@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.android.mantingfanggsc.MainActivity" >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_view" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+        
+        <!-- 首页 -->
+        <LinearLayout
+            android:id="@+id/bottom_linear_zhailu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="5dp"
+            android:onClick="clickMenu" >
+            <ImageView
+                android:id="@+id/bottom_menu_img_zhailu"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/mtab1_off" />
+            
+            <TextView
+                android:id="@+id/bottom_menu_tv_zhailu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="摘录"
+                android:textSize="12sp" />
+        </LinearLayout>
+        
+        <!-- 文库 -->
+        <LinearLayout
+            android:id="@+id/bottom_linear_wenku"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="5dp"
+            android:onClick="clickMenu" >
+            <ImageView
+                android:id="@+id/bottom_menu_img_wenku"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/mtab3_off" />
+            
+            <TextView
+                android:id="@+id/bottom_menu_tv_wenku"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="文库"
+                android:textSize="12sp" />
+        </LinearLayout>
+        
+        <!-- 诗友 -->
+        <LinearLayout
+            android:id="@+id/bottom_linear_shiyou"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="5dp"
+            android:onClick="clickMenu" >
+            <ImageView
+                android:id="@+id/bottom_menu_img_shiyou"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/mtab2_off" />
+            
+            <TextView
+                android:id="@+id/bottom_menu_tv_shiyou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="诗友"
+                android:textSize="12sp" />
+        </LinearLayout>
+        
+        <!-- 我的 -->
+        <LinearLayout
+            android:id="@+id/bottom_linear_wode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="5dp"
+            android:onClick="clickMenu" >
+            <ImageView
+                android:id="@+id/bottom_menu_img_wode"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/mtab4_off" />
+            
+            <TextView
+                android:id="@+id/bottom_menu_tv_wode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

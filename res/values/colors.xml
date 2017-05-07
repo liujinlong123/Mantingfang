@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--线条颜色-->
+    <color name="line_view">#dddddd</color>
+    
+    <color name="white">#ffffff</color>
+    <color name="gray">#a0a0a0</color>
+    <color name="beijingwhite">#d2d2d2</color>
+    <color name="blue">#00479d</color>
+</resources>

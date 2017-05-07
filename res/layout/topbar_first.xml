@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white" >
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical" >
+        
+        <Button
+            android:id="@+id/topbar_first_zhailu"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:background="@drawable/topbar_first_btn"
+            android:text="全部"
+            android:textSize="12sp"
+            android:textColor="@color/gray"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="2dp" />
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true" >
+            
+            <ImageView
+                android:id="@+id/topbar_first_collect"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/collection_off"
+                android:layout_marginRight="15dp" />
+            
+            <ImageView
+                android:id="@+id/topbar_first_more"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/more_or_save"
+                android:layout_marginRight="10dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray" />
+
+</LinearLayout>
