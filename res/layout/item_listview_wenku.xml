@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/secondlist_tv_kind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:text="诗经选集"
+        android:textSize="17sp"
+        android:background="@color/beijingwhite" />
+    
+    <com.android.mantingfang.second.KindGridView
+        android:id="@+id/secondlist_grd_kind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+        
+
+</LinearLayout>

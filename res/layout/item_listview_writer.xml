@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white" >
+    
+    <TextView
+        android:id="@+id/secondlist_writer_dynasty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="唐代"
+        android:textSize="17sp"
+        android:padding="5dp"
+        android:background="@color/beijingwhite" />
+    
+    <TextView
+        android:id="@+id/secondlist_writer_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="李白"
+        android:textSize="17dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp" />
+    
+    <TextView
+        android:id="@+id/secondlist_poem_rhesis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="床前明月光，疑是地上霜"
+        android:textSize="15sp"
+        android:paddingLeft="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="@color/gray" />
+
+</LinearLayout>

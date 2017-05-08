@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@color/white" >
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="诗友"
+        android:textSize="20sp" />
+    
+    
+    <ImageView
+        android:id="@+id/topbar_second_search"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/search"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

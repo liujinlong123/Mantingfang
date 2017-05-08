@@ -21,7 +21,8 @@
             android:text="分类"
             android:textColor="@color/blue"
             android:paddingLeft="12dp"
-            android:paddingRight="5dp" />
+            android:paddingRight="5dp"
+            android:checked="true" />
         
         <RadioButton
             android:id="@+id/topbar_second_rbtnR"

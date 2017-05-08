@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <ImageView
+            android:id="@+id/thirdlist_img_headPhoto"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_launcher" />
+        
+        <TextView
+            android:id="@+id/thirdlist_tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/thirdlist_img_headPhoto"
+            android:layout_centerVertical="true"
+            android:text="username"
+            android:textSize="20sp" />
+        
+        <ImageView
+            android:id="@+id/thirdlist_img_more"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/more_or_save"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/thirdlist_tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="内容"
+        android:textSize="15sp" />
+    
+    <TextView
+        android:id="@+id/thirdlist_tv_poem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/poetry_bg" />
+
+</LinearLayout>
