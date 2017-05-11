@@ -3,15 +3,20 @@ package com.android.mantingfang.second;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.android.mantingfang.bean.PoetryDao;
+import com.android.mantingfang.bean.URLs;
 import com.android.mantingfang.model.Poem;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -26,7 +31,7 @@ public class FragmentSecond extends Fragment {
 	private SecondWenkuListViewAdapter wenkuAdapter;
 	private List<KindContent> wenkuList;
 	
-	private String[] singleName = {"诗经全集", "楚辞节选", "道德经", "金刚经", "古诗十九首", "唐诗三百首", "宋词三百首", "给孩子的诗", "乐府诗集", "周易"};
+	//private String[] singleName = {"诗经全集", "楚辞节选", "道德经", "金刚经", "古诗十九首", "唐诗三百首", "宋词三百首", "给孩子的诗", "乐府诗集", "周易"};
 	private int[] images = {R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher,
 			R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher,};
 	
@@ -35,6 +40,7 @@ public class FragmentSecond extends Fragment {
 	private ListView writerListView;
 	private SecondWriterListViewAdapter writerAdapter;
 	private List<Poem> writerList;
+	private PoetryDao poetryDao;
 	
 	
 	//主界面
@@ -67,9 +73,11 @@ public class FragmentSecond extends Fragment {
 	
 	private List<KindContent> getWenkuData() {
 		wenkuList = new ArrayList<KindContent>();
-		for (int i = 0; i < 5; i++) {
-			KindContent content = new KindContent("kind " + i, singleName, images);
-			wenkuList.add(content);
+		for (int i = 0; i < URLs.typeKind.length; i++) {
+			//for (int j = 0; j < URLs.TYPES[i].length; j++) {
+				KindContent content = new KindContent(URLs.typeKind[i], URLs.TYPES[i], images);
+				wenkuList.add(content);
+			//}
 		}
 		
 		return wenkuList;
@@ -80,15 +88,20 @@ public class FragmentSecond extends Fragment {
 		writerListView = (ListView)view.findViewById(R.id.frag_second_writer_list);
 		writerAdapter = new SecondWriterListViewAdapter(getActivity(), getWriterData());
 		writerListView.setAdapter(writerAdapter);
+		writerListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Toast.makeText(getActivity(), "fuck you", Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 	
 	private List<Poem> getWriterData() {
-		writerList = new ArrayList<Poem>();
-		for (int i = 0; i < 15; i++) {
-			Poem poem = new Poem(i, i, i, i, "李白", "fuck", "fuck");
-			writerList.add(poem);
-		}
-		
+		poetryDao = new PoetryDao(getActivity());
+		//writerList = poetryDao.getPoemByWid(writerid);
+		writerList = poetryDao.getPoemByWid(2);
+		Log.v("writerList", writerList.size() + "");
 		return writerList;
 	}
 	

@@ -2,6 +2,7 @@ package com.android.mantingfang.second;
 
 import java.util.List;
 
+import com.android.mantingfang.bean.URLs;
 import com.android.mantingfang.model.Poem;
 import com.android.mantingfanggsc.R;
 import android.annotation.SuppressLint;
@@ -73,9 +74,10 @@ public class SecondWriterListViewAdapter extends BaseAdapter{
 	}
 	
 	private void initViews(ViewHolder holder, Poem poem) {
-		holder.dynasty.setText("唐朝");
-		holder.writerName.setText("李白");
+		holder.dynasty.setText(URLs.DYNASTYS[poem.getDynastyid()]);
+		holder.writerName.setText(poem.getWritername());
 		holder.poemRhesis.setText("窗前明月光，疑是地上霜");
+		//holder.poemRhesis.setText(poem.getRhesis());
 	}
 
 }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/white" >
+    
+    <LinearLayout
+        android:id="@+id/topbar_all_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerVertical="true" >
+        
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/come_back" />
+        
+        <TextView
+            android:id="@+id/topbar_tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分类"
+            android:textColor="@color/blue"
+            android:textSize="17sp" />
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/topbar_tv_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="诗经全集"
+        android:textSize="17sp" />
+    
+    <RadioGroup
+        android:id="@+id/topbar_radgp_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" >
+        
+        <RadioButton
+            android:id="@+id/topbar_rbtn_selectL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:background="@drawable/topbar_second_leftselector"
+            android:text="我的点赞"
+            android:textColor="@drawable/topbar_second_text" />
+        
+        <RadioButton
+            android:id="@+id/topbar_rbtn_selectR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:background="@drawable/topbar_second_rightselector"
+            android:text="点赞我的"
+            android:textColor="@drawable/topbar_second_text" />
+    </RadioGroup>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:visibility="invisible" >
+        
+        <ImageView
+            android:id="@+id/topbar_all_collect"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/collection_off"
+            android:layout_marginRight="10dp" />
+        
+        <ImageView
+            android:id="@+id/topbar_all_comment"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/paper_icon"
+            android:layout_marginRight="10dp" />
+        
+        <ImageView
+            android:id="@+id/topbar_all_more"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/more_or_save"
+            android:layout_marginRight="10dp" />
+    </LinearLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray" />
+
+</RelativeLayout>

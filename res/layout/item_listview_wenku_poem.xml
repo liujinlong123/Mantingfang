@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="10dp" >
+    
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+        
+        <TextView
+            android:id="@+id/poemlist_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="国风·周南·关雎" />
+        
+        <TextView
+            android:id="@+id/poemlist_tv_poemrhesis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关关雎鸠，在河之洲"
+            android:textColor="@color/gray" />
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/poemlist_tv_writername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="[周]无名氏"
+        android:textColor="@color/gray" />
+
+</LinearLayout>

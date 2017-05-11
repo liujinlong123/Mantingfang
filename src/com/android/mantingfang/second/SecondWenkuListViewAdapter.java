@@ -9,6 +9,8 @@ import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SecondWenkuListViewAdapter extends BaseAdapter {
 
@@ -69,7 +70,7 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 		}
 		KindContent content = list.get(position);
 		
-		initGridView(content, holder);
+		initGridView(content, holder, position);
 		
 		return view;
 	}
@@ -80,16 +81,28 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 		GridView grdKind;
 	}
 	
-	private void initGridView(KindContent content, ViewHolder holder) {
+	private void initGridView(KindContent content, ViewHolder holder, final int listPosition) {
 		holder.tvKind.setText(content.getKindName());
 		holder.grdKind.setNumColumns(4);
 		adapter = new SimpleAdapter(mContext, getData(content), R.layout.item_gridview_wenku, new String[]{"image", "text"}, new int[]{R.id.secondgrd_img_kind, R.id.secondgrd_tv_kindname});
 		holder.grdKind.setAdapter(adapter);
+		
+		final String kindName = content.getKindName();
+		final String[] singleName = content.getSingleName();
+		final int[] images = content.getImages();
+		
 		holder.grdKind.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Toast.makeText(mContext, "fuck you", Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(view.getContext(), SecondWenkuPoem.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("kindName", kindName);
+				bundle.putString("singleName", singleName[position]);
+				bundle.putInt("imgId", images[position]);
+				bundle.putString("typeId", (listPosition + 1) + "" + position);
+				intent.putExtras(bundle);
+				mContext.startActivity(intent);
 			}
 		});
 	}

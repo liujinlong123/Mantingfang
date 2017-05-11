@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white" >
+    
+    <include layout="@layout/topbar_all"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:gravity="center_vertical" >
+        
+        <ImageView
+            android:id="@+id/floor2_second_img_theme"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_launcher" />
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <TextView
+                android:id="@+id/floor2_second_tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="诗经全集" />
+            
+            <TextView
+                android:id="@+id/floor2_second_tv_sum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="中国最古老的诗歌总集。"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                android:layout_marginTop="3dp" />
+        </LinearLayout>
+    </LinearLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray" />
+    
+    <ListView
+        android:id="@+id/floor2_secondlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
+</LinearLayout>
