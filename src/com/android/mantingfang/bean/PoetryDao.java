@@ -25,7 +25,7 @@ public class PoetryDao {
 			database = helper.getWritableDatabase();
 			database.beginTransaction();
 			for (int i = 0; i < poetryList.size(); i++) {
-				Poetry poetry = poetryList.get(i);
+				/*Poetry poetry = poetryList.get(i);
 				ContentValues cv = new ContentValues();
 				cv.put("poetryid", poetry.getPoetryid());
 				cv.put("title", poetry.getTitle());
@@ -33,8 +33,18 @@ public class PoetryDao {
 				cv.put("typeid", poetry.getTypeid());
 				cv.put("writerid", poetry.getWriterid());
 				cv.put("content", poetry.getContent());
-				cv.put("rhesis", "");
-				if (!helper.isExist("Poetry", "poetryid", poetry.getPoetryid(), database)) {
+				cv.put("rhesis", "");*/
+				Poetry poetry = poetryList.get(i);
+				ContentValues cv = new ContentValues();
+				cv.put("poetry_id", poetry.getPoetryId());
+				cv.put("poetry_label_id", poetry.getLabelId());
+				cv.put("poetry_writer_id", poetry.getWriterId());
+				cv.put("poetry_language_id", poetry.getLanguageId());
+				cv.put("poetry_name", poetry.getName());
+				cv.put("poetry_content", poetry.getContent());
+				cv.put("poetry_rhesis", poetry.getRhesis());
+				
+				if (!helper.isExist("Poetry", "poetryid", poetry.getPoetryId(), database)) {
 					database.insert("Poetry", null, cv);
 				}
 			}
@@ -132,15 +142,23 @@ public class PoetryDao {
 			Cursor cursor = db.rawQuery(sql, null);
 			if (cursor.moveToFirst()) {
 				for (int i = 0; i < cursor.getCount(); i++) {
-					Info info = new Info(
+					/*Info info = new Info(
 							cursor.getInt(cursor.getColumnIndexOrThrow("infoid")),
 							cursor.getInt(cursor.getColumnIndexOrThrow("cateid")),
 							cursor.getInt(cursor.getColumnIndexOrThrow("fid")),
 							cursor.getString(cursor.getColumnIndexOrThrow("title")),
 							cursor.getString(cursor.getColumnIndexOrThrow("adder")),
-							cursor.getString(cursor.getColumnIndexOrThrow("content")));
+							cursor.getString(cursor.getColumnIndexOrThrow("content")));*/
+					Info info = new Info(
+							cursor.getInt(cursor.getColumnIndexOrThrow("info_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("info_poetry_id")),
+							cursor.getString(cursor.getColumnIndexOrThrow("info_background")),
+							cursor.getString(cursor.getColumnIndexOrThrow("info_praise")),
+							cursor.getString(cursor.getColumnIndexOrThrow("info_note")),
+							cursor.getString(cursor.getColumnIndexOrThrow("info_tonow")),
+							cursor.getString(cursor.getColumnIndexOrThrow("info_translation")));
 					infos.add(info);
-					Log.v("title", info.getTitle());
+					Log.v("title", info.getInfoId() + "");
 					cursor.moveToNext();
 				}
 				return infos;

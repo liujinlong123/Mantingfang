@@ -17,7 +17,7 @@ public class DbHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		
-		String WRsql = "create table writer (writerid interger, writername text, "
+		/*String WRsql = "create table writer (writerid interger, writername text, "
 				+ "summary text, dynastyid integer)";
 		db.execSQL(WRsql);
 		
@@ -29,6 +29,46 @@ public class DbHelper extends SQLiteOpenHelper {
 				+ " adder text, title text, content text)";
 		db.execSQL(INsql);
 		
+		String MYsql = "create table my(myid integer)";
+		db.execSQL(MYsql);*/
+		
+		//poetry
+		String POsql = "create table poetry (poetry_id integer, poetry_label_id integer, "
+				+ "poetry_writer_id integer, poetry_language_id integer, poetry_name text,"
+				+ "poetry_content text, poetry_rhesis text)";
+		db.execSQL(POsql);
+		
+		//writer
+		String WRsql = "create table writer (writer_id integer, writer_label_id integer, writer_dynasty_id integer,"
+				+ "writer_country_id integer, writer_name text, writer_career text)";
+		db.execSQL(WRsql);
+		
+		//info
+		String INsql = "create table info (info_id integer, info_poetry_id integer, info_background text, info_praise text,"
+				+ "info_not text, info_tonow text, info_translation text)";
+		db.execSQL(INsql);
+		
+		//country
+		String COUNTRYsql = "create table country (country_id integer, country_name text)";
+		db.execSQL(COUNTRYsql);
+		
+		//dynasty
+		String DYsql = "create table dynasty (dynasty_id integer, dynasty_name text)";
+		db.execSQL(DYsql);
+		
+		//label
+		String LBsql = "create table label (label_id integer, label_poetry_id text, label_kind_id integer, label_name text)";
+		db.execSQL(LBsql);
+		
+		//language
+		String LAsql = "create table language (language_id integer, language_name text)";
+		db.execSQL(LAsql);
+		
+		//kind
+		String KINDsql = "create table kind (kind_id integer, kind_name text)";
+		db.execSQL(KINDsql);
+		
+		//my
 		String MYsql = "create table my(myid integer)";
 		db.execSQL(MYsql);
 	}

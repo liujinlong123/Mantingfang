@@ -29,11 +29,18 @@ public class WriterList extends Base {
 			wList.writerCount = obj.length();
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
-				Writer writer = new Writer(
+				/*Writer writer = new Writer(
 						Integer.parseInt(jo.getString("writerid")),
 						jo.getString("writername"),
 						jo.getString("summary"),
-						Integer.parseInt(jo.getString("dynastyid")));
+						Integer.parseInt(jo.getString("dynastyid")));*/
+				Writer writer = new Writer(
+						Integer.parseInt("writer_id"),
+						Integer.parseInt("writer_label_id"),
+						Integer.parseInt("writer_dynasty_id"),
+						Integer.parseInt("writer_country_id"),
+						jo.getString("writer_name"),
+						jo.getString("writer_career"));
 				wList.writerList.add(writer);
 			}
 		}

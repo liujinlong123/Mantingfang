@@ -109,7 +109,7 @@ public class SecondWenkuPoem extends Activity {
 		list = new ArrayList<Poem>();
 		
 		//list = poetryDao.getPoemByTid(typeId);
-		list = poetryDao.getPoemByTid(1);
+		list = poetryDao.getPoemByTid(2);
 		/*for (int i = 0; i < 20; i++) {
 			Poem poem = new Poem(i, i, i, i, "xx", "xx", "xx");
 			list.add(poem);

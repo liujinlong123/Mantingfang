@@ -3,67 +3,78 @@ package com.android.mantingfang.bean;
 @SuppressWarnings("serial")
 public class Info extends Base {
 
-	private int infoid;
-	private int cateid;
-	private int fid;
-	private String title;
-	private String adder;
-	private String content;
+	private int info_id;
+	private int info_poetry_id;
+	private String info_background;
+	private String info_praise;
+	private String info_note;
+	private String info_tonow;
+	private String info_translation;
 	
-	public Info(int infoid, int cateid, int fid, String title, String adder, String content) {
-		this.infoid = infoid;
-		this.cateid = cateid;
-		this.fid = fid;
-		this.title = title;
-		this.adder = adder;
-		this.content = content;
+	public Info(int info_id, int info_poetry_id, String info_background, 
+			String info_praise, String info_note, String info_tonow, String info_tranlation) {
+		this.info_id = info_id;
+		this.info_poetry_id = info_poetry_id;
+		this.info_background = info_background;
+		this.info_praise = info_praise;
+		this.info_note = info_note;
+		this.info_tonow = info_tonow;
+		this.info_translation = info_tranlation;
 	}
 	
-	public int getInfoid() {
-		return infoid;
+	public int getInfoId() {
+		return info_id;
 	}
 	
-	public void setInfoid(int infoid) {
-		this.infoid = infoid;
+	public void setInfoId(int info_id) {
+		this.info_id = info_id;
 	}
 	
-	public int getCateid() {
-		return cateid;
+	public int getPoetryId() {
+		return info_poetry_id;
 	}
 	
-	public void setCateid(int cateid) {
-		this.cateid = cateid;
+	public void setPoetryId(int info_poetry_id) {
+		this.info_poetry_id = info_poetry_id;
 	}
 	
-	public int getFid() {
-		return fid;
+	public String getBackground() {
+		return info_background;
 	}
 	
-	public void setFid(int fid) {
-		this.fid = fid;
+	public void setBackground(String info_background) {
+		this.info_background = info_background;
 	}
 	
-	public String getTitle() {
-		return title;
+	public String getPraise() {
+		return info_praise;
 	}
 	
-	public void setTitle(String title) {
-		this.title = title;
+	public void setPraise(String info_praise) {
+		this.info_praise = info_praise;
 	}
 	
-	public String getAddr() {
-		return adder;
+	public String getNote() {
+		return info_note;
 	}
 	
-	public void setAdder(String adder) {
-		this.adder = adder;
+	public void setNote(String info_note) {
+		this.info_note = info_note;
 	}
 	
-	public String getContent() {
-		return content;
+	public String getTonow() {
+		return info_tonow;
 	}
 	
-	public void setContent(String content) {
-		this.content = content;
+	public void setTonow(String info_tonow) {
+		this.info_tonow = info_tonow;
+	}
+	
+	public String getTranslation() {
+		return info_translation;
+	}
+	
+	public void setTranslation(String info_translation) {
+		this.info_translation = info_translation;
 	}
 }

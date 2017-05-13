@@ -3,77 +3,78 @@ package com.android.mantingfang.bean;
 @SuppressWarnings("serial")
 public class Poetry extends Base {
 
-	private int poetryid;
-	private String title;
-	private String typeid;
-	private int kindid;
-	private int writerid;
-	private String content;
-	private String rhesis;
+	private int poetry_id;
+	private int poetry_label_id;
+	private int poetry_writer_id;
+	private int poetry_language_id;
+	private String poetry_name;
+	private String poetry_content;
+	private String poetry_rhesis;
 	
-	public Poetry(int poetryid, String title, String typeid, int kindid, int writerid, String content, String rhesis) {
-		this.poetryid = poetryid;
-		this.title = title;
-		this.typeid = typeid;
-		this.kindid = kindid;
-		this.writerid = writerid;
-		this.content = content;
-		this.rhesis = rhesis;
+	public Poetry(int poetry_id, int poetry_label_id, int poetry_writer_id, int poetry_language_id, 
+			String poetry_name, String poetry_content, String poetry_rhesis) {
+		this.poetry_id = poetry_id;
+		this.poetry_label_id = poetry_label_id;
+		this.poetry_writer_id = poetry_writer_id;
+		this.poetry_language_id = poetry_language_id;
+		this.poetry_name = poetry_name;
+		this.poetry_content = poetry_content;
+		this.poetry_rhesis = poetry_rhesis;
 	}
 	
-	public int getPoetryid() {
-		return poetryid;
+	public int getPoetryId() {
+		return poetry_id;
 	}
 	
-	public void setPoetryid(int poetryid) {
-		this.poetryid = poetryid;
+	public void setPoetryId(int poetry_id) {
+		this.poetry_id = poetry_id;
 	}
 	
-	public String getTitle() {
-		return title;
+	public int getLabelId() {
+		return poetry_label_id;
 	}
 	
-	public void setTitle(String title) {
-		this.title = title;
+	public void setLabelId(int poetry_label_id) {
+		this.poetry_label_id = poetry_label_id;
 	}
 	
-	public String getTypeid() {
-		return typeid;
+	public int getWriterId() {
+		return poetry_writer_id;
 	}
 	
-	public void setTypeid(String typeid) {
-		this.typeid = typeid;
+	public void setWriterId(int poetry_writer_id) {
+		this.poetry_writer_id = poetry_writer_id;
 	}
 	
-	public int getKindid() {
-		return kindid;
+	public int getLanguageId() {
+		return poetry_language_id;
 	}
 	
-	public void setKindid(int kindid) {
-		this.kindid = kindid;
+	public void setLanguageId(int poetry_language_id) {
+		this.poetry_language_id = poetry_language_id;
 	}
 	
-	public int getWriterid() {
-		return writerid;
+	public String getName() {
+		return poetry_name;
 	}
 	
-	public void setWriterid(int writerid) {
-		this.writerid = writerid;
+	public void setName(String poetry_name) {
+		this.poetry_name = poetry_name;
 	}
 	
 	public String getContent() {
-		return content;
+		return poetry_content;
 	}
 	
-	public void setContent(String content) {
-		this.content = content;
+	public void setCotent(String poetry_content) {
+		this.poetry_content = poetry_content;
 	}
 	
 	public String getRhesis() {
-		return rhesis;
+		return poetry_rhesis;
 	}
 	
-	public void setRhesis(String rhesis) {
-		this.rhesis = rhesis;
+	public void setRhesis(String poetry_rhesis) {
+		this.poetry_rhesis = poetry_rhesis;
 	}
 }

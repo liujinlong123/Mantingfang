@@ -29,13 +29,21 @@ public class InfoList extends Base {
 			infos.infoCount = obj.length();
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
-				Info info = new Info(
+				/*Info info = new Info(
 						Integer.parseInt(jo.getString("infoid")),
 						Integer.parseInt(jo.getString("cateid")),
 						Integer.parseInt(jo.getString("fid")),
 						jo.getString("title"),
 						jo.getString("adder"),
-						jo.getString("content"));
+						jo.getString("content"));*/
+				Info info = new Info(
+						Integer.parseInt("info_id"),
+						Integer.parseInt("info_poetry_id"),
+						jo.getString("info_background"),
+						jo.getString("info_praise"),
+						jo.getString("info_note"),
+						jo.getString("info_tonow"),
+						jo.getString("info_translation"));
 				infos.infoList.add(info);
 			}
 		}
