@@ -74,7 +74,7 @@ public class SecondWriterListViewAdapter extends BaseAdapter{
 	}
 	
 	private void initViews(ViewHolder holder, Poem poem) {
-		holder.dynasty.setText(URLs.DYNASTYS[poem.getDynastyid()]);
+		holder.dynasty.setText(poem.getDynastyid() + "");
 		holder.writerName.setText(poem.getWritername());
 		holder.poemRhesis.setText("窗前明月光，疑是地上霜");
 		//holder.poemRhesis.setText(poem.getRhesis());

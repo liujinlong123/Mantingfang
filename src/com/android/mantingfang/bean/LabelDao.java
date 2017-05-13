@@ -6,30 +6,27 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-public class InfoDao {
+public class LabelDao {
 
 	private DbHelper helper = null;
-	public InfoDao(Context context) {
+	public LabelDao(Context context) {
 		helper = new DbHelper(context);
 	}
 	
-	public void insertIN(List<Info> infoList) {
+	public void insertLabel(List<Label> labelList) {
 		SQLiteDatabase database = null;
 		try {
 			database = helper.getWritableDatabase();
 			database.beginTransaction();
-			for (int i = 0; i < infoList.size(); i++) {
-				Info info = infoList.get(i);
+			for (int i = 0; i < labelList.size(); i++) {
+				Label label = labelList.get(i);
 				ContentValues cv = new ContentValues();
-				cv.put("info_id", info.getInfoId());
-				cv.put("info_poetry_id", info.getPoetryId());
-				cv.put("info_background", info.getBackground());
-				cv.put("info_praise", info.getPraise());
-				cv.put("info_note", info.getNote());
-				cv.put("info_tonow", info.getTonow());
-				cv.put("info_translation", info.getTranslation());
-				if (!helper.isExist("Info", "info_id", info.getInfoId(), database)) {
-					database.insert("Info", null, cv);
+				cv.put("label_id", label.getLabelId());
+				cv.put("label_poetry_id", label.getPoetryId());
+				cv.put("label_kind_id", label.getKindId());
+				cv.put("label_name", label.getLabelName());
+				if (!helper.isExist("Label", "label_id", label.getLabelId(), database)) {
+					database.insert("Label", null, cv);
 				}
 			}
 			database.setTransactionSuccessful();

@@ -6,30 +6,25 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-public class InfoDao {
+public class LanguageDao {
 
 	private DbHelper helper = null;
-	public InfoDao(Context context) {
+	public LanguageDao(Context context) {
 		helper = new DbHelper(context);
 	}
 	
-	public void insertIN(List<Info> infoList) {
+	public void insertLan(List<Language> lanList) {
 		SQLiteDatabase database = null;
 		try {
 			database = helper.getWritableDatabase();
 			database.beginTransaction();
-			for (int i = 0; i < infoList.size(); i++) {
-				Info info = infoList.get(i);
+			for (int i = 0; i < lanList.size(); i++) {
+				Language lan = lanList.get(i);
 				ContentValues cv = new ContentValues();
-				cv.put("info_id", info.getInfoId());
-				cv.put("info_poetry_id", info.getPoetryId());
-				cv.put("info_background", info.getBackground());
-				cv.put("info_praise", info.getPraise());
-				cv.put("info_note", info.getNote());
-				cv.put("info_tonow", info.getTonow());
-				cv.put("info_translation", info.getTranslation());
-				if (!helper.isExist("Info", "info_id", info.getInfoId(), database)) {
-					database.insert("Info", null, cv);
+				cv.put("language_id", lan.getLanguageId());
+				cv.put("language_name", lan.getLanguageName());
+				if (!helper.isExist("Language", "language_id", lan.getLanguageId(), database)) {
+					database.insert("Language", null, cv);
 				}
 			}
 			database.setTransactionSuccessful();

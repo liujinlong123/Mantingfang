@@ -6,30 +6,25 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-public class InfoDao {
+public class CountryDao {
 
 	private DbHelper helper = null;
-	public InfoDao(Context context) {
+	public CountryDao(Context context) {
 		helper = new DbHelper(context);
 	}
 	
-	public void insertIN(List<Info> infoList) {
+	public void insertCountry(List<Country> countryList) {
 		SQLiteDatabase database = null;
 		try {
 			database = helper.getWritableDatabase();
 			database.beginTransaction();
-			for (int i = 0; i < infoList.size(); i++) {
-				Info info = infoList.get(i);
+			for (int i = 0; i < countryList.size(); i++) {
+				Country country = countryList.get(i);
 				ContentValues cv = new ContentValues();
-				cv.put("info_id", info.getInfoId());
-				cv.put("info_poetry_id", info.getPoetryId());
-				cv.put("info_background", info.getBackground());
-				cv.put("info_praise", info.getPraise());
-				cv.put("info_note", info.getNote());
-				cv.put("info_tonow", info.getTonow());
-				cv.put("info_translation", info.getTranslation());
-				if (!helper.isExist("Info", "info_id", info.getInfoId(), database)) {
-					database.insert("Info", null, cv);
+				cv.put("country_id", country.getCountryId());
+				cv.put("country_name", country.getCountryName());
+				if (!helper.isExist("Country", "country_id", country.getCountryId(), database)) {
+					database.insert("Country", null, cv);
 				}
 			}
 			database.setTransactionSuccessful();

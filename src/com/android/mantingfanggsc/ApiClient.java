@@ -14,8 +14,18 @@ import org.apache.http.util.EncodingUtils;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 
+import com.android.mantingfang.bean.Country;
+import com.android.mantingfang.bean.CountryList;
+import com.android.mantingfang.bean.Dynasty;
+import com.android.mantingfang.bean.DynastyList;
 import com.android.mantingfang.bean.Info;
 import com.android.mantingfang.bean.InfoList;
+import com.android.mantingfang.bean.Kind;
+import com.android.mantingfang.bean.KindList;
+import com.android.mantingfang.bean.Label;
+import com.android.mantingfang.bean.LabelList;
+import com.android.mantingfang.bean.Language;
+import com.android.mantingfang.bean.LanguageList;
 import com.android.mantingfang.bean.Poetry;
 import com.android.mantingfang.bean.PoetryList;
 import com.android.mantingfang.bean.StringUtils;
@@ -149,5 +159,30 @@ public class ApiClient {
 	public static List<Poetry> getPoetryListByAs(String poetryname, Context context) throws JSONException {
 		String resultString = getFromAssets(poetryname, context);
 		return PoetryList.parse(StringUtils.toJSONArray(resultString)).getPoetryList();
+	}
+	
+	public static List<Dynasty> getDynastyListByAs(String dynastyname, Context context) throws JSONException {
+		String resultString = getFromAssets(dynastyname, context);
+		return DynastyList.parse(StringUtils.toJSONArray(resultString)).getDynastyList();
+	}
+	
+	public static List<Country> getCountryListByAs(String countryname, Context context) throws JSONException {
+		String resultString = getFromAssets(countryname, context);
+		return CountryList.parse(StringUtils.toJSONArray(resultString)).getCountryList();
+	}
+	
+	public static List<Language> getLanguageListByAs(String languagename, Context context) throws JSONException {
+		String resultString = getFromAssets(languagename, context);
+		return LanguageList.parse(StringUtils.toJSONArray(resultString)).getLanguageList();
+	}
+	
+	public static List<Kind> getKindListByAs(String kindname, Context context) throws JSONException {
+		String resultString = getFromAssets(kindname, context);
+		return KindList.parse(StringUtils.toJSONArray(resultString)).getKindList();
+	}
+	
+	public static List<Label> getLabelListByAs(String labelname, Context context) throws JSONException {
+		String resultString = getFromAssets(labelname, context);
+		return LabelList.parse(StringUtils.toJSONArray(resultString)).getLabelList();
 	}
 }

@@ -11,7 +11,6 @@ import com.android.mantingfanggsc.R;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,10 +97,14 @@ public class FragmentSecond extends Fragment {
 	}
 	
 	private List<Poem> getWriterData() {
-		poetryDao = new PoetryDao(getActivity());
+		writerList = new ArrayList<Poem>();
+		/*poetryDao = new PoetryDao(getActivity());
 		//writerList = poetryDao.getPoemByWid(writerid);
-		writerList = poetryDao.getPoemByWid(2);
-		Log.v("writerList", writerList.size() + "");
+		writerList = poetryDao.getPoemByWid(1);
+		Log.v("writerList", writerList.size() + "");*/
+		for (int i = 0; i < 10; i++) {
+			
+		}
 		return writerList;
 	}
 	

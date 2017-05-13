@@ -2,6 +2,8 @@ package com.android.mantingfang.model;
 
 import com.android.mantingfang.bean.Base;
 
+import android.annotation.SuppressLint;
+
 @SuppressWarnings("serial")
 public class Poem extends Base {
 
@@ -14,10 +16,10 @@ public class Poem extends Base {
 	private String content;
 	private String rhesis;
 
-	public Poem(int kindid, int poid, int dynastyid,int writerid ,String writername,
-			String title, String content, String rhesis) {
+	public Poem(String kindid, int poid, int dynastyid, int writerid, String writername, String title, String content,
+			String rhesis) {
 
-		this.kindid = kindid;
+		this.kindid = parseKind(kindid);
 		this.poetryid = poid;
 		this.dynastyid = dynastyid;
 		this.writerid = writerid;
@@ -26,6 +28,17 @@ public class Poem extends Base {
 		this.content = content;
 		this.rhesis = rhesis;
 
+	}
+
+	// 分类定为10
+	@SuppressLint("UseValueOf")
+	private int parseKind(String kindid) {
+		String str = kindid.charAt(0) + "";
+		int aa = new Integer(str);
+		if (aa >= 0 && aa <= 10) {
+			return aa;
+		}
+		return 0;
 	}
 
 	public int getDynastyid() {
@@ -51,7 +64,7 @@ public class Poem extends Base {
 	public void setPoetryid(int poetryid) {
 		this.poetryid = poetryid;
 	}
-	
+
 	public int getWriterid() {
 		return writerid;
 	}
@@ -59,7 +72,7 @@ public class Poem extends Base {
 	public void setWriterid(int writerid) {
 		this.writerid = writerid;
 	}
-	
+
 	public String getWritername() {
 		return writername;
 	}
@@ -83,11 +96,11 @@ public class Poem extends Base {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	public String getRhesis() {
 		return rhesis;
 	}
-	
+
 	public void setRhesis(String rhesis) {
 		this.rhesis = rhesis;
 	}

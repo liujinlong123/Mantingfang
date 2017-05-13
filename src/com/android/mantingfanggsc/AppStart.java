@@ -5,12 +5,23 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import com.android.mantingfang.bean.Country;
+import com.android.mantingfang.bean.CountryDao;
+import com.android.mantingfang.bean.Dynasty;
+import com.android.mantingfang.bean.DynastyDao;
 import com.android.mantingfang.bean.Info;
 import com.android.mantingfang.bean.InfoDao;
+import com.android.mantingfang.bean.Kind;
+import com.android.mantingfang.bean.KindDao;
+import com.android.mantingfang.bean.Label;
+import com.android.mantingfang.bean.LabelDao;
+import com.android.mantingfang.bean.Language;
+import com.android.mantingfang.bean.LanguageDao;
 import com.android.mantingfang.bean.Poetry;
 import com.android.mantingfang.bean.PoetryDao;
 import com.android.mantingfang.bean.Writer;
 import com.android.mantingfang.bean.WriterDao;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -31,9 +42,19 @@ public class AppStart extends Activity {
 	private List<Writer> writerList;
 	private List<Poetry> poetryList;
 	private List<Info> infoList;
+	private List<Dynasty> dynastyList;
+	private List<Country> countryList;
+	private List<Language> languageList;
+	private List<Kind> kindList;
+	private List<Label> labelList;
 	List<Writer> wrs = new ArrayList<Writer>();
 	List<Poetry> pos = new ArrayList<Poetry>();
 	List<Info> ins = new ArrayList<Info>();
+	List<Dynasty> dys = new ArrayList<Dynasty>();
+	List<Country> cos = new ArrayList<Country>();
+	List<Language> lans = new ArrayList<Language>();
+	List<Kind> kinds = new ArrayList<Kind>();
+	List<Label> labs = new ArrayList<Label>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +118,43 @@ public class AppStart extends Activity {
 					ii.insertIN(infoList);
 					Log.v("info", "------successful");
 				}
+				
+				
+				dynastyList = (List<Dynasty>)list.get(3);
+				if (dynastyList != null) {
+					DynastyDao dd = new DynastyDao(context);
+					dd.insertDY(dynastyList);
+					Log.v("dynasty", "------successful");
+				}
+				
+				countryList = (List<Country>)list.get(4);
+				if (countryList != null) {
+					CountryDao cc = new CountryDao(context);
+					cc.insertCountry(countryList);
+					Log.v("country", "------successful");
+				}
+				
+				languageList = (List<Language>)list.get(5);
+				if (languageList != null) {
+					LanguageDao ll = new LanguageDao(context);
+					ll.insertLan(languageList);
+					Log.v("Language", "------successful");
+				}
+				
+				kindList = (List<Kind>)list.get(6);
+				if (kindList != null) {
+					KindDao kk = new KindDao(context);
+					kk.insertKIND(kindList);
+					Log.v("kind", "------successful");
+				}
+				
+				labelList = (List<Label>)list.get(7);
+				if (labelList != null) {
+					LabelDao lla = new LabelDao(context);
+					lla.insertLabel(labelList);
+					Log.v("Label", "------successful");
+				}
+				
 				long endTime = System.currentTimeMillis();
 				Log.v("≤Â»Î ±º‰", "------" + (endTime - startTime));
 				Toast.makeText(context, endTime - startTime + "", Toast.LENGTH_LONG).show();
@@ -113,13 +171,14 @@ public class AppStart extends Activity {
 			public void run() {
 				Message msg = new Message();
 				try {
-					for (int i = 1; i < 11; i++) {
-						List<Info> tempInfos = ApiClient.getInfoListByAs("info" + i + ".json", context);
-						ins.addAll(tempInfos);
-					}
-					
+					ins = ApiClient.getInfoListByAs("info.json", context);
 					wrs = ApiClient.getWriterListByAs("writer.json", context);
 					pos = ApiClient.getPoetryListByAs("poetry.json", context);
+					dys = ApiClient.getDynastyListByAs("dynasty.json", context);
+					cos = ApiClient.getCountryListByAs("country.json", context);
+					lans = ApiClient.getLanguageListByAs("language.json", context);
+					kinds = ApiClient.getKindListByAs("kind.json", context);
+					labs = ApiClient.getLabelListByAs("label.json", context);
 					Log.v("Appstart", "initData");
 					
 					if ((wrs.size() > 0) || (pos.size() > 0) || (ins.size() > 0)) {
@@ -130,6 +189,11 @@ public class AppStart extends Activity {
 						list.add(wrs);
 						list.add(pos);
 						list.add(ins);
+						list.add(dys);
+						list.add(cos);
+						list.add(lans);
+						list.add(kinds);
+						list.add(labs);
 						data.putParcelableArrayList("list", list);
 						msg.setData(data);
 					} else {

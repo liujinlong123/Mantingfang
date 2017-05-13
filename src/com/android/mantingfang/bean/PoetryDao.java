@@ -19,21 +19,16 @@ public class PoetryDao {
 		helper = new DbHelper(context);
 	}
 	
+	/**
+	 * 向数据库中插入诗词
+	 * @param poetryList
+	 */
 	public void insertPO(List<Poetry> poetryList) {
 		SQLiteDatabase database = null;
 		try {
 			database = helper.getWritableDatabase();
 			database.beginTransaction();
 			for (int i = 0; i < poetryList.size(); i++) {
-				/*Poetry poetry = poetryList.get(i);
-				ContentValues cv = new ContentValues();
-				cv.put("poetryid", poetry.getPoetryid());
-				cv.put("title", poetry.getTitle());
-				cv.put("kindid", poetry.getKindid());
-				cv.put("typeid", poetry.getTypeid());
-				cv.put("writerid", poetry.getWriterid());
-				cv.put("content", poetry.getContent());
-				cv.put("rhesis", "");*/
 				Poetry poetry = poetryList.get(i);
 				ContentValues cv = new ContentValues();
 				cv.put("poetry_id", poetry.getPoetryId());
@@ -44,7 +39,7 @@ public class PoetryDao {
 				cv.put("poetry_content", poetry.getContent());
 				cv.put("poetry_rhesis", poetry.getRhesis());
 				
-				if (!helper.isExist("Poetry", "poetryid", poetry.getPoetryId(), database)) {
+				if (!helper.isExist("Poetry", "poetry_id", poetry.getPoetryId(), database)) {
 					database.insert("Poetry", null, cv);
 				}
 			}
@@ -59,7 +54,10 @@ public class PoetryDao {
 		}
 	}
 	
-	
+	/**
+	 * 获取所有诗词
+	 * @return
+	 */
 	public List<Poem> getAllPoem() {
 		
 		List<Poem> pList = new ArrayList<Poem>();
@@ -68,21 +66,21 @@ public class PoetryDao {
 			database = helper.getReadableDatabase();
 			database.beginTransaction();
 			Cursor cursor;
-			String sql = "select p.kindid, p.poetryid, w.dynastyid, w.writerid, w.writername,"
-					+ "p.title, p.content from Poetry p join Writer w on p.writerid = w.writerid "
-					+ " order by p.poetryid desc";
+			String sql = "select p.poetry_label_id, p.poetry_id, w.writer_dynasty_id, w.writer_id, w.writer_name,"
+					+ "p.poetry_name, p.poetry_content, p.poetry_rhesis from Poetry p join Writer w on p.poetry_writer_id = w.writer_id "
+					+ " order by p.poetry_id desc";
 			cursor = database.rawQuery(sql, null);
 			if (cursor.moveToFirst()) {
 				for (int i = 0; i < cursor.getCount(); i++) {
 					Poem p = new Poem(
-							cursor.getInt(cursor.getColumnIndexOrThrow("kindid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("poetryid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("dynastyid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("writerid")),
-							cursor.getString(cursor.getColumnIndexOrThrow("writername")),
-							cursor.getString(cursor.getColumnIndexOrThrow("title")),
-							cursor.getString(cursor.getColumnIndexOrThrow("content")),
-							"");
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_label_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("poetry_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_dynasty_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")),
+							cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_content")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_rhesis")));
 					pList.add(p);
 					cursor.moveToNext();
 				}
@@ -99,25 +97,30 @@ public class PoetryDao {
 		return pList;
 	}
 	
+	/**
+	 * 通过诗词id返回对应的诗词
+	 * @param pid
+	 * @return
+	 */
 	public Poem findPoemById(int pid) {
 		
 		Poem p = null;
 		SQLiteDatabase db = null;
 		try {
 			db = helper.getReadableDatabase();
-			String sql = "select p.kindid, p.poetryid, w.dynastyid, w.writerid, w.writername, p.title, p.content from "
-					+ "Poetry p join Writer w on p.writerid = w.writerid where p.poetryid = " + pid;
+			String sql = "select p.poetry_label_id, p.poetry_id, w.writer_dynasty_id, w.writer_id, w.writer_name, p.poetry_name, p.poetry_content, p.poetry_rhesis from "
+					+ "Poetry p join Writer w on p.poetry_writer_id = w.writer_id where p.poetry_id = " + pid;
 			Log.v("sql", sql);
 			Cursor cursor = db.rawQuery(sql, null);
 			if (cursor.moveToFirst()) {
-				p = new Poem(cursor.getInt(cursor.getColumnIndexOrThrow("kindid")),
-						cursor.getInt(cursor.getColumnIndexOrThrow("poetryid")),
-						cursor.getInt(cursor.getColumnIndexOrThrow("dynastyid")),
-						cursor.getInt(cursor.getColumnIndexOrThrow("writerid")),
-						cursor.getString(cursor.getColumnIndexOrThrow("writername")),
-						cursor.getString(cursor.getColumnIndexOrThrow("title")),
-						cursor.getString(cursor.getColumnIndexOrThrow("content")),
-						"");
+				p = new Poem(cursor.getString(cursor.getColumnIndexOrThrow("poetry_label_id")),
+						cursor.getInt(cursor.getColumnIndexOrThrow("poetry_id")),
+						cursor.getInt(cursor.getColumnIndexOrThrow("writer_dynasty_id")),
+						cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")),
+						cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),
+						cursor.getString(cursor.getColumnIndexOrThrow("poetry_name")),
+						cursor.getString(cursor.getColumnIndexOrThrow("poetry_content")),
+						cursor.getString(cursor.getColumnIndexOrThrow("poetry_rhesis")));
 				Log.v("p", p.getWritername());
 				return p;
 			}
@@ -131,24 +134,22 @@ public class PoetryDao {
 		return null;
 	}
 	
-	public List<Info> findInfoById(int fid) {
+	/**
+	 * 通过诗词id来查询information
+	 * @param poetry_id
+	 * @return
+	 */
+	public List<Info> findInfoById(int poetry_id) {
 		
 		List<Info> infos = new ArrayList<Info>();
 		SQLiteDatabase db = null;
 		try {
 			db = helper.getReadableDatabase();
-			String sql = "select * from Info where cateid = 1 and fid = " + fid;
+			String sql = "select * from Info where poetry_id = " + poetry_id;
 			Log.v("sql", sql);
 			Cursor cursor = db.rawQuery(sql, null);
 			if (cursor.moveToFirst()) {
 				for (int i = 0; i < cursor.getCount(); i++) {
-					/*Info info = new Info(
-							cursor.getInt(cursor.getColumnIndexOrThrow("infoid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("cateid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("fid")),
-							cursor.getString(cursor.getColumnIndexOrThrow("title")),
-							cursor.getString(cursor.getColumnIndexOrThrow("adder")),
-							cursor.getString(cursor.getColumnIndexOrThrow("content")));*/
 					Info info = new Info(
 							cursor.getInt(cursor.getColumnIndexOrThrow("info_id")),
 							cursor.getInt(cursor.getColumnIndexOrThrow("info_poetry_id")),
@@ -174,7 +175,7 @@ public class PoetryDao {
 		return null;
 	}
 	
-	public int getSumById(int kindid) {
+	/*public int getSumById(int kindid) {
 		
 		int sum = 0;
 		SQLiteDatabase db = null;
@@ -198,8 +199,13 @@ public class PoetryDao {
 		}
 		
 		return sum;
-	}
+	}*/
 	
+	/**
+	 * 搜索该诗人下的所有作品
+	 * @param writerid
+	 * @return
+	 */
 	public List<Poem> getPoemByWid(int writerid) {
 		
 		List<Poem> pList = new ArrayList<Poem>();
@@ -208,22 +214,22 @@ public class PoetryDao {
 			database = helper.getReadableDatabase();
 			database.beginTransaction();
 			Cursor cursor;
-			String sql = "select p.kindid,p.poetryid,w.dynastyid,w.writerid,w.writername,p.title,p.content from Poetry p "
-					+ " join Writer w on p.writerid = w.writerid where p.writerid = "
-					+ writerid + " order by p.poetryid desc ";
+			String sql = "select p.poetry_label_id,p.poetry_id,w.writer_dynasty_id,w.writer_id,w.writer_name,p.poetry_name,p.poetry_content, poetry_rhesis from Poetry p "
+					+ " join Writer w on p.poetry_writer_id = w.writer_id where p.poetry_writer_id = "
+					+ writerid + " order by p.poetry_id desc ";
 			Log.v("sql", sql);
 			cursor = database.rawQuery(sql, null);
 			if (cursor.moveToFirst()) {
 				for (int i = 0; i < cursor.getCount(); i++) {
 					Poem p = new Poem(
-							cursor.getInt(cursor.getColumnIndexOrThrow("kindid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("poetryid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("dynastyid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("writerid")),
-							cursor.getString(cursor.getColumnIndexOrThrow("writername")),
-							cursor.getString(cursor.getColumnIndexOrThrow("title")),
-							cursor.getString(cursor.getColumnIndexOrThrow("content")),
-							"");
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_label_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("poetry_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_dynasty_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")),
+							cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_content")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_rhesis")));
 					pList.add(p);
 					cursor.moveToNext();
 				}
@@ -242,6 +248,11 @@ public class PoetryDao {
 		return null;
 	}
 	
+	/**
+	 * 通过收藏的id检索诗词信息
+	 * @param myids
+	 * @return
+	 */
 	public List<Poem> getPoemByMy(int[] myids) {
 		
 		String myString = StringUtils.getString4Array(myids);
@@ -251,22 +262,22 @@ public class PoetryDao {
 			database = helper.getReadableDatabase();
 			database.beginTransaction();
 			Cursor cursor;
-			String sql = "select p.kindid, p.poetryid, w.dynastyid, w.writerid, w.writername,"
-					+ "p.title, p.content from Poetry p join Writer w on p.writerid = w.writerid "
-					+ "where p.poetryid in (" + myString + ") order by p.poetryid desc";
+			String sql = "select p.poetry_label_id, p.poetry_id, w.writer_dynasty_id, w.writer_id, w.writer_name,"
+					+ "p.poetry_name, p.poetry_content, poetry_rhesis from Poetry p join Writer w on p.poetry_writer_id = w.writer_id "
+					+ "where p.poetry_id in (" + myString + ") order by p.poetry_id desc";
 			Log.v("sql", sql);
 			cursor = database.rawQuery(sql, null);
 			if (cursor.moveToFirst()) {
 				for (int i = 0; i < cursor.getCount(); i++) {
 					Poem p = new Poem(
-							cursor.getInt(cursor.getColumnIndexOrThrow("kindid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("poetryid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("dynastyid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("writerid")),
-							cursor.getString(cursor.getColumnIndexOrThrow("writername")),
-							cursor.getString(cursor.getColumnIndexOrThrow("title")),
-							cursor.getString(cursor.getColumnIndexOrThrow("content")),
-							"");
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_label_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("poetry_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_dynasty_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")),
+							cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_content")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_rhesis")));
 					pList.add(p);
 					cursor.moveToNext();
 				}
@@ -285,6 +296,11 @@ public class PoetryDao {
 		return null;
 	}
 	
+	/**
+	 * 该类型的所有诗词
+	 * @param tid
+	 * @return
+	 */
 	public List<Poem> getPoemByTid(int tid) {
 		
 		List<Poem> pList = new ArrayList<Poem>();
@@ -293,23 +309,23 @@ public class PoetryDao {
 			database = helper.getReadableDatabase();
 			database.beginTransaction();
 			Cursor cursor;
-			String sql = "select p.kindid,p.poetryid,w.dynastyid,w.writerid,w.writername,p.title,p.content from Poetry p "
-					+ " join Writer w on p.writerid = w.writerid where" +
-					" p.typeid like '"+tid+",%' or p.typeid like '%,"+tid+",%' or p.typeid like '%,"+tid+"' or p.typeid ="+tid
-					+ " order by p.poetryid desc ";
+			String sql = "select p.poetry_label_id, p.poetry_id,w.writer_dynasty_id,w.writer_id,w.writer_name,p.poetry_name,p.poetry_content, poetry_rhesis from Poetry p "
+					+ " join Writer w on p.poetry_writer_id = w.writer_id where" +
+					" p.poetry_label_id like '"+tid+",%' or p.poetry_label_id like '%,"+tid+",%' or p.poetry_label_id like '%,"+tid+"' or p.poetry_label_id ="+tid
+					+ " order by p.poetry_id desc ";
 			Log.v("sql", sql);
 			cursor = database.rawQuery(sql, null);
 			if (cursor.moveToFirst()) {
 				for (int i = 0; i < cursor.getCount(); i++) {
 					Poem p = new Poem(
-							cursor.getInt(cursor.getColumnIndexOrThrow("kindid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("poetryid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("dynastyid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("writerid")),
-							cursor.getString(cursor.getColumnIndexOrThrow("writername")),
-							cursor.getString(cursor.getColumnIndexOrThrow("title")),
-							cursor.getString(cursor.getColumnIndexOrThrow("content")),
-							"");
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_label_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("poetry_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_dynasty_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")),
+							cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_content")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_rhesis")));
 					pList.add(p);
 					cursor.moveToNext();
 				}
@@ -327,6 +343,11 @@ public class PoetryDao {
 		return null;
 	}
 	
+	/**
+	 * 通过搜索检索
+	 * @param sStr
+	 * @return
+	 */
 	public List<Poem> getPoemBySearch(String sStr) {
 		
 		List<Poem> pList = new ArrayList<Poem>();
@@ -335,21 +356,21 @@ public class PoetryDao {
 			database = helper.getReadableDatabase();
 			database.beginTransaction();
 			Cursor cursor;
-			String sql ="select p.kindid,p.poetryid,w.dynastyid,w.writerid,w.writername,p.title,p.content from Poetry p "
-					+ " join Writer w on p.writerid = w.writerid where " +
-					"p.title like '%"+ sStr +"%' or w.writername like '%"+ sStr +"%' or p.content like '%"+ sStr +"%'";
+			String sql ="select p.poetry_label_id,p.poetry_id,w.writer_dynasty_id,w.writer_id,w.writer_name,p.poetry_name,p.poetry_content,poetry_rhesis from Poetry p "
+					+ " join Writer w on p.poetry_writer_id = w.writer_id where " +
+					"p.poetry_name like '%"+ sStr +"%' or w.writer_name like '%"+ sStr +"%' or p.poetry_content like '%"+ sStr +"%'";
 			cursor = database.rawQuery(sql, null);
 			if (cursor.moveToFirst()) {
 				for (int i = 0; i < cursor.getCount(); i++) {
 					Poem p = new Poem(
-							cursor.getInt(cursor.getColumnIndexOrThrow("kindid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("poetryid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("dynastyid")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("writerid")),
-							cursor.getString(cursor.getColumnIndexOrThrow("writername")),
-							cursor.getString(cursor.getColumnIndexOrThrow("title")),
-							cursor.getString(cursor.getColumnIndexOrThrow("content")),
-							"");
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_label_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("poetry_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_dynasty_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")),
+							cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_content")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_rhesis")));
 					pList.add(p);
 					cursor.moveToNext();
 				}
@@ -365,6 +386,46 @@ public class PoetryDao {
 				database.close();
 			}
 		}
+		return null;
+	}
+	
+	public List<Poem> getPoemByLanId(int poetry_language_id) {
+		
+		List<Poem> poemList = new ArrayList<Poem>();
+		SQLiteDatabase database = null;
+		try {
+			database = helper.getReadableDatabase();
+			database.beginTransaction();
+			String sql = "select p.poetry_label_id,p.poetry_id,w.writer_dynasty_id,w.writer_id,w.writer_name,p.poetry_name,p.poetry_content, poetry_rhesis from Poetry p "
+					+ " join Writer w on p.poetry_writer_id = w.writer_id where p.poetry_language_id = "
+					+ poetry_language_id + " order by p.poetry_id desc ";
+			Cursor cursor = database.rawQuery(sql, null);
+			if (cursor.moveToFirst()) {
+				for (int i = 0; i < cursor.getCount(); i++) {
+					Poem p = new Poem(
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_label_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("poetry_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_dynasty_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")),
+							cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_content")),
+							cursor.getString(cursor.getColumnIndexOrThrow("poetry_rhesis")));
+					poemList.add(p);
+					cursor.moveToNext();
+				}
+				return poemList;
+			}
+			database.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (database != null) {
+				database.endTransaction();
+				database.close();
+			}
+		}
+		
 		return null;
 	}
 	

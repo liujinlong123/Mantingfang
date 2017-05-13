@@ -4,14 +4,14 @@ package com.android.mantingfang.bean;
 public class Poetry extends Base {
 
 	private int poetry_id;
-	private int poetry_label_id;
+	private String poetry_label_id;
 	private int poetry_writer_id;
 	private int poetry_language_id;
 	private String poetry_name;
 	private String poetry_content;
 	private String poetry_rhesis;
 	
-	public Poetry(int poetry_id, int poetry_label_id, int poetry_writer_id, int poetry_language_id, 
+	public Poetry(int poetry_id, String poetry_label_id, int poetry_writer_id, int poetry_language_id, 
 			String poetry_name, String poetry_content, String poetry_rhesis) {
 		this.poetry_id = poetry_id;
 		this.poetry_label_id = poetry_label_id;
@@ -30,11 +30,11 @@ public class Poetry extends Base {
 		this.poetry_id = poetry_id;
 	}
 	
-	public int getLabelId() {
+	public String getLabelId() {
 		return poetry_label_id;
 	}
 	
-	public void setLabelId(int poetry_label_id) {
+	public void setLabelId(String poetry_label_id) {
 		this.poetry_label_id = poetry_label_id;
 	}
 	
