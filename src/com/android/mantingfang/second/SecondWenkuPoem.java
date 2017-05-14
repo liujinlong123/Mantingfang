@@ -6,6 +6,8 @@ import java.util.List;
 import com.android.mantingfang.bean.PoetryDao;
 import com.android.mantingfang.model.Poem;
 import com.android.mantingfanggsc.R;
+import com.android.mantingfanggsc.UIHelper;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -100,7 +102,7 @@ public class SecondWenkuPoem extends Activity {
 			
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Toast.makeText(SecondWenkuPoem.this, "fuck you", Toast.LENGTH_SHORT).show();
+				UIHelper.showPoemDetail(view.getContext(), list.get(position).getPoetryid(), 0);
 			}
 		});
 	}

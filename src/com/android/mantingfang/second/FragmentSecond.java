@@ -7,10 +7,12 @@ import com.android.mantingfang.bean.PoetryDao;
 import com.android.mantingfang.bean.URLs;
 import com.android.mantingfang.model.Poem;
 import com.android.mantingfanggsc.R;
+import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,20 +93,22 @@ public class FragmentSecond extends Fragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Toast.makeText(getActivity(), "fuck you", Toast.LENGTH_SHORT).show();
+				UIHelper.showWriterDetail(getActivity(), 1);
 			}
 		});
 	}
 	
 	private List<Poem> getWriterData() {
 		writerList = new ArrayList<Poem>();
-		/*poetryDao = new PoetryDao(getActivity());
+		//poetryDao = new PoetryDao(getActivity());
 		//writerList = poetryDao.getPoemByWid(writerid);
-		writerList = poetryDao.getPoemByWid(1);
-		Log.v("writerList", writerList.size() + "");*/
+		//writerList = poetryDao.getPoemByWid(1);
 		for (int i = 0; i < 10; i++) {
-			
+			Poem p = new Poem("1", 1, 1, 1, "Àî°×", "¾²Ò¹Ë¼", "Ê«´ÊÄÚÈÝ", "Ê«´ÊÃû¾ä");
+			writerList.add(p);
 		}
+		Log.v("writerList", writerList.size() + "");
+		
 		return writerList;
 	}
 	

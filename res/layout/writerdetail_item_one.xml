@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+    
+    <TextView
+        android:id="@+id/writerdetail_one_tv_writername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="白居易--唐代" 
+        android:textSize="20dp" />
+    
+    <TextView
+        android:id="@+id/writerdetail_one_tv_themename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="简介" 
+        android:textColor="@color/red"
+        android:layout_marginTop="10dp" />
+    
+    <TextView
+        android:id="@+id/writerdetail_one_tv_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="这是白居易的简介"
+        android:layout_marginTop="10dp" />
+    
+    <TextView
+        android:id="@+id/writerdetail_one_works"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="作品/118"
+        android:textColor="@color/red"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>

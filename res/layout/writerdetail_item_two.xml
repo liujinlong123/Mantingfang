@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+        <TextView
+            android:id="@+id/writerdetail_item_two_poemname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="庐山草堂记" />
+        
+        <TextView
+            android:id="@+id/writerdetail_item_two_kind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[文]"
+            android:layout_marginLeft="5dp" />
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/writerdetail_item_two_rhesis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="匡庐奇秀，甲天下山"
+        android:maxLines="1"
+        android:textColor="@color/gray"/>
+    
+</LinearLayout>

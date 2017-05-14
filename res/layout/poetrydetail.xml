@@ -3,6 +3,121 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <RadioGroup
+            android:id="@+id/poetrydetail_rgp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <RadioButton
+                android:id="@+id/poetrydetail_rbtn_beijing"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="背景" />
+
+            <RadioButton
+                android:id="@+id/poetrydetail_rbtn_zhushi"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="注释" />
+
+            <RadioButton
+                android:id="@+id/poetrydetail_rbtn_yiwen"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="译文" />
+
+            <RadioButton
+                android:id="@+id/poetrydetail_rbtn_fanyi"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="翻译" />
+
+            <RadioButton
+                android:id="@+id/poetrydetail_rbtn_shangxi"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="赏析" />
+
+            <RadioButton
+                android:id="@+id/poetrydetail_rbtn_shoucang"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="收藏" />
+
+            <RadioButton
+                android:id="@+id/poetrydetail_rbtn_pinglun"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="评论" />
+        </RadioGroup>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp" >
+                
+                <TextView
+                    android:id="@+id/poetrydetail_tv_poemname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="静夜思"
+                    android:textSize="20sp"
+                    android:gravity="center" />
+                
+                <TextView
+                    android:id="@+id/poetrydetail_tv_writername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="[唐]李白"
+                    android:gravity="right" />
+                
+                <TextView
+                    android:id="@+id/poetrydetail_tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="床前明月光，疑是地上霜。\n举头望明月，低头思故乡。"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp" />
+                
+                <TextView
+                    android:id="@+id/poetrydetail_tv_kind"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="背景"
+                    android:textColor="@color/red"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="5dp" />
+                
+                <TextView
+                    android:id="@+id/poetrydetail_tv_kind_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="  detailhhhhhhh\nhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+                    android:padding="5dp" />
+                
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
 </LinearLayout>

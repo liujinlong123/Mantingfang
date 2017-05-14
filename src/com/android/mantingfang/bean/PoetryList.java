@@ -31,8 +31,8 @@ public class PoetryList extends Base {
 				Poetry p = new Poetry(Integer.parseInt(jo.getString("poetry_id")),
 						jo.getString("poetry_label_id"),
 						Integer.parseInt(jo.getString("poetry_writer_id")),
-						//Integer.parseInt(jo.getString("poetry_language_id")),
-						1,
+						Integer.parseInt(jo.getString("poetry_language_id")),
+						
 						jo.getString("poetry_name"),
 						jo.getString("poetry_content"),
 						jo.getString("poetry_rhesis"));

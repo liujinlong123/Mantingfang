@@ -3,7 +3,7 @@
     "poetry_id": "1",
     "poetry_label_id": "1, 2",
     "poetry_writer_id": "1",
-    "poetry_languge_id": "1",
+    "poetry_language_id": "1",
     "poetry_name": "静夜思1",
     "poetry_content": "床前明月光，疑是地上霜。<br/>举头望明月，低头思故乡。<br/>",
     "poetry_rhesis": "举头望明月，低头思故乡。"
@@ -12,7 +12,7 @@
     "poetry_id": "2",
     "poetry_label_id": "1",
     "poetry_writer_id": "1",
-    "poetry_languge_id": "1",
+    "poetry_language_id": "1",
     "poetry_name": "静夜思2",
     "poetry_content": "床前明月光，疑是地上霜。<br/>举头望明月，低头思故乡。<br/>",
     "poetry_rhesis": "举头望明月，低头思故乡。"
@@ -21,7 +21,7 @@
      "poetry_id": "3",
     "poetry_label_id": "1",
     "poetry_writer_id": "1",
-    "poetry_languge_id": "1",
+    "poetry_language_id": "1",
     "poetry_name": "静夜思3",
     "poetry_content": "床前明月光，疑是地上霜。<br/>举头望明月，低头思故乡。<br/>",
     "poetry_rhesis": "举头望明月，低头思故乡。"

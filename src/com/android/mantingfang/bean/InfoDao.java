@@ -4,7 +4,9 @@ import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class InfoDao {
 
@@ -41,5 +43,42 @@ public class InfoDao {
 				database.close();
 			}
 		}
+	}
+	
+	/**
+	 * 通过诗词id 返回对应信息
+	 * @param info_poetry_id
+	 * @return
+	 */
+	public Info getInfoByPId(int info_poetry_id) {
+		Info info = null;
+		SQLiteDatabase database = null;
+		try {
+			database = helper.getReadableDatabase();
+			String sql = "select * from Info where info_poetry_id = " + info_poetry_id;
+			Log.v("sql", sql);
+			Cursor cursor = database.rawQuery(sql, null);
+			if (cursor.moveToFirst()) {
+				info = new Info(
+						cursor.getInt(cursor.getColumnIndexOrThrow("info_id")),
+						cursor.getInt(cursor.getColumnIndexOrThrow("info_poetry_id")),
+						cursor.getString(cursor.getColumnIndexOrThrow("info_background")),
+						cursor.getString(cursor.getColumnIndexOrThrow("info_praise")),
+						cursor.getString(cursor.getColumnIndexOrThrow("info_note")),
+						cursor.getString(cursor.getColumnIndexOrThrow("info_tonow")),
+						cursor.getString(cursor.getColumnIndexOrThrow("info_translation")));
+				Log.v("info", info.getInfoId() + "");
+				Log.v("info", info.getBackground() + "");
+				return info;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (database != null) {
+				database.close();
+			}
+		}
+		
+		return null;
 	}
 }
