@@ -48,7 +48,7 @@ public class SecondWenkuPoem extends Activity {
 	private String kindName;
 	private String singleName;
 	private int imageId;
-	private int typeId;
+	private int label_id;
 	
 	//与数据库的接口-->从数据库查询获取内容
 	private PoetryDao poetryDao;
@@ -84,10 +84,8 @@ public class SecondWenkuPoem extends Activity {
 		Bundle bundle = intent.getExtras();
 		kindName = bundle.getString("kindName");
 		singleName = bundle.getString("singleName");
+		label_id = bundle.getInt("label_id");
 		imageId = bundle.getInt("imgId");
-		typeId = new Integer(bundle.getString("typeId")); 
-		
-		Log.v("Test", kindName + " " + singleName + "  " + imageId + " " + typeId);
 		
 		theme.setText(kindName);
 		imgTheme.setImageResource(imageId);
@@ -110,12 +108,8 @@ public class SecondWenkuPoem extends Activity {
 	private List<Poem> getData() {
 		list = new ArrayList<Poem>();
 		
-		//list = poetryDao.getPoemByTid(typeId);
+		//list = poetryDao.getPoemByTid(label_id);
 		list = poetryDao.getPoemByTid(1);
-		/*for (int i = 0; i < 20; i++) {
-			Poem poem = new Poem(i, i, i, i, "xx", "xx", "xx");
-			list.add(poem);
-		}*/
 		return list;
 	}
 }

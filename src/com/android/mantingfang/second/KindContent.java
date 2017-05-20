@@ -1,21 +1,24 @@
 package com.android.mantingfang.second;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class KindContent {
 
 	private String kindName;
 	
-	private String[] singleName;
+	private List<SingleNames> singleName;
 	
 	private int[] images;
 	
 	public KindContent() {};
 	
-	public KindContent(String kindName, String[] singleName) {
+	public KindContent(String kindName, ArrayList<SingleNames> singleName) {
 		this.kindName = kindName;
 		this.singleName = singleName;
 	}
 	
-	public KindContent(String kindName, String[] singleName, int[] images) {
+	public KindContent(String kindName, ArrayList<SingleNames> singleName, int[] images) {
 		this.kindName = kindName;
 		this.singleName = singleName;
 		this.images = images;
@@ -29,13 +32,12 @@ public class KindContent {
 		return kindName;
 	}
 	
-	public void setSingleName(String[] singleName) {
-		this.singleName = new String[singleName.length];
-		System.arraycopy(singleName, 0, this.singleName, 0, singleName.length);
+	public void setSingleName(ArrayList<SingleNames> singleName) {
+		this.singleName = singleName;
 	}
 	
-	public String[] getSingleName() {
-		return singleName;
+	public ArrayList<SingleNames> getSingleName() {
+		return (ArrayList<SingleNames>) singleName;
 	}
 	
 	public void setImages(int[] images) {
@@ -46,4 +48,5 @@ public class KindContent {
 	public int[] getImages() {
 		return images;
 	}
+	
 }

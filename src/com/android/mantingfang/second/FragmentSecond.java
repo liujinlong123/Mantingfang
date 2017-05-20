@@ -3,8 +3,8 @@ package com.android.mantingfang.second;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.android.mantingfang.bean.KindDao;
 import com.android.mantingfang.bean.PoetryDao;
-import com.android.mantingfang.bean.URLs;
 import com.android.mantingfang.model.Poem;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
@@ -83,11 +83,10 @@ public class FragmentSecond extends Fragment {
 	
 	private List<KindContent> getWenkuData() {
 		wenkuList = new ArrayList<KindContent>();
-		for (int i = 0; i < URLs.typeKind.length; i++) {
-			//for (int j = 0; j < URLs.TYPES[i].length; j++) {
-				KindContent content = new KindContent(URLs.typeKind[i], URLs.TYPES[i], images);
-				wenkuList.add(content);
-			//}
+		
+		KindDao kindDao = new KindDao(getActivity());
+		if (kindDao.findAllLabelByKind() != null) {
+			wenkuList = kindDao.findAllLabelByKind();
 		}
 		
 		return wenkuList;

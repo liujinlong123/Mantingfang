@@ -17,21 +17,6 @@ public class DbHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		
-		/*String WRsql = "create table writer (writerid interger, writername text, "
-				+ "summary text, dynastyid integer)";
-		db.execSQL(WRsql);
-		
-		String POsql = "create table poetry (poetryid integer, typeid text, kindid integer,"
-				+ "writerid integer, title text, content text, rhesis text)";
-		db.execSQL(POsql);
-		
-		String INsql = "create table info (infoid integer, cateid integer, fid integer,"
-				+ " adder text, title text, content text)";
-		db.execSQL(INsql);
-		
-		String MYsql = "create table my(myid integer)";
-		db.execSQL(MYsql);*/
-		
 		//poetry
 		String POsql = "create table Poetry (poetry_id integer, poetry_label_id integer, "
 				+ "poetry_writer_id integer, poetry_language_id integer, poetry_name text,"

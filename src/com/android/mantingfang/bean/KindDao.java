@@ -1,9 +1,11 @@
 package com.android.mantingfang.bean;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.android.mantingfang.second.KindContent;
+import com.android.mantingfang.second.SingleNames;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -56,20 +58,28 @@ public class KindDao {
 				for (int i = 0; i < cursor.getCount(); i++) {
 					int kind_id = cursor.getInt(cursor.getColumnIndexOrThrow("kind_id"));
 					String kind_name = cursor.getString(cursor.getColumnIndexOrThrow("kind_name"));
-					String sqltwo = "select l. label_name from Label l join Kind k on k.kind_id = l.label_kind_id where "
-							+ "l.label_kind_id = " + kind_id;
+					String sqltwo = "select label_id, label_name from Label where "
+							+ "label_kind_id = " + kind_id;
 					Cursor cr = database.rawQuery(sqltwo, null);
 					Log.v("sql", sqltwo);
-					String[] singleName = new String[cursor.getCount()];
-					if (cr.moveToFirst()) {
-						for (int j = 0; j < cursor.getCount(); j++) {
-							singleName[j] = cursor.getString(cursor.getColumnIndexOrThrow("label_name"));
+					List<SingleNames> label = null;
+					if (cr.getCount() != 0) {
+						if (cr.moveToFirst()) {
+							label = new ArrayList<>();
+							for (int j = 0; j < cr.getCount(); j++) {
+								SingleNames singleNamePair = new SingleNames(cr.getString(cr.getColumnIndexOrThrow("label_name")),
+										cr.getInt(cr.getColumnIndexOrThrow("label_id")));
+								label.add(singleNamePair);
+								cr.moveToNext();
+							}
 						}
-						cr.moveToNext();
 					}
-					KindContent kindc = new KindContent(kind_name, singleName);
-					kinds.add(kindc);
-					cursor.moveToNext();
+					if (label != null) {
+						Log.v("label--length", label.size() + " ");
+						KindContent kindc = new KindContent(kind_name, (ArrayList<SingleNames>) label);
+						kinds.add(kindc);
+						cursor.moveToNext();
+					}
 				}
 				return kinds;
 			}

@@ -84,12 +84,14 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 	private void initGridView(KindContent content, ViewHolder holder, final int listPosition) {
 		holder.tvKind.setText(content.getKindName());
 		holder.grdKind.setNumColumns(4);
-		adapter = new SimpleAdapter(mContext, getData(content), R.layout.item_gridview_wenku, new String[]{"image", "text"}, new int[]{R.id.secondgrd_img_kind, R.id.secondgrd_tv_kindname});
-		holder.grdKind.setAdapter(adapter);
+		if (content.getSingleName() != null) {
+			adapter = new SimpleAdapter(mContext, getData(content), R.layout.item_gridview_wenku, new String[]{"image", "text"}, new int[]{R.id.secondgrd_img_kind, R.id.secondgrd_tv_kindname});
+			holder.grdKind.setAdapter(adapter);
+		}
 		
 		final String kindName = content.getKindName();
-		final String[] singleName = content.getSingleName();
-		final int[] images = content.getImages();
+		final List<SingleNames> label = content.getSingleName();
+		//final int[] images = content.getImages();
 		
 		holder.grdKind.setOnItemClickListener(new OnItemClickListener() {
 
@@ -98,9 +100,10 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 				Intent intent = new Intent(view.getContext(), SecondWenkuPoem.class);
 				Bundle bundle = new Bundle();
 				bundle.putString("kindName", kindName);
-				bundle.putString("singleName", singleName[position]);
-				bundle.putInt("imgId", images[position]);
-				bundle.putString("typeId", (listPosition + 1) + "" + position);
+				bundle.putString("singlename", label.get(position).getLableName());
+				bundle.putInt("label_id", label.get(position).getLabelId());
+				bundle.putInt("imgId", R.drawable.ic_launcher);
+				//bundle.putString("typeId", (listPosition + 1) + "" + position);
 				intent.putExtras(bundle);
 				mContext.startActivity(intent);
 			}
@@ -109,12 +112,12 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 	
 	private List<Map<String, Object>> getData(KindContent content) {
 		//int[] images = content.getImages();
-		String[] text = content.getSingleName();
+		List<SingleNames> text = content.getSingleName();
 		dataList = new ArrayList<Map<String, Object>>();
-		for (int i = 0; i < text.length; i++) {
+		for (int i = 0; i < text.size(); i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("image", R.drawable.ic_launcher);
-			map.put("text", text[i]);
+			map.put("text", text.get(i).getLableName());
 			dataList.add(map);
 		}
 		
