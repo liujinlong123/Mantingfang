@@ -15,13 +15,14 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.Toast;
 
 public class FragmentSecond extends Fragment {
 
@@ -43,6 +44,8 @@ public class FragmentSecond extends Fragment {
 	private List<Poem> writerList;
 	private PoetryDao poetryDao;
 	
+	//跳转搜索
+	private ImageView imgSearch;
 	
 	//主界面
 	private RadioGroup radgp;
@@ -53,15 +56,21 @@ public class FragmentSecond extends Fragment {
 		if (view == null) {
 			view = inflater.inflate(R.layout.frag_second_pager, null);
 			
+			initViews();
 			initWriter();
 			initWenku();
 			
 			initMain();
+			initSearch();
 			
 			return view;
 		}
 		
 		return view;
+	}
+	
+	private void initViews() {
+		imgSearch = (ImageView)view.findViewById(R.id.topbar_second_search);
 	}
 	
 	
@@ -131,6 +140,17 @@ public class FragmentSecond extends Fragment {
 					wenkuListView.setVisibility(View.GONE);
 					break;
 				}
+			}
+		});
+	}
+	
+	//初始化search
+	private void initSearch() {
+		imgSearch.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				UIHelper.showSearch(getActivity());
 			}
 		});
 	}

@@ -72,7 +72,7 @@ public class WriterDao {
 				for (int i = 0; i < cursor.getCount(); i++) {
 					Writer w = new Writer(
 							cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("writer_label_id")),
+							cursor.getString(cursor.getColumnIndexOrThrow("writer_label_id")),
 							cursor.getInt(cursor.getColumnIndexOrThrow("writer_dynasty_id")),
 							cursor.getInt(cursor.getColumnIndexOrThrow("writer_country_id")),
 							cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),
@@ -142,7 +142,7 @@ public class WriterDao {
 			if (cursor.moveToFirst()) {
 				Writer w = new Writer(
 						cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")),
-						cursor.getInt(cursor.getColumnIndexOrThrow("writer_label_id")),
+						cursor.getString(cursor.getColumnIndexOrThrow("writer_label_id")),
 						cursor.getInt(cursor.getColumnIndexOrThrow("writer_dynasty_id")),
 						cursor.getInt(cursor.getColumnIndexOrThrow("writer_country_id")),
 						cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),
@@ -181,7 +181,7 @@ public class WriterDao {
 				for (int i = 0; i < cursor.getCount(); i++) {
 					Writer w = new Writer(
 							cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("writer_label_id")),
+							cursor.getString(cursor.getColumnIndexOrThrow("writer_label_id")),
 							cursor.getInt(cursor.getColumnIndexOrThrow("writer_dynasty_id")),
 							cursor.getInt(cursor.getColumnIndexOrThrow("writer_country_id")),
 							cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),
@@ -220,7 +220,7 @@ public class WriterDao {
 				for (int i = 0; i < cursor.getCount(); i++) {
 					Writer w = new Writer(
 							cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")),
-							cursor.getInt(cursor.getColumnIndexOrThrow("writer_label_id")),
+							cursor.getString(cursor.getColumnIndexOrThrow("writer_label_id")),
 							cursor.getInt(cursor.getColumnIndexOrThrow("writer_dynasty_id")),
 							cursor.getInt(cursor.getColumnIndexOrThrow("writer_country_id")),
 							cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),

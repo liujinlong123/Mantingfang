@@ -1,6 +1,50 @@
 [
   {
     "kind_id": "1",
-    "kind_name": "诗人思乡"
+    "kind_name": "爱的表达"
+  },
+  {
+    "kind_id": "2",
+    "kind_name": "百千人物"
+  },
+  {
+    "kind_id": "3",
+    "kind_name": "风景名胜"
+  },
+  {
+    "kind_id": "4",
+    "kind_name": "节日节气"
+  },
+  {
+    "kind_id": "5",
+    "kind_name": "境遇命运"
+  },
+  {
+    "kind_id": "6",
+    "kind_name": "亲情"
+  },
+  {
+    "kind_id": "7",
+    "kind_name": "人际交往"
+  },
+  {
+    "kind_id": "8",
+    "kind_name": "日月山川"
+  },
+  {
+    "kind_id": "9",
+    "kind_name": "四季心情"
+  },
+  {
+    "kind_id": "10",
+    "kind_name": "性情百态"
+  },
+  {
+    "kind_id": "11",
+    "kind_name": "仪式活动"
+  },
+  {
+    "kind_id": "12",
+    "kind_name": "针砭时弊"
   }
 ]

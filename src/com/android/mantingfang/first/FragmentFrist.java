@@ -12,9 +12,11 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.Toast;
 
 public class FragmentFrist extends Fragment {
 	private View view;
@@ -61,6 +63,13 @@ public class FragmentFrist extends Fragment {
 				imageview.setScaleType(ScaleType.CENTER_CROP);		//≤ª»√Õº∆¨±‰–Œ
 				container.addView(imageview);
 				mImages.add(imageview);
+				imageview.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Toast.makeText(getActivity(), "fuck you", Toast.LENGTH_SHORT).show();
+					}
+				});
 				
 				return imageview;
 			}

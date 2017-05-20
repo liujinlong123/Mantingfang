@@ -10,9 +10,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,9 @@ public class WriterDetail extends Activity {
 	private ListView listview;
 	private List<Poem> plist;
 	private WriterDetailListAdapter adapter;
+	
+	//topbar
+	private LinearLayout linearback;
 	private TextView tv_back;
 	private TextView tv_theme;
 	private ImageView img_collect;
@@ -39,6 +44,7 @@ public class WriterDetail extends Activity {
 	}
 	
 	private void initViews() {
+		linearback = (LinearLayout)findViewById(R.id.topbar_all_back);
 		tv_back = (TextView)findViewById(R.id.topbar_tv_back);
 		tv_theme = (TextView)findViewById(R.id.topbar_tv_theme);
 		img_collect = (ImageView)findViewById(R.id.topbar_all_collect);
@@ -50,6 +56,14 @@ public class WriterDetail extends Activity {
 		img_collect.setVisibility(View.VISIBLE);
 		img_comment.setVisibility(View.VISIBLE);
 		img_more.setVisibility(View.VISIBLE);
+		
+		linearback.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 	
 	private void initListView() {
@@ -63,7 +77,7 @@ public class WriterDetail extends Activity {
 				if (position == 0) {
 					
 				} else {
-					Toast.makeText(WriterDetail.this, "fuck you", Toast.LENGTH_SHORT).show();
+					UIHelper.showPoemDetail(WriterDetail.this, 1, 0);
 				}
 			}
 		});

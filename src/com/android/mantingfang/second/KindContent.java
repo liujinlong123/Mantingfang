@@ -10,6 +10,11 @@ public class KindContent {
 	
 	public KindContent() {};
 	
+	public KindContent(String kindName, String[] singleName) {
+		this.kindName = kindName;
+		this.singleName = singleName;
+	}
+	
 	public KindContent(String kindName, String[] singleName, int[] images) {
 		this.kindName = kindName;
 		this.singleName = singleName;

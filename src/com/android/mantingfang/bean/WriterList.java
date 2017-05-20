@@ -31,7 +31,7 @@ public class WriterList extends Base {
 				JSONObject jo = obj.getJSONObject(i);
 				Writer writer = new Writer(
 						Integer.parseInt(jo.getString("writer_id")),
-						Integer.parseInt(jo.getString("writer_label_id")),
+						jo.getString("writer_label_id"),
 						Integer.parseInt(jo.getString("writer_dynasty_id")),
 						Integer.parseInt(jo.getString("writer_country_id")),
 						jo.getString("writer_name"),

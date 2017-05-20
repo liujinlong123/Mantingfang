@@ -4,13 +4,13 @@ package com.android.mantingfang.bean;
 public class Writer extends Base {
 
 	private int writer_id;
-	private int writer_label_id;
+	private String writer_label_id;
 	private int writer_dynasty_id;
 	private int writer_country_id;
 	private String writer_name;
 	private String writer_career;
 	
-	public Writer(int writer_id, int writer_label_id, int writer_dynasty_id, int writer_country_id,
+	public Writer(int writer_id, String writer_label_id, int writer_dynasty_id, int writer_country_id,
 			String writer_name, String writer_career) {
 		this.writer_id = writer_id;
 		this.writer_label_id = writer_label_id;
@@ -28,11 +28,11 @@ public class Writer extends Base {
 		this.writer_id = writer_id;
 	}
 	
-	public int getLabelId() {
+	public String getLabelId() {
 		return writer_label_id;
 	}
 	
-	public void setLabelId(int writer_label_id) {
+	public void setLabelId(String writer_label_id) {
 		this.writer_label_id = writer_label_id;
 	}
 	

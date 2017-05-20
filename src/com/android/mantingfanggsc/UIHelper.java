@@ -54,6 +54,8 @@ public class UIHelper {
 	 * @param context
 	 */
 	public static void showSearch(Context context) {
-		
+		Intent intent = new Intent(context, Search.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
 	}
 }

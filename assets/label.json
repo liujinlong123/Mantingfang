@@ -2,7 +2,325 @@
   {
     "label_id": "1",
     "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "0",
+    "label_name": "文"
+  },
+  {
+    "label_id": "2",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "0",
+    "label_name": "诗"
+  },
+  {
+    "label_id": "3",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "0",
+    "label_name": "词"
+  },
+  {
+    "label_id": "4",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "0",
+    "label_name": "曲"
+  },
+  {
+    "label_id": "5",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "0",
+    "label_name": "乐府"
+  },
+  {
+    "label_id": "6",
+    "label_poetry_id": "1, 2, 3",
     "label_kind_id": "1",
-    "label_name": "思乡"
+    "label_name": "爱慕"
+  },
+  {
+    "label_id": "7",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "1",
+    "label_name": "分手"
+  },
+  {
+    "label_id": "8",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "1",
+    "label_name": "婚姻"
+  },
+  {
+    "label_id": "9",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "1",
+    "label_name": "求婚"
+  },
+  {
+    "label_id": "10",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "1",
+    "label_name": "热恋"
+  },
+  {
+    "label_id": "12",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "1",
+    "label_name": "失恋"
+  },
+  {
+    "label_id": "13",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "1",
+    "label_name": "相思"
+  },
+  {
+    "label_id": "14",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "儿童"
+  },
+  {
+    "label_id": "15",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "发肤"
+  },
+  {
+    "label_id": "16",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "妇女"
+  },
+  {
+    "label_id": "17",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "乐舞"
+  },
+  {
+    "label_id": "18",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "老人"
+  },
+  {
+    "label_id": "19",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "老师"
+  },
+  {
+    "label_id": "20",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "眉眼"
+  },
+  {
+    "label_id": "21",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "美人"
+  },
+  {
+    "label_id": "22",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "农民"
+  },
+  {
+    "label_id": "23",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "男子"
+  },
+  {
+    "label_id": "24",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "气质"
+  },
+  {
+    "label_id": "25",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "声音"
+  },
+  {
+    "label_id": "26",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "游子"
+  },
+  {
+    "label_id": "27",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "衣饰"
+  },
+  {
+    "label_id": "28",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "2",
+    "label_name": "战士"
+  },
+  {
+    "label_id": "29",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "3",
+    "label_name": "嵩山"
+  },
+  {
+    "label_id": "30",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "3",
+    "label_name": "滕王阁"
+  },
+  {
+    "label_id": "31",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "3",
+    "label_name": "草原"
+  },
+  {
+    "label_id": "32",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "3",
+    "label_name": "长江"
+  },
+  {
+    "label_id": "33",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "3",
+    "label_name": "大漠"
+  },
+  {
+    "label_id": "34",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "3",
+    "label_name": "洞庭湖"
+  },
+  {
+    "label_id": "35",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "3",
+    "label_name": "峨眉山"
+  },
+  {
+    "label_id": "36",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "3",
+    "label_name": "华山"
+  },
+  {
+    "label_id": "37",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "3",
+    "label_name": "恒山"
+  },
+  {
+    "label_id": "38",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "3",
+    "label_name": "衡山"
+  },
+  {
+    "label_id": "39",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "3",
+    "label_name": "黄山"
+  },
+  {
+    "label_id": "40",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "4",
+    "label_name": "春节"
+  },
+  {
+    "label_id": "41",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "4",
+    "label_name": "端午"
+  },
+  {
+    "label_id": "42",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "4",
+    "label_name": "儿童节"
+  },
+  {
+    "label_id": "43",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "4",
+    "label_name": "父亲节"
+  },
+  {
+    "label_id": "44",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "4",
+    "label_name": "国庆"
+  },
+  {
+    "label_id": "45",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "4",
+    "label_name": "寒食"
+  },
+  {
+    "label_id": "47",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "4",
+    "label_name": "七夕"
+  },
+  {
+    "label_id": "48",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "4",
+    "label_name": "中秋"
+  },
+  {
+    "label_id": "49",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "5",
+    "label_name": "羁旅"
+  },
+  {
+    "label_id": "50",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "5",
+    "label_name": "回忆"
+  },
+  {
+    "label_id": "51",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "5",
+    "label_name": "品格"
+  },
+  {
+    "label_id": "52",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "5",
+    "label_name": "仕途"
+  },
+  {
+    "label_id": "53",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "5",
+    "label_name": "抒怀"
+  },
+  {
+    "label_id": "54",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "5",
+    "label_name": "徐梦"
+  },
+  {
+    "label_id": "55",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "5",
+    "label_name": "咏史"
+  },
+  {
+    "label_id": "56",
+    "label_poetry_id": "1, 2, 3",
+    "label_kind_id": "5",
+    "label_name": "隐逸"
   }
 ]
