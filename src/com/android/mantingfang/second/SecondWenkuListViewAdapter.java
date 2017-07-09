@@ -11,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,6 +102,8 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 				Bundle bundle = new Bundle();
 				bundle.putString("kindName", kindName);
 				bundle.putString("singlename", label.get(position).getLableName());
+				Log.v("singlename: ", label.get(position).getLableName());
+				
 				bundle.putInt("label_id", label.get(position).getLabelId());
 				bundle.putInt("imgId", R.drawable.ic_launcher);
 				//bundle.putString("typeId", (listPosition + 1) + "" + position);

@@ -2,21 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white" >
-    
-    <include layout="@layout/topbar_second"/>
-    
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/topbar_second" />
+
     <ListView
         android:id="@+id/frag_second_wenku_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none" />
-    
-    <ListView
+
+    <!--
+         <ListView
         android:id="@+id/frag_second_writer_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none" />
+        android:layout_height="wrap_content" />
+    -->
+
+    <FrameLayout
+        android:id="@+id/frame_list_writer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ListView
+            android:id="@+id/frag_second_writer_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:divider="@null" />
+
+        <TextView
+            android:id="@+id/dialog"
+            android:layout_width="80.0dip"
+            android:layout_height="80.0dip"
+            android:layout_gravity="center"
+            android:background="@drawable/show_head_toast_bg"
+            android:gravity="center"
+            android:textColor="#ffffffff"
+            android:textSize="30.0dip"
+            android:visibility="invisible" />
+
+        <com.android.mantingfang.second.SideBar
+            android:id="@+id/sidrbar"
+            android:layout_width="30.0dip"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right|center" />
+    </FrameLayout>
 
 </LinearLayout>

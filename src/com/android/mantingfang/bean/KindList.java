@@ -30,7 +30,7 @@ public class KindList extends Base {
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
 				Kind kind = new Kind(
-						Integer.parseInt(jo.getString("kind_id")),
+						jo.getInt("kind_id"),
 						jo.getString("kind_name"));
 				kinds.kindList.add(kind);
 			}

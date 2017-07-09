@@ -30,7 +30,7 @@ public class DynastyList extends Base {
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
 				Dynasty dynasty = new Dynasty(
-						Integer.parseInt(jo.getString("dynasty_id")),
+						jo.getInt("dynasty_id"),
 						jo.getString("dynasty_name"));
 				dynastyList.dynastyList.add(dynasty);
 			}

@@ -30,8 +30,8 @@ public class InfoList extends Base {
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
 				Info info = new Info(
-						Integer.parseInt(jo.getString("info_id")),
-						Integer.parseInt(jo.getString("info_poetry_id")),
+						jo.getInt("info_id"),
+						jo.getInt("info_poetry_id"),
 						jo.getString("info_background"),
 						jo.getString("info_praise"),
 						jo.getString("info_note"),

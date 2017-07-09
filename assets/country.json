@@ -1,6 +1,8 @@
-[
-  {
-    "country_id": "1",
-    "country_name": "中国"
-  }
-]
+[{
+"country_id":1,
+"country_name":"中国"
+},
+{
+"country_id":2,
+"country_name":"英国"
+}]

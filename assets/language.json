@@ -1,6 +1,12 @@
-[
-  {
-    "language_id": "1",
-    "language_name": "中文"
-  }
-]
+[{
+"language_id":1,
+"language_name":"中文"
+},
+{
+"language_id":2,
+"language_name":"英文"
+},
+{
+"language_id":3,
+"language_name":"法文"
+}]

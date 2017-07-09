@@ -66,7 +66,8 @@ public class InfoDao {
 						cursor.getString(cursor.getColumnIndexOrThrow("info_praise")),
 						cursor.getString(cursor.getColumnIndexOrThrow("info_note")),
 						cursor.getString(cursor.getColumnIndexOrThrow("info_tonow")),
-						cursor.getString(cursor.getColumnIndexOrThrow("info_translation")));
+						cursor.getString(cursor.getColumnIndexOrThrow("info_translation"))
+						);
 				Log.v("info", info.getInfoId() + "");
 				Log.v("info", info.getBackground() + "");
 				return info;

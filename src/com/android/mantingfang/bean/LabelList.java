@@ -30,9 +30,9 @@ public class LabelList extends Base {
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
 				Label label = new Label(
-						Integer.parseInt(jo.getString("label_id")),
+						jo.getInt("label_id"),
 						jo.getString("label_poetry_id"),
-						Integer.parseInt(jo.getString("label_kind_id")),
+						jo.getInt("label_kind_id"),
 						jo.getString("label_name"));
 				labels.labelList.add(label);
 			}

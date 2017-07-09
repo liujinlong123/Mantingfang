@@ -94,6 +94,44 @@ public class WriterDao {
 		return writerList;
 	}
 	
+	public List<Writer> getAllWriter() {
+		List<Writer> writerList = new ArrayList<>();
+		SQLiteDatabase database = null;
+		
+		try {
+			database = helper.getReadableDatabase();
+			database.beginTransaction();
+			Cursor cursor;
+			String sql = "select * from Writer";
+			Log.v("sql", sql);
+			cursor = database.rawQuery(sql, null);
+			if (cursor.moveToFirst()) {
+				for (int i = 0; i < cursor.getCount(); i++) {
+					Writer w = new Writer(
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")),
+							cursor.getString(cursor.getColumnIndexOrThrow("writer_label_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_dynasty_id")),
+							cursor.getInt(cursor.getColumnIndexOrThrow("writer_country_id")),
+							cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),
+							cursor.getString(cursor.getColumnIndexOrThrow("writer_career")));
+					writerList.add(w);
+					cursor.moveToNext();
+				}
+			}
+			Log.v("list_writer", writerList.size() + "");
+			database.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (database != null) {
+				database.endTransaction();
+				database.close();
+			}
+		}
+		
+		return writerList;
+	}
+	
 	/**
 	 * 返回某朝代下所有作品的数目
 	 * @param dynastyid

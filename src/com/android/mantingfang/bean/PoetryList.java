@@ -28,10 +28,10 @@ public class PoetryList extends Base {
 			plist.poetryCount = obj.length();
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
-				Poetry p = new Poetry(Integer.parseInt(jo.getString("poetry_id")),
+				Poetry p = new Poetry(jo.getInt("poetry_id"),
 						jo.getString("poetry_label_id"),
-						Integer.parseInt(jo.getString("poetry_writer_id")),
-						Integer.parseInt(jo.getString("poetry_language_id")),
+						jo.getInt("poetry_writer_id"),
+						jo.getInt("poetry_language_id"),
 						
 						jo.getString("poetry_name"),
 						jo.getString("poetry_content"),

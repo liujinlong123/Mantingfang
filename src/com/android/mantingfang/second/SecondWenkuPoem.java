@@ -83,7 +83,7 @@ public class SecondWenkuPoem extends Activity {
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		kindName = bundle.getString("kindName");
-		singleName = bundle.getString("singleName");
+		singleName = bundle.getString("singlename");
 		label_id = bundle.getInt("label_id");
 		imageId = bundle.getInt("imgId");
 		
@@ -108,8 +108,7 @@ public class SecondWenkuPoem extends Activity {
 	private List<Poem> getData() {
 		list = new ArrayList<Poem>();
 		
-		//list = poetryDao.getPoemByTid(label_id);
-		list = poetryDao.getPoemByTid(1);
+		list = poetryDao.getPoemByTid(label_id);
 		return list;
 	}
 }

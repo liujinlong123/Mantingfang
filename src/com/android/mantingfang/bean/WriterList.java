@@ -30,10 +30,10 @@ public class WriterList extends Base {
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
 				Writer writer = new Writer(
-						Integer.parseInt(jo.getString("writer_id")),
+						jo.getInt("writer_id"),
 						jo.getString("writer_label_id"),
-						Integer.parseInt(jo.getString("writer_dynasty_id")),
-						Integer.parseInt(jo.getString("writer_country_id")),
+						jo.getInt("writer_dynasty_id"),
+						jo.getInt("writer_country_id"),
 						jo.getString("writer_name"),
 						jo.getString("writer_career"));
 				wList.writerList.add(writer);

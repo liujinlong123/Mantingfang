@@ -117,7 +117,6 @@
                     android:id="@+id/poetrydetail_tv_poemname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="静夜思"
                     android:textSize="20sp"
                     android:gravity="center" />
                 
@@ -125,7 +124,6 @@
                     android:id="@+id/poetrydetail_tv_writername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="[唐]李白"
                     android:gravity="right"
                     android:layout_marginTop="10dp" />
                 
@@ -133,7 +131,6 @@
                     android:id="@+id/poetrydetail_tv_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="床前明月光，疑是地上霜。\n举头望明月，低头思故乡。"
                     android:textSize="15sp"
                     android:gravity="center"
                     android:layout_marginTop="20dp" />
@@ -151,7 +148,6 @@
                     android:id="@+id/poetrydetail_tv_kind_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="  detailhhhhhhh\nhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
                     android:padding="5dp" />
                 
             </LinearLayout>

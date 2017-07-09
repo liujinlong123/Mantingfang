@@ -29,7 +29,7 @@ public class CountryList {
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
 				Country country = new Country(
-						Integer.parseInt(jo.getString("country_id")),
+						jo.getInt("country_id"),
 						jo.getString("country_name"));
 				countrys.countryList.add(country);
 			}

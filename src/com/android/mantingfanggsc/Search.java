@@ -63,7 +63,6 @@ public class Search extends Activity{
 	}
 	
 	private void initListView() {
-		//pDao = new PoetryDao(Search.this);
 		editer = (EditText)findViewById(R.id.search_editer);
 		listview = (ListView)findViewById(R.id.search_list);
 		
@@ -124,9 +123,9 @@ public class Search extends Activity{
 				list = new ArrayList<Poem>();
 				
 				if (str != null && !str.equals("")) {
-					String[] tokenOne = str.split("[&]");
+					String[] tokenOne = str.split("[@]");
 					for (int i = 1; i < tokenOne.length; i++) {
-						String[] tokenTwo = tokenOne[i].split("[#]");
+						String[] tokenTwo = tokenOne[i].split("[%]");
 						dataList.add(Arrays.asList(tokenTwo));
 					}
 					

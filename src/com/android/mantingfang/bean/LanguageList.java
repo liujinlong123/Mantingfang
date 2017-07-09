@@ -30,7 +30,7 @@ public class LanguageList extends Base {
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
 				Language lan = new Language(
-						Integer.parseInt(jo.getString("language_id")),
+						jo.getInt("language_id"),
 						jo.getString("language_name"));
 				lans.lanList.add(lan);
 			}
