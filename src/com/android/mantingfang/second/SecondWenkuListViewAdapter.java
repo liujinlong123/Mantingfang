@@ -92,6 +92,7 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 		
 		final String kindName = content.getKindName();
 		final List<SingleNames> label = content.getSingleName();
+		//final int[] images = content.getImages();
 		
 		holder.grdKind.setOnItemClickListener(new OnItemClickListener() {
 
