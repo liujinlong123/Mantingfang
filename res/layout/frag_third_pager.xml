@@ -7,10 +7,19 @@
     
     <include layout="@layout/topbar_third"/>
     
-    <ListView
-        android:id="@+id/third_listview"
+    <include layout="@layout/third_head" />
+    
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none" />
-
+        android:layout_height="0.5dp"
+        android:background="@color/gray" />
+    
+   <android.support.v4.view.ViewPager
+        android:layout_above="@+id/foot_rl"
+        android:layout_below="@+id/head_rl"
+        android:id="@+id/third_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+    </android.support.v4.view.ViewPager>
+    
 </LinearLayout>

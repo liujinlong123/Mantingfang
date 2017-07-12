@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <RadioGroup
+        android:id="@+id/third_head_radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/third_head_one"
+            style="@style/third_footbar"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:text="话题" />
+
+        <RadioButton
+            android:id="@+id/third_head_two"
+            style="@style/third_footbar"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:text="笔记" />
+
+        <RadioButton
+            android:id="@+id/third_head_three"
+            style="@style/third_footbar"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:text="原创" />
+
+        <RadioButton
+            android:id="@+id/third_head_four"
+            style="@style/third_footbar"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:text="朗读" />
+    </RadioGroup>
+
+</LinearLayout>
