@@ -1,0 +1,35 @@
+package com.android.mantingfang.third;
+
+import com.android.mantingfanggsc.R;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+public class UserTwo extends Fragment {
+
+	//private MyViewPager vp;
+	private View view;
+	
+	/*public UserTwo(MyViewPager vp) {
+		this.vp = vp;
+	}*/
+	
+	@SuppressLint("InflateParams")
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		if (view == null) {
+			view = inflater.inflate(R.layout.user_two_frag, null);
+			
+			//vp.setObjectForPosition(view, 1);
+			return view;
+		}
+		
+		
+		//vp.setObjectForPosition(view, 1);
+		return view;
+	}
+}

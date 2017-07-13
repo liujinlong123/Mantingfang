@@ -92,14 +92,16 @@ public final class R {
         public static final int topbar_second_rightbtn_true=0x7f020038;
         public static final int topbar_second_rightselector=0x7f020039;
         public static final int topbar_second_text=0x7f02003a;
-        public static final int welcome=0x7f02003b;
-        public static final int xcz_round=0x7f02003c;
-        public static final int zan=0x7f02003d;
-        public static final int zan_rs=0x7f02003e;
-        public static final int zan_s=0x7f02003f;
+        public static final int user_care=0x7f02003b;
+        public static final int userhead=0x7f02003c;
+        public static final int welcome=0x7f02003d;
+        public static final int xcz_round=0x7f02003e;
+        public static final int zan=0x7f02003f;
+        public static final int zan_rs=0x7f020040;
+        public static final int zan_s=0x7f020041;
     }
     public static final class id {
-        public static final int action_settings=0x7f090089;
+        public static final int action_settings=0x7f090097;
         public static final int bottom_linear_shiyou=0x7f09002b;
         public static final int bottom_linear_wenku=0x7f090028;
         public static final int bottom_linear_wode=0x7f09002e;
@@ -229,14 +231,28 @@ public final class R {
         public static final int topbar_third_search=0x7f090080;
         public static final int topbar_tv_back=0x7f090070;
         public static final int topbar_tv_theme=0x7f090071;
-        public static final int writerdetail_item_two_kind=0x7f090087;
-        public static final int writerdetail_item_two_poemname=0x7f090086;
-        public static final int writerdetail_item_two_rhesis=0x7f090088;
-        public static final int writerdetail_listview=0x7f090081;
-        public static final int writerdetail_one_tv_detail=0x7f090084;
-        public static final int writerdetail_one_tv_themename=0x7f090083;
-        public static final int writerdetail_one_tv_writername=0x7f090082;
-        public static final int writerdetail_one_works=0x7f090085;
+        public static final int user_head_linear=0x7f090085;
+        public static final int user_linear_height=0x7f09008b;
+        public static final int user_pager_care=0x7f09008d;
+        public static final int user_pager_headphoto=0x7f09008c;
+        public static final int user_pager_rbtn_one=0x7f090082;
+        public static final int user_pager_rbtn_one1=0x7f090087;
+        public static final int user_pager_rbtn_three=0x7f090084;
+        public static final int user_pager_rbtn_three1=0x7f090089;
+        public static final int user_pager_rbtn_two=0x7f090083;
+        public static final int user_pager_rbtn_two1=0x7f090088;
+        public static final int user_pager_rgp=0x7f090081;
+        public static final int user_pager_rgp1=0x7f090086;
+        public static final int user_pager_scrollView=0x7f09008a;
+        public static final int user_pager_view_pager=0x7f09008e;
+        public static final int writerdetail_item_two_kind=0x7f090095;
+        public static final int writerdetail_item_two_poemname=0x7f090094;
+        public static final int writerdetail_item_two_rhesis=0x7f090096;
+        public static final int writerdetail_listview=0x7f09008f;
+        public static final int writerdetail_one_tv_detail=0x7f090092;
+        public static final int writerdetail_one_tv_themename=0x7f090091;
+        public static final int writerdetail_one_tv_writername=0x7f090090;
+        public static final int writerdetail_one_works=0x7f090093;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -269,9 +285,14 @@ public final class R {
         public static final int topbar_fourth=0x7f03001b;
         public static final int topbar_second=0x7f03001c;
         public static final int topbar_third=0x7f03001d;
-        public static final int writerdetail=0x7f03001e;
-        public static final int writerdetail_item_one=0x7f03001f;
-        public static final int writerdetail_item_two=0x7f030020;
+        public static final int user_head=0x7f03001e;
+        public static final int user_one_frag=0x7f03001f;
+        public static final int user_pager=0x7f030020;
+        public static final int user_three_frag=0x7f030021;
+        public static final int user_two_frag=0x7f030022;
+        public static final int writerdetail=0x7f030023;
+        public static final int writerdetail_item_one=0x7f030024;
+        public static final int writerdetail_item_two=0x7f030025;
     }
     public static final class menu {
         public static final int main=0x7f080000;

@@ -1,42 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <RadioGroup
-        android:id="@+id/third_head_radioGroup"
+        android:id="@+id/user_pager_rgp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
         <RadioButton
-            android:id="@+id/third_head_one"
+            android:id="@+id/user_pager_rbtn_one"
             style="@style/third_footbar"
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"
-            android:text="话题" />
-
+            android:text="诗词" />
+        
         <RadioButton
-            android:id="@+id/third_head_two"
+            android:id="@+id/user_pager_rbtn_two"
             style="@style/third_footbar"
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"
-            android:text="笔记" />
-
+            android:text="动态" />
+        
         <RadioButton
-            android:id="@+id/third_head_three"
+            android:id="@+id/user_pager_rbtn_three"
             style="@style/third_footbar"
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"
-            android:text="原创" />
-
-        <RadioButton
-            android:id="@+id/third_head_four"
-            style="@style/third_footbar"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
-            android:text="朗读" />
+            android:text="关于TA" />
     </RadioGroup>
 
 </LinearLayout>

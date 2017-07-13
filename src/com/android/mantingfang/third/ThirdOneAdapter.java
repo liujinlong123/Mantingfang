@@ -8,6 +8,7 @@ import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -73,7 +74,7 @@ public class ThirdOneAdapter extends BaseAdapter {
 		}
 		
 		ThirdOneContent content = list.get(position);
-		initViews(content, holder);
+		initViews(content, holder, view);
 		
 		return view;
 	}
@@ -104,7 +105,7 @@ public class ThirdOneAdapter extends BaseAdapter {
 		ImageView share;
 	}
 
-	private void initViews(ThirdOneContent content, ViewHolder holder) {
+	private void initViews(ThirdOneContent content, ViewHolder holder, final View view) {
 		//设置头像
 		String path = content.getHeadPath();
 		
@@ -126,7 +127,8 @@ public class ThirdOneAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(mContext, "跳转用户", Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(mContext, UserPager.class);
+				mContext.startActivity(intent);
 			}
 		});
 		

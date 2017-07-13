@@ -56,6 +56,8 @@
         
         <activity android:name="com.android.mantingfang.second.SecondWenkuPoem" ></activity>
         
+        <activity android:name="com.android.mantingfang.third.UserPager" ></activity>
+        
         
     </application>
 
