@@ -1,12 +1,16 @@
 package com.android.mantingfang.third;
 
+import java.util.ArrayList;
+
 import com.android.mantingfang.model.Poem;
 
-public class ThirdFourContent {
+public class UserTwoContent {
 	private String userId;		//用户id
 	private String headPath;	//头像
 	private String name;		//昵称
 	private String time;		//时间
+	private String content;		//内容
+	private ArrayList<String> picture;	//图片组
 	private String soundPath;	//音频路径
 	private Poem poem;			//诗
 	private boolean zan;		//是否被赞
@@ -14,16 +18,18 @@ public class ThirdFourContent {
 	private int post_com_pId;	//帖子ID
 	private int post_com_cId;	//评论ID
 	
-	public ThirdFourContent() {}
+	public UserTwoContent() {}
 	
-	public ThirdFourContent(String userId, String headPath, String name, String time, String soundPath,
-			Poem poem, boolean zan, int post_com_num, int post_com_pId, int post_com_cId) {
+	public UserTwoContent(String userId, String headPath, String name, String time, String content, ArrayList<String> picture,
+			String soundPath, Poem poem, boolean zan, int post_com_num, int post_com_pId, int post_com_cId) {
 		this.userId = userId;
 		this.headPath = headPath;
 		this.name = name;
 		this.time = time;
-		this.soundPath = soundPath;
+		this.content = content;
+		this.picture = picture;
 		this.poem = poem;
+		this.soundPath = soundPath;
 		this.zan = zan;
 		this.post_com_num = post_com_num;
 		this.post_com_pId = post_com_pId;
@@ -60,6 +66,22 @@ public class ThirdFourContent {
 	
 	public String getTime() {
 		return time;
+	}
+	
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
+	public String getContent() {
+		return content;
+	}
+	
+	public void setPicture(ArrayList<String> picture) {
+		this.picture = picture;
+	}
+	
+	public ArrayList<String> getPicture() {
+		return picture;
 	}
 	
 	public void setSoundPath(String soundPath) {

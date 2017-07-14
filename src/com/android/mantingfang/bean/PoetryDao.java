@@ -131,7 +131,7 @@ public class PoetryDao {
 				db.close();
 			}
 		}
-		return null;
+		return p;
 	}
 	
 	/**

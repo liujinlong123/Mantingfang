@@ -154,8 +154,8 @@ public class UserPager extends FragmentActivity {
 			@SuppressLint("ClickableViewAccessibility")
 			@Override
 			public void onScrollChanged(VerticalScrollView myscrollView, int x, int y, int oldx, int oldy) {
-				Log.v("height", (linearHeight.getMeasuredHeight()) + "-------x: " + x + "----------y: " + y);
-				Log.v("height", linearHeight.getMeasuredHeightAndState() + "-------");
+				//Log.v("height", (linearHeight.getMeasuredHeight()) + "-------x: " + x + "----------y: " + y);
+				//Log.v("height", linearHeight.getMeasuredHeightAndState() + "-------");
 				if (y >= linearHeight.getMeasuredHeight()) {
 					linearHead.setVisibility(View.VISIBLE);
 					userRgp.setVisibility(View.GONE);
