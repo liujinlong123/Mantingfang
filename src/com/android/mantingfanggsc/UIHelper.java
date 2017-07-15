@@ -1,5 +1,7 @@
 package com.android.mantingfanggsc;
 
+import com.android.mantingfang.third.UserPager;
+
 import android.content.Context;
 import android.content.Intent;
 
@@ -14,6 +16,13 @@ public class UIHelper {
 	public static void showPoemDetail(Context context, int poetry_id, int flag) {
 		Intent intent = new Intent(context, PoetryDetail.class);
 		intent.putExtra("poetry_id", poetry_id);
+		intent.putExtra("flag", flag);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
+	}
+	
+	public static void showUserDetail(Context context, int flag) {
+		Intent intent = new Intent(context, UserPager.class);
 		intent.putExtra("flag", flag);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);

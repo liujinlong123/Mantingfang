@@ -5,10 +5,11 @@ import java.util.List;
 
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.R;
+import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -111,24 +112,24 @@ public class ThirdOneAdapter extends BaseAdapter {
 		
 		
 		//昵称
-		//holder.userName.setText(content.getName());
+		Log.v("userName", content.getName());
+		holder.userName.setText(content.getName());
 		//时间
-		//holder.time.setText(content.getTime());
+		Log.v("time", content.getTime());
+		holder.time.setText(content.getTime());
 		//内容
-		//holder.content.setText(content.getContent());
+		holder.content.setText(content.getContent());
 		//设置图片
 		//initGridView(content.getPicture(), holder);
 		//设置诗词
-		//holder.poemName.setText(content.getPoem().getTitle());
-		//holder.poemQuote.setText(content.getPoem().getContent());
+		holder.linearPoem.setVisibility(View.GONE);
 		
 		//头像点击事件
 		holder.linearHead.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(mContext, UserPager.class);
-				mContext.startActivity(intent);
+				UIHelper.showUserDetail(mContext, 0);
 			}
 		});
 		
@@ -138,15 +139,6 @@ public class ThirdOneAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				Toast.makeText(mContext, "跳转详情", Toast.LENGTH_SHORT).show();
-			}
-		});
-		
-		//涉及诗词点击事件
-		holder.linearPoem.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(mContext, "跳转诗词", Toast.LENGTH_SHORT).show();
 			}
 		});
 		

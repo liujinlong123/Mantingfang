@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.R;
+import com.android.mantingfanggsc.UIHelper;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -126,7 +128,7 @@ public class ThirdTwoAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(mContext, "Ìø×ªÓÃ»§", Toast.LENGTH_SHORT).show();
+				UIHelper.showUserDetail(mContext, 0);
 			}
 		});
 

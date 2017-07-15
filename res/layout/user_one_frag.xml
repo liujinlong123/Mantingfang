@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-	<ListView
+	<com.android.mantingfanggsc.CustomListView
 	    android:id="@+id/user_one_listview"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:scrollbars="none" />
+	    android:scrollbars="none" ></com.android.mantingfanggsc.CustomListView>
     
     
 </LinearLayout>

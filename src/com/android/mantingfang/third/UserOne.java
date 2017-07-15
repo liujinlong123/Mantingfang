@@ -3,6 +3,7 @@ package com.android.mantingfang.third;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.android.mantingfanggsc.CustomListView;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
 
@@ -25,7 +26,7 @@ public class UserOne extends Fragment {
 		this.vp = vp;
 	}*/
 	
-	private ListView listview;
+	private CustomListView listview;
 	private UserOneAdapter adapter;
 	private List<Integer> list;
 	
@@ -44,7 +45,7 @@ public class UserOne extends Fragment {
 	}
 	
 	private void initViews() {
-		listview = (ListView)view.findViewById(R.id.user_one_listview);
+		listview = (CustomListView)view.findViewById(R.id.user_one_listview);
 		adapter = new UserOneAdapter(getActivity(), getData(), false);
 		listview.setAdapter(adapter);
 		

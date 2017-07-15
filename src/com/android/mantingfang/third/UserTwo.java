@@ -3,6 +3,7 @@ package com.android.mantingfang.third;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.android.mantingfanggsc.CustomListView;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
@@ -23,7 +24,7 @@ public class UserTwo extends Fragment {
 	}*/
 	
 	
-	private ListView listview;
+	private CustomListView listview;
 	private UserTwoAdapter adapter;
 	private List<UserTwoContent> list;
 	
@@ -45,7 +46,7 @@ public class UserTwo extends Fragment {
 	}
 	
 	private void initViews() {
-		listview = (ListView)view.findViewById(R.id.user_two_listview);
+		listview = (CustomListView)view.findViewById(R.id.user_two_listview);
 		adapter = new UserTwoAdapter(getActivity(), getData());
 		listview.setAdapter(adapter);
 	}

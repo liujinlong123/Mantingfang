@@ -89,5 +89,15 @@ public class StringUtils {
     	return list.toArray(new String[1]);
     	
     }
+    
+    public static ArrayList<String> getPictures(String pic) {
+    	ArrayList<String> pictures = new ArrayList<>();
+    	String[] tokens = pic.split("[ ]");
+    	for (int i = 0; i < tokens.length; i++) {
+    		pictures.add(tokens[i]);
+    	}
+    	
+    	return pictures;
+    }
 
 }

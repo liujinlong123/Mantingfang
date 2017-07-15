@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.android.mantingfang.bean.PoetryDao;
 import com.android.mantingfang.model.Poem;
+import com.android.mantingfanggsc.CustomListView;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
 
@@ -12,7 +13,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -21,11 +21,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SecondWenkuPoem extends Activity {
 
-	private ListView listview;
+	private CustomListView listview;
 	private SecondWenkuPoemListAdapter madapter;
 	private List<Poem> list;
 	
@@ -93,7 +92,7 @@ public class SecondWenkuPoem extends Activity {
 	}
 	
 	private void initListView() {
-		listview = (ListView)findViewById(R.id.floor2_secondlist);
+		listview = (CustomListView)findViewById(R.id.floor2_secondlist);
 		madapter = new SecondWenkuPoemListAdapter(SecondWenkuPoem.this, getData());
 		listview.setAdapter(madapter);
 		listview.setOnItemClickListener(new OnItemClickListener() {

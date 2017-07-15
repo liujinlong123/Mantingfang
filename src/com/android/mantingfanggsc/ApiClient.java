@@ -2,13 +2,19 @@ package com.android.mantingfanggsc;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EncodingUtils;
 import org.apache.http.util.EntityUtils;
@@ -29,14 +35,20 @@ import com.android.mantingfang.bean.LanguageList;
 import com.android.mantingfang.bean.Poetry;
 import com.android.mantingfang.bean.PoetryList;
 import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.bean.Writer;
 import com.android.mantingfang.bean.WriterList;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 
-public class ApiClient {
+public class ApiClient{
 
 	public static final String ENCODING = "UTF-8";
+	public static final String URLTOPIC = "http://1696824u8f.51mypc.cn:12755//returndata.php";
 	
 	/**
 	 * 获取诗人列表

@@ -10,6 +10,7 @@ import com.android.mantingfang.bean.Writer;
 import com.android.mantingfang.bean.WriterDao;
 import com.android.mantingfang.second.SideBar.OnTouchingLetterChangedListener;
 import com.android.mantingfanggsc.CharacterParser;
+import com.android.mantingfanggsc.CustomListView;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
 
@@ -35,12 +36,12 @@ public class FragmentSecond extends Fragment {
 	private View view;
 	
 	//文库
-	private ListView wenkuListView;
+	private CustomListView wenkuListView;
 	private SecondWenkuListViewAdapter wenkuAdapter;
 	private List<KindContent> wenkuList;
 	
 	//诗人
-	private ListView writerListView;
+	private CustomListView writerListView;
 	private SecondWriterListViewAdapter writerAdapter;
 	private List<Writer> writers;
 	private FrameLayout frame;
@@ -94,7 +95,7 @@ public class FragmentSecond extends Fragment {
 	
 	//初始化文库界面
 	private void initWenku() {
-		wenkuListView = (ListView)view.findViewById(R.id.frag_second_wenku_list);
+		wenkuListView = (CustomListView)view.findViewById(R.id.frag_second_wenku_list);
 		wenkuAdapter = new SecondWenkuListViewAdapter(getActivity(), getWenkuData());
 		wenkuListView.setAdapter(wenkuAdapter);
 	}
@@ -112,7 +113,7 @@ public class FragmentSecond extends Fragment {
 	
 	//初始化诗人界面
 	private void initWriter() {
-		writerListView = (ListView)view.findViewById(R.id.frag_second_writer_list);
+		writerListView = (CustomListView)view.findViewById(R.id.frag_second_writer_list);
 		frame = (FrameLayout)view.findViewById(R.id.frame_list_writer);
 		
 		//实例化汉字转拼音类

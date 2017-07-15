@@ -5,22 +5,20 @@ import java.util.ArrayList;
 import com.android.mantingfang.model.Poem;
 
 public class ThirdOneContent {
-	private String userId;		//用户id
-	private String headPath;	//头像
+	private String userId;		//用户id	
+	private String headPath;	//头像	
 	private String name;		//昵称
-	private String time;		//时间
+	private String time;		//时间		
 	private String content;		//内容
 	private ArrayList<String> picture;	//图片组
 	private Poem poem;			//诗
-	private boolean zan;		//是否被赞
 	private int post_com_num;	//帖子标号
 	private int post_com_pId;	//帖子ID
-	private int post_com_cId;	//评论ID
 	
 	public ThirdOneContent() {}
 	
 	public ThirdOneContent(String userId, String headPath, String name, String time, String content, ArrayList<String> picture,
-			Poem poem, boolean zan, int post_com_num, int post_com_pId, int post_com_cId) {
+			Poem poem, int post_com_num, int post_com_pId) {
 		this.userId = userId;
 		this.headPath = headPath;
 		this.name = name;
@@ -28,10 +26,8 @@ public class ThirdOneContent {
 		this.content = content;
 		this.picture = picture;
 		this.poem = poem;
-		this.zan = zan;
 		this.post_com_num = post_com_num;
 		this.post_com_pId = post_com_pId;
-		this.post_com_cId = post_com_cId;
 	}
 	
 	public void setUserId(String userId) {
@@ -90,14 +86,6 @@ public class ThirdOneContent {
 		return poem;
 	}
 	
-	public void setZan(boolean zan) {
-		this.zan = zan;
-	}
-	
-	public boolean getZan() {
-		return zan;
-	}
-	
 	public void setPostComNum(int post_com_num) {
 		this.post_com_num = post_com_num;
 	}
@@ -112,13 +100,5 @@ public class ThirdOneContent {
 	
 	public int getPostComPId() {
 		return post_com_pId;
-	}
-	
-	public void setPostComCId(int post_com_cId) {
-		this.post_com_cId = post_com_cId;
-	}
-	
-	public int getPostComCId() {
-		return post_com_cId;
 	}
 }

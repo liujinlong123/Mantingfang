@@ -3,19 +3,20 @@ package com.android.mantingfang.third;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.android.mantingfanggsc.CustomListView;
 import com.android.mantingfanggsc.R;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 public class ThirdThreePager extends Fragment {
 
 	private View view;
-	private ListView thirdThreeListView;
+	private CustomListView thirdThreeListView;
 	private ThirdThreeAdapter adapterThree;
 	private List<ThirdOneContent> listThree;
 
@@ -35,7 +36,7 @@ public class ThirdThreePager extends Fragment {
 
 	// ≥ı ºªØThirdThree
 	private void initViews() {
-		thirdThreeListView = (ListView) view.findViewById(R.id.third_pager_three_listview);
+		thirdThreeListView = (CustomListView) view.findViewById(R.id.third_pager_three_listview);
 		adapterThree = new ThirdThreeAdapter(getActivity(), getData());
 		thirdThreeListView.setAdapter(adapterThree);
 	}
