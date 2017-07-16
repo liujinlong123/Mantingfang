@@ -3,12 +3,20 @@ package com.android.mantingfang.third;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
+import com.android.mantingfang.bean.PoetryList;
+import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.model.PoemM;
 import com.android.mantingfang.second.KindGridView;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,15 +25,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ThirdTwoAdapter extends BaseAdapter {
 
 	private Context mContext;
 	private LayoutInflater inflater;
-	private List<ThirdOneContent> list;
+	private List<UserTwoContent> list;
 
-	public ThirdTwoAdapter(Context context, List<ThirdOneContent> list) {
+	public ThirdTwoAdapter(Context context, List<UserTwoContent> list) {
 		this.list = list;
 		mContext = context;
 		inflater = LayoutInflater.from(context);
@@ -75,9 +82,9 @@ public class ThirdTwoAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 
-		ThirdOneContent content = list.get(position);
+		UserTwoContent content = list.get(position);
 		initViews(content, holder);
-		
+
 		return view;
 	}
 
@@ -107,21 +114,21 @@ public class ThirdTwoAdapter extends BaseAdapter {
 		ImageView share;
 	}
 
-	private void initViews(ThirdOneContent content, ViewHolder holder) {
+	private void initViews(final UserTwoContent content, final ViewHolder holder) {
 		// 设置头像
-		String path = content.getHeadPath();
+		// String path = content.getHeadPath();
 
 		// 昵称
-		// holder.userName.setText(content.getName());
+		holder.userName.setText(content.getName());
 		// 时间
-		// holder.time.setText(content.getTime());
+		holder.time.setText(content.getTime());
 		// 内容
-		// holder.content.setText(content.getContent());
+		holder.content.setText(content.getContent());
 		// 设置图片
 		// initGridView(content.getPicture(), holder);
 		// 设置诗词
-		// holder.poemName.setText(content.getPoem().getTitle());
-		// holder.poemQuote.setText(content.getPoem().getContent());
+		holder.poemName.setText(content.getPoemName());
+		holder.poemQuote.setText(content.getPoemContent());
 
 		// 头像点击事件
 		holder.linearHead.setOnClickListener(new OnClickListener() {
@@ -146,7 +153,8 @@ public class ThirdTwoAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(mContext, "跳转诗词", Toast.LENGTH_SHORT).show();
+				getData(content.getPoemId(), holder);
+				//getData("1", holder);
 			}
 		});
 
@@ -181,6 +189,7 @@ public class ThirdTwoAdapter extends BaseAdapter {
 		});
 	}
 
+	@SuppressWarnings("unused")
 	private void initGridView(ArrayList<String> picture, ViewHolder holder) {
 		holder.grdview.setNumColumns(3);
 		if (picture.size() == 0 || picture == null) {
@@ -188,6 +197,36 @@ public class ThirdTwoAdapter extends BaseAdapter {
 		} else {
 
 		}
+	}
+
+	private void getData(final String poem_id, final ViewHolder holder) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+
+				return MyClient.getInstance().http_postPoem(poem_id);
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				Log.v("TEST", result);
+				final List<PoemM> poemList;
+				try {
+					poemList = PoetryList.parsePoem(StringUtils.toJSONArray(result)).getPoemMList();
+					if (poemList != null) {
+
+						UIHelper.showPoemMDetail(mContext, poemList.get(0), 0);
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		};
+
+		task.execute();
 	}
 
 }

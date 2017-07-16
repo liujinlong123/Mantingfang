@@ -17,12 +17,11 @@ public class UserTwoContent {
 	private boolean zan;		//是否被赞
 	private int post_com_num;	//帖子标号
 	private int post_com_pId;	//帖子ID
-	private int post_com_cId;	//评论ID
 	
 	public UserTwoContent() {}
 	
 	public UserTwoContent(String userId, String headPath, String name, String time, String content, ArrayList<String> picture,
-			String soundPath, String poemId, String poemContent, String poemName, boolean zan, int post_com_num, int post_com_pId, int post_com_cId) {
+			String soundPath, String poemId, String poemContent, String poemName, boolean zan, int post_com_num, int post_com_pId) {
 		this.userId = userId;
 		this.headPath = headPath;
 		this.name = name;
@@ -36,7 +35,6 @@ public class UserTwoContent {
 		this.zan = zan;
 		this.post_com_num = post_com_num;
 		this.post_com_pId = post_com_pId;
-		this.post_com_cId = post_com_cId;
 	}
 	
 	public void setUserId(String userId) {
@@ -141,13 +139,5 @@ public class UserTwoContent {
 	
 	public int getPostComPId() {
 		return post_com_pId;
-	}
-	
-	public void setPostComCId(int post_com_cId) {
-		this.post_com_cId = post_com_cId;
-	}
-	
-	public int getPostComCId() {
-		return post_com_cId;
 	}
 }

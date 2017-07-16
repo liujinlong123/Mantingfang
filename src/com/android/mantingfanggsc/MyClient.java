@@ -40,13 +40,13 @@ public class MyClient {
 	 * 界面一返回数据
 	 * @return
 	 */
-	public String http_postOne() {
+	public String http_postOne(String TypeNum, String number) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//returndata.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
-			param.add(new BasicNameValuePair("TypeNum", "1"));
-			param.add(new BasicNameValuePair("number", "0"));
+			param.add(new BasicNameValuePair("TypeNum", TypeNum));
+			param.add(new BasicNameValuePair("number", number));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
 			httpPost.setEntity(entity);
 			HttpResponse httpResponse = httpClient.execute(httpPost);
@@ -54,7 +54,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("界面一", response);
+				Log.v("界面" + TypeNum, response);
 				
 				return response;
 			} 
@@ -65,10 +65,28 @@ public class MyClient {
 	}
 	
 	/**
-	 * 界面二返回数据
+	 * 返回诗词
 	 * @return
 	 */
-	public String http_postTwo() {
+	public String http_postPoem(String poetry_id) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchpoem.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("poetry_id", poetry_id));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("poetry_id: " + poetry_id, response);
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 }

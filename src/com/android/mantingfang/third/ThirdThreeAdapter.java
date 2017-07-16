@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.mantingfang.second.KindGridView;
-import com.android.mantingfang.third.ThirdTwoAdapter.ViewHolder;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
 
@@ -12,8 +11,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,9 +23,9 @@ public class ThirdThreeAdapter extends BaseAdapter {
 
 	private Context mContext;
 	private LayoutInflater inflater;
-	private List<ThirdOneContent> list;
+	private List<UserTwoContent> list;
 	
-	public ThirdThreeAdapter(Context context, List<ThirdOneContent> list) {
+	public ThirdThreeAdapter(Context context, List<UserTwoContent> list) {
 		this.list = list;
 		mContext = context;
 		inflater = LayoutInflater.from(context);
@@ -76,7 +75,7 @@ public class ThirdThreeAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 
-		ThirdOneContent content = list.get(position);
+		UserTwoContent content = list.get(position);
 		initViews(content, holder);
 		
 		return view;
@@ -108,16 +107,17 @@ public class ThirdThreeAdapter extends BaseAdapter {
 		ImageView share;
 	}
 	
-	private void initViews(ThirdOneContent content, ViewHolder holder) {
+	private void initViews(UserTwoContent content, ViewHolder holder) {
 		// 设置头像
 		String path = content.getHeadPath();
 
 		// 昵称
-		// holder.userName.setText(content.getName());
+		//Log.v("userName", content.getName());
+		holder.userName.setText(content.getName());
 		// 时间
-		// holder.time.setText(content.getTime());
+		holder.time.setText(content.getTime());
 		// 内容
-		// holder.content.setText(content.getContent());
+		holder.content.setText(content.getContent());
 		// 设置图片
 		// initGridView(content.getPicture(), holder);
 		// 设置诗词

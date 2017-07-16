@@ -1,10 +1,7 @@
-package com.android.mantingfanggsc;
+package com.android.mantingfang.third;
 
-import com.android.mantingfang.bean.DynastyDao;
-import com.android.mantingfang.bean.Info;
-import com.android.mantingfang.bean.InfoDao;
-import com.android.mantingfang.bean.PoetryDao;
-import com.android.mantingfang.model.Poem;
+import com.android.mantingfang.model.PoemM;
+import com.android.mantingfanggsc.R;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -18,7 +15,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PoetryDetail extends Activity {
+public class PoemMDetail extends Activity {
 	
 	private RadioGroup poetrydetail_rgp;
 	private TextView poemname;
@@ -35,9 +32,7 @@ public class PoetryDetail extends Activity {
 	private ImageView img_comment;
 	private ImageView img_more;
 	
-	private Poem poem;
-	private Info info;
-	private String dynasty = null;
+	private PoemM poem;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +51,7 @@ public class PoetryDetail extends Activity {
 		kind = (TextView)findViewById(R.id.poetrydetail_tv_kind);
 		kindDetail = (TextView)findViewById(R.id.poetrydetail_tv_kind_detail);
 		
-		int poetry_id = getIntent().getIntExtra("poetry_id", 0);
-		poem = new PoetryDao(PoetryDetail.this).findPoemById(poetry_id);
-		info = (new InfoDao(PoetryDetail.this)).getInfoByPId(poetry_id);
-		dynasty = new DynastyDao(PoetryDetail.this).getDynastyById(poem.getDynastyid()).getDynastyName();
+		poem = (PoemM) getIntent().getSerializableExtra("poemM");
 		
 		//topbar
 		linearback = (LinearLayout)findViewById(R.id.topbar_all_back);
@@ -86,7 +78,7 @@ public class PoetryDetail extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(PoetryDetail.this, "Collect", Toast.LENGTH_SHORT).show();
+				Toast.makeText(PoemMDetail.this, "Collect", Toast.LENGTH_SHORT).show();
 			}
 		});
 		
@@ -94,7 +86,7 @@ public class PoetryDetail extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(PoetryDetail.this, "Comment", Toast.LENGTH_SHORT).show();
+				Toast.makeText(PoemMDetail.this, "Comment", Toast.LENGTH_SHORT).show();
 			}
 		});
 		
@@ -102,15 +94,15 @@ public class PoetryDetail extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(PoetryDetail.this, "more", Toast.LENGTH_SHORT).show();
+				Toast.makeText(PoemMDetail.this, "more", Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
 	
 	private void initshow() {
-		poemname.setText(poem.getTitle());
-		writername.setText("[" + dynasty + "]" + poem.getWritername());
-		content.setText(poem.getContent());
+		poemname.setText(poem.getPoemName());
+		writername.setText("[" + poem.getDynasty() + "]" + poem.getWriter());
+		content.setText(poem.getPoemContent());
 		
 		poetrydetail_rgp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
@@ -119,57 +111,61 @@ public class PoetryDetail extends Activity {
 				switch (checkedId) {
 				case R.id.poetrydetail_rbtn_beijing:
 					kind.setText("±³¾°");
-					if (info == null) {
+					if (poem.getPoemBg() == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
-						kindDetail.setText(info.getBackground());
+						kindDetail.setText(poem.getPoemBg());
 					}
 					
 					break;
 					
 				case R.id.poetrydetail_rbtn_zhushi:
 					kind.setText("×¢ÊÍ");
-					if (info == null) {
+					if (poem.getNotes() == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
-						kindDetail.setText(info.getNote());
+						kindDetail.setText(poem.getNotes());
 					}
 					
 					break;
 					
 				case R.id.poetrydetail_rbtn_yiwen:
 					kind.setText("ÒëÎÄ");
-					if (info == null) {
+					if (poem.getToNow() == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
-						kindDetail.setText(info.getTonow());
+						kindDetail.setText(poem.getToNow());
 					}
 					
 					break;
 					
 				case R.id.poetrydetail_rbtn_fanyi:
 					kind.setText("·­Òë");
-					if (info == null) {
+					if (poem.getTrans() == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
-						kindDetail.setText(info.getTranslation());
+						kindDetail.setText(poem.getTrans());
 					}
 					
 					break;
 					
 				case R.id.poetrydetail_rbtn_shangxi:
 					kind.setText("ÉÍÎö");
-					if (info == null) {
+					if (poem.getApprec() == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
-						kindDetail.setText(info.getPraise());
+						kindDetail.setText(poem.getApprec());
 					}
 					
 					break;
 					
 				case R.id.poetrydetail_rbtn_shoucang:
 					kind.setText("×÷Õß");
-					kindDetail.setText("");
+					if (poem.getWriterBg() == null) {
+						Log.v("info--poetrydetail", "null");
+					} else {
+						kindDetail.setText(poem.getWriterBg());
+					}
 					break;
 					
 				case R.id.poetrydetail_rbtn_pinglun:

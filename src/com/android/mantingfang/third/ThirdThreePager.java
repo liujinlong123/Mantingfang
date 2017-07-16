@@ -3,10 +3,16 @@ package com.android.mantingfang.third;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
+import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfanggsc.CustomListView;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,7 +24,7 @@ public class ThirdThreePager extends Fragment {
 	private View view;
 	private CustomListView thirdThreeListView;
 	private ThirdThreeAdapter adapterThree;
-	private List<ThirdOneContent> listThree;
+	private List<UserTwoContent> listThree;
 
 	@SuppressLint("InflateParams")
 	@Override
@@ -27,6 +33,7 @@ public class ThirdThreePager extends Fragment {
 			view = inflater.inflate(R.layout.third_pager_three, null);
 
 			initViews();
+			getData();
 
 			return view;
 		}
@@ -36,17 +43,34 @@ public class ThirdThreePager extends Fragment {
 
 	// ≥ı ºªØThirdThree
 	private void initViews() {
-		thirdThreeListView = (CustomListView) view.findViewById(R.id.third_pager_three_listview);
-		adapterThree = new ThirdThreeAdapter(getActivity(), getData());
-		thirdThreeListView.setAdapter(adapterThree);
+		thirdThreeListView = (CustomListView)view.findViewById(R.id.third_pager_three_listview);
 	}
+	
+	private void getData() {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
-	private List<ThirdOneContent> getData() {
-		listThree = new ArrayList<ThirdOneContent>();
-		for (int i = 0; i < 10; i++) {
-			listThree.add(new ThirdOneContent());
-		}
-
-		return listThree;
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().http_postOne("3", "0");
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				listThree = new ArrayList<UserTwoContent>();
+				try {
+					listThree = TopicList.parseThree(StringUtils.toJSONArray(result)).getTopicThree();
+					//Log.v("TESTTTT", listThree.get(0).getContent());
+					adapterThree = new ThirdThreeAdapter(getActivity(), listThree);
+					thirdThreeListView.setAdapter(adapterThree);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		};
+		
+		task.execute();
 	}
 }

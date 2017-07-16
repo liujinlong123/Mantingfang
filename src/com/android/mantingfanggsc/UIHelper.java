@@ -1,11 +1,14 @@
 package com.android.mantingfanggsc;
 
+import com.android.mantingfang.model.PoemM;
 import com.android.mantingfang.third.Comment;
 import com.android.mantingfang.third.CommentMain;
+import com.android.mantingfang.third.PoemMDetail;
 import com.android.mantingfang.third.UserPager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 public class UIHelper {
 	
@@ -19,6 +22,22 @@ public class UIHelper {
 		Intent intent = new Intent(context, PoetryDetail.class);
 		intent.putExtra("poetry_id", poetry_id);
 		intent.putExtra("flag", flag);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
+	}
+	
+	/**
+	 * œ‘ æPoemMœÍ«È
+	 * @param context
+	 * @param poem
+	 * @param flag
+	 */
+	public static void showPoemMDetail(Context context, PoemM poem, int flag) {
+		Intent intent = new Intent(context, PoemMDetail.class);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("poemM", poem);
+		intent.putExtra("flag", flag);
+		intent.putExtras(bundle);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 	}

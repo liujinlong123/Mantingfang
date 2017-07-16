@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="收藏"
+                android:text="作者"
                 android:button="@null"
                 android:paddingRight="10dp"
                 android:textColor="@drawable/radiobutton_text_selector"
