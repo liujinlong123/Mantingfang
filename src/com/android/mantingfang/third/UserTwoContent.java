@@ -2,8 +2,6 @@ package com.android.mantingfang.third;
 
 import java.util.ArrayList;
 
-import com.android.mantingfang.model.Poem;
-
 public class UserTwoContent {
 	private String userId;		//用户id
 	private String headPath;	//头像
@@ -12,7 +10,10 @@ public class UserTwoContent {
 	private String content;		//内容
 	private ArrayList<String> picture;	//图片组
 	private String soundPath;	//音频路径
-	private Poem poem;			//诗
+	//private Poem poem;			//诗
+	private String poemId;		//诗的id
+	private String poemContent;	//诗内容
+	private String poemName;	//诗名
 	private boolean zan;		//是否被赞
 	private int post_com_num;	//帖子标号
 	private int post_com_pId;	//帖子ID
@@ -21,14 +22,16 @@ public class UserTwoContent {
 	public UserTwoContent() {}
 	
 	public UserTwoContent(String userId, String headPath, String name, String time, String content, ArrayList<String> picture,
-			String soundPath, Poem poem, boolean zan, int post_com_num, int post_com_pId, int post_com_cId) {
+			String soundPath, String poemId, String poemContent, String poemName, boolean zan, int post_com_num, int post_com_pId, int post_com_cId) {
 		this.userId = userId;
 		this.headPath = headPath;
 		this.name = name;
 		this.time = time;
 		this.content = content;
 		this.picture = picture;
-		this.poem = poem;
+		this.poemId = poemId;
+		this.poemContent = poemContent;
+		this.poemName = poemName;
 		this.soundPath = soundPath;
 		this.zan = zan;
 		this.post_com_num = post_com_num;
@@ -92,12 +95,28 @@ public class UserTwoContent {
 		return soundPath;
 	}
 	
-	public void setPoem(Poem poem) {
-		this.poem = poem;
+	public void setPoemId(String poemId) {
+		this.poemId = poemId;
 	}
 	
-	public Poem getPoem() {
-		return poem;
+	public String getPoemId() {
+		return poemId;
+	}
+	
+	public void setPoemContent(String poemContent) {
+		this.poemContent = poemContent;
+	}
+	
+	public String getPoemContent() {
+		return poemContent;
+	}
+	
+	public void setPoemName(String poemName) {
+		this.poemName = poemName;
+	}
+	
+	public String getPoemName() {
+		return poemName;
 	}
 	
 	public void setZan(boolean zan) {

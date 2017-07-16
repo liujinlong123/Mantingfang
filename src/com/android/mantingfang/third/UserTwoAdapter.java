@@ -114,9 +114,9 @@ public class UserTwoAdapter extends BaseAdapter {
 		String path = content.getHeadPath();
 
 		// 昵称
-		holder.userName.setText(content.getName());
+		//holder.userName.setText(content.getName());
 		// 时间
-		holder.time.setText(content.getTime());
+		//holder.time.setText(content.getTime());
 
 		// 头像点击事件
 		holder.linearHead.setOnClickListener(new OnClickListener() {
@@ -125,24 +125,6 @@ public class UserTwoAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				Intent intent = new Intent(mContext, UserPager.class);
 				mContext.startActivity(intent);
-			}
-		});
-
-		// content点击事件
-		holder.content.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(mContext, "跳转详情", Toast.LENGTH_SHORT).show();
-			}
-		});
-
-		// 涉及诗词点击事件
-		holder.linearPoem.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(mContext, "跳转诗词", Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -182,8 +164,22 @@ public class UserTwoAdapter extends BaseAdapter {
 			//设置图片
 			initGridView(content.getPicture(), holder);
 			//设置诗词
-			holder.poemName.setText(content.getPoem().getTitle());
-			holder.poemQuote.setText(content.getPoem().getContent());
+			holder.poemName.setText(content.getPoemName());
+			holder.poemQuote.setText(content.getPoemContent());
+			holder.linearPoem.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Toast.makeText(mContext, "跳转诗词", Toast.LENGTH_SHORT).show();
+				}
+			});
+			holder.content.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Toast.makeText(mContext, "跳转详情", Toast.LENGTH_SHORT).show();
+				}
+			});
 		} 
 		else if (content.getPostComNum() == 2) {
 			//内容
@@ -191,8 +187,22 @@ public class UserTwoAdapter extends BaseAdapter {
 			//设置图片
 			initGridView(content.getPicture(), holder);
 			//设置诗词
-			holder.poemName.setText(content.getPoem().getTitle());
-			holder.poemQuote.setText(content.getPoem().getContent());
+			holder.poemName.setText(content.getPoemName());
+			holder.poemQuote.setText(content.getPoemContent());
+			holder.linearPoem.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Toast.makeText(mContext, "跳转诗词", Toast.LENGTH_SHORT).show();
+				}
+			});
+			holder.content.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Toast.makeText(mContext, "跳转详情", Toast.LENGTH_SHORT).show();
+				}
+			});
 		} 
 		else if (content.getPostComNum() == 3) {
 			//内容
@@ -200,6 +210,13 @@ public class UserTwoAdapter extends BaseAdapter {
 			//设置图片
 			initGridView(content.getPicture(), holder);
 			holder.linearPoem.setVisibility(View.GONE);
+			holder.content.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Toast.makeText(mContext, "跳转详情", Toast.LENGTH_SHORT).show();
+				}
+			});
 		} 
 		else if (content.getPostComNum() == 4) {
 			holder.content.setVisibility(View.GONE);
@@ -212,6 +229,16 @@ public class UserTwoAdapter extends BaseAdapter {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					
+				}
+			});
+			//设置诗词
+			holder.poemName.setText(content.getPoemName());
+			holder.poemQuote.setText(content.getPoemContent());
+			holder.linearPoem.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Toast.makeText(mContext, "跳转诗词", Toast.LENGTH_SHORT).show();
 				}
 			});
 		}

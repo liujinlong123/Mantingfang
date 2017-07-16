@@ -1,5 +1,7 @@
 package com.android.mantingfanggsc;
 
+import com.android.mantingfang.third.Comment;
+import com.android.mantingfang.third.CommentMain;
 import com.android.mantingfang.third.UserPager;
 
 import android.content.Context;
@@ -21,6 +23,11 @@ public class UIHelper {
 		context.startActivity(intent);
 	}
 	
+	/**
+	 * 显示用户详情
+	 * @param context
+	 * @param flag
+	 */
 	public static void showUserDetail(Context context, int flag) {
 		Intent intent = new Intent(context, UserPager.class);
 		intent.putExtra("flag", flag);
@@ -64,6 +71,30 @@ public class UIHelper {
 	 */
 	public static void showSearch(Context context) {
 		Intent intent = new Intent(context, Search.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
+	}
+	
+	/**
+	 * 显示评论页
+	 * @param context
+	 * @param flag
+	 */
+	public static void showComment(Context context, int flag) {
+		Intent intent = new Intent(context, Comment.class);
+		intent.putExtra("flag", flag);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
+	}
+	
+	/**
+	 * 显示评论Main页
+	 * @param context
+	 * @param flag
+	 */
+	public static void showCommentMain(Context context, int flag) {
+		Intent intent = new Intent(context, CommentMain.class);
+		intent.putExtra("flag", flag);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 	}

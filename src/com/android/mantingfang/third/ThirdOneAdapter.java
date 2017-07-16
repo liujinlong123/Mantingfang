@@ -138,7 +138,7 @@ public class ThirdOneAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(mContext, "Ìø×ªÏêÇé", Toast.LENGTH_SHORT).show();
+				UIHelper.showCommentMain(mContext, 0);
 			}
 		});
 		
@@ -157,8 +157,7 @@ public class ThirdOneAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
+				UIHelper.showComment(mContext, 0);
 			}
 		});
 		
