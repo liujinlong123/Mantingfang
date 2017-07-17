@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class StringUtils {
 	
 
@@ -90,6 +92,11 @@ public class StringUtils {
     	
     }
     
+    /**
+     * 获取图片路径List
+     * @param pic
+     * @return
+     */
     public static ArrayList<String> getPictures(String pic) {
     	ArrayList<String> pictures = new ArrayList<>();
     	String[] tokens = pic.split("[ ]");
@@ -98,6 +105,21 @@ public class StringUtils {
     	}
     	
     	return pictures;
+    }
+    
+    /**
+     * 对UserTwoPager界面二中返回数据处理
+     * @param result
+     * @return
+     */
+    public static String[] getUserTopic(String result) {
+    	if (result != null && !result.equals("")) {
+    		String[] tokens = result.split("[&&]");
+    		Log.v("token[0]", tokens[0]);
+    		Log.v("token[0]", tokens[1]);
+    		return tokens;
+    	}
+    	return null;
     }
 
 }

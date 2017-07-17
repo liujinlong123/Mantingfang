@@ -2,63 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/white" >
     
-	<LinearLayout
+	<ScrollView
 	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:orientation="vertical" >
+	    android:layout_height="wrap_content"
+	    android:scrollbars="none" >
 	    
-	    <TextView
-	        android:layout_width="wrap_content"
+	    <LinearLayout
+	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:text="3"
-	        android:textSize="50sp" />
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="3"
-	        android:textSize="50sp" />
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="3"
-	        android:textSize="50sp" />
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="3"
-	        android:textSize="50sp" />
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="3"
-	        android:textSize="50sp" />
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="3"
-	        android:textSize="50sp" />
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="3"
-	        android:textSize="50sp" />
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="3"
-	        android:textSize="50sp" />
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="3"
-	        android:textSize="50sp" />
-	    <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="3"
-	        android:textSize="50sp" />
-	</LinearLayout>
+	        android:orientation="vertical" >
+	        <TextView
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="个人信息"
+	            android:textColor="@color/red"
+	            android:layout_margin="5dp" />
+	        
+	        <TextView
+	            android:id="@+id/user_tv_age"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="年龄: 17岁"
+	            android:layout_marginLeft="20dp"
+	            android:layout_marginRight="20dp" />
+	        
+	        <TextView
+	            android:id="@+id/user_tv_sex"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="性别: 男"
+	            android:layout_marginLeft="20dp"
+	            android:layout_marginRight="20dp" />
+	        
+	        <TextView
+	            android:id="@+id/user_tv_area"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="地区: 山西太原"
+	            android:layout_marginLeft="20dp"
+	            android:layout_marginRight="20dp" />
+	        
+	        <TextView
+	            android:id="@+id/user_tv_label"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="个性签名: 我要做普京"
+	            android:layout_marginLeft="20dp"
+	            android:layout_marginRight="20dp" />
+	        
+	        <LinearLayout
+	            android:id="@+id/user_linear_intro"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
+	            
+	            <TextView
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:text="个人介绍"
+	                android:textColor="@color/red"
+	                android:layout_margin="5dp" />
+	            
+	            <TextView
+	                android:id="@+id/user_tv_intro"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:text="我出生在火星"
+	                android:layout_marginLeft="20dp"
+	           		android:layout_marginRight="20dp" />
+	        </LinearLayout>
+	        
+	    </LinearLayout>
+	</ScrollView>
     
 </LinearLayout>

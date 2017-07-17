@@ -47,9 +47,14 @@ public class UIHelper {
 	 * @param context
 	 * @param flag
 	 */
-	public static void showUserDetail(Context context, int flag) {
+	public static void showUserDetail(Context context, int flag, String userId, String headPath, String nickName) {
 		Intent intent = new Intent(context, UserPager.class);
 		intent.putExtra("flag", flag);
+		Bundle bundle = new Bundle();
+		bundle.putString("userId", userId);
+		bundle.putString("headPath", headPath);
+		bundle.putString("nickName", nickName);
+		intent.putExtras(bundle);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 	}

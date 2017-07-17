@@ -22,9 +22,9 @@ public class ThirdOneAdapter extends BaseAdapter {
 
 	private Context mContext;
 	private LayoutInflater inflater;
-	private List<ThirdOneContent> list;
+	private List<UserTwoContent> list;
 	
-	public ThirdOneAdapter(Context context, List<ThirdOneContent> list) {
+	public ThirdOneAdapter(Context context, List<UserTwoContent> list) {
 		this.list = list;
 		mContext = context;
 		inflater = LayoutInflater.from(context);
@@ -72,7 +72,7 @@ public class ThirdOneAdapter extends BaseAdapter {
 			holder = (ViewHolder)view.getTag();
 		}
 		
-		ThirdOneContent content = list.get(position);
+		UserTwoContent content = list.get(position);
 		initViews(content, holder, view);
 		
 		return view;
@@ -104,7 +104,7 @@ public class ThirdOneAdapter extends BaseAdapter {
 		ImageView share;
 	}
 
-	private void initViews(ThirdOneContent content, ViewHolder holder, final View view) {
+	private void initViews(final UserTwoContent content, ViewHolder holder, final View view) {
 		//…Ë÷√Õ∑œÒ
 		String path = content.getHeadPath();
 		
@@ -127,7 +127,7 @@ public class ThirdOneAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				UIHelper.showUserDetail(mContext, 0);
+				UIHelper.showUserDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
 			}
 		});
 		

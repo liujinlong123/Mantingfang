@@ -9,12 +9,18 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class CommentMain extends Activity {
+	
+	private LinearLayout linearBack;
+	private TextView theme_bg;
 	
 	private ListView listview;
 	private UserTwoAdapter adapter;
@@ -72,6 +78,17 @@ public class CommentMain extends Activity {
 		adapterTwo = new CommentAdapter(this, dataListTwo);
 		listTwo.setAdapter(adapterTwo);
 		setListViewHeightBasedOnChildren(listTwo);
+		
+		linearBack = (LinearLayout)findViewById(R.id.topbar_all_back);
+		theme_bg = (TextView)findViewById(R.id.topbar_tv_theme);
+		linearBack.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+		theme_bg.setText("Ьћзг");
 	}
 
 	/**

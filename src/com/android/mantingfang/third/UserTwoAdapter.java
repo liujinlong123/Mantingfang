@@ -3,21 +3,28 @@ package com.android.mantingfang.third;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
+import com.android.mantingfang.bean.PoetryList;
+import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.model.PoemM;
 import com.android.mantingfang.second.KindGridView;
-import com.android.mantingfang.third.ThirdOneAdapter.ViewHolder;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
+import com.android.mantingfanggsc.UIHelper;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class UserTwoAdapter extends BaseAdapter {
 
@@ -68,13 +75,15 @@ public class UserTwoAdapter extends BaseAdapter {
 			holder.zan = (ImageView) view.findViewById(R.id.third_pager_one_zan);
 			holder.comment = (ImageView) view.findViewById(R.id.third_pager_one_comment);
 			holder.share = (ImageView) view.findViewById(R.id.third_pager_one_share);
+			
+			view.setTag(holder);
 		} else {
 			view = convertView;
 			holder = (ViewHolder) view.getTag();
 		}
 
 		UserTwoContent content = list.get(position);
-		//initViews(content, holder, view);
+		initViews(content, holder, view);
 
 		return view;
 	}
@@ -109,24 +118,14 @@ public class UserTwoAdapter extends BaseAdapter {
 		ImageView share;
 	}
 
-	private void initViews(UserTwoContent content, ViewHolder holder, View view) {
+	private void initViews(final UserTwoContent content, final ViewHolder holder, View view) {
 		// 相同部分
 		String path = content.getHeadPath();
 
 		// 昵称
 		//holder.userName.setText(content.getName());
 		// 时间
-		//holder.time.setText(content.getTime());
-
-		// 头像点击事件
-		holder.linearHead.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(mContext, UserPager.class);
-				mContext.startActivity(intent);
-			}
-		});
+		holder.time.setText(content.getTime());
 
 		// 点赞按钮点击时间
 		holder.zan.setOnClickListener(new OnClickListener() {
@@ -166,18 +165,12 @@ public class UserTwoAdapter extends BaseAdapter {
 			//设置诗词
 			holder.poemName.setText(content.getPoemName());
 			holder.poemQuote.setText(content.getPoemContent());
-			holder.linearPoem.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					Toast.makeText(mContext, "跳转诗词", Toast.LENGTH_SHORT).show();
-				}
-			});
+			holder.linearPoem.setVisibility(View.GONE);
 			holder.content.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					Toast.makeText(mContext, "跳转详情", Toast.LENGTH_SHORT).show();
+					UIHelper.showCommentMain(mContext, 0);
 				}
 			});
 		} 
@@ -193,14 +186,14 @@ public class UserTwoAdapter extends BaseAdapter {
 
 				@Override
 				public void onClick(View v) {
-					Toast.makeText(mContext, "跳转诗词", Toast.LENGTH_SHORT).show();
+					getData(content.getPoemId(), holder);
 				}
 			});
 			holder.content.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					Toast.makeText(mContext, "跳转详情", Toast.LENGTH_SHORT).show();
+					UIHelper.showCommentMain(mContext, 0);
 				}
 			});
 		} 
@@ -214,7 +207,7 @@ public class UserTwoAdapter extends BaseAdapter {
 
 				@Override
 				public void onClick(View v) {
-					Toast.makeText(mContext, "跳转详情", Toast.LENGTH_SHORT).show();
+					UIHelper.showCommentMain(mContext, 0);
 				}
 			});
 		} 
@@ -238,7 +231,7 @@ public class UserTwoAdapter extends BaseAdapter {
 
 				@Override
 				public void onClick(View v) {
-					Toast.makeText(mContext, "跳转诗词", Toast.LENGTH_SHORT).show();
+					getData(content.getPoemId(), holder);
 				}
 			});
 		}
@@ -253,4 +246,33 @@ public class UserTwoAdapter extends BaseAdapter {
 		}
 	}
 
+	private void getData(final String poem_id, final ViewHolder holder) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+
+				return MyClient.getInstance().http_postPoem(poem_id);
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				Log.v("TEST", result);
+				final List<PoemM> poemList;
+				try {
+					poemList = PoetryList.parsePoem(StringUtils.toJSONArray(result)).getPoemMList();
+					if (poemList != null) {
+
+						UIHelper.showPoemMDetail(mContext, poemList.get(0), 0);
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		};
+
+		task.execute();
+	}
 }

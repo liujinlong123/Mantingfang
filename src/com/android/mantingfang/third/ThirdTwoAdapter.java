@@ -117,7 +117,7 @@ public class ThirdTwoAdapter extends BaseAdapter {
 	private void initViews(final UserTwoContent content, final ViewHolder holder) {
 		// 设置头像
 		// String path = content.getHeadPath();
-
+		Log.v("userid", content.getUserId());
 		// 昵称
 		holder.userName.setText(content.getName());
 		// 时间
@@ -135,7 +135,7 @@ public class ThirdTwoAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				UIHelper.showUserDetail(mContext, 0);
+				UIHelper.showUserDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
 			}
 		});
 

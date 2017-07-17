@@ -140,7 +140,7 @@ public class ThirdFourAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				UIHelper.showUserDetail(mContext, 0);
+				UIHelper.showUserDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
 			}
 		});
 		

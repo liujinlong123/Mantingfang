@@ -35,7 +35,7 @@ public class ThirdOnePager extends Fragment {
 	private View view;
 	private CustomListView thirdOneListView;
 	private ThirdOneAdapter adapterOne;
-	private List<ThirdOneContent> listOne;
+	private List<UserTwoContent> listOne;
 
 	@SuppressLint("InflateParams")
 	@Override
@@ -64,7 +64,7 @@ public class ThirdOnePager extends Fragment {
 					//Log.v("reponse--str-----", str);
 				}
 				try {
-					listOne = (List<ThirdOneContent>) (TopicList.parseOne(StringUtils.toJSONArray(str), 1)
+					listOne = (List<UserTwoContent>) (TopicList.parseOne(StringUtils.toJSONArray(str), 1)
 							.getTopicList());
 
 					thirdOneListView = (CustomListView) view.findViewById(R.id.third_pager_one_listview);

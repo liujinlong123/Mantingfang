@@ -107,7 +107,7 @@ public class ThirdThreeAdapter extends BaseAdapter {
 		ImageView share;
 	}
 	
-	private void initViews(UserTwoContent content, ViewHolder holder) {
+	private void initViews(final UserTwoContent content, ViewHolder holder) {
 		// …Ë÷√Õ∑œÒ
 		String path = content.getHeadPath();
 
@@ -130,7 +130,7 @@ public class ThirdThreeAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				UIHelper.showUserDetail(mContext, 0);
+				UIHelper.showUserDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
 			}
 		});
 

@@ -106,7 +106,7 @@ public final class R {
         public static final int zan_s=0x7f020045;
     }
     public static final class id {
-        public static final int action_settings=0x7f0900b2;
+        public static final int action_settings=0x7f0900b8;
         public static final int bottom_linear_shiyou=0x7f09003e;
         public static final int bottom_linear_wenku=0x7f09003b;
         public static final int bottom_linear_wode=0x7f090041;
@@ -259,6 +259,7 @@ public final class R {
         public static final int topbar_tv_theme=0x7f090086;
         public static final int user_head_linear=0x7f09009f;
         public static final int user_linear_height=0x7f0900a5;
+        public static final int user_linear_intro=0x7f0900ad;
         public static final int user_one_list_cancel=0x7f09009e;
         public static final int user_one_list_name=0x7f09009b;
         public static final int user_one_list_poemrhesis=0x7f09009c;
@@ -276,15 +277,20 @@ public final class R {
         public static final int user_pager_rgp1=0x7f0900a0;
         public static final int user_pager_scrollView=0x7f0900a4;
         public static final int user_pager_view_pager=0x7f0900a8;
-        public static final int user_two_listview=0x7f0900a9;
-        public static final int writerdetail_item_two_kind=0x7f0900b0;
-        public static final int writerdetail_item_two_poemname=0x7f0900af;
-        public static final int writerdetail_item_two_rhesis=0x7f0900b1;
-        public static final int writerdetail_listview=0x7f0900aa;
-        public static final int writerdetail_one_tv_detail=0x7f0900ad;
-        public static final int writerdetail_one_tv_themename=0x7f0900ac;
-        public static final int writerdetail_one_tv_writername=0x7f0900ab;
-        public static final int writerdetail_one_works=0x7f0900ae;
+        public static final int user_tv_age=0x7f0900a9;
+        public static final int user_tv_area=0x7f0900ab;
+        public static final int user_tv_intro=0x7f0900ae;
+        public static final int user_tv_label=0x7f0900ac;
+        public static final int user_tv_sex=0x7f0900aa;
+        public static final int user_two_listview=0x7f0900af;
+        public static final int writerdetail_item_two_kind=0x7f0900b6;
+        public static final int writerdetail_item_two_poemname=0x7f0900b5;
+        public static final int writerdetail_item_two_rhesis=0x7f0900b7;
+        public static final int writerdetail_listview=0x7f0900b0;
+        public static final int writerdetail_one_tv_detail=0x7f0900b3;
+        public static final int writerdetail_one_tv_themename=0x7f0900b2;
+        public static final int writerdetail_one_tv_writername=0x7f0900b1;
+        public static final int writerdetail_one_works=0x7f0900b4;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

@@ -5,6 +5,13 @@
     android:orientation="vertical"
     android:background="@color/white" >
 
+    <include layout="@layout/topbar_all"/>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray" />
+    
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"

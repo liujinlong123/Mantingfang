@@ -3,18 +3,15 @@ package com.android.mantingfang.third;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.R;
-import com.android.mantingfanggsc.UIHelper;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -22,6 +19,9 @@ import android.widget.TextView;
 
 public class Comment extends Activity {
 
+	private LinearLayout linearBack;
+	private TextView theme_bg;
+	
 	private ListView listTv;
 	private CommentTextAdapter adapterTv;
 	private List<String> dataListTv;
@@ -66,6 +66,20 @@ public class Comment extends Activity {
 		adapterTwo = new CommentAdapter(this, dataListTwo);
 		listTwo.setAdapter(adapterTwo);
 		setListViewHeightBasedOnChildren(listTwo);
+		
+		linearBack = (LinearLayout)findViewById(R.id.topbar_all_back);
+		theme_bg = (TextView)findViewById(R.id.topbar_tv_theme);
+		linearBack.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+		
+		theme_bg.setText("Ьћзг");
+		
+		
 	}
 	
 	/**

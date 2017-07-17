@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -36,11 +35,20 @@ public class UserPager extends FragmentActivity {
 	private LinearLayout linearHead;
 	private RadioGroup userRgp1;
 	
+	private String userId;
+	private String headPath;
+	private String nickName;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_pager);
+		
+		Bundle bundle = getIntent().getExtras();
+		userId = bundle.getString("userId");
+		headPath = bundle.getString("headPath");
+		nickName = bundle.getString("nickName");
 		
 		initViews();
 	}
@@ -178,6 +186,11 @@ public class UserPager extends FragmentActivity {
 
 		@Override
 		public Fragment getItem(int position) {
+			Bundle bundle = new Bundle();
+			bundle.putString("userId", userId);
+			bundle.putString("nickName", nickName);
+			bundle.putString("headPath", headPath);
+			fragmentList.get(position).setArguments(bundle);
 			return fragmentList.get(position);
 		}
 

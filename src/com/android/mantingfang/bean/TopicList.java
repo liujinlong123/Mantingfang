@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.mantingfang.third.ThirdOneContent;
 import com.android.mantingfang.third.UserTwoContent;
 
 import android.util.Log;
@@ -15,17 +14,19 @@ import android.util.Log;
 @SuppressWarnings("serial")
 public class TopicList extends Base {
 
-	private List<ThirdOneContent> topicList = new ArrayList<ThirdOneContent>();
+	private List<UserTwoContent> topicList = new ArrayList<UserTwoContent>();
 	private List<UserTwoContent> listTwo = new ArrayList<UserTwoContent>();
 	private List<UserTwoContent> listThree = new ArrayList<UserTwoContent>();
 	private List<UserTwoContent> listFour = new ArrayList<UserTwoContent>();
+	private List<UserTwoContent> listUser = new ArrayList<UserTwoContent>();
 	
 	private int topicCount;
 	private int topicTwoCount;
 	private int topicThreeCount;
 	private int topicFourCount;
+	private int userCount;
 	
-	public List<ThirdOneContent> getTopicList() {
+	public List<UserTwoContent> getTopicList() {
 		return topicList;
 	}
 	
@@ -39,6 +40,10 @@ public class TopicList extends Base {
 	
 	public List<UserTwoContent> getTopicFour() {
 		return listFour;
+	}
+	
+	public List<UserTwoContent> getUserList() {
+		return listUser;
 	}
 	
 	public int getTopicCount() {
@@ -57,6 +62,10 @@ public class TopicList extends Base {
 		return topicFourCount;
 	}
 	
+	public int getUserCount() {
+		return userCount;
+	}
+	
 	/**
 	 * Topic--One
 	 * @param obj
@@ -72,7 +81,7 @@ public class TopicList extends Base {
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
 				Log.v("TEST", jo.toString());
-				ThirdOneContent content = new ThirdOneContent(
+				UserTwoContent content = new UserTwoContent(
 						jo.getString("topic_user_id"),
 						jo.getString("user_photo"),
 						jo.getString("user_nickname"),
@@ -80,7 +89,11 @@ public class TopicList extends Base {
 						jo.getString("topic_content"),
 						StringUtils.getPictures(jo.getString("topic_picture")),
 						null,
-						topic_num,
+						null,
+						null,
+						null,
+						false,
+						1,
 						Integer.parseInt(jo.getString("topic_id")));
 				
 				tList.topicList.add(content);
@@ -160,6 +173,12 @@ public class TopicList extends Base {
 		return tList;
 	}
 	
+	/**
+	 * ½çÃæËÄ
+	 * @param obj
+	 * @return
+	 * @throws JSONException
+	 */
 	public static TopicList parseFour(JSONArray obj) throws JSONException {
 		TopicList tList = new TopicList();
 		if (obj != null) {
@@ -187,4 +206,87 @@ public class TopicList extends Base {
 		}
 		
 		return tList;
-	}}
+	}
+	
+	public static TopicList parseUser(JSONArray obj, String userId, String headPath, String nickName) throws JSONException {
+		TopicList tList = new TopicList();
+		if (obj != null) {
+			tList.userCount = obj.length();
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				Log.v("JO", jo.toString());
+				String topicTime = jo.optString("topic_time");
+				String noteTime = jo.optString("note_time");
+				String originalTime = jo.optString("original_time");
+				String audioTime = jo.optString("audio_time");
+				UserTwoContent content = null;
+				if (topicTime != null && !topicTime.equals("")) {
+					content = new UserTwoContent(
+							"",
+							"",
+							"",
+							jo.getString("topic_time"),
+							jo.getString("topic_content"),
+							StringUtils.getPictures(jo.getString("topic_picture")),
+							null,
+							null,
+							null,
+							null,
+							false,
+							1,
+							Integer.parseInt(jo.getString("topic_id")));
+				} else if (noteTime != null && !noteTime.equals("")) {
+					content = new UserTwoContent(
+							"",
+							"",
+							"",
+							jo.getString("note_time"),
+							jo.getString("note_content"),
+							StringUtils.getPictures(jo.getString("note_picture")),
+							null,
+							jo.getString("note_poem_id"),
+							jo.getString("poetry_content"),
+							jo.getString("poetry_name"),
+							false,
+							2,
+							Integer.parseInt(jo.getString("note_id")));
+				} else if (originalTime != null && !originalTime.equals("")) {
+					content = new UserTwoContent(
+							"",
+							"",
+							"",
+							jo.getString("original_time"),
+							jo.getString("original_content"),
+							StringUtils.getPictures(jo.getString("original_picture")),
+							null,
+							null,
+							null,
+							null,
+							false,
+							3,
+							Integer.parseInt(jo.getString("original_id")));
+				} else if (audioTime != null && !audioTime.equals("")) {
+					content = new UserTwoContent(
+							"",
+							"",
+							"",
+							jo.getString("audio_time"),
+							null,
+							null,
+							jo.getString("audio_content"),
+							jo.getString("audio_poem_id"),
+							jo.getString("poetry_content"),
+							jo.getString("poetry_name"),
+							false,
+							4,
+							Integer.parseInt(jo.getString("audio_id")));
+				}
+				
+				tList.listUser.add(content);
+				Log.v("TEST" + content.getPostComNum(), content.getTime());
+			}
+		}
+		
+		return tList;
+	}
+}
