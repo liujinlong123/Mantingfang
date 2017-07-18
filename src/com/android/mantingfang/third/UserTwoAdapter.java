@@ -170,7 +170,7 @@ public class UserTwoAdapter extends BaseAdapter {
 
 				@Override
 				public void onClick(View v) {
-					UIHelper.showCommentMain(mContext, 0);
+					UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "");
 				}
 			});
 		} 
@@ -193,7 +193,7 @@ public class UserTwoAdapter extends BaseAdapter {
 
 				@Override
 				public void onClick(View v) {
-					UIHelper.showCommentMain(mContext, 0);
+					UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "");
 				}
 			});
 		} 
@@ -207,7 +207,7 @@ public class UserTwoAdapter extends BaseAdapter {
 
 				@Override
 				public void onClick(View v) {
-					UIHelper.showCommentMain(mContext, 0);
+					UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "");
 				}
 			});
 		} 

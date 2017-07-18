@@ -2,7 +2,10 @@ package com.android.mantingfang.third;
 
 import java.util.ArrayList;
 
-public class UserTwoContent {
+import com.android.mantingfang.bean.Base;
+
+@SuppressWarnings("serial")
+public class UserTwoContent extends Base {
 	private String userId;		//”√ªßid
 	private String headPath;	//Õ∑œÒ
 	private String name;		//Í«≥∆

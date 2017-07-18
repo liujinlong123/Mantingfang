@@ -143,4 +143,34 @@ public class MyClient {
 		}
 		return null;
 	}
+	
+	/**
+	 * 获取评论数据
+	 * @param tpye_num
+	 * @param post_id
+	 * @return
+	 */
+	public String Http_postComment(String tpye_num, String post_id) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchcomment.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("type_num", "1"));
+			param.add(new BasicNameValuePair("post_id", "1"));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("AAAA", response);
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

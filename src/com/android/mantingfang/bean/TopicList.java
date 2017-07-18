@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.mantingfang.third.CommentContent;
 import com.android.mantingfang.third.UserTwoContent;
 
 import android.util.Log;
@@ -19,12 +20,14 @@ public class TopicList extends Base {
 	private List<UserTwoContent> listThree = new ArrayList<UserTwoContent>();
 	private List<UserTwoContent> listFour = new ArrayList<UserTwoContent>();
 	private List<UserTwoContent> listUser = new ArrayList<UserTwoContent>();
+	private List<CommentContent> listComment = new ArrayList<CommentContent>();
 	
 	private int topicCount;
 	private int topicTwoCount;
 	private int topicThreeCount;
 	private int topicFourCount;
 	private int userCount;
+	private int commentCount;
 	
 	public List<UserTwoContent> getTopicList() {
 		return topicList;
@@ -46,6 +49,10 @@ public class TopicList extends Base {
 		return listUser;
 	}
 	
+	public List<CommentContent> getCommentList() {
+		return listComment;
+	}
+	
 	public int getTopicCount() {
 		return topicCount;
 	}
@@ -64,6 +71,10 @@ public class TopicList extends Base {
 	
 	public int getUserCount() {
 		return userCount;
+	}
+	
+	public int getCommentCount() {
+		return commentCount;
 	}
 	
 	/**
@@ -208,6 +219,15 @@ public class TopicList extends Base {
 		return tList;
 	}
 	
+	/**
+	 * 解析User界面数据
+	 * @param obj
+	 * @param userId
+	 * @param headPath
+	 * @param nickName
+	 * @return
+	 * @throws JSONException
+	 */
 	public static TopicList parseUser(JSONArray obj, String userId, String headPath, String nickName) throws JSONException {
 		TopicList tList = new TopicList();
 		if (obj != null) {
@@ -284,6 +304,29 @@ public class TopicList extends Base {
 				
 				tList.listUser.add(content);
 				Log.v("TEST" + content.getPostComNum(), content.getTime());
+			}
+		}
+		
+		return tList;
+	}
+	
+	public static TopicList parseComment(JSONArray obj, String topicId, String topicNum) throws JSONException {
+		TopicList tList = new TopicList();
+		if (obj != null) {
+			tList.topicThreeCount = obj.length();
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				CommentContent content = new CommentContent(
+						topicId,
+						topicNum,
+						jo.getString("user_photo"),
+						jo.getString("user_nickname"),
+						jo.getString("comment_time"),
+						jo.getString("comment_content"),
+						jo.getString("comment_user_id"));
+				
+				tList.listComment.add(content);
+				Log.v("Test", content.getContent());
 			}
 		}
 		

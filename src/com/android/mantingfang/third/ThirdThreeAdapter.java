@@ -139,7 +139,7 @@ public class ThirdThreeAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				UIHelper.showCommentMain(mContext, 0);
+				UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "");
 			}
 		});
 
@@ -167,7 +167,7 @@ public class ThirdThreeAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				UIHelper.showComment(mContext, 0);
+				UIHelper.showComment(mContext, 0, content.getPostComPId() + "", content.getPostComNum() + "");
 
 			}
 		});

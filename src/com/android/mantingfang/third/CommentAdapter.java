@@ -61,6 +61,15 @@ public class CommentAdapter extends BaseAdapter {
 		
 		
 		//对此处理
+		CommentContent content = list.get(position);
+		
+		if (content.getName() != null && content.getHeadPath() != null && content.getTime() != null && content.getContent() != null) {
+			holder.tvName.setText(content.getName());
+			holder.time.setText(content.getTime());
+			holder.content.setText(content.getContent());
+		}
+		
+		
 		return view;
 	}
 	

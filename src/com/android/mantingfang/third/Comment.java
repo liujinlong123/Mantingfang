@@ -3,9 +3,15 @@ package com.android.mantingfang.third;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
+import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,14 +48,15 @@ public class Comment extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.comment);
 		
+		Bundle bundle = getIntent().getExtras();
+		initViews(bundle.getString("topicId"), bundle.getString("typeNum"));
+	}
+	
+	private void initViews(String topicId, String typeNum) {
 		listOne = (ListView)findViewById(R.id.comment_better);
-		dataListOne = new ArrayList<>();
-		for (int i = 1; i < 10; i++) {
-			dataListOne.add(new CommentContent());
-		}
-		adapterOne = new CommentAdapter(this, dataListOne);
-		listOne.setAdapter(adapterOne);
-		setListViewHeightBasedOnChildren(listOne);
+		listTwo = (ListView)findViewById(R.id.comment_new);
+		linearBack = (LinearLayout)findViewById(R.id.topbar_all_back);
+		theme_bg = (TextView)findViewById(R.id.topbar_tv_theme);
 		
 		listTv = (ListView)findViewById(R.id.comment_tv_better);
 		dataListTv = new ArrayList<>();
@@ -58,17 +65,8 @@ public class Comment extends Activity {
 		listTv.setAdapter(adapterTv);
 		listTv.setEnabled(false);
 		
-		listTwo = (ListView)findViewById(R.id.comment_new);
-		dataListTwo = new ArrayList<>();
-		for (int i = 1; i < 10; i++) {
-			dataListTwo.add(new CommentContent());
-		}
-		adapterTwo = new CommentAdapter(this, dataListTwo);
-		listTwo.setAdapter(adapterTwo);
-		setListViewHeightBasedOnChildren(listTwo);
+		getData(topicId, typeNum);
 		
-		linearBack = (LinearLayout)findViewById(R.id.topbar_all_back);
-		theme_bg = (TextView)findViewById(R.id.topbar_tv_theme);
 		linearBack.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -76,10 +74,42 @@ public class Comment extends Activity {
 				finish();
 			}
 		});
-		
 		theme_bg.setText("Ьћзг");
+	}
+	
+	private void getData(final String topicId, final String typeNum) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_postComment(typeNum, topicId);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				dataListOne = new ArrayList<>();
+				try {
+					dataListOne = TopicList.parseComment(StringUtils.toJSONArray(result), topicId, typeNum).getCommentList();
+					dataListTwo = TopicList.parseComment(StringUtils.toJSONArray(result), topicId, typeNum).getCommentList();
+					
+					
+					adapterOne = new CommentAdapter(Comment.this, dataListOne);
+					listOne.setAdapter(adapterOne);
+					setListViewHeightBasedOnChildren(listOne);
+					
+					adapterTwo = new CommentAdapter(Comment.this, dataListTwo);
+					listTwo.setAdapter(adapterTwo);
+					setListViewHeightBasedOnChildren(listTwo);
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		};
 		
-		
+		task.execute();
 	}
 	
 	/**

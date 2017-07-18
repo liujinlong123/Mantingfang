@@ -5,6 +5,7 @@ import com.android.mantingfang.third.Comment;
 import com.android.mantingfang.third.CommentMain;
 import com.android.mantingfang.third.PoemMDetail;
 import com.android.mantingfang.third.UserPager;
+import com.android.mantingfang.third.UserTwoContent;
 
 import android.content.Context;
 import android.content.Intent;
@@ -104,9 +105,13 @@ public class UIHelper {
 	 * @param context
 	 * @param flag
 	 */
-	public static void showComment(Context context, int flag) {
+	public static void showComment(Context context, int flag, String topicId, String typeNum) {
 		Intent intent = new Intent(context, Comment.class);
 		intent.putExtra("flag", flag);
+		Bundle bundle = new Bundle();
+		bundle.putString("topicId", topicId);
+		bundle.putString("typeNum", typeNum);
+		intent.putExtras(bundle);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 	}
@@ -116,9 +121,14 @@ public class UIHelper {
 	 * @param context
 	 * @param flag
 	 */
-	public static void showCommentMain(Context context, int flag) {
+	public static void showCommentMain(Context context, int flag, UserTwoContent content, String topicId, String typeNum) {
 		Intent intent = new Intent(context, CommentMain.class);
 		intent.putExtra("flag", flag);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("commentM", content);
+		bundle.putString("topicId", topicId);
+		bundle.putString("typeNum", typeNum);
+		intent.putExtras(bundle);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 	}
