@@ -14,10 +14,10 @@
     
     
     <ImageView
-        android:id="@+id/topbar_third_search"
+        android:id="@+id/topbar_third_addInfo"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/search"
+        android:src="@drawable/add_info"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_centerHorizontal="true"

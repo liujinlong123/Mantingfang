@@ -13,5 +13,12 @@
     <string name="p2refresh_doing_head_refresh">正在刷新</string>
     <string name="p2refresh_doing_end_refresh">加载中</string>
     <string name="p2refresh_refresh_lasttime">最近更新</string>
+    
+    <array name="item_irdc_dialog">
+        <item>话题</item>
+        <item>笔记</item>
+        <item>原创</item>
+        <item>朗读</item>
+    </array>
 
 </resources>
