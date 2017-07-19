@@ -74,7 +74,11 @@ public class FragmentThird extends Fragment {
 
 			@Override
 			public void onClick(View v) {
+<<<<<<< HEAD
 				new AlertDialog.Builder(getActivity()).setTitle("é€‰æ‹©")
+=======
+				new AlertDialog.Builder(getActivity()).setTitle("Ñ¡Ôñ")
+>>>>>>> origin/master
 						.setItems(R.array.item_irdc_dialog, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int whichcountry) {
 								Log.v("Button", whichcountry + "");
