@@ -58,7 +58,7 @@ public class PoetryList extends Base {
 	}
 	
 	/**
-	 * »ñÈ¡Ê«´Ê
+	 * param poem
 	 * @param obj
 	 * @return
 	 * @throws JSONException
@@ -80,8 +80,8 @@ public class PoetryList extends Base {
 						jo.getString("info_background"),
 						jo.getString("writer_career"),
 						jo.getString("poetry_note"),
-						jo.getString("info_tonow"),		//ÒëÎÄ
-						null,							//·­Òë
+						jo.getString("info_tonow"),		//ï¿½ï¿½ï¿½ï¿½
+						null,							//ï¿½ï¿½ï¿½ï¿½
 						jo.getString("info_praise"));
 				
 				pList.poemList.add(p);

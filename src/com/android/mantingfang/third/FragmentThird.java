@@ -6,17 +6,22 @@ import java.util.List;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 
 @SuppressLint("ResourceAsColor")
@@ -24,7 +29,7 @@ public class FragmentThird extends Fragment {
 
 	private View view;
 	private ViewPager viewPager;
-	//private RadioGroup btnTeam;
+	// private RadioGroup btnTeam;
 	private RadioButton btnOne;
 	private RadioButton btnTwo;
 	private RadioButton btnThree;
@@ -34,42 +39,57 @@ public class FragmentThird extends Fragment {
 	private Fragment pagerTwo;
 	private Fragment pagerThree;
 	private Fragment pagerFour;
-	
+	private ImageView imgAdd;
+
 	@SuppressLint("InflateParams")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (view == null) {
 			view = inflater.inflate(R.layout.frag_third_pager, null);
-			
+
 			initViews();
 			initViewPager();
-			
+
 			return view;
 		}
-		
+
 		return view;
 	}
-	
+
 	private void initViews() {
-		viewPager = (ViewPager)view.findViewById(R.id.third_view_pager);
-		//btnTeam = (RadioGroup)view.findViewById(R.id.third_head_radioGroup);
-		btnOne = (RadioButton)view.findViewById(R.id.third_head_one);
-		btnTwo = (RadioButton)view.findViewById(R.id.third_head_two);
-		btnThree = (RadioButton)view.findViewById(R.id.third_head_three);
-		btnFour = (RadioButton)view.findViewById(R.id.third_head_four);
-		
+		viewPager = (ViewPager) view.findViewById(R.id.third_view_pager);
+		// btnTeam = (RadioGroup)view.findViewById(R.id.third_head_radioGroup);
+		btnOne = (RadioButton) view.findViewById(R.id.third_head_one);
+		btnTwo = (RadioButton) view.findViewById(R.id.third_head_two);
+		btnThree = (RadioButton) view.findViewById(R.id.third_head_three);
+		btnFour = (RadioButton) view.findViewById(R.id.third_head_four);
+		imgAdd = (ImageView) view.findViewById(R.id.topbar_third_addInfo);
+
 		btnOne.setOnClickListener(new MyOnClickListener(0));
 		btnTwo.setOnClickListener(new MyOnClickListener(1));
 		btnThree.setOnClickListener(new MyOnClickListener(2));
 		btnFour.setOnClickListener(new MyOnClickListener(3));
+
+		imgAdd.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				new AlertDialog.Builder(getActivity()).setTitle("选择")
+						.setItems(R.array.item_irdc_dialog, new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichcountry) {
+								Log.v("Button", whichcountry + "");
+							}
+						}).show();
+			}
+		});
 	}
-	
+
 	private void initViewPager() {
 		pagerOne = new ThirdOnePager();
 		pagerTwo = new ThirdTwoPager();
 		pagerThree = new ThirdThreePager();
 		pagerFour = new ThirdFourPager();
-		
+
 		fragmentList.add(pagerOne);
 		fragmentList.add(pagerTwo);
 		fragmentList.add(pagerThree);
@@ -81,10 +101,10 @@ public class FragmentThird extends Fragment {
 		btnOne.setTextColor(Color.RED);
 		changeHeadSelectedState(0);
 	}
-	
+
 	private void changeHeadSelectedState(int currentPosition) {
 	}
-	
+
 	class HomePageAdapter extends android.support.v4.app.FragmentStatePagerAdapter {// FragmentPagerAdapter
 
 		// private FragmentManager fm;
@@ -114,68 +134,68 @@ public class FragmentThird extends Fragment {
 			return fragments.size();// hotIssuesList.size();
 		}
 	}
-	
+
 	public class MyOnClickListener implements View.OnClickListener {
 
 		private int index = 0;
-		
+
 		public MyOnClickListener(int i) {
 			index = i;
 		}
-		
+
 		@Override
 		public void onClick(View v) {
 			viewPager.setCurrentItem(index);
 		}
-		
+
 	}
-	
+
 	@SuppressLint("ResourceAsColor")
 	public class MyOnPageChangeListener implements OnPageChangeListener {
 
-        @SuppressLint("ResourceAsColor")
+		@SuppressLint("ResourceAsColor")
 		@Override
-        public void onPageSelected(int arg0) {
-            switch (arg0) {
-            case 0:
-                btnOne.setTextColor(Color.RED);
-                btnTwo.setTextColor(Color.BLACK);
-                btnThree.setTextColor(Color.BLACK);
-                btnFour.setTextColor(Color.BLACK);
-                
-                break;
-            case 1:
-            	btnOne.setTextColor(Color.BLACK);
-                btnTwo.setTextColor(Color.RED);
-                btnThree.setTextColor(Color.BLACK);
-                btnFour.setTextColor(Color.BLACK);
-                
-                break;
-                
-            case 2:
-            	btnOne.setTextColor(Color.BLACK);
-                btnTwo.setTextColor(Color.BLACK);
-                btnThree.setTextColor(Color.RED);
-                btnFour.setTextColor(Color.BLACK);
-            	
-            	break;
-            	
-            case 3:
-            	btnOne.setTextColor(Color.BLACK);
-                btnTwo.setTextColor(Color.BLACK);
-                btnThree.setTextColor(Color.BLACK);
-                btnFour.setTextColor(Color.RED);
-            	
-            	break;
-            }
-        }
+		public void onPageSelected(int arg0) {
+			switch (arg0) {
+			case 0:
+				btnOne.setTextColor(Color.RED);
+				btnTwo.setTextColor(Color.BLACK);
+				btnThree.setTextColor(Color.BLACK);
+				btnFour.setTextColor(Color.BLACK);
 
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-        }
+				break;
+			case 1:
+				btnOne.setTextColor(Color.BLACK);
+				btnTwo.setTextColor(Color.RED);
+				btnThree.setTextColor(Color.BLACK);
+				btnFour.setTextColor(Color.BLACK);
 
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-        }
-    }
+				break;
+
+			case 2:
+				btnOne.setTextColor(Color.BLACK);
+				btnTwo.setTextColor(Color.BLACK);
+				btnThree.setTextColor(Color.RED);
+				btnFour.setTextColor(Color.BLACK);
+
+				break;
+
+			case 3:
+				btnOne.setTextColor(Color.BLACK);
+				btnTwo.setTextColor(Color.BLACK);
+				btnThree.setTextColor(Color.BLACK);
+				btnFour.setTextColor(Color.RED);
+
+				break;
+			}
+		}
+
+		@Override
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
+		}
+
+		@Override
+		public void onPageScrollStateChanged(int arg0) {
+		}
+	}
 }

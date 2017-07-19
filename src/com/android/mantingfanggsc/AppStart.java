@@ -156,10 +156,10 @@ public class AppStart extends Activity {
 				}
 				
 				long endTime = System.currentTimeMillis();
-				Log.v("²åÈëÊ±¼ä", "------" + (endTime - startTime));
+				Log.v("æ—¶é—´", "------" + (endTime - startTime));
 				Toast.makeText(context, endTime - startTime + "", Toast.LENGTH_LONG).show();
 			} else if (msg.what == -1) {
-				Toast.makeText(context, "ÎÞÊý¾Ý", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 			}
 		}
 	};

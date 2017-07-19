@@ -117,25 +117,25 @@ public class ThirdFourAdapter extends BaseAdapter {
 	}
 
 	private void initViews(final UserTwoContent content, final ViewHolder holder) {
-		//ÉèÖÃÍ·Ïñ
+		//å¤´åƒè·¯å¾„
 		//String path = content.getHeadPath();
 		
 		
-		//êÇ³Æ
+		//ç”¨æˆ·æ˜µç§°
 		holder.userName.setText(content.getName());
-		//Ê±¼ä
+		//å‘è¡¨æ—¶é—´
 		holder.time.setText(content.getTime());
-		//ÄÚÈİ
+		//å‘è¡¨å†…å®¹
 		holder.content.setVisibility(View.GONE);
 		
 		holder.linearSound.setVisibility(View.VISIBLE);
-		//ÉèÖÃÍ¼Æ¬
+		//åˆå§‹åŒ–å›¾ç‰‡
 		//initGridView(content.getPicture(), holder);
-		//ÉèÖÃÊ«´Ê
+		//ç›¸å…³è¯—è¯
 		holder.poemName.setText(content.getPoemName());
 		holder.poemQuote.setText(content.getPoemContent());
 		
-		//Í·Ïñµã»÷ÊÂ¼ş
+		//è·³è½¬user
 		holder.linearHead.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -144,7 +144,7 @@ public class ThirdFourAdapter extends BaseAdapter {
 			}
 		});
 		
-		//contentµã»÷ÊÂ¼ş
+		//è·³è½¬è¯„è®ºé¡µ
 		holder.content.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -153,7 +153,7 @@ public class ThirdFourAdapter extends BaseAdapter {
 			}
 		});
 		
-		//Éæ¼°Ê«´Êµã»÷ÊÂ¼ş
+		//è·³è½¬è¯—è¯è¯¦æƒ…
 		holder.linearPoem.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -162,7 +162,7 @@ public class ThirdFourAdapter extends BaseAdapter {
 			}
 		});
 		
-		//µãÔŞ°´Å¥µã»÷Ê±¼ä
+		//èµ
 		holder.zan.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -172,7 +172,7 @@ public class ThirdFourAdapter extends BaseAdapter {
 			}
 		});
 		
-		//ÆÀÂÛ°´Å¥µã»÷ÊÂ¼ş
+		//è¯„è®º
 		holder.comment.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -181,7 +181,7 @@ public class ThirdFourAdapter extends BaseAdapter {
 			}
 		});
 		
-		//·ÖÏí°´Å¥µã»÷ÊÂ¼ş
+		//åˆ†äº«
 		holder.share.setOnClickListener(new OnClickListener() {
 			
 			@Override

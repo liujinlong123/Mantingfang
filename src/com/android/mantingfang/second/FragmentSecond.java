@@ -26,7 +26,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
@@ -35,12 +34,12 @@ public class FragmentSecond extends Fragment {
 
 	private View view;
 	
-	//ÎÄ¿â
+	//æ–‡åº“
 	private CustomListView wenkuListView;
 	private SecondWenkuListViewAdapter wenkuAdapter;
 	private List<KindContent> wenkuList;
 	
-	//Ê«ÈË
+	//è¯—äºº
 	private CustomListView writerListView;
 	private SecondWriterListViewAdapter writerAdapter;
 	private List<Writer> writers;
@@ -53,20 +52,20 @@ public class FragmentSecond extends Fragment {
 	
 	
 	/**
-	 * ºº×Ö×ª»»³ÉÆ´ÒôµÄÀà
+	 * 
 	 */
 	private CharacterParser characterParser;
 	private List<SortModel> SourceDateList;
 	
 	/**
-	 * ¸ù¾İÆ´ÒôÀ´ÅÅÁĞListViewÀïÃæµÄÊı¾İÀà
+	 * 
 	 */
 	private PinyinComparator pinyinComparator;
 	
-	//Ìø×ªËÑË÷
+	//æœç´¢
 	private ImageView imgSearch;
 	
-	//Ö÷½çÃæ
+	//é€‰æ‹©æŒ‰é’®
 	private RadioGroup radgp;
 	
 	@SuppressLint("InflateParams")
@@ -93,7 +92,7 @@ public class FragmentSecond extends Fragment {
 	}
 	
 	
-	//³õÊ¼»¯ÎÄ¿â½çÃæ
+	//åˆå§‹åŒ–æ–‡åº“
 	private void initWenku() {
 		wenkuListView = (CustomListView)view.findViewById(R.id.frag_second_wenku_list);
 		wenkuAdapter = new SecondWenkuListViewAdapter(getActivity(), getWenkuData());
@@ -111,28 +110,28 @@ public class FragmentSecond extends Fragment {
 		return wenkuList;
 	}
 	
-	//³õÊ¼»¯Ê«ÈË½çÃæ
+	//åˆå§‹åŒ–è¯—äººé¡µ
 	private void initWriter() {
 		writerListView = (CustomListView)view.findViewById(R.id.frag_second_writer_list);
 		frame = (FrameLayout)view.findViewById(R.id.frame_list_writer);
 		
-		//ÊµÀı»¯ºº×Ö×ªÆ´ÒôÀà
+		
 		characterParser = CharacterParser.getInstance();
 				
 		pinyinComparator = new PinyinComparator();
 		
 		dynastyDao = new DynastyDao(getActivity());
-		//ÓÒ±ßÀ¸--×ÖÄ¸
+		
 		sideBar = (SideBar)view.findViewById(R.id.sidrbar);
 		dialog = (TextView)view.findViewById(R.id.dialog);
 		sideBar.setTextView(dialog);
 		
-		//ÉèÖÃÓÒ²à´¥Ãş¼àÌı
+		
 		sideBar.setOnTouchingLetterChangedListener(new OnTouchingLetterChangedListener() {
 					
 			@Override
 			public void onTouchingLetterChanged(String s) {
-				//¸Ã×ÖÄ¸Ê×´Î³öÏÖµÄÎ»ÖÃ
+				
 				int position = writerAdapter.getPositionForSection(s.charAt(0));
 				if(position != -1){
 				writerListView.setSelection(position);
@@ -150,7 +149,7 @@ public class FragmentSecond extends Fragment {
 		}
 		
 		SourceDateList = filledData(writerss, writers);
-		// ¸ù¾İa-z½øĞĞÅÅĞòÔ´Êı¾İ
+		
 		Collections.sort(SourceDateList, pinyinComparator);
 				
 		writerAdapter = new SecondWriterListViewAdapter(getActivity(), SourceDateList);
@@ -165,7 +164,7 @@ public class FragmentSecond extends Fragment {
 	}
 	
 	/**
-	 * ÎªListViewÌî³äÊı¾İ
+	 * ÎªListViewï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param date
 	 * @return
 	 */
@@ -181,14 +180,13 @@ public class FragmentSecond extends Fragment {
 			sortModel.setDynastyName(dynastyDao.getDynastyById(writer.get(i).getDynastyId()).getDynastyName());
 			System.out.println("ming--"+sortModel.getName()+"----"+date[i]);
 		
-			//ºº×Ö×ª»»³ÉÆ´Òô
+			
 			String pinyin = characterParser.getSelling(date[i]);
 			
 		
 			String sortString = pinyin.substring(0, 1).toUpperCase();
 			
 		
-			// ÕıÔò±í´ïÊ½£¬ÅĞ¶ÏÊ××ÖÄ¸ÊÇ·ñÊÇÓ¢ÎÄ×ÖÄ¸
 			if(sortString.matches("[A-Z]")){
 				sortModel.setSortLetters(sortString.toUpperCase());
 			}else{
@@ -204,7 +202,7 @@ public class FragmentSecond extends Fragment {
 		
 	}
 	
-	//³õÊ¼»¯Ö÷Ò³Ãæ
+	//åˆå§‹åŒ–ç•Œé¢åˆ‡æ¢æŒ‰é’®
 	private void initMain() {
 		radgp = (RadioGroup)view.findViewById(R.id.topbar_second_radgp);
 		
@@ -227,7 +225,7 @@ public class FragmentSecond extends Fragment {
 		});
 	}
 	
-	//³õÊ¼»¯search
+	//è·³è½¬search
 	private void initSearch() {
 		imgSearch.setOnClickListener(new OnClickListener() {
 			

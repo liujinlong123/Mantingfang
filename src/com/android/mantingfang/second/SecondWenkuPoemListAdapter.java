@@ -64,9 +64,9 @@ public class SecondWenkuPoemListAdapter extends BaseAdapter {
 		Poem poem = list.get(position);
 		
 		holder.poemName.setText(poem.getTitle());
-		holder.poemRhesis.setText("¹Ø¹ØöÂð¯£¬ÔÚºÓÖ®ÖÞ");
+		holder.poemRhesis.setText("å…³å…³é›Žé¸ ï¼Œåœ¨æ²³ä¹‹æ´²");
 		//holder.poemRhesis.setText(poem.getRhesis());
-		//holder.wirterName.setText("[ÖÜ]ÎÞÃûÊÏ");
+		//holder.wirterName.setText("[ï¿½ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		holder.wirterName.setText("[" + URLs.DYNASTYS[poem.getDynastyid()] + "]" + poem.getWritername());
 		
 		return view;

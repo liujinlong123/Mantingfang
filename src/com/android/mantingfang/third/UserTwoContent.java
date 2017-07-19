@@ -6,20 +6,19 @@ import com.android.mantingfang.bean.Base;
 
 @SuppressWarnings("serial")
 public class UserTwoContent extends Base {
-	private String userId;		//ÓÃ»§id
-	private String headPath;	//Í·Ïñ
-	private String name;		//êÇ³Æ
-	private String time;		//Ê±¼ä
-	private String content;		//ÄÚÈİ
-	private ArrayList<String> picture;	//Í¼Æ¬×é
-	private String soundPath;	//ÒôÆµÂ·¾¶
-	//private Poem poem;			//Ê«
-	private String poemId;		//Ê«µÄid
-	private String poemContent;	//Ê«ÄÚÈİ
-	private String poemName;	//Ê«Ãû
-	private boolean zan;		//ÊÇ·ñ±»ÔŞ
-	private int post_com_num;	//Ìû×Ó±êºÅ
-	private int post_com_pId;	//Ìû×ÓID
+	private String userId;		//ç”¨æˆ·Id
+	private String headPath;	//å¤´åƒè·¯å¾„
+	private String name;		//ç”¨æˆ·æ˜µç§°
+	private String time;		//å‘è¡¨æ—¶é—´
+	private String content;		//å‘è¡¨å†…å®¹
+	private ArrayList<String> picture;	//å›¾ç‰‡ç»„
+	private String soundPath;	//éŸ³é¢‘è·¯å¾„
+	private String poemId;		//è¯—è¯Id
+	private String poemContent;	//è¯—è¯å†…å®¹
+	private String poemName;	//è¯—è¯åå­—
+	private boolean zan;		//æ˜¯å¦è¢«èµ
+	private int post_com_num;	//å¸–å­æ ‡å·
+	private int post_com_pId;	//å¸–å­Id
 	
 	public UserTwoContent() {}
 	

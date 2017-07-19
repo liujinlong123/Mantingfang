@@ -14,7 +14,7 @@ import android.os.Bundle;
 public class UIHelper {
 	
 	/**
-	 * ÏÔÊ¾Ê«´ÊÏêÇé
+	 * è¯—è¯è¯¦æƒ…
 	 * @param context
 	 * @param poetryId
 	 * @param flag
@@ -28,7 +28,7 @@ public class UIHelper {
 	}
 	
 	/**
-	 * ÏÔÊ¾PoemMÏêÇé
+	 * è¯—è¯PoemMè¯¦æƒ…é¡µ
 	 * @param context
 	 * @param poem
 	 * @param flag
@@ -44,7 +44,7 @@ public class UIHelper {
 	}
 	
 	/**
-	 * ÏÔÊ¾ÓÃ»§ÏêÇé
+	 * User è¯¦æƒ…
 	 * @param context
 	 * @param flag
 	 */
@@ -61,7 +61,7 @@ public class UIHelper {
 	}
 	
 	/**
-	 * ÏÔÊ¾×÷ÕßÏêÇé
+	 * è¯—äººè¯¦æƒ…
 	 * @param context
 	 * @param writerId
 	 */
@@ -73,7 +73,7 @@ public class UIHelper {
 	}
 	
 	/**
-	 * ÏÔÊ¾Ä³×÷ÕßµÄÈ«²¿×÷Æ·
+	 * 
 	 * @param context
 	 * @param writerId
 	 */
@@ -82,7 +82,7 @@ public class UIHelper {
 	}
 	
 	/**
-	 * Í¨¹ıÀàĞÍÇú²éÕÒÏà¹Ø×÷Æ·
+	 * 
 	 * @param context
 	 * @param typeId
 	 */
@@ -91,7 +91,7 @@ public class UIHelper {
 	}
 	
 	/**
-	 * ËÑË÷½çÃæ
+	 * è·³è½¬search
 	 * @param context
 	 */
 	public static void showSearch(Context context) {
@@ -101,7 +101,7 @@ public class UIHelper {
 	}
 	
 	/**
-	 * ÏÔÊ¾ÆÀÂÛÒ³
+	 * Commentè¯¦æƒ…
 	 * @param context
 	 * @param flag
 	 */
@@ -117,7 +117,7 @@ public class UIHelper {
 	}
 	
 	/**
-	 * ÏÔÊ¾ÆÀÂÛMainÒ³
+	 * CommentMainè¯¦æƒ…
 	 * @param context
 	 * @param flag
 	 */

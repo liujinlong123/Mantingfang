@@ -28,28 +28,28 @@ public class SecondWenkuPoem extends Activity {
 	private SecondWenkuPoemListAdapter madapter;
 	private List<Poem> list;
 	
-	//ºóÍË°´Å¥
+	//è¿”å›ž
 	private LinearLayout back;
 	
-	//kindName ÖÐÑë±êÌâ
+	//kindName
 	private TextView theme;
 	
-	//Ö÷ÌâµÄÍ¼Æ¬
+	//
 	private ImageView imgTheme;
 	
-	//Ö÷ÌâµÄÃû×Ö singleName
+	//singleName
 	private TextView tvSingleName;
 	
-	//singleNameµÄÃèÊö
+	//singleName
 	private TextView sum;
 	
-	//ÉÏÒ»¼¶´«À´µÄÐÅÏ¢
+	//ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 	private String kindName;
 	private String singleName;
 	private int imageId;
 	private int label_id;
 	
-	//ÓëÊý¾Ý¿âµÄ½Ó¿Ú-->´ÓÊý¾Ý¿â²éÑ¯»ñÈ¡ÄÚÈÝ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½Ä½Ó¿ï¿½-->ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ñ¯ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
 	private PoetryDao poetryDao;
 	
 	@Override

@@ -30,7 +30,7 @@ public class FragmentFrist extends Fragment {
 	private List<ImageView> mImages = new ArrayList<ImageView>();
 	
 	
-	//按钮
+	//锟斤拷钮
 	private Button btnAdd;
 	private ImageView imgCollect;
 	private ImageView imgMore;
@@ -86,7 +86,6 @@ public class FragmentFrist extends Fragment {
 	
 	private void initViewPager() {
 		mViewPager = (ViewPager)view.findViewById(R.id.frag_first_viewpager);
-		//添加动画效果
 		//mViewPager.setPageTransformer(arg0, arg1);
 		mViewPager.setAdapter(new PagerAdapter(){
 
@@ -104,7 +103,7 @@ public class FragmentFrist extends Fragment {
 			public Object instantiateItem(ViewGroup container, int position) {
 				ImageView imageview = new ImageView(getActivity());
 				imageview.setImageResource(mImagIds[position]);
-				imageview.setScaleType(ScaleType.CENTER_CROP);		//不让图片变形
+				imageview.setScaleType(ScaleType.CENTER_CROP);
 				container.addView(imageview);
 				mImages.add(imageview);
 				imageview.setOnClickListener(new OnClickListener() {

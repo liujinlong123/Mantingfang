@@ -79,7 +79,7 @@ public class UserOneAdapter extends BaseAdapter {
 		Log.v("poem", poem.getContent());
 		
 		holder.poemName.setText(poem.getTitle());
-		holder.poemRhesis.setText("¹Ø¹ØöÂð¯£¬ÔÚºÓÖ®ÖÞ");
+		holder.poemRhesis.setText("å…³å…³é›Žé¸ ï¼Œåœ¨æ²³ä¹‹æ´²");
 		if (!isCancel) {
 			//holder.writerName.setVisibility(View.VISIBLE);
 			holder.writerName.setText("[" + dynastyDao.getDynastyById(poem.getDynastyid()).getDynastyName() + "]"

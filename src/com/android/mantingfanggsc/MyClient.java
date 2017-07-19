@@ -27,7 +27,7 @@ public class MyClient {
 	}
 	
 	/**
-	 * 获取MyClient 实例
+	 * 杩斿洖瀹炰緥
 	 * @return
 	 */
 	public synchronized static MyClient getInstance() {
@@ -37,7 +37,7 @@ public class MyClient {
 	}
 	
 	/**
-	 * 界面一返回数据
+	 *鐣岄潰涓�
 	 * @return
 	 */
 	public String http_postOne(String TypeNum, String number) {
@@ -54,7 +54,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("界面" + TypeNum, response);
+				Log.v("鐣岄潰" + TypeNum, response);
 				
 				return response;
 			} 
@@ -65,7 +65,7 @@ public class MyClient {
 	}
 	
 	/**
-	 * 返回诗词
+	 * 閫氳繃璇楄瘝Id璇锋眰璇楄瘝
 	 * @return
 	 */
 	public String http_postPoem(String poetry_id) {
@@ -91,7 +91,7 @@ public class MyClient {
 	}
 	
 	/**
-	 * 返回该用户界面二信息
+	 * user Two 鐣岄潰璇锋眰
 	 * @param user_id
 	 * @return
 	 */
@@ -118,7 +118,7 @@ public class MyClient {
 	}
 	
 	/**
-	 * 返回该用户界面三信息
+	 * user three 鐣岄潰璇锋眰
 	 * @param user_id
 	 * @return
 	 */
@@ -145,7 +145,7 @@ public class MyClient {
 	}
 	
 	/**
-	 * 获取评论数据
+	 * 璇勮璇锋眰
 	 * @param tpye_num
 	 * @param post_id
 	 * @return

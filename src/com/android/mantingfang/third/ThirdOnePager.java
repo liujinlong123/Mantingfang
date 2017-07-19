@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,7 +107,6 @@ public class ThirdOnePager extends Fragment {
 						// Log.v("AAAA", EntityUtils.toString(httpEntity,
 						// "utf-8"));
 						String response = EntityUtils.toString(httpEntity, "utf-8");
-						Log.v("ΩÁ√Ê“ª", response);
 						msg.what = 1;
 						Bundle bundle = new Bundle();
 						bundle.putString("tables", response);

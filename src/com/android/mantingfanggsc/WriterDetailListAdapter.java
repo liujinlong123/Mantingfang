@@ -91,17 +91,17 @@ public class WriterDetailListAdapter extends BaseAdapter {
 			switch (type) {
 			case TYPE_ONE:
 				holder1 = (ViewHolder1)convertView.getTag();
-				holder1.writername.setText("°×¾ÓÒ×-ÌÆ");
-				holder1.themename.setText("¼ò½é");
-				holder1.themedetail.setText("°×¾ÓÒ×µÄ¼ò½é");
-				holder1.works.setText("×÷Æ·/118");
+				holder1.writername.setText("ç™½å±…æ˜“");
+				holder1.themename.setText("ï¿½ï¿½ï¿½");
+				holder1.themedetail.setText("ï¿½×¾ï¿½ï¿½×µÄ¼ï¿½ï¿½");
+				holder1.works.setText("ï¿½ï¿½Æ·/118");
 				break;
 				
 			case TYPE_TWO:
 				holder2 = (ViewHolder2)convertView.getTag();
-				holder2.poemname.setText("Â®É½²ÝÌÃ¼Ç");
-				holder2.kindname.setText("[ÎÄ]");
-				holder2.poemrhesis.setText("¿ïÂ®ÆæÐã£¬¼×ÌìÏÂÉ½");
+				holder2.poemname.setText("Â®É½ï¿½ï¿½ï¿½Ã¼ï¿½");
+				holder2.kindname.setText("[ï¿½ï¿½]");
+				holder2.poemrhesis.setText("ï¿½ï¿½Â®ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½");
 				break;
 			}
 		}

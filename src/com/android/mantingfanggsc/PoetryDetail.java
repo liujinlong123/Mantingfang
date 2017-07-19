@@ -69,7 +69,7 @@ public class PoetryDetail extends Activity {
 		img_comment = (ImageView)findViewById(R.id.topbar_all_comment);
 		img_more = (ImageView)findViewById(R.id.topbar_all_more);
 		
-		tv_back.setText("·µ»Ø");
+		tv_back.setText("è¿”å›");
 		tv_theme.setVisibility(View.INVISIBLE);
 		img_collect.setVisibility(View.VISIBLE);
 		img_comment.setVisibility(View.VISIBLE);
@@ -118,7 +118,7 @@ public class PoetryDetail extends Activity {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch (checkedId) {
 				case R.id.poetrydetail_rbtn_beijing:
-					kind.setText("±³¾°");
+					kind.setText("èƒŒæ™¯");
 					if (info == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
@@ -128,7 +128,7 @@ public class PoetryDetail extends Activity {
 					break;
 					
 				case R.id.poetrydetail_rbtn_zhushi:
-					kind.setText("×¢ÊÍ");
+					kind.setText("æ³¨é‡Š");
 					if (info == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
@@ -138,7 +138,7 @@ public class PoetryDetail extends Activity {
 					break;
 					
 				case R.id.poetrydetail_rbtn_yiwen:
-					kind.setText("ÒëÎÄ");
+					kind.setText("è¯‘æ–‡");
 					if (info == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
@@ -148,7 +148,7 @@ public class PoetryDetail extends Activity {
 					break;
 					
 				case R.id.poetrydetail_rbtn_fanyi:
-					kind.setText("·­Òë");
+					kind.setText("ç¿»è¯‘");
 					if (info == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
@@ -158,7 +158,7 @@ public class PoetryDetail extends Activity {
 					break;
 					
 				case R.id.poetrydetail_rbtn_shangxi:
-					kind.setText("ÉÍÎö");
+					kind.setText("èµæ");
 					if (info == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
@@ -168,12 +168,12 @@ public class PoetryDetail extends Activity {
 					break;
 					
 				case R.id.poetrydetail_rbtn_shoucang:
-					kind.setText("×÷Õß");
+					kind.setText("ä½œè€…");
 					kindDetail.setText("");
 					break;
 					
 				case R.id.poetrydetail_rbtn_pinglun:
-					kind.setText("ÆÀÂÛ");
+					kind.setText("è¯„è®º");
 					kindDetail.setText("");
 					break;
 				}

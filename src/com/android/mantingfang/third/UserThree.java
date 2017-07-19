@@ -71,10 +71,10 @@ public class UserThree extends Fragment {
 					User user = new User(user_id, null, null, jo.optString("user_age"), jo.optString("user_sex"),
 							jo.optString("user_area"), jo.optString("user_introduce"), jo.optString("user_label"));
 					
-					tvAge.setText("年龄: " + user.getUserAge());
-					tvSex.setText("性别: " + user.getUserSex());
-					tvArea.setText("地区: " + user.getUserArea());
-					tvLabel.setText("个性签名: " + user.getUserIntro());
+					tvAge.setText("骞撮緞: " + user.getUserAge());
+					tvSex.setText("鎬у埆: " + user.getUserSex());
+					tvArea.setText("鍦板尯: " + user.getUserArea());
+					tvLabel.setText("涓汉浠嬬粛: " + user.getUserIntro());
 					tvIntro.setText(" " + user.getUserIntro());
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block

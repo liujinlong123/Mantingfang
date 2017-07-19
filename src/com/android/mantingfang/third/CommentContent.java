@@ -1,14 +1,14 @@
 package com.android.mantingfang.third;
 
 public class CommentContent {
-	private String topicId;		//帖子Id
-	private String topicNum;	//帖子标号
-	private String headPath;	//头像路径
-	private String name;		//用户昵称
-	private String time;		//发布时间
-	private boolean zan;		//是否被赞
-	private String content;		//发布内容
-	private String userId;		//所属用户Id
+	private String topicId;	
+	private String topicNum;
+	private String headPath;
+	private String name;
+	private String time;
+	private boolean zan;
+	private String content;
+	private String userId;
 	
 	public CommentContent() {};
 	

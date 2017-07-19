@@ -5,18 +5,18 @@ import com.android.mantingfang.bean.Base;
 @SuppressWarnings("serial")
 public class PoemM extends Base {
 	
-	private String poemId;		//Ê«´ÊId
-	private String poemName;	//Ê«´ÊÃû×Ö
-	private String poemContent;	//Ê«´ÊÄÚÈİ
-	private String poemRhesis;	//Ê«´ÊÃû¾ä
-	private String writer;		//Ê«ÈËÃû×Ö
-	private String dynasty;		//³¯´úÃû×Ö
-	private String poem_bg;		//Ê«´Ê±³¾°
-	private String writer_bg;	//Ê«ÈË±³¾°
-	private String notes;		//×¢ÊÍ
-	private String toNow;		//ÒëÎÄ
-	private String trans;		//·­Òë
-	private String apprec;		//ÉÍÎö
+	private String poemId;		//è¯—è¯ID
+	private String poemName;	//è¯—è¯åå­—
+	private String poemContent;	//è¯—è¯å†…å®¹
+	private String poemRhesis;	//åå¥
+	private String writer;		//è¯—äºº
+	private String dynasty;		//æœä»£
+	private String poem_bg;		//è¯—è¯èƒŒæ™¯
+	private String writer_bg;	//ä½œè€…èƒŒæ™¯
+	private String notes;		//æ³¨é‡Š
+	private String toNow;		//è¯‘æ–‡
+	private String trans;		//ç¿»è¯‘
+	private String apprec;		//èµæ
 	
 	public PoemM() {};
 	

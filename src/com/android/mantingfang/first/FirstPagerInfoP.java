@@ -71,7 +71,7 @@ public class FirstPagerInfoP extends Activity {
 			@Override
 			public void onClick(View v) {
 				poemList = poem.getPoemList();
-				/*String[] token = poemList.get(1).getRhesis().split("[, + . ¡££¬]");
+				/*String[] token = poemList.get(1).getRhesis().split("[, + . ï¿½ï¿½ï¿½ï¿½]");
 				if (token.length == 2) {
 					tv1.setText(token[0]);
 					tv2.setText(token[1]);
@@ -89,19 +89,19 @@ public class FirstPagerInfoP extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				String text = "Ã÷ÔÂ¼¸Ê±ÓĞ£¬°Ñ¾ÆÎÊÇàÌì";
+				String text = "ï¿½ï¿½ï¿½Â¼ï¿½Ê±ï¿½Ğ£ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 				setParam();
 				int code = mTts.startSpeaking(text, mTtsListener);
 				
 				if (code != ErrorCode.SUCCESS) {
-					Toast.makeText(FirstPagerInfoP.this, "ÓïÒôºÏ³ÉÊµÅÄ£¬ ´íÎóÂë£º" + code, Toast.LENGTH_SHORT).show();
+					Toast.makeText(FirstPagerInfoP.this, "ï¿½ï¿½ï¿½ï¿½ï¿½Ï³ï¿½Êµï¿½Ä£ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ë£º" + code, Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
 	}
 	
 	/**
-	 * ºÏ³É»Øµ÷¼àÌı
+	 * ï¿½Ï³É»Øµï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	private SynthesizerListener mTtsListener = new SynthesizerListener() {
 
@@ -112,24 +112,24 @@ public class FirstPagerInfoP extends Activity {
 		
 		@Override
 		public void onSpeakPaused() {
-			//²¥·ÅÔİÍ£
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£
 		}
 		
 		@Override
 		public void onSpeakResumed() {
-			//¼ÌĞø²¥·Å
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			
 		}
 		
 		@Override
 		public void onBufferProgress(int arg0, int arg1, int arg2, String arg3) {
-			// ºÏ³É½ø¶È
+			// ï¿½Ï³É½ï¿½ï¿½ï¿½
 			
 		}
 
 		@Override
 		public void onCompleted(SpeechError error) {
-			// ²¥·ÅÍê³É
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			if (error == null) {
                 imgOn.setImageResource(R.drawable.a8p);
             } else if (error != null) {
@@ -145,38 +145,27 @@ public class FirstPagerInfoP extends Activity {
 
 		@Override
 		public void onSpeakProgress(int arg0, int arg1, int arg2) {
-			//²¥·Å½ø¶È
+			//ï¿½ï¿½ï¿½Å½ï¿½ï¿½ï¿½
 			
 		}
 		
 	};
 	
 	/**
-	 * ²ÎÊıÉèÖÃ
+	 * è®¾ç½®å‚æ•°
 	 */
 	private void setParam() {
-		// Çå¿Õ²ÎÊı
         mTts.setParameter(SpeechConstant.PARAMS, null);
-        // ¸ù¾İºÏ³ÉÒıÇæÉèÖÃÏàÓ¦²ÎÊı
         mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
-        // ÉèÖÃÔÚÏßºÏ³É·¢ÒôÈË
         mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");
-        //ÉèÖÃºÏ³ÉÓïËÙ
         mTts.setParameter(SpeechConstant.SPEED,
                 "50");
-        //ÉèÖÃºÏ³ÉÒôµ÷
         mTts.setParameter(SpeechConstant.PITCH, "50");
-        //ÉèÖÃºÏ³ÉÒôÁ¿
         mTts.setParameter(SpeechConstant.VOLUME,
                 "50");
-        //ÉèÖÃ²¥·ÅÆ÷ÒôÆµÁ÷ÀàĞÍ
         mTts.setParameter(SpeechConstant.STREAM_TYPE,
                 "3");
-        // ÉèÖÃ²¥·ÅºÏ³ÉÒôÆµ´ò¶ÏÒôÀÖ²¥·Å£¬Ä¬ÈÏÎªtrue
         mTts.setParameter(SpeechConstant.KEY_REQUEST_FOCUS, "true");
-
-        // ÉèÖÃÒôÆµ±£´æÂ·¾¶£¬±£´æÒôÆµ¸ñÊ½Ö§³Öpcm¡¢wav£¬ÉèÖÃÂ·¾¶Îªsd¿¨Çë×¢ÒâWRITE_EXTERNAL_STORAGEÈ¨ÏŞ
-        // ×¢£ºAUDIO_FORMAT²ÎÊıÓï¼ÇĞèÒª¸üĞÂ°æ±¾²ÅÄÜÉúĞ§
         mTts.setParameter(SpeechConstant.AUDIO_FORMAT, "wav");
         mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, Environment.getExternalStorageDirectory() + "/msc/tts.wav");
 	}
@@ -185,7 +174,6 @@ public class FirstPagerInfoP extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		mTts.stopSpeaking();
-		//ÍË³öÊ± ÊÍ·ÅÁ¬½Ó
 		mTts.destroy();
 	}
 }

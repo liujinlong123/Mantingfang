@@ -3,16 +3,16 @@ package com.android.mantingfang.third;
 import com.android.mantingfang.model.Poem;
 
 public class ThirdFourContent {
-	private String userId;		//用户id
-	private String headPath;	//头像
-	private String name;		//昵称
-	private String time;		//时间
-	private String soundPath;	//音频路径
-	private Poem poem;			//诗
-	private boolean zan;		//是否被赞
-	private int post_com_num;	//帖子标号
-	private int post_com_pId;	//帖子ID
-	private int post_com_cId;	//评论ID
+	private String userId;
+	private String headPath;
+	private String name;
+	private String time;
+	private String soundPath;
+	private Poem poem;
+	private boolean zan;
+	private int post_com_num;
+	private int post_com_pId;
+	private int post_com_cId;
 	
 	public ThirdFourContent() {}
 	

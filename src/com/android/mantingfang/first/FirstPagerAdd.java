@@ -47,11 +47,11 @@ public class FirstPagerAdd extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(FirstPagerAdd.this, "背景", Toast.LENGTH_SHORT).show();
+				Toast.makeText(FirstPagerAdd.this, "锟斤拷锟斤拷", Toast.LENGTH_SHORT).show();
 			}
 		});
 		
-		//对形成的新内容进行保存
+		
 		tvSave.setOnClickListener(new OnClickListener() {
 			
 			@Override

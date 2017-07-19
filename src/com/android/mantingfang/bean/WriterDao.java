@@ -18,7 +18,7 @@ public class WriterDao {
 	}
 	
 	/**
-	 * 为Writer表添加内容
+	 * writer into the database
 	 * @param writerList
 	 */
 	public void insertWR(List<Writer> writerList) {
@@ -51,7 +51,7 @@ public class WriterDao {
 	}
 	
 	/**
-	 * 该朝代下的所有诗人
+	 *get All Writer
 	 * @param dynastyid
 	 * @return
 	 */
@@ -133,7 +133,7 @@ public class WriterDao {
 	}
 	
 	/**
-	 * 返回某朝代下所有作品的数目
+	 * get the number of writer in special dynasty
 	 * @param dynastyid
 	 * @return
 	 */
@@ -164,7 +164,7 @@ public class WriterDao {
 	}
 	
 	/**
-	 * 通过writer_id返回诗人信息
+	 *get writer by writerId
 	 * @param writerid
 	 * @return
 	 */
@@ -201,7 +201,7 @@ public class WriterDao {
 	
 	
 	/**
-	 * 该国籍下的所有诗人
+	 *get Writers by country_id
 	 * @param writer_country_id
 	 * @return
 	 */
@@ -242,7 +242,7 @@ public class WriterDao {
 	}
 	
 	/**
-	 * 该风格下的所有诗人
+	 * get writers by label_id
 	 * @param writer_label_id
 	 * @return
 	 */

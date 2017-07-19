@@ -116,7 +116,7 @@ public class TopicList extends Base {
 	}
 	
 	/**
-	 * ½çÃæ¶ş
+	 * ç•Œé¢äºŒ
 	 * @param obj
 	 * @return
 	 * @throws JSONException
@@ -150,7 +150,7 @@ public class TopicList extends Base {
 	}
 	
 	/**
-	 * ½çÃæÈı
+	 * ç•Œé¢ä¸‰
 	 * @param obj
 	 * @return
 	 * @throws JSONException
@@ -185,7 +185,7 @@ public class TopicList extends Base {
 	}
 	
 	/**
-	 * ½çÃæËÄ
+	 * ç•Œé¢å››
 	 * @param obj
 	 * @return
 	 * @throws JSONException
@@ -220,7 +220,7 @@ public class TopicList extends Base {
 	}
 	
 	/**
-	 * ½âÎöUser½çÃæÊı¾İ
+	 * User Two
 	 * @param obj
 	 * @param userId
 	 * @param headPath

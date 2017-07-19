@@ -61,7 +61,7 @@ public class PoemMDetail extends Activity {
 		img_comment = (ImageView)findViewById(R.id.topbar_all_comment);
 		img_more = (ImageView)findViewById(R.id.topbar_all_more);
 		
-		tv_back.setText("·µ»Ø");
+		tv_back.setText("è¿”å›");
 		tv_theme.setVisibility(View.INVISIBLE);
 		img_collect.setVisibility(View.VISIBLE);
 		img_comment.setVisibility(View.VISIBLE);
@@ -110,7 +110,7 @@ public class PoemMDetail extends Activity {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch (checkedId) {
 				case R.id.poetrydetail_rbtn_beijing:
-					kind.setText("±³¾°");
+					kind.setText("èƒŒæ™¯");
 					if (poem.getPoemBg() == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
@@ -120,7 +120,7 @@ public class PoemMDetail extends Activity {
 					break;
 					
 				case R.id.poetrydetail_rbtn_zhushi:
-					kind.setText("×¢ÊÍ");
+					kind.setText("æ³¨é‡Š");
 					if (poem.getNotes() == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
@@ -130,7 +130,7 @@ public class PoemMDetail extends Activity {
 					break;
 					
 				case R.id.poetrydetail_rbtn_yiwen:
-					kind.setText("ÒëÎÄ");
+					kind.setText("è¯‘æ–‡");
 					if (poem.getToNow() == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
@@ -140,7 +140,7 @@ public class PoemMDetail extends Activity {
 					break;
 					
 				case R.id.poetrydetail_rbtn_fanyi:
-					kind.setText("·­Òë");
+					kind.setText("ç¿»è¯‘");
 					if (poem.getTrans() == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
@@ -150,7 +150,7 @@ public class PoemMDetail extends Activity {
 					break;
 					
 				case R.id.poetrydetail_rbtn_shangxi:
-					kind.setText("ÉÍÎö");
+					kind.setText("èµæ");
 					if (poem.getApprec() == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
@@ -160,7 +160,7 @@ public class PoemMDetail extends Activity {
 					break;
 					
 				case R.id.poetrydetail_rbtn_shoucang:
-					kind.setText("×÷Õß");
+					kind.setText("ä½œè€…");
 					if (poem.getWriterBg() == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
@@ -169,7 +169,7 @@ public class PoemMDetail extends Activity {
 					break;
 					
 				case R.id.poetrydetail_rbtn_pinglun:
-					kind.setText("ÆÀÂÛ");
+					kind.setText("è¯„è®º");
 					kindDetail.setText("");
 					break;
 				}

@@ -51,7 +51,7 @@ public class WriterDetail extends Activity {
 		img_comment = (ImageView)findViewById(R.id.topbar_all_comment);
 		img_more = (ImageView)findViewById(R.id.topbar_all_more);
 		
-		tv_back.setText("·µ»Ø");
+		tv_back.setText("è¿”å›ž");
 		tv_theme.setVisibility(View.INVISIBLE);
 		img_collect.setVisibility(View.VISIBLE);
 		img_comment.setVisibility(View.VISIBLE);

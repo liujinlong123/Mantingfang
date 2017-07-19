@@ -60,7 +60,7 @@ public class CommentAdapter extends BaseAdapter {
 		}
 		
 		
-		//对此处理
+		//鎺т欢璁剧疆
 		CommentContent content = list.get(position);
 		
 		if (content.getName() != null && content.getHeadPath() != null && content.getTime() != null && content.getContent() != null) {

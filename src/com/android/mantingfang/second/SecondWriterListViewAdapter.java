@@ -2,8 +2,6 @@ package com.android.mantingfang.second;
 
 import java.util.List;
 
-import com.android.mantingfang.bean.DynastyDao;
-import com.android.mantingfang.model.Poem;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
@@ -18,6 +16,7 @@ import android.widget.TextView;
 public class SecondWriterListViewAdapter extends BaseAdapter implements SectionIndexer{
 
 	private List<SortModel> list;
+	@SuppressWarnings("unused")
 	private Context mContext;
 	private LayoutInflater inflater;
 	
@@ -79,12 +78,10 @@ public class SecondWriterListViewAdapter extends BaseAdapter implements SectionI
 	private void initViews(ViewHolder holder, SortModel sort, int section, int position) {
 		holder.dynasty.setText(sort.getDynastyName());
 		holder.writerName.setText(sort.getName());
-		holder.poemRhesis.setText("´°Ç°Ã÷ÔÂ¹â£¬ÒÉÊÇµØÉÏËª");
-		//holder.poemRhesis.setText(sort.getPoetryRhesis());
-		//¸ù¾İposition»ñÈ¡·ÖÀàµÄÊ××ÖÄ¸µÄChar asciiÖµ
+		holder.poemRhesis.setText("å…³å…³é›é¸ ï¼Œåœ¨æ²³ä¹‹æ´²");
+		//holder.poemRhesis.setText(sort.getPoetryRhesis());Öµ
 		
-				
-		//Èç¹ûµ±Ç°Î»ÖÃµÈÓÚ¸Ã·ÖÀàÊ××ÖÄ¸µÄCharµÄÎ»ÖÃ £¬ÔòÈÏÎªÊÇµÚÒ»´Î³öÏÖ
+		
 		if(position == getPositionForSection(section)){
 			holder.dynasty.setVisibility(View.VISIBLE);
 			holder.dynasty.setText(sort.getSortLetters());
@@ -100,10 +97,7 @@ public class SecondWriterListViewAdapter extends BaseAdapter implements SectionI
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	/**
-	 * ¸ù¾İ·ÖÀàµÄÊ××ÖÄ¸µÄChar asciiÖµ»ñÈ¡ÆäµÚÒ»´Î³öÏÖ¸ÃÊ××ÖÄ¸µÄÎ»ÖÃ
-	 */
+	
 	@SuppressLint("DefaultLocale")
 	public int getPositionForSection(int section) {
 		for (int i = 0; i < getCount(); i++) {
@@ -117,9 +111,6 @@ public class SecondWriterListViewAdapter extends BaseAdapter implements SectionI
 		return -1;
 	}
 
-	/**
-	 * ¸ù¾İListViewµÄµ±Ç°Î»ÖÃ»ñÈ¡·ÖÀàµÄÊ××ÖÄ¸µÄChar asciiÖµ
-	 */
 	public int getSectionForPosition(int position) {
 		return list.get(position).getSortLetters().charAt(0);
 	}

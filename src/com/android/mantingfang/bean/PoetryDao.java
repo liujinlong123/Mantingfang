@@ -20,7 +20,7 @@ public class PoetryDao {
 	}
 	
 	/**
-	 * 向数据库中插入诗词
+	 * insert Poem
 	 * @param poetryList
 	 */
 	public void insertPO(List<Poetry> poetryList) {
@@ -55,7 +55,7 @@ public class PoetryDao {
 	}
 	
 	/**
-	 * 获取所有诗词
+	 * GEt All Poem
 	 * @return
 	 */
 	public List<Poem> getAllPoem() {
@@ -98,7 +98,7 @@ public class PoetryDao {
 	}
 	
 	/**
-	 * 通过诗词id返回对应的诗词
+	 *閫氳繃Id 鑾峰彇 璇楄瘝
 	 * @param pid
 	 * @return
 	 */
@@ -135,7 +135,7 @@ public class PoetryDao {
 	}
 	
 	/**
-	 * 通过诗词id来查询information
+	 * 閫氳繃璇楄瘝ID鑾峰彇淇℃伅
 	 * @param poetry_id
 	 * @return
 	 */
@@ -202,7 +202,7 @@ public class PoetryDao {
 	}*/
 	
 	/**
-	 * 搜索该诗人下的所有作品
+	 * get poem by writer Id
 	 * @param writerid
 	 * @return
 	 */
@@ -249,7 +249,7 @@ public class PoetryDao {
 	}
 	
 	/**
-	 * 通过收藏的id检索诗词信息
+	 *get my collect poems
 	 * @param myids
 	 * @return
 	 */
@@ -297,7 +297,7 @@ public class PoetryDao {
 	}
 	
 	/**
-	 * 该类型的所有诗词
+	 * get Poem by type ID
 	 * @param tid
 	 * @return
 	 */
@@ -344,7 +344,7 @@ public class PoetryDao {
 	}
 	
 	/**
-	 * 通过搜索检索
+	 *get Poem by search
 	 * @param sStr
 	 * @return
 	 */

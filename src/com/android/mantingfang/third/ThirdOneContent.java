@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import com.android.mantingfang.model.Poem;
 
 public class ThirdOneContent {
-	private String userId;		//用户id	
-	private String headPath;	//头像	
-	private String name;		//昵称
-	private String time;		//时间		
-	private String content;		//内容
-	private ArrayList<String> picture;	//图片组
-	private Poem poem;			//诗
-	private int post_com_num;	//帖子标号
-	private int post_com_pId;	//帖子ID
+	private String userId;
+	private String headPath;
+	private String name;
+	private String time;	
+	private String content;	
+	private ArrayList<String> picture;
+	private Poem poem;
+	private int post_com_num;
+	private int post_com_pId;
 	
 	public ThirdOneContent() {}
 	
