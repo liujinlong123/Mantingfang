@@ -1,27 +1,27 @@
-package com.android.mantingfang.second;
+package com.android.mantingfang.third;
 
 import java.util.List;
 
-import com.android.mantingfang.bean.URLs;
-import com.android.mantingfang.model.Poem;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
+import android.widget.ImageView;
 
-public class SecondWenkuPoemListAdapter extends BaseAdapter {
+public class PictureAdapter extends BaseAdapter {
 
 	@SuppressWarnings("unused")
 	private Context mContext;
-	private List<Poem> list;
+	private List<String> list;
 	private LayoutInflater inflater;
 	
-	public SecondWenkuPoemListAdapter(Context context, List<Poem> list) {
+	public PictureAdapter(Context context, List<String> list) {
 		this.mContext = context;
 		this.list = list;
 		inflater = LayoutInflater.from(context);
@@ -29,7 +29,7 @@ public class SecondWenkuPoemListAdapter extends BaseAdapter {
 	
 	@Override
 	public int getCount() {
-		return list == null? 0 : list.size();
+		return list == null? 0:list.size();
 	}
 
 	@Override
@@ -47,13 +47,12 @@ public class SecondWenkuPoemListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		View view;
-		
 		if (convertView == null) {
-			view = inflater.inflate(R.layout.item_listview_wenku_poem, null);
+			view = inflater.inflate(R.layout.picture_item, null);
 			holder = new ViewHolder();
-			holder.poemName = (TextView)view.findViewById(R.id.poemlist_tv_name);
-			holder.poemRhesis = (TextView)view.findViewById(R.id.poemlist_tv_poemrhesis);
-			holder.wirterName = (TextView)view.findViewById(R.id.poemlist_tv_writername);
+			
+			holder.img = (ImageView)view.findViewById(R.id.img_picture);
+			holder.imgDel = (ImageView)view.findViewById(R.id.img_del);
 			
 			view.setTag(holder);
 		} else {
@@ -61,22 +60,17 @@ public class SecondWenkuPoemListAdapter extends BaseAdapter {
 			holder = (ViewHolder)view.getTag();
 		}
 		
-		Poem poem = list.get(position);
+		Bitmap bitmap = BitmapFactory.decodeFile(list.get(position));
+		holder.img.setImageBitmap(bitmap);
 		
-		holder.poemName.setText(poem.getTitle());
-		holder.poemRhesis.setText("关关雎鸠，在河之洲");
-		//holder.poemRhesis.setText(poem.getRhesis());
-		holder.wirterName.setText("[" + URLs.DYNASTYS[poem.getDynastyid()] + "]" + poem.getWritername());
 		
 		return view;
 	}
 	
 	final static class ViewHolder {
-		TextView poemName;
+		ImageView img;
 		
-		TextView poemRhesis;
-		
-		TextView wirterName;
+		ImageView imgDel;
 	}
-
+	
 }

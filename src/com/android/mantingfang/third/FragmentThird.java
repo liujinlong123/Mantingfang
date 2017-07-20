@@ -7,8 +7,8 @@ import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -74,14 +74,12 @@ public class FragmentThird extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-<<<<<<< HEAD
 				new AlertDialog.Builder(getActivity()).setTitle("é€‰æ‹©")
-=======
-				new AlertDialog.Builder(getActivity()).setTitle("Ñ¡Ôñ")
->>>>>>> origin/master
 						.setItems(R.array.item_irdc_dialog, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int whichcountry) {
 								Log.v("Button", whichcountry + "");
+								Intent intent = new Intent(getActivity(), AddOne.class);
+								startActivity(intent);
 							}
 						}).show();
 			}

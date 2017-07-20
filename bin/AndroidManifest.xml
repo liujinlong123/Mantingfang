@@ -27,6 +27,8 @@
 
     <!--摄相头权限， 拍照需要用到 -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="24" />
@@ -60,6 +62,8 @@
         <activity android:name="com.android.mantingfang.third.Comment" ></activity>
         <activity android:name="com.android.mantingfang.third.CommentMain" ></activity>
         <activity android:name="com.android.mantingfang.third.PoemMDetail" ></activity>
+        <activity android:name="com.android.mantingfang.third.AddOne" ></activity>
+        
         
         
     </application>

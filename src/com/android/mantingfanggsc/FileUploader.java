@@ -21,99 +21,102 @@ import android.util.Log;
  * Created by kaiyi.cky on 2015/8/16.
  */
 public class FileUploader {
-    private static final String TAG = "uploadFile";
-    private static final int TIME_OUT = 10*10000000; //³¬Ê±Ê±¼ä
-    private static final String CHARSET = "utf-8"; //ÉèÖÃ±àÂë
-    private static final String PREFIX = "--";
-    private static final String LINE_END = "\r\n";
+	private static final String TAG = "uploadFile";
+	private static final int TIME_OUT = 10 * 10000000; // è¶…æ—¶æ—¶é—´
+	private static final String CHARSET = "utf-8"; // è®¾ç½®ç¼–ç 
+	private static final String PREFIX = "--";
+	private static final String LINE_END = "\r\n";
 
-    public static String upload(String host,File file,Map<String,String> params,FileUploadListener listener){
-        String BOUNDARY = UUID.randomUUID().toString(); //±ß½ç±êÊ¶ Ëæ»úÉú³É String PREFIX = "--" , LINE_END = "\r\n";
-        String CONTENT_TYPE = "multipart/form-data"; //ÄÚÈİÀàĞÍ
-        try {
-            URL url = new URL(host);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(TIME_OUT);
-            conn.setConnectTimeout(TIME_OUT);
-            conn.setRequestMethod("POST"); //ÇëÇó·½Ê½
-            conn.setRequestProperty("Charset", CHARSET);//ÉèÖÃ±àÂë
-            conn.setRequestProperty("connection", "keep-alive");
-            conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary=" + BOUNDARY);
-            conn.setDoInput(true); //ÔÊĞíÊäÈëÁ÷
-            conn.setDoOutput(true); //ÔÊĞíÊä³öÁ÷
-            conn.setUseCaches(false); //²»ÔÊĞíÊ¹ÓÃ»º´æ
-           // if(file!=null) {
-                /** * µ±ÎÄ¼ş²»Îª¿Õ£¬°ÑÎÄ¼ş°ü×°²¢ÇÒÉÏ´« */
-                OutputStream outputSteam=conn.getOutputStream();
-                DataOutputStream dos = new DataOutputStream(outputSteam);
-                StringBuffer sb = new StringBuffer();
-                sb.append(LINE_END);
-                if(params!=null){//¸ù¾İ¸ñÊ½£¬¿ªÊ¼Æ´½ÓÎÄ±¾²ÎÊı
-                    for(Map.Entry<String,String> entry: params.entrySet()){                        
-                        sb.append(PREFIX).append(BOUNDARY).append(LINE_END);//·Ö½ç·û
-                        sb.append("Content-Disposition: form-data; name=\"" + entry.getKey() + "\"" + LINE_END);
-                        sb.append("Content-Type: text/plain; charset=" + CHARSET + LINE_END);
-                        sb.append("Content-Transfer-Encoding: 8bit" + LINE_END);
-                        sb.append(LINE_END);
-                        sb.append(entry.getValue());
-                        sb.append(LINE_END);//»»ĞĞ£¡
-                    }
-                }
-                sb.append(PREFIX);//¿ªÊ¼Æ´½ÓÎÄ¼ş²ÎÊı
-                sb.append(BOUNDARY);
-                sb.append(LINE_END);
-                /**
-                 * ÕâÀïÖØµã×¢Òâ£º
-                 * nameÀïÃæµÄÖµÎª·şÎñÆ÷¶ËĞèÒªkey Ö»ÓĞÕâ¸ökey ²Å¿ÉÒÔµÃµ½¶ÔÓ¦µÄÎÄ¼ş
-                 * filenameÊÇÎÄ¼şµÄÃû×Ö£¬°üº¬ºó×ºÃûµÄ ±ÈÈç:abc.png
-                 */
-                if(file!=null) {
-                sb.append("Content-Disposition: form-data; name=\"uploadedfile\"; filename=\""+file.getName()+"\""+LINE_END);
-                sb.append("Content-Type: application/octet-stream; charset="+CHARSET+LINE_END);
-                sb.append(LINE_END);
-                }
-                //Ğ´ÈëÎÄ¼şÊı¾İ
-                dos.write(sb.toString().getBytes());
-                InputStream is = new FileInputStream(file);
-                byte[] bytes = new byte[1024];
-                long totalbytes = file.length();
-                long curbytes = 0;
-                Log.v("cky","total="+totalbytes);
-                int len = 0;
-                while((len=is.read(bytes))!=-1){
-                    curbytes += len;
-                    dos.write(bytes, 0, len);
-                    listener.onProgress(curbytes,1.0d*curbytes/totalbytes);
-                }
-                is.close();
-                dos.write(LINE_END.getBytes());//Ò»¶¨»¹ÓĞ»»ĞĞ
-                byte[] end_data = (PREFIX+BOUNDARY+PREFIX+LINE_END).getBytes();
-                dos.write(end_data);
-                dos.flush();
-                /**
-                 * »ñÈ¡ÏìÓ¦Âë 200=³É¹¦
-                 * µ±ÏìÓ¦³É¹¦£¬»ñÈ¡ÏìÓ¦µÄÁ÷
-                 */
-                int code = conn.getResponseCode();
-                sb.setLength(0);
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                String line;
-                while((line=br.readLine())!=null){
-                    sb.append(line);
-                }
-                listener.onFinish(code,sb.toString(),conn.getHeaderFields());
-                return sb.toString();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        return null;
-    }
+	public static String upload(String host, File file, Map<String, String> params, FileUploadListener listener) {
+		String BOUNDARY = UUID.randomUUID().toString(); // è¾¹ç•Œæ ‡è¯†Â éšæœºç”ŸæˆÂ StringÂ PREFIXÂ =Â "--"Â ,Â LINE_ENDÂ =Â "\r\n"ï¼›
+		String CONTENT_TYPE = "multipart/form-data"; // å†…å®¹ç±»å‹
+		try {
+			URL url = new URL(host);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setReadTimeout(TIME_OUT);
+			conn.setConnectTimeout(TIME_OUT);
+			conn.setRequestMethod("POST"); // è¯·æ±‚æ–¹å¼Ê½
+			conn.setRequestProperty("Charset", CHARSET);// è®¾ç½®ç¼–ç 
+			conn.setRequestProperty("connection", "keep-alive");
+			conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary=" + BOUNDARY);
+			conn.setDoInput(true); // å…è®¸è¾“å…¥æµ
+			conn.setDoOutput(true); // å…è®¸è¾“å‡ºæµ
+			conn.setUseCaches(false); // ä¸å…è®¸ä½¿ç”¨ç¼“å­˜
+			// if(file!=null) {
+			/** Â *Â å½“æ–‡ä»¶ä¸ä¸ºç©ºï¼ŒæŠŠæ–‡ä»¶åŒ…è£…å¹¶ä¸”ä¸Šä¼ Â  */
+			OutputStream outputSteam = conn.getOutputStream();
+			DataOutputStream dos = new DataOutputStream(outputSteam);
+			StringBuffer sb = new StringBuffer();
+			sb.append(LINE_END);
+			if (params != null) {// æ ¹æ®æ ¼å¼ï¼Œå¼€å§‹æ‹¼æ¥æ–‡æœ¬å‚æ•°
+				for (Map.Entry<String, String> entry : params.entrySet()) {
+					sb.append(PREFIX).append(BOUNDARY).append(LINE_END);// ï¿½Ö½ï¿½ï¿½
+					sb.append("Content-Disposition: form-data; name=\"" + entry.getKey() + "\"" + LINE_END);
+					sb.append("Content-Type: text/plain; charset=" + CHARSET + LINE_END);
+					sb.append("Content-Transfer-Encoding: 8bit" + LINE_END);
+					sb.append(LINE_END);
+					sb.append(entry.getValue());
+					sb.append(LINE_END);// æ¢è¡Œ
+				}
+			}
+			sb.append(PREFIX);// å¼€å§‹æ‹¼æ¥æ–‡ä»¶å‚æ•°
+			sb.append(BOUNDARY);
+			sb.append(LINE_END);
+			/**
+			 **Â è¿™é‡Œé‡ç‚¹æ³¨æ„ï¼šÂ 
+			 **Â nameé‡Œé¢çš„å€¼ä¸ºæœåŠ¡å™¨ç«¯éœ€è¦keyÂ åªæœ‰è¿™ä¸ªkeyÂ æ‰å¯ä»¥å¾—åˆ°å¯¹åº”çš„æ–‡ä»¶Â 
+			 **Â filenameæ˜¯æ–‡ä»¶çš„åå­—ï¼ŒåŒ…å«åç¼€åçš„Â æ¯”å¦‚:abc.pngÂ 
+			 * Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â 
+			 */
+			if (file != null) {
+				sb.append("Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"" + file.getName() + "\""
+						+ LINE_END);
+				sb.append("Content-Type: application/octet-stream; charset=" + CHARSET + LINE_END);
+				sb.append(LINE_END);
+			}
+			// å†™å…¥æ–‡ä»¶æ•°æ®
+			dos.write(sb.toString().getBytes());
+			InputStream is = new FileInputStream(file);
+			byte[] bytes = new byte[1024];
+			long totalbytes = file.length();
+			long curbytes = 0;
+			Log.v("cky", "total=" + totalbytes);
+			int len = 0;
+			while ((len = is.read(bytes)) != -1) {
+				curbytes += len;
+				dos.write(bytes, 0, len);
+				listener.onProgress(curbytes, 1.0d * curbytes / totalbytes);
+			}
+			is.close();
+			dos.write(LINE_END.getBytes());// Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ğ»ï¿½ï¿½ï¿½
+			byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END).getBytes();
+			dos.write(end_data);
+			dos.flush();
+			/**
+			 **Â è·å–å“åº”ç Â 200=æˆåŠŸÂ 
+			 **Â å½“å“åº”æˆåŠŸï¼Œè·å–å“åº”çš„æµÂ  Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â 
+			 */
+			int code = conn.getResponseCode();
+			sb.setLength(0);
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line;
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+			listener.onFinish(code, sb.toString(), conn.getHeaderFields());
+			return sb.toString();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    public interface FileUploadListener{
-        public void onProgress(long pro,double precent);
-        public void onFinish(int code,String res,Map<String,List<String>> headers);
-    }
+		return null;
+	}
+
+	public interface FileUploadListener {
+		public void onProgress(long pro, double precent);
+
+		public void onFinish(int code, String res, Map<String, List<String>> headers);
+	}
 }
