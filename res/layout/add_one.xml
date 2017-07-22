@@ -77,13 +77,22 @@
             </LinearLayout>
             
             <com.android.mantingfang.second.KindGridView
-                android:id="@+id/add_one_photo"
+                android:listSelector="@android:color/transparent"
+                android:id="@+id/add_one_grd_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:numColumns="4"
         		android:scrollbars="none"
         		android:verticalSpacing="5dp" ></com.android.mantingfang.second.KindGridView>
+            
+            <View
+                android:id="@+id/add_one_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/gray" />
 
             <EditText
                 android:id="@+id/add_one_editer"

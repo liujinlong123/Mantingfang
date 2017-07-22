@@ -77,9 +77,25 @@ public class FragmentThird extends Fragment {
 				new AlertDialog.Builder(getActivity()).setTitle("选择")
 						.setItems(R.array.item_irdc_dialog, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int whichcountry) {
-								Log.v("Button", whichcountry + "");
-								Intent intent = new Intent(getActivity(), AddOne.class);
-								startActivity(intent);
+								switch (whichcountry) {
+								case 0:
+									Intent intent0 = new Intent(getActivity(), AddOne.class);
+									startActivity(intent0);
+									break;
+								case 1:
+									Intent intent1 = new Intent(getActivity(), AddTwo.class);
+									startActivity(intent1);
+									break;
+								case 2:
+									Intent intent2 = new Intent(getActivity(), AddOne.class);
+									startActivity(intent2);
+									break;
+								case 3:
+									Intent intent3 = new Intent(getActivity(), AddFour.class);
+									startActivity(intent3);
+									break;
+								}
+								
 							}
 						}).show();
 			}

@@ -41,7 +41,7 @@ public class ThirdThreePager extends Fragment {
 		return view;
 	}
 
-	// ³õÊ¼»¯ThirdThree
+	// ï¿½ï¿½Ê¼ï¿½ï¿½ThirdThree
 	private void initViews() {
 		thirdThreeListView = (CustomListView)view.findViewById(R.id.third_pager_three_listview);
 	}
@@ -59,10 +59,12 @@ public class ThirdThreePager extends Fragment {
 			protected void onPostExecute(String result) {
 				listThree = new ArrayList<UserTwoContent>();
 				try {
-					listThree = TopicList.parseThree(StringUtils.toJSONArray(result)).getTopicThree();
-					//Log.v("TESTTTT", listThree.get(0).getContent());
-					adapterThree = new ThirdThreeAdapter(getActivity(), listThree);
-					thirdThreeListView.setAdapter(adapterThree);
+					if (result != null && !result.equals("")) {
+						listThree = TopicList.parseThree(StringUtils.toJSONArray(result)).getTopicThree();
+						//Log.v("TESTTTT", listThree.get(0).getContent());
+						adapterThree = new ThirdThreeAdapter(getActivity(), listThree);
+						thirdThreeListView.setAdapter(adapterThree);
+					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

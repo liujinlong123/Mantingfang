@@ -63,19 +63,21 @@ public class ThirdOnePager extends Fragment {
 					//Log.v("reponse--str-----", str);
 				}
 				try {
-					listOne = (List<UserTwoContent>) (TopicList.parseOne(StringUtils.toJSONArray(str), 1)
-							.getTopicList());
+					if (str != null && !str.equals("")) {
+						listOne = (List<UserTwoContent>) (TopicList.parseOne(StringUtils.toJSONArray(str), 1)
+								.getTopicList());
 
-					thirdOneListView = (CustomListView) view.findViewById(R.id.third_pager_one_listview);
-					adapterOne = new ThirdOneAdapter(getActivity(), listOne);
-					thirdOneListView.setAdapter(adapterOne);
-					thirdOneListView.setOnItemClickListener(new OnItemClickListener() {
+						thirdOneListView = (CustomListView) view.findViewById(R.id.third_pager_one_listview);
+						adapterOne = new ThirdOneAdapter(getActivity(), listOne);
+						thirdOneListView.setAdapter(adapterOne);
+						thirdOneListView.setOnItemClickListener(new OnItemClickListener() {
 
-						@Override
-						public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+							@Override
+							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-						}
-					});
+							}
+						});
+					}
 
 					//Log.v("ListOne", listOne.size() + "----");
 				} catch (JSONException e) {

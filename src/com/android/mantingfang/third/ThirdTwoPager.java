@@ -57,9 +57,11 @@ public class ThirdTwoPager extends Fragment{
 			protected void onPostExecute(String result) {
 				listTwo = new ArrayList<UserTwoContent>();
 				try {
-					listTwo = TopicList.parseTwo(StringUtils.toJSONArray(result)).getTopicTwo();
-					adapterTwo = new ThirdTwoAdapter(getActivity(), listTwo);
-					thirdTwoListView.setAdapter(adapterTwo);
+					if (result != null && !result.equals("")) {
+						listTwo = TopicList.parseTwo(StringUtils.toJSONArray(result)).getTopicTwo();
+						adapterTwo = new ThirdTwoAdapter(getActivity(), listTwo);
+						thirdTwoListView.setAdapter(adapterTwo);
+					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
