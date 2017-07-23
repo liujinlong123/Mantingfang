@@ -68,6 +68,9 @@
         
         <activity android:name="com.android.mantingfang.picture.Picture" ></activity>
         
+        
+        <activity android:name="com.android.mantingfang.fourth.FourthTongzhi" ></activity>
+        <activity android:name="com.android.mantingfang.fourth.FourthTuijian" ></activity>
     </application>
 
 </manifest>

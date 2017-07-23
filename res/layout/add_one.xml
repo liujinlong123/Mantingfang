@@ -5,6 +5,43 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/add_one_img_finish"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/delete_close" />
+
+        <TextView
+            android:id="@+id/add_one_tv_topic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="话题"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/add_one_tv_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="提交"
+            android:textColor="@color/blue"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,43 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:id="@+id/add_one_img_finish"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/delete_close" />
-
-                <TextView
-                    android:id="@+id/add_one_tv_topic"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="话题"
-                    android:textSize="17sp" />
-
-                <TextView
-                    android:id="@+id/add_one_tv_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:text="提交"
-                    android:textColor="@color/blue"
-                    android:textSize="17sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/gray" />
 
             <LinearLayout
                 android:id="@+id/add_one_linear_add"
@@ -64,9 +64,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="+添加文学作品"
                     android:layout_weight="1"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:text="+添加文学作品" />
 
                 <ImageView
                     android:layout_width="30dp"
@@ -75,17 +75,18 @@
                     android:layout_marginRight="5dp"
                     android:src="@drawable/right_arrows" />
             </LinearLayout>
-            
+
             <com.android.mantingfang.second.KindGridView
-                android:listSelector="@android:color/transparent"
                 android:id="@+id/add_one_grd_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:listSelector="@android:color/transparent"
                 android:numColumns="4"
-        		android:scrollbars="none"
-        		android:verticalSpacing="5dp" ></com.android.mantingfang.second.KindGridView>
-            
+                android:scrollbars="none"
+                android:verticalSpacing="5dp" >
+            </com.android.mantingfang.second.KindGridView>
+
             <View
                 android:id="@+id/add_one_line"
                 android:layout_width="match_parent"

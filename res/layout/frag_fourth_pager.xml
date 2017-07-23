@@ -239,7 +239,7 @@
                 android:orientation="vertical" >
 
                 <LinearLayout
-                    android:id="@+id/fourth_linear_tongzhi"
+                    android:id="@+id/fourth_linear_tuijian"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -258,7 +258,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:layout_weight="1"
-                        android:text="通知私信" />
+                        android:text="推荐" />
 
                     <ImageView
                         android:layout_width="30dp"
@@ -282,7 +282,7 @@
                 android:orientation="vertical" >
 
                 <LinearLayout
-                    android:id="@+id/fourth_linear_tuijian"
+                    android:id="@+id/fourth_linear_tongzhi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -301,7 +301,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:layout_weight="1"
-                        android:text="推荐" />
+                        android:text="通知" />
 
                     <ImageView
                         android:layout_width="30dp"
