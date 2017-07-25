@@ -9,12 +9,13 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class FirstPagerAdd extends Activity {
 
 	private ImageView imgBack;
-	private Button btnBeijing;
+	private TextView btnBeijing;
 	private EditText editText;
 	private EditText editWriter;
 	private Button tvSave;
@@ -30,7 +31,7 @@ public class FirstPagerAdd extends Activity {
 	
 	private void initViews() {
 		imgBack = (ImageView)findViewById(R.id.first_pager_img_addBack);
-		btnBeijing = (Button)findViewById(R.id.first_pager_img_beijing);
+		btnBeijing = (TextView)findViewById(R.id.first_pager_img_beijing);
 		editText = (EditText)findViewById(R.id.first_pager_text);
 		editWriter = (EditText)findViewById(R.id.first_pager_writer);
 		tvSave = (Button)findViewById(R.id.first_pager_save);
@@ -47,7 +48,7 @@ public class FirstPagerAdd extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(FirstPagerAdd.this, "����", Toast.LENGTH_SHORT).show();
+				Toast.makeText(FirstPagerAdd.this, "背景", Toast.LENGTH_SHORT).show();
 			}
 		});
 		

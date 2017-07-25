@@ -7,30 +7,30 @@ import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
-import android.widget.Toast;
 
 public class FragmentFrist extends Fragment {
 	private View view;
 	
 	//ViewPager
-	private ViewPager mViewPager;
+	private ViewPager viewPager;
+	private List<PoemRhesis> dataList;
+	private ViewAdapter adapter;
 	
-	private int[] mImagIds = {R.drawable.guide_image1, R.drawable.guide_image2, R.drawable.guide_image3,};
-	private List<ImageView> mImages = new ArrayList<ImageView>();
+	private List<Fragment> fragmentList = new ArrayList<Fragment>();
 	
-	
-	//��ť
 	private Button btnAdd;
 	private ImageView imgCollect;
 	private ImageView imgMore;
@@ -40,7 +40,7 @@ public class FragmentFrist extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (view == null) {
 			view = inflater.inflate(R.layout.frag_first_pager, null);
-			initViewPager();
+			//initViewPager();
 			
 			initViews();
 			
@@ -82,47 +82,68 @@ public class FragmentFrist extends Fragment {
 				
 			}
 		});
+		
+		initViewPager();
 	}
 	
 	private void initViewPager() {
-		mViewPager = (ViewPager)view.findViewById(R.id.frag_first_viewpager);
-		//mViewPager.setPageTransformer(arg0, arg1);
-		mViewPager.setAdapter(new PagerAdapter(){
+		viewPager = (ViewPager) view.findViewById(R.id.frag_first_viewpager);
+		getData();
+	}
+	
+	class ViewAdapter extends FragmentPagerAdapter {
+		private List<Fragment> fragmentsList;
+		
+		public ViewAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		public ViewAdapter(FragmentManager fm, List<Fragment> fragments) {
+			super(fm);
+			this.fragmentsList = fragments;
+		}
+
+		@Override
+		public int getCount() {
+			return fragmentsList.size();
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			return fragmentsList.get(position);
+		}
+
+		@Override
+		public int getItemPosition(Object object) {
+			//return super.getItemPosition(object);
+			return POSITION_NONE;
+		}
+	}
+	
+	private void getData() {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
-			public int getCount() {
-				return mImagIds.length;
-			}
-
-			@Override
-			public boolean isViewFromObject(View arg0, Object arg1) {
-				return arg0 == arg1;
+			protected String doInBackground(String... params) {
+				for (int i = 0; i < 100; i++) {
+					fragmentList.add(new FragViewPager(new PoemRhesis("1", "无名氏" + i, "关关雎鸠，在河之洲")));
+				}
+				//return MyClient.getInstance().Http_postViewPager("", "");
+				return null;
 			}
 			
 			@Override
-			public Object instantiateItem(ViewGroup container, int position) {
-				ImageView imageview = new ImageView(getActivity());
-				imageview.setImageResource(mImagIds[position]);
-				imageview.setScaleType(ScaleType.CENTER_CROP);
-				container.addView(imageview);
-				mImages.add(imageview);
-				imageview.setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						Intent intent = new Intent(getActivity(), FirstPagerInfoP.class);
-						startActivity(intent);
-					}
-				});
+			protected void onPostExecute(String result) {
+				viewPager.setOffscreenPageLimit(100);
+				adapter = new ViewAdapter(getChildFragmentManager(), fragmentList);
+				viewPager.setAdapter(adapter);
+				viewPager.setCurrentItem(0);
 				
-				return imageview;
+				adapter.notifyDataSetChanged();
 			}
 			
-			@Override
-			public void destroyItem(ViewGroup container, int position, Object object) {
-				container.removeView(mImages.get(position));
-			}
-			
-		});
+		};
+		
+		task.execute();
 	}
 }

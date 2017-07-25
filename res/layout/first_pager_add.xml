@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/white" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
@@ -24,11 +25,13 @@
             android:text="卡片制作"
             android:textSize="20sp" />
 
-        <Button
+        <TextView
             android:id="@+id/first_pager_img_beijing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:textSize="15sp"
+            android:layout_marginRight="10dp"
             android:text="背景" />
     </LinearLayout>
 

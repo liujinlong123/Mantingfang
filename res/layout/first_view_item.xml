@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:id="@+id/relative_layout_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/first_viewpager_info_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="1"
+                android:gravity="left"
+                android:text="明月几时有"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/first_viewpager_info_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="1"
+                android:text="把酒问青天"
+                android:textSize="25sp" />
+        </LinearLayout>
+        
+        <TextView
+            android:id="@+id/first_viewpager_info_tv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="1"
+            android:text="李白"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="30dp"
+            android:textSize="18sp" />
+        
+    </RelativeLayout>
+
+</LinearLayout>

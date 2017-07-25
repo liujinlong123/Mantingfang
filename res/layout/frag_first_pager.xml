@@ -7,14 +7,14 @@
     
     <include layout="@layout/topbar_first"/>
     
-    <android.support.v4.view.ViewPager
+    <com.android.mantingfang.first.SelfViewPager
         android:id="@+id/frag_first_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="35dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp" >
-    </android.support.v4.view.ViewPager>
+        android:layout_marginRight="40dp"
+        android:background="@color/white" ></com.android.mantingfang.first.SelfViewPager>
 
 </LinearLayout>

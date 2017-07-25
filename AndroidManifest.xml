@@ -71,6 +71,12 @@
         
         <activity android:name="com.android.mantingfang.fourth.FourthTongzhi" ></activity>
         <activity android:name="com.android.mantingfang.fourth.FourthTuijian" ></activity>
+        <activity android:name="com.android.mantingfang.fourth.FourthDianzan" ></activity>
+        <activity android:name="com.android.mantingfang.fourth.FourthGuanzhu" ></activity>
+        <activity android:name="com.android.mantingfang.fourth.FourthShoucang" ></activity>
+        <activity android:name="com.android.mantingfang.fourth.FourthMy" ></activity>
+        <activity android:name="com.android.mantingfang.fourth.LogOn" ></activity>
+        <activity android:name="com.android.mantingfang.fourth.Phone" ></activity>
     </application>
 
 </manifest>

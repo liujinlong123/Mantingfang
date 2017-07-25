@@ -22,6 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="1"
+                android:gravity="left"
                 android:text="明月几时有"
                 android:textSize="25sp" />
 
@@ -62,10 +63,10 @@
         
         <Button
             android:id="@+id/first_pager_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/circle_small"
-            android:text="开"
+            android:text="Info"
             android:gravity="center"
             android:layout_marginLeft="20dp" />
         

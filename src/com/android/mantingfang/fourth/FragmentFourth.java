@@ -12,7 +12,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FragmentFourth extends Fragment implements OnClickListener{
 
@@ -70,27 +69,32 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 		switch(id) {
 		//0
 		case R.id.fourth_linear_my:
-			Toast.makeText(getActivity(), "My", Toast.LENGTH_SHORT).show();
+			Intent intent0 = new Intent(getActivity(), FourthMy.class);
+			startActivity(intent0);
 			break;
 			
 		//1
 		case R.id.fourth_linear_zhuye:
-			
+			Intent intent1 = new Intent(getActivity(), LogOn.class);
+			startActivity(intent1);
 			break;
 		
 		//2
 		case R.id.fourth_linear_guanzhu:
-			
+			Intent intent2 = new Intent(getActivity(), FourthGuanzhu.class);
+			startActivity(intent2);
 			break;
 			
 		//3
 		case R.id.fourth_linear_shoucang:
-			
+			Intent intent3 = new Intent(getActivity(), FourthShoucang.class);
+			startActivity(intent3);
 			break;
 			
 		//4
 		case R.id.fourth_linear_dianzan:
-			
+			Intent intent4 = new Intent(getActivity(), FourthDianzan.class);
+			startActivity(intent4);
 			break;
 			
 		//5

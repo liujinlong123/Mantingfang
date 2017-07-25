@@ -119,15 +119,15 @@ public class UserTwoAdapter extends BaseAdapter {
 	}
 
 	private void initViews(final UserTwoContent content, final ViewHolder holder, View view) {
-		// ÏàÍ¬²¿·Ö
+		// å¤´åƒè·¯å¾„
 		String path = content.getHeadPath();
 
-		// êÇ³Æ
+		// ç”¨æˆ·æ˜µç§°
 		//holder.userName.setText(content.getName());
-		// Ê±¼ä
+		// æ—¶é—´
 		holder.time.setText(content.getTime());
 
-		// µãÔŞ°´Å¥µã»÷Ê±¼ä
+		// ç‚¹èµç‚¹å‡»äº‹ä»¶
 		holder.zan.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -137,7 +137,7 @@ public class UserTwoAdapter extends BaseAdapter {
 			}
 		});
 
-		// ÆÀÂÛ°´Å¥µã»÷ÊÂ¼ş
+		// è¯„è®ºç‚¹å‡»äº‹ä»¶
 		holder.comment.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -147,7 +147,7 @@ public class UserTwoAdapter extends BaseAdapter {
 			}
 		});
 
-		// ·ÖÏí°´Å¥µã»÷ÊÂ¼ş
+		// åˆ†äº«ç‚¹å‡»æ—¶é—´
 		holder.share.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -158,11 +158,11 @@ public class UserTwoAdapter extends BaseAdapter {
 		});
 		
 		if (content.getPostComNum() == 1) {
-			//ÄÚÈİ
+			//ï¿½ï¿½ï¿½ï¿½
 			holder.content.setText(content.getContent());
-			//ÉèÖÃÍ¼Æ¬
+			//ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 			initGridView(content.getPicture(), holder);
-			//ÉèÖÃÊ«´Ê
+			//ï¿½ï¿½ï¿½ï¿½Ê«ï¿½ï¿½
 			holder.poemName.setText(content.getPoemName());
 			holder.poemQuote.setText(content.getPoemContent());
 			holder.linearPoem.setVisibility(View.GONE);
@@ -175,11 +175,11 @@ public class UserTwoAdapter extends BaseAdapter {
 			});
 		} 
 		else if (content.getPostComNum() == 2) {
-			//ÄÚÈİ
+			//ï¿½ï¿½ï¿½ï¿½
 			holder.content.setText(content.getContent());
-			//ÉèÖÃÍ¼Æ¬
+			//ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 			initGridView(content.getPicture(), holder);
-			//ÉèÖÃÊ«´Ê
+			//ï¿½ï¿½ï¿½ï¿½Ê«ï¿½ï¿½
 			holder.poemName.setText(content.getPoemName());
 			holder.poemQuote.setText(content.getPoemContent());
 			holder.linearPoem.setOnClickListener(new OnClickListener() {
@@ -198,9 +198,9 @@ public class UserTwoAdapter extends BaseAdapter {
 			});
 		} 
 		else if (content.getPostComNum() == 3) {
-			//ÄÚÈİ
+			//ï¿½ï¿½ï¿½ï¿½
 			holder.content.setText(content.getContent());
-			//ÉèÖÃÍ¼Æ¬
+			//ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 			initGridView(content.getPicture(), holder);
 			holder.linearPoem.setVisibility(View.GONE);
 			holder.content.setOnClickListener(new OnClickListener() {
@@ -224,7 +224,7 @@ public class UserTwoAdapter extends BaseAdapter {
 					
 				}
 			});
-			//ÉèÖÃÊ«´Ê
+			//ï¿½ï¿½ï¿½ï¿½Ê«ï¿½ï¿½
 			holder.poemName.setText(content.getPoemName());
 			holder.poemQuote.setText(content.getPoemContent());
 			holder.linearPoem.setOnClickListener(new OnClickListener() {

@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.mantingfang.first.PoemRhesis;
 import com.android.mantingfang.third.CommentContent;
 import com.android.mantingfang.third.UserTwoContent;
 
@@ -21,6 +22,7 @@ public class TopicList extends Base {
 	private List<UserTwoContent> listFour = new ArrayList<UserTwoContent>();
 	private List<UserTwoContent> listUser = new ArrayList<UserTwoContent>();
 	private List<CommentContent> listComment = new ArrayList<CommentContent>();
+	private List<PoemRhesis> listRhesis = new ArrayList<>();
 	
 	private int topicCount;
 	private int topicTwoCount;
@@ -28,6 +30,7 @@ public class TopicList extends Base {
 	private int topicFourCount;
 	private int userCount;
 	private int commentCount;
+	private int rhesisCount;
 	
 	public List<UserTwoContent> getTopicList() {
 		return topicList;
@@ -53,6 +56,10 @@ public class TopicList extends Base {
 		return listComment;
 	}
 	
+	public List<PoemRhesis> getRhesisList() {
+		return listRhesis;
+	}
+	
 	public int getTopicCount() {
 		return topicCount;
 	}
@@ -75,6 +82,10 @@ public class TopicList extends Base {
 	
 	public int getCommentCount() {
 		return commentCount;
+	}
+	
+	public int getRhesisCount() {
+		return rhesisCount;
 	}
 	
 	/**
@@ -310,6 +321,14 @@ public class TopicList extends Base {
 		return tList;
 	}
 	
+	/**
+	 * 解析评论数据
+	 * @param obj
+	 * @param topicId
+	 * @param topicNum
+	 * @return
+	 * @throws JSONException
+	 */
 	public static TopicList parseComment(JSONArray obj, String topicId, String topicNum) throws JSONException {
 		TopicList tList = new TopicList();
 		if (obj != null) {
@@ -327,6 +346,31 @@ public class TopicList extends Base {
 				
 				tList.listComment.add(content);
 				Log.v("Test", content.getContent());
+			}
+		}
+		
+		return tList;
+	}
+	
+	/**
+	 * ViewPager 名句解析
+	 * @param obj
+	 * @return
+	 * @throws JSONException
+	 */
+	public static TopicList parseRhesis(JSONArray obj) throws JSONException {
+		TopicList tList = new TopicList();
+		if (obj != null) {
+			tList.topicThreeCount = obj.length();
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				PoemRhesis content = new PoemRhesis(
+						jo.getString("poem_id"),
+						jo.getString("writer_name"),
+						jo.getString("poem_rhesis"));
+				
+				tList.listRhesis.add(content);
+				Log.v("Test", content.getRhesis());
 			}
 		}
 		
