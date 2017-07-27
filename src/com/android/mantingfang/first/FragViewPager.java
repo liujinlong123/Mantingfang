@@ -38,10 +38,9 @@ public class FragViewPager extends Fragment{
 			tv2 = (TextView)view.findViewById(R.id.first_viewpager_info_tv2);
 			tv3 = (TextView)view.findViewById(R.id.first_viewpager_info_tv3);
 			layout = (RelativeLayout)view.findViewById(R.id.relative_layout_viewpager);
-			
 			if (rhesis.getPoemId() != null && rhesis.getWriter() != null && rhesis.getRhesis() != null
 					&& !rhesis.getPoemId().equals("") && !rhesis.getWriter().equals("") && !rhesis.getRhesis().equals("")) {
-				String[] tokens = rhesis.getRhesis().split("[，,]");
+				String[] tokens = rhesis.getRhesis().split("[，,.。!?！？]");
 				tv1.setText(tokens[0]);
 				tv2.setText(tokens[1]);
 				tv3.setText(rhesis.getWriter());

@@ -84,10 +84,10 @@ public class AddOne extends Activity {
 		grdView = (KindGridView) findViewById(R.id.add_one_grd_photo);
 		editer = (EditText) findViewById(R.id.add_one_editer);
 
-		/*
-		 * SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-		 * userId = pref.getString("userId", "xx");
-		 */
+		
+		/*SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+		userId = pref.getString("userId", "xx");*/
+		
 		userId = "1";
 
 		// 不保存

@@ -21,7 +21,6 @@ import android.util.Log;
  * Created by kaiyi.cky on 2015/8/16.
  */
 public class FileUploader {
-	private static final String TAG = "uploadFile";
 	private static final int TIME_OUT = 10 * 10000000; // 超时时间
 	private static final String CHARSET = "utf-8"; // 设置编码
 	private static final String PREFIX = "--";
@@ -42,7 +41,7 @@ public class FileUploader {
 			conn.setDoInput(true); // 允许输入流
 			conn.setDoOutput(true); // 允许输出流
 			conn.setUseCaches(false); // 不允许使用缓存
-			// if(file!=null) {
+			// if (file != null) {
 			/**  * 当文件不为空，把文件包装并且上传  */
 			OutputStream outputSteam = conn.getOutputStream();
 			DataOutputStream dos = new DataOutputStream(outputSteam);
@@ -50,7 +49,7 @@ public class FileUploader {
 			sb.append(LINE_END);
 			if (params != null) {// 根据格式，开始拼接文本参数
 				for (Map.Entry<String, String> entry : params.entrySet()) {
-					sb.append(PREFIX).append(BOUNDARY).append(LINE_END);// �ֽ��
+					sb.append(PREFIX).append(BOUNDARY).append(LINE_END);//
 					sb.append("Content-Disposition: form-data; name=\"" + entry.getKey() + "\"" + LINE_END);
 					sb.append("Content-Type: text/plain; charset=" + CHARSET + LINE_END);
 					sb.append("Content-Transfer-Encoding: 8bit" + LINE_END);
@@ -59,42 +58,47 @@ public class FileUploader {
 					sb.append(LINE_END);// 换行
 				}
 			}
-			sb.append(PREFIX);// 开始拼接文件参数
-			sb.append(BOUNDARY);
-			sb.append(LINE_END);
-			/**
-			 ** 这里重点注意： 
-			 ** name里面的值为服务器端需要key 只有这个key 才可以得到对应的文件 
-			 ** filename是文件的名字，包含后缀名的 比如:abc.png 
-			 *                  
-			 */
-			if (file != null) {
+			if (file.exists()) {
+				sb.append(PREFIX);// 开始拼接文件参数
+				sb.append(BOUNDARY);
+				sb.append(LINE_END);
+				Log.v("File", file.getName() + file.exists() + "---" + file.getAbsolutePath());
+				/**
+				 **  这里重点注意：   name里面的值为服务器端需要key 只有这个key 才可以得到对应的文件 
+				 **  filename是文件的名字，包含后缀名的 比如:abc.png                   
+				 */
+
 				sb.append("Content-Disposition: form-data; name=\"uploadedfile\"; filename=\"" + file.getName() + "\""
 						+ LINE_END);
 				sb.append("Content-Type: application/octet-stream; charset=" + CHARSET + LINE_END);
 				sb.append(LINE_END);
+
+				Log.v("File----", sb.toString());
+				// 写入文件数据
 			}
-			// 写入文件数据
+
 			dos.write(sb.toString().getBytes());
-			InputStream is = new FileInputStream(file);
-			byte[] bytes = new byte[1024];
-			long totalbytes = file.length();
-			long curbytes = 0;
-			Log.v("cky", "total=" + totalbytes);
-			int len = 0;
-			while ((len = is.read(bytes)) != -1) {
-				curbytes += len;
-				dos.write(bytes, 0, len);
-				listener.onProgress(curbytes, 1.0d * curbytes / totalbytes);
+			if (file.exists()) {
+				InputStream is = new FileInputStream(file);
+				byte[] bytes = new byte[1024];
+				long totalbytes = file.length();
+				long curbytes = 0;
+				Log.v("cky", "total=" + totalbytes);
+				int len = 0;
+				while ((len = is.read(bytes)) != -1) {
+					curbytes += len;
+					dos.write(bytes, 0, len);
+					listener.onProgress(curbytes, 1.0d * curbytes / totalbytes);
+				}
+				is.close();
+				dos.write(LINE_END.getBytes());
 			}
-			is.close();
-			dos.write(LINE_END.getBytes());// һ�����л���
 			byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END).getBytes();
 			dos.write(end_data);
 			dos.flush();
+			dos.close();
 			/**
-			 ** 获取响应码 200=成功 
-			 ** 当响应成功，获取响应的流                   
+			 **  获取响应码 200=成功   当响应成功，获取响应的流                   
 			 */
 			int code = conn.getResponseCode();
 			sb.setLength(0);
@@ -104,7 +108,9 @@ public class FileUploader {
 				sb.append(line);
 			}
 			listener.onFinish(code, sb.toString(), conn.getHeaderFields());
+			conn.disconnect();
 			return sb.toString();
+			// }
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

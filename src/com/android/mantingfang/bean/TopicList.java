@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import com.android.mantingfang.first.PoemRhesis;
 import com.android.mantingfang.third.CommentContent;
+import com.android.mantingfang.third.User;
 import com.android.mantingfang.third.UserTwoContent;
 
 import android.util.Log;
@@ -23,6 +24,7 @@ public class TopicList extends Base {
 	private List<UserTwoContent> listUser = new ArrayList<UserTwoContent>();
 	private List<CommentContent> listComment = new ArrayList<CommentContent>();
 	private List<PoemRhesis> listRhesis = new ArrayList<>();
+	private List<User> listUserinfo = new ArrayList<>();
 	
 	private int topicCount;
 	private int topicTwoCount;
@@ -31,6 +33,7 @@ public class TopicList extends Base {
 	private int userCount;
 	private int commentCount;
 	private int rhesisCount;
+	private int userInfoCount;
 	
 	public List<UserTwoContent> getTopicList() {
 		return topicList;
@@ -60,6 +63,10 @@ public class TopicList extends Base {
 		return listRhesis;
 	}
 	
+	public List<User> getUserInfoList() {
+		return listUserinfo;
+	}
+	
 	public int getTopicCount() {
 		return topicCount;
 	}
@@ -86,6 +93,10 @@ public class TopicList extends Base {
 	
 	public int getRhesisCount() {
 		return rhesisCount;
+	}
+	
+	public int getUserInfoCount() {
+		return userInfoCount;
 	}
 	
 	/**
@@ -361,16 +372,40 @@ public class TopicList extends Base {
 	public static TopicList parseRhesis(JSONArray obj) throws JSONException {
 		TopicList tList = new TopicList();
 		if (obj != null) {
-			tList.topicThreeCount = obj.length();
+			tList.rhesisCount = obj.length();
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
 				PoemRhesis content = new PoemRhesis(
-						jo.getString("poem_id"),
-						jo.getString("writer_name"),
-						jo.getString("poem_rhesis"));
+						jo.optString("poetry_id"),
+						jo.optString("writer_name"),
+						jo.optString("poetry_rhesis"));
 				
 				tList.listRhesis.add(content);
-				Log.v("Test", content.getRhesis());
+				//Log.v("Test", content.getRhesis());
+			}
+		}
+		
+		return tList;
+	}
+	
+	public static TopicList parseUserInfo(JSONArray obj, String userId) throws JSONException {
+		TopicList tList = new TopicList();
+		if (obj != null) {
+			tList.userInfoCount = obj.length();
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				User content = new User(
+						userId,
+						jo.optString("user_nickname"),
+						jo.optString("user_photo"),
+						jo.optString("user_age"),
+						jo.optString("user_sex"),
+						jo.optString("user_area"),
+						jo.optString("user_introduce"),
+						jo.optString("user_label"));
+				
+				tList.listUserinfo.add(content);
+				//Log.v("Test", content.getRhesis());
 			}
 		}
 		

@@ -1,5 +1,8 @@
 package com.android.mantingfang.bean;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +65,7 @@ public class StringUtils {
 	}
 	
 	/** 
-     * ���ת��Ϊȫ�� 
+     * ���ת��Ϊȫ�� 
      *  
      * @param input 
      * @return 
@@ -93,7 +96,7 @@ public class StringUtils {
     }
     
     /**
-     * ��ȡͼƬ·��List
+     * ��ȡͼƬ·��List
      * @param pic
      * @return
      */
@@ -108,7 +111,7 @@ public class StringUtils {
     }
     
     /**
-     * ��UserTwoPager������з������ݴ���
+     * ��UserTwoPager������з������ݴ���
      * @param result
      * @return
      */
@@ -121,5 +124,64 @@ public class StringUtils {
     	}
     	return null;
     }
+
+    
+    /**
+	 * 二进制转字符串
+	 * @param b
+	 * @return
+	 */
+	public static String byte2hex(byte[] b) // 二进制转字符串
+	{
+		StringBuffer sb = new StringBuffer();
+		String stmp = "";
+		for (int n = 0; n < b.length; n++) {
+			stmp = Integer.toHexString(b[n] & 0XFF);
+			if (stmp.length() == 1) {
+				sb.append("0" + stmp);
+			} else {
+				sb.append(stmp);
+			}
+
+		}
+		return sb.toString();
+	}
+	
+	/**
+	 * 将二进制转换成图片保存
+	 * @param imgStr 二进制流转换的字符串
+	 * @param imgPath 图片的保存路径
+	 * @param imgName 图片的名称
+	 * @return 
+	 * 		1：保存正常
+	 * 		0：保存失败
+	 */
+	public static int saveToImgByBytes(File imgFile,String imgPath,String imgName){
+
+		int stateInt = 1;
+		if(imgFile.length() > 0){
+			try {
+				File file=new File(imgPath,imgName);//可以是任何图片格式.jpg,.png等
+				FileOutputStream fos=new FileOutputStream(file);
+				
+				FileInputStream fis = new FileInputStream(imgFile);
+				  
+				byte[] b = new byte[1024];
+				int nRead = 0;
+				while ((nRead = fis.read(b)) != -1) {
+					fos.write(b, 0, nRead);
+				}
+				fos.flush();
+				fos.close();
+				fis.close();
+			} catch (Exception e) {
+				stateInt = 0;
+				e.printStackTrace();
+			} finally {
+			}
+		}
+		return stateInt;
+	}
+
 
 }

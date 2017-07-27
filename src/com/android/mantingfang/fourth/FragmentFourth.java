@@ -3,9 +3,13 @@ package com.android.mantingfang.fourth;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +29,11 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 	private LinearLayout linearTongzhi;
 	private LinearLayout linearGuanyu;
 	private TextView quit;
+	private String userId;
+	private SharedPreferences pref;
+	
+	private IntentFilter intentFilter;
+	private MyBroadcast myBroadcast;
 	
 	@SuppressLint("InflateParams")
 	@Override
@@ -34,6 +43,10 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 			
 			
 			initViews();
+			intentFilter = new IntentFilter();
+			intentFilter.addAction("com.android.mantingfang.fourth.LOG_ON");
+			myBroadcast = new MyBroadcast(quit);
+			getActivity().registerReceiver(myBroadcast, intentFilter);
 			
 			return view;
 		}
@@ -41,6 +54,10 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 	}
 
 	private void initViews() {
+		pref = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+		userId = pref.getString("userId", "-1");
+		Log.v("userIdTwo", userId);
+		
 		linearMy = (LinearLayout)view.findViewById(R.id.fourth_linear_my);
 		linearZhuye = (LinearLayout)view.findViewById(R.id.fourth_linear_zhuye);
 		linearGuanzhu = (LinearLayout)view.findViewById(R.id.fourth_linear_guanzhu);
@@ -61,52 +78,90 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 		linearTongzhi.setOnClickListener(this);
 		linearGuanyu.setOnClickListener(this);
 		quit.setOnClickListener(this);
+		
+		if (Integer.parseInt(userId) < 0) {
+			quit.setVisibility(View.GONE);
+		} else {
+			quit.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
 	public void onClick(View v) {
+		userId = pref.getString("userId", "-1");
+		//Log.v("userIdTwo", userId);
+		
 		int id = v.getId();
+		Intent intent = new Intent(getActivity(), LogOn.class);
 		switch(id) {
 		//0
 		case R.id.fourth_linear_my:
-			Intent intent0 = new Intent(getActivity(), FourthMy.class);
-			startActivity(intent0);
+			if (Integer.parseInt(userId) < 0) {
+				startActivity(intent);
+			} else if (Integer.parseInt(userId) > -1) {
+				Intent intent0 = new Intent(getActivity(), FourthMy.class);
+				startActivity(intent0);
+			}
 			break;
 			
 		//1
 		case R.id.fourth_linear_zhuye:
-			Intent intent1 = new Intent(getActivity(), LogOn.class);
-			startActivity(intent1);
+			if (Integer.parseInt(userId) < 0) {
+				startActivity(intent);
+			} else if (Integer.parseInt(userId) > -1) {
+				/*Intent intent0 = new Intent(getActivity(), FourthMy.class);
+				startActivity(intent0);*/
+			}
 			break;
 		
 		//2
 		case R.id.fourth_linear_guanzhu:
-			Intent intent2 = new Intent(getActivity(), FourthGuanzhu.class);
-			startActivity(intent2);
+			if (Integer.parseInt(userId) < 0) {
+				startActivity(intent);
+			} else if (Integer.parseInt(userId) > -1) {
+				Intent intent2 = new Intent(getActivity(), FourthGuanzhu.class);
+				startActivity(intent2);
+			}
 			break;
 			
 		//3
 		case R.id.fourth_linear_shoucang:
-			Intent intent3 = new Intent(getActivity(), FourthShoucang.class);
-			startActivity(intent3);
+			if (Integer.parseInt(userId) < 0) {
+				startActivity(intent);
+			} else if (Integer.parseInt(userId) > -1) {
+				Intent intent3 = new Intent(getActivity(), FourthShoucang.class);
+				startActivity(intent3);
+			}
 			break;
 			
 		//4
 		case R.id.fourth_linear_dianzan:
-			Intent intent4 = new Intent(getActivity(), FourthDianzan.class);
-			startActivity(intent4);
+			if (Integer.parseInt(userId) < 0) {
+				startActivity(intent);
+			} else if (Integer.parseInt(userId) > -1) {
+				Intent intent4 = new Intent(getActivity(), FourthDianzan.class);
+				startActivity(intent4);
+			}
 			break;
 			
 		//5
 		case R.id.fourth_linear_tuijian:
-			Intent intent5 = new Intent(getActivity(), FourthTuijian.class);
-			startActivity(intent5);
+			if (Integer.parseInt(userId) < 0) {
+				startActivity(intent);
+			} else if (Integer.parseInt(userId) > -1) {
+				Intent intent5 = new Intent(getActivity(), FourthTuijian.class);
+				startActivity(intent5);
+			}
 			break;
 			
 		//6
 		case R.id.fourth_linear_tongzhi:
-			Intent intent6 = new Intent(getActivity(), FourthTongzhi.class);
-			startActivity(intent6);
+			if (Integer.parseInt(userId) < 0) {
+				startActivity(intent);
+			} else if (Integer.parseInt(userId) > -1) {
+				Intent intent6 = new Intent(getActivity(), FourthTongzhi.class);
+				startActivity(intent6);
+			}
 			break;
 			
 		//7
@@ -116,11 +171,24 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 			
 		//8
 		case R.id.fourth_tv_logoff:
-			
+			if (Integer.parseInt(userId) < 0) {
+				
+			} else if (Integer.parseInt(userId) > -1) {
+				SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE).edit();
+				editor.putString("userId", "-1");
+				editor.commit();
+				quit.setVisibility(View.GONE);
+			}
 			break;
 			
 		default:
 			break;
 		}
+	}
+	
+	@Override
+	public void onDestroy() {
+		getActivity().unregisterReceiver(myBroadcast);
+		super.onDestroy();
 	}
 }

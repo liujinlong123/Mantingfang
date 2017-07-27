@@ -1,9 +1,13 @@
 package com.android.mantingfang.first;
 
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -19,12 +23,17 @@ public class FirstPagerAdd extends Activity {
 	private EditText editText;
 	private EditText editWriter;
 	private Button tvSave;
-	private PictureContent content;
+	private String userId;
+	private String text;
+	private String writer;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.first_pager_add);
+		
+		SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+		userId = pref.getString("userId", "-1");
 		
 		initViews();
 	}
@@ -57,15 +66,33 @@ public class FirstPagerAdd extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				String text = editText.getText().toString();
-				String writer = editWriter.getText().toString();
-				if (text != null && !text.equals("")) {
-					content = new PictureContent(text, writer);
-					
-					
+				text = editText.getText().toString();
+				writer = editWriter.getText().toString();
+				if (text != null && !text.equals("") && Integer.parseInt(userId) >= 0) {
+					saveData();
 					finish();
+				} else if (text == null || text.equals("")) {
+					Toast.makeText(FirstPagerAdd.this, "内容不能为空", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
+	}
+	
+	private void saveData() {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				return MyClient.getInstance().Http_postSaveCard(userId, text, writer);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				
+			}
+			
+		};
+		
+		task.execute();
 	}
 }

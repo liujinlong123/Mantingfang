@@ -21,6 +21,11 @@
         <item>朗读</item>
     </array>
     
+    <array name="item_sex">
+        <item>男</item>
+        <item>女</item>
+    </array>
+    
     <string name="start">开始录音</string>
     <string name="stop">停止录音</string>
     <string name="paly">播放录音</string>

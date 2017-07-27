@@ -28,11 +28,11 @@
                 android:orientation="horizontal" >
 
                 <com.android.mantingfanggsc.CircleImageView
-                    android:id="@+id/fourh_my_userPhoto"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_margin="25dp"
-                    android:src="@drawable/welcome" />
+                    android:id="@+id/fourth_my_userPhoto"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="35dp"
+                    android:background="@drawable/circle_photo" />
             </LinearLayout>
 
             <View
@@ -115,7 +115,6 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:gravity="left"
-                    android:text="男"
                     android:textSize="17sp" />
 
                 <ImageView
@@ -150,7 +149,6 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:gravity="left"
-                    android:text="1997-02-18"
                     android:textSize="17sp" />
 
                 <ImageView
@@ -185,7 +183,6 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:gravity="left"
-                    android:text="山东淄博"
                     android:textSize="17sp" />
 
                 <ImageView
@@ -220,7 +217,6 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:gravity="left"
-                    android:text="山东淄博"
                     android:textSize="17sp" />
 
                 <ImageView
