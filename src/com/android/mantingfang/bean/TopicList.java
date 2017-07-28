@@ -12,6 +12,7 @@ import com.android.mantingfang.third.CommentContent;
 import com.android.mantingfang.third.User;
 import com.android.mantingfang.third.UserTwoContent;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 @SuppressWarnings("serial")
@@ -25,6 +26,7 @@ public class TopicList extends Base {
 	private List<CommentContent> listComment = new ArrayList<CommentContent>();
 	private List<PoemRhesis> listRhesis = new ArrayList<>();
 	private List<User> listUserinfo = new ArrayList<>();
+	private List<PoemRhesis> listSearch = new ArrayList<>();
 	
 	private int topicCount;
 	private int topicTwoCount;
@@ -34,6 +36,7 @@ public class TopicList extends Base {
 	private int commentCount;
 	private int rhesisCount;
 	private int userInfoCount;
+	private int searchCount;
 	
 	public List<UserTwoContent> getTopicList() {
 		return topicList;
@@ -67,6 +70,10 @@ public class TopicList extends Base {
 		return listUserinfo;
 	}
 	
+	public List<PoemRhesis> getSearchList() {
+		return listSearch;
+	}
+	
 	public int getTopicCount() {
 		return topicCount;
 	}
@@ -97,6 +104,10 @@ public class TopicList extends Base {
 	
 	public int getUserInfoCount() {
 		return userInfoCount;
+	}
+	
+	public int getSearchCount() {
+		return searchCount;
 	}
 	
 	/**
@@ -264,9 +275,9 @@ public class TopicList extends Base {
 				UserTwoContent content = null;
 				if (topicTime != null && !topicTime.equals("")) {
 					content = new UserTwoContent(
-							"",
-							"",
-							"",
+							userId,
+							headPath,
+							nickName,
 							jo.getString("topic_time"),
 							jo.getString("topic_content"),
 							StringUtils.getPictures(jo.getString("topic_picture")),
@@ -279,9 +290,9 @@ public class TopicList extends Base {
 							Integer.parseInt(jo.getString("topic_id")));
 				} else if (noteTime != null && !noteTime.equals("")) {
 					content = new UserTwoContent(
-							"",
-							"",
-							"",
+							userId,
+							headPath,
+							nickName,
 							jo.getString("note_time"),
 							jo.getString("note_content"),
 							StringUtils.getPictures(jo.getString("note_picture")),
@@ -294,9 +305,9 @@ public class TopicList extends Base {
 							Integer.parseInt(jo.getString("note_id")));
 				} else if (originalTime != null && !originalTime.equals("")) {
 					content = new UserTwoContent(
-							"",
-							"",
-							"",
+							userId,
+							headPath,
+							nickName,
 							jo.getString("original_time"),
 							jo.getString("original_content"),
 							StringUtils.getPictures(jo.getString("original_picture")),
@@ -309,9 +320,9 @@ public class TopicList extends Base {
 							Integer.parseInt(jo.getString("original_id")));
 				} else if (audioTime != null && !audioTime.equals("")) {
 					content = new UserTwoContent(
-							"",
-							"",
-							"",
+							userId,
+							headPath,
+							nickName,
 							jo.getString("audio_time"),
 							null,
 							null,
@@ -388,6 +399,13 @@ public class TopicList extends Base {
 		return tList;
 	}
 	
+	/**
+	 * 获取用户个人信息
+	 * @param obj
+	 * @param userId
+	 * @return
+	 * @throws JSONException
+	 */
 	public static TopicList parseUserInfo(JSONArray obj, String userId) throws JSONException {
 		TopicList tList = new TopicList();
 		if (obj != null) {
@@ -405,6 +423,33 @@ public class TopicList extends Base {
 						jo.optString("user_label"));
 				
 				tList.listUserinfo.add(content);
+				//Log.v("Test", content.getRhesis());
+			}
+		}
+		
+		return tList;
+	}
+	
+	/**
+	 * 解析通过关键字搜索获取的诗词信息
+	 * @param obj
+	 * @return
+	 * @throws JSONException
+	 */
+	public static TopicList parseSearchPoem (JSONArray obj) throws JSONException {
+		TopicList tList = new TopicList();
+		if (obj != null) {
+			tList.searchCount = obj.length();
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				PoemRhesis poem = new PoemRhesis(
+						jo.optString("poetry_id"),
+						jo.optString("poetry_name"),
+						jo.optString("dynasty_name"),
+						jo.optString("writer_name"),
+						jo.optString("poetry_rhesis"));
+				
+				tList.listSearch.add(poem);
 				//Log.v("Test", content.getRhesis());
 			}
 		}

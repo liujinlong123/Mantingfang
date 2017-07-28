@@ -84,7 +84,7 @@ public class FourthMy extends Activity {
 	private Uri imgUri;
 	
 	private User user = new User();
-	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//test.php";
+	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receiveusermessage.php";
 	private Bitmap bitmap;
 	
 	@Override
@@ -225,7 +225,7 @@ public class FourthMy extends Activity {
 			@Override
 			protected String doInBackground(String... params) {
 				
-				/*return FileUploader.upload(actionUrl, new File(user.getUserPhoto()), param, new FileUploadListener() {
+				return FileUploader.upload(actionUrl, new File(user.getUserPhoto()), param, new FileUploadListener() {
 
 					@Override
 					public void onProgress(long pro, double precent) {
@@ -237,21 +237,7 @@ public class FourthMy extends Activity {
 					public void onFinish(int code, String res, Map<String, List<String>> headers) {
 						Log.v("result", res);
 					}
-				});*/
-				Map<String, File> files = new HashMap<>();
-				File img = new File(user.getUserPhoto());
-				files.put(img.getName(), img);
-				files.put("f951a4405fe4b410efddb6f9e021b6db.jpg", new File("/storage/emulated/0/Download/f951a4405fe4b410efddb6f9e021b6db.jpg"));
-				files.put("1.png", new File("/data/data/1.png"));
-				files.put("fd7fa453b141ca5c2dcb6af592400046.jpg", new File("/storage/emulated/0/Download/fd7fa453b141ca5c2dcb6af592400046.jpg"));
-				try {
-					return FilesUpload.post(actionUrl, param, files);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				return null;
+				});
 			}
 			
 			@Override

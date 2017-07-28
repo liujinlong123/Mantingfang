@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.mantingfang.second.KindGridView;
+import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
 
@@ -17,20 +18,19 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ThirdThreeAdapter extends BaseAdapter {
 
 	private Context mContext;
 	private LayoutInflater inflater;
 	private List<UserTwoContent> list;
-	
+
 	public ThirdThreeAdapter(Context context, List<UserTwoContent> list) {
 		this.list = list;
 		mContext = context;
 		inflater = LayoutInflater.from(context);
 	}
-	
+
 	@Override
 	public int getCount() {
 		return list == null ? 0 : list.size();
@@ -57,7 +57,7 @@ public class ThirdThreeAdapter extends BaseAdapter {
 
 			holder = new ViewHolder();
 			holder.linearHead = (LinearLayout) view.findViewById(R.id.third_pager_one_listhead);
-			holder.headPhoto = (ImageView) view.findViewById(R.id.third_pager_user_photo);
+			holder.headPhoto = (CircleImageView) view.findViewById(R.id.third_pager_user_photo);
 			holder.userName = (TextView) view.findViewById(R.id.third_pager_user_name);
 			holder.time = (TextView) view.findViewById(R.id.third_pager_user_time);
 			holder.content = (TextView) view.findViewById(R.id.third_pager_user_content);
@@ -77,14 +77,14 @@ public class ThirdThreeAdapter extends BaseAdapter {
 
 		UserTwoContent content = list.get(position);
 		initViews(content, holder);
-		
+
 		return view;
 	}
-	
+
 	final static class ViewHolder {
 		LinearLayout linearHead;
 
-		ImageView headPhoto;
+		CircleImageView headPhoto;
 
 		TextView userName;
 
@@ -106,26 +106,26 @@ public class ThirdThreeAdapter extends BaseAdapter {
 
 		ImageView share;
 	}
-	
-	private void initViews(final UserTwoContent content, ViewHolder holder) {
-		// ÉèÖÃÍ·Ïñ
-		String path = content.getHeadPath();
 
-		// êÇ³Æ
-		//Log.v("userName", content.getName());
+	private void initViews(final UserTwoContent content, ViewHolder holder) {
+		// å¤´åƒè·¯å¾„
+		holder.headPhoto.setImageBitmap(content.getHeadPhoto());
+
+		// ç”¨æˆ·æ˜µç§°
+		// Log.v("userName", content.getName());
 		holder.userName.setText(content.getName());
-		// Ê±¼ä
+		// å‘è¡¨æ—¶é—´
 		holder.time.setText(content.getTime());
-		// ÄÚÈİ
+		// å‘è¡¨å†…å®¹
 		holder.content.setText(content.getContent());
-		// ÉèÖÃÍ¼Æ¬
+		// åˆå§‹åŒ–å›¾ç‰‡
 		// initGridView(content.getPicture(), holder);
-		// ÉèÖÃÊ«´Ê
+		// ç›¸å…³è¯—è¯
 		holder.linearPoem.setVisibility(View.GONE);
 		// holder.poemName.setText(content.getPoem().getTitle());
 		// holder.poemQuote.setText(content.getPoem().getContent());
 
-		// Í·Ïñµã»÷ÊÂ¼ş
+		// è·³è½¬ç”¨æˆ·è¯¦æƒ…
 		holder.linearHead.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -134,25 +134,17 @@ public class ThirdThreeAdapter extends BaseAdapter {
 			}
 		});
 
-		// contentµã»÷ÊÂ¼ş
+		// è·³è½¬å†…å®¹
 		holder.content.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "");
+				UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "",
+						content.getHeadPath());
 			}
 		});
 
-		// Éæ¼°Ê«´Êµã»÷ÊÂ¼ş
-		holder.linearPoem.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(mContext, "Ìø×ªÊ«´Ê", Toast.LENGTH_SHORT).show();
-			}
-		});
-
-		// µãÔŞ°´Å¥µã»÷Ê±¼ä
+		// ç‚¹èµ
 		holder.zan.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -162,7 +154,7 @@ public class ThirdThreeAdapter extends BaseAdapter {
 			}
 		});
 
-		// ÆÀÂÛ°´Å¥µã»÷ÊÂ¼ş
+		// è¯„è®º
 		holder.comment.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -172,7 +164,7 @@ public class ThirdThreeAdapter extends BaseAdapter {
 			}
 		});
 
-		// ·ÖÏí°´Å¥µã»÷ÊÂ¼ş
+		// åˆ†äº«
 		holder.share.setOnClickListener(new OnClickListener() {
 
 			@Override

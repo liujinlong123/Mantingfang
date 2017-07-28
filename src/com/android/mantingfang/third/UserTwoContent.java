@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 import com.android.mantingfang.bean.Base;
 
+import android.graphics.Bitmap;
+
 @SuppressWarnings("serial")
 public class UserTwoContent extends Base {
 	private String userId;		//用户Id
 	private String headPath;	//头像路径
+	private Bitmap headPhoto;	//头像
+	
 	private String name;		//用户昵称
 	private String time;		//发表时间
 	private String content;		//发表内容
@@ -39,6 +43,47 @@ public class UserTwoContent extends Base {
 		this.post_com_pId = post_com_pId;
 	}
 	
+	public UserTwoContent(String userId, Bitmap headPhoto, String name, String time, String content, ArrayList<String> picture,
+			String soundPath, String poemId, String poemContent, String poemName, boolean zan, int post_com_num, int post_com_pId) {
+		this.userId = userId;
+		this.headPhoto = headPhoto;
+		this.name = name;
+		this.time = time;
+		this.content = content;
+		this.picture = picture;
+		this.poemId = poemId;
+		this.poemContent = poemContent;
+		this.poemName = poemName;
+		this.soundPath = soundPath;
+		this.zan = zan;
+		this.post_com_num = post_com_num;
+		this.post_com_pId = post_com_pId;
+	}
+	
+	public Bitmap getHeadPhoto() {
+		return headPhoto;
+	}
+
+	public void setHeadPhoto(Bitmap headPhoto) {
+		this.headPhoto = headPhoto;
+	}
+
+	public int getPost_com_num() {
+		return post_com_num;
+	}
+
+	public void setPost_com_num(int post_com_num) {
+		this.post_com_num = post_com_num;
+	}
+
+	public int getPost_com_pId() {
+		return post_com_pId;
+	}
+
+	public void setPost_com_pId(int post_com_pId) {
+		this.post_com_pId = post_com_pId;
+	}
+
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}

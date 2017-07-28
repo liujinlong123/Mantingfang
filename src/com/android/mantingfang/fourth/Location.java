@@ -51,7 +51,7 @@ public class Location extends Activity implements OnClickListener{
 		backTitle = (TextView)findViewById(R.id.topbar_tv_back);
 		backTitle.setText("返回");
 		save = (TextView)findViewById(R.id.topbar_all_saveOn);
-		editor = (EditText)findViewById(R.id.intro);
+		editor = (EditText)findViewById(R.id.location_editor);
 		save.setVisibility(View.VISIBLE);
 		save.setOnClickListener(new OnClickListener() {
 			

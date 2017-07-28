@@ -9,6 +9,7 @@ import com.android.mantingfang.bean.PoetryList;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.model.PoemM;
 import com.android.mantingfang.second.KindGridView;
+import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
@@ -64,7 +65,7 @@ public class ThirdTwoAdapter extends BaseAdapter {
 
 			holder = new ViewHolder();
 			holder.linearHead = (LinearLayout) view.findViewById(R.id.third_pager_one_listhead);
-			holder.headPhoto = (ImageView) view.findViewById(R.id.third_pager_user_photo);
+			holder.headPhoto = (CircleImageView) view.findViewById(R.id.third_pager_user_photo);
 			holder.userName = (TextView) view.findViewById(R.id.third_pager_user_name);
 			holder.time = (TextView) view.findViewById(R.id.third_pager_user_time);
 			holder.content = (TextView) view.findViewById(R.id.third_pager_user_content);
@@ -91,7 +92,7 @@ public class ThirdTwoAdapter extends BaseAdapter {
 	final static class ViewHolder {
 		LinearLayout linearHead;
 
-		ImageView headPhoto;
+		CircleImageView headPhoto;
 
 		TextView userName;
 
@@ -115,22 +116,21 @@ public class ThirdTwoAdapter extends BaseAdapter {
 	}
 
 	private void initViews(final UserTwoContent content, final ViewHolder holder) {
-		// ÉèÖÃÍ·Ïñ
-		// String path = content.getHeadPath();
-		Log.v("userid", content.getUserId());
-		// êÇ³Æ
+		//å¤´åƒè·¯å¾„
+		holder.headPhoto.setImageBitmap(content.getHeadPhoto());
+		//ç”¨æˆ·æ˜µç§°
 		holder.userName.setText(content.getName());
-		// Ê±¼ä
+		//å‘è¡¨æ—¶é—´
 		holder.time.setText(content.getTime());
-		// ÄÚÈİ
+		//å‘è¡¨å†…å®¹
 		holder.content.setText(content.getContent());
-		// ÉèÖÃÍ¼Æ¬
+		// åˆå§‹åŒ–å›¾ç‰‡
 		// initGridView(content.getPicture(), holder);
-		// ÉèÖÃÊ«´Ê
+		// è¯—è¯åå­—
 		holder.poemName.setText(content.getPoemName());
 		holder.poemQuote.setText(content.getPoemContent());
 
-		// Í·Ïñµã»÷ÊÂ¼ş
+		//è·³è½¬ç”¨æˆ·
 		holder.linearHead.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -139,26 +139,26 @@ public class ThirdTwoAdapter extends BaseAdapter {
 			}
 		});
 
-		// contentµã»÷ÊÂ¼ş
+		// è·³è½¬è¯¦æƒ…
 		holder.content.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "");
+				UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "",
+						content.getHeadPath());
 			}
 		});
 
-		// Éæ¼°Ê«´Êµã»÷ÊÂ¼ş
+		//è·³è½¬è¯—è¯è¯¦æƒ…
 		holder.linearPoem.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				getData(content.getPoemId(), holder);
-				//getData("1", holder);
 			}
 		});
 
-		// µãÔŞ°´Å¥µã»÷Ê±¼ä
+		// ç‚¹èµ
 		holder.zan.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -168,7 +168,7 @@ public class ThirdTwoAdapter extends BaseAdapter {
 			}
 		});
 
-		// ÆÀÂÛ°´Å¥µã»÷ÊÂ¼ş
+		// è¯„è®º
 		holder.comment.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -178,7 +178,7 @@ public class ThirdTwoAdapter extends BaseAdapter {
 			}
 		});
 
-		// ·ÖÏí°´Å¥µã»÷ÊÂ¼ş
+		// åˆ†äº«
 		holder.share.setOnClickListener(new OnClickListener() {
 
 			@Override

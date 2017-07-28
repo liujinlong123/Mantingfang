@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.mantingfang.second.KindGridView;
+import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -54,7 +57,7 @@ public class ThirdOneAdapter extends BaseAdapter {
 			view = inflater.inflate(R.layout.third_pager_one_itemlist, null);
 			holder = new ViewHolder();
 			holder.linearHead = (LinearLayout)view.findViewById(R.id.third_pager_one_listhead);
-			holder.headPhoto = (ImageView)view.findViewById(R.id.third_pager_user_photo);
+			holder.headPhoto = (CircleImageView)view.findViewById(R.id.third_pager_user_photo);
 			holder.userName = (TextView)view.findViewById(R.id.third_pager_user_name);
 			holder.time = (TextView)view.findViewById(R.id.third_pager_user_time);
 			holder.content = (TextView)view.findViewById(R.id.third_pager_user_content);
@@ -81,7 +84,7 @@ public class ThirdOneAdapter extends BaseAdapter {
 	final static class ViewHolder {
 		LinearLayout linearHead;
 		
-		ImageView headPhoto;
+		CircleImageView headPhoto;
 		
 		TextView userName;
 		
@@ -105,42 +108,43 @@ public class ThirdOneAdapter extends BaseAdapter {
 	}
 
 	private void initViews(final UserTwoContent content, ViewHolder holder, final View view) {
-		//ÉèÖÃÍ·Ïñ
-		String path = content.getHeadPath();
+		//å¤´åƒè·¯å¾„
+		holder.headPhoto.setImageBitmap(content.getHeadPhoto());
 		
-		
-		//êÇ³Æ
+		//æ˜µç§°
 		//Log.v("userName", content.getName());
 		holder.userName.setText(content.getName());
-		//Ê±¼ä
+		//å‘è¡¨æ—¶é—´
 		//Log.v("time", content.getTime());
 		holder.time.setText(content.getTime());
-		//ÄÚÈİ
+		//å‘è¡¨å†…å®¹
 		holder.content.setText(content.getContent());
-		//ÉèÖÃÍ¼Æ¬
+		//åˆå§‹åŒ–å›¾ç‰‡
 		//initGridView(content.getPicture(), holder);
-		//ÉèÖÃÊ«´Ê
+		//ç›¸å…³è¯—è¯
 		holder.linearPoem.setVisibility(View.GONE);
 		
-		//Í·Ïñµã»÷ÊÂ¼ş
+		//è·³è½¬ç”¨æˆ·
 		holder.linearHead.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				UIHelper.showUserDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
+				Log.v("useroneadapter", content.getHeadPath());
 			}
 		});
 		
-		//contentµã»÷ÊÂ¼ş
+		//è·³è½¬å†…å®¹
 		holder.content.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "");
+				UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "",
+						content.getHeadPath());
 			}
 		});
 		
-		//µãÔŞ°´Å¥µã»÷Ê±¼ä
+		//ç‚¹èµ
 		holder.zan.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -150,7 +154,7 @@ public class ThirdOneAdapter extends BaseAdapter {
 			}
 		});
 		
-		//ÆÀÂÛ°´Å¥µã»÷ÊÂ¼ş
+		//è·³è½¬è¯„è®º
 		holder.comment.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -159,7 +163,7 @@ public class ThirdOneAdapter extends BaseAdapter {
 			}
 		});
 		
-		//·ÖÏí°´Å¥µã»÷ÊÂ¼ş
+		//åˆ†äº«
 		holder.share.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -170,9 +174,9 @@ public class ThirdOneAdapter extends BaseAdapter {
 		});
 	}
 	
-	private void initGridView(ArrayList<String> picture, ViewHolder holder) {
+	private void initGridView(ArrayList<Bitmap> pictures, ViewHolder holder) {
 		holder.grdview.setNumColumns(3);
-		if (picture.size() == 0 || picture == null) {
+		if (pictures.size() == 0 || pictures == null) {
 			holder.grdview.setVisibility(View.GONE);
 		} else {
 			

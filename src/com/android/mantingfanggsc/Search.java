@@ -50,7 +50,6 @@ public class Search extends Activity{
 	private EditText editer;
 	private String currentStr = "";
 	
-	//private PoetryDao pDao;
 	
 	private List<List<String>> dataList;
 	

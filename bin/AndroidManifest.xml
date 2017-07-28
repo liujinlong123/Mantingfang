@@ -68,6 +68,7 @@
         <activity android:name="com.android.mantingfanggsc.MainActivity" />
         <activity android:name="com.android.mantingfanggsc.PoetryDetail" />
         <activity android:name="com.android.mantingfanggsc.Search" />
+        <activity android:name="com.android.mantingfanggsc.SearchTwo" />
         <activity android:name="com.android.mantingfanggsc.WriterDetail" />
         
         <activity android:name="com.android.mantingfang.first.FirstPagerAdd" ></activity>

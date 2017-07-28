@@ -1,17 +1,21 @@
 package com.android.mantingfang.third;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfanggsc.CustomListView;
+import com.android.mantingfanggsc.ImageLoad;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,6 +39,10 @@ public class UserTwo extends Fragment {
 	private CustomListView listview;
 	private UserTwoAdapter adapter;
 	private List<UserTwoContent> list;
+	private String userId;
+	private String nickName;
+	private String headPath;
+	private Bitmap bitmap;
 	
 	@SuppressLint("InflateParams")
 	@Override
@@ -45,9 +53,11 @@ public class UserTwo extends Fragment {
 			//vp.setObjectForPosition(view, 1);
 			
 			initViews();
-			Log.v("TESTFRAGMENT", (String)getArguments().get("userId") + "-----Two");
-			getData((String)getArguments().get("userId"), (String)getArguments().get("headPath"),
-					(String)getArguments().get("nickName"));
+			userId = (String)getArguments().get("userId");
+			nickName = (String)getArguments().get("nickName");
+			headPath = (String)getArguments().get("headPath");
+			Log.v("UserTwo", headPath);
+			getData(userId, nickName);
 			return view;
 		}
 		
@@ -60,7 +70,7 @@ public class UserTwo extends Fragment {
 		listview = (CustomListView)view.findViewById(R.id.user_two_listview);
 	}
 	
-	private void getData(final String user_id, final String headPath, final String nickName) {
+	private void getData(final String user_id, final String nickName) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
@@ -73,13 +83,39 @@ public class UserTwo extends Fragment {
 				list = new ArrayList<>();
 				try {
 					list = TopicList.parseUser(StringUtils.toJSONArray(result),user_id, headPath, nickName).getUserList();
-					adapter = new UserTwoAdapter(getActivity(), list);
-					listview.setAdapter(adapter);
-					setListViewHeightBasedOnChildren(listview);
+					getImage(headPath);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+			
+		};
+		
+		task.execute();
+	}
+	
+	/**
+	 * 获取头像
+	 * @param path
+	 */
+	private void getImage(final String path) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				Map<String, String> param = new HashMap<>();
+				param.put("path", path);
+				bitmap = ImageLoad.upload("http://1696824u8f.51mypc.cn:12755//sendpicture.php", param);
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				adapter = new UserTwoAdapter(getActivity(), list, bitmap);
+				listview.setAdapter(adapter);
+				setListViewHeightBasedOnChildren(listview);
 			}
 			
 		};

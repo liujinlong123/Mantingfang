@@ -287,7 +287,6 @@ public class MyClient {
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
 			httpPost.setEntity(entity);
 			HttpResponse httpResponse = httpClient.execute(httpPost);
-			
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
@@ -301,6 +300,11 @@ public class MyClient {
 		return null;
 	}
 	
+	/**
+	 * 获取图片方法
+	 * @param bmurl
+	 * @return
+	 */
 	public Bitmap DownloadBitmap(String bmurl)    //bmurl是解析出来的utl， iv是显示图片的imageView控件
 	{
 		Bitmap bm=null;
@@ -330,5 +334,27 @@ public class MyClient {
 		
 		return null;
 		
+	}
+	
+	public String Http_postPoemKey (String key) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchpoemmessage.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("keyword", key));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("TEST22", response);
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

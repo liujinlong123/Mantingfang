@@ -61,6 +61,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/add_one_tv_poemName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"

@@ -12,13 +12,14 @@ import java.util.Map;
 
 import com.android.mantingfang.picture.Picture;
 import com.android.mantingfang.second.KindGridView;
-import com.android.mantingfanggsc.FileUploader;
-import com.android.mantingfanggsc.FileUploader.FileUploadListener;
+import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.R;
+import com.android.mantingfanggsc.SearchTwo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -37,6 +38,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AddTwo extends Activity {
 
@@ -47,25 +49,29 @@ public class AddTwo extends Activity {
 	public static final int CHOOSE_PHOTO = 3;
 
 	public static final int LIST_PHOTO = 4;
+	
+	public static final int POEM_ID = 5;
 
 	private ImageView imgFinish;
 	private TextView tvAdd;
 	private LinearLayout linearAdd;
 	private KindGridView grdView;
 	private EditText editer;
+	private TextView tvPoemName;
 	private String userId;
-	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//picturewander.php";
+	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 
 	private Uri imgUri;
 	private PictureAdapter picAdapter;
 	private List<Bitmap> bitList;
-	
+	private String res;
 	/**
 	 * 选中图片的路径集合
 	 */
 	private ArrayList<String> setPath = new ArrayList<>();
-	
+
 	private int pos = 0;
+	private String poemId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +89,10 @@ public class AddTwo extends Activity {
 		linearAdd = (LinearLayout) findViewById(R.id.add_one_linear_add);
 		grdView = (KindGridView) findViewById(R.id.add_one_grd_photo);
 		editer = (EditText) findViewById(R.id.add_one_editer);
+		tvPoemName = (TextView)findViewById(R.id.add_one_tv_poemName);
 
-		/*
-		 * SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-		 * userId = pref.getString("userId", "xx");
-		 */
-		userId = "1";
+		SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+		userId = pref.getString("userId", "-1");
 
 		// 不保存
 		imgFinish.setOnClickListener(new OnClickListener() {
@@ -98,10 +102,10 @@ public class AddTwo extends Activity {
 				finish();
 			}
 		});
-		
+
 		// 添加图片
 		initGridViews(CHOOSE_PHOTO, null);
-		
+
 		grdView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -120,13 +124,15 @@ public class AddTwo extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				Intent intent = new Intent(AddTwo.this, SearchTwo.class);
+				startActivityForResult(intent, POEM_ID);
 			}
 		});
 
 		// 上传
 		tvAdd.setOnClickListener(new OnClickListener() {
 
+			@SuppressWarnings("deprecation")
 			@SuppressLint("SimpleDateFormat")
 			@Override
 			public void onClick(View v) {
@@ -137,15 +143,17 @@ public class AddTwo extends Activity {
 				String typeNum = "1";
 
 				Date d = new Date();
+				d.setHours(d.getHours() + 8);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String dateNowStr = sdf.format(d); // 当前时间
 
 				Map<String, String> param = new HashMap<>();
 				param.put("user_id", userId);
+				param.put("poetry_id", poemId);
 				param.put("datatime", dateNowStr);
 				param.put("content", content);
 				param.put("type_num", typeNum);
-				getData(param);
+				saveData(param);
 			}
 		});
 	}
@@ -165,14 +173,14 @@ public class AddTwo extends Activity {
 			for (int i = setPath.size() - 1; i >= 0; i--) {
 				bitList.add(new BitmapFactory().decodeFile(setPath.get(i)));
 			}
-			
+
 			if (code == TAKE_PHOTO) {
 				bitList.add(bmp);
 			}
 			Bitmap bm = new BitmapFactory().decodeResource(getResources(), R.drawable.icon_addpic_unfocused);
 			bitList.add(bm);
 		}
-		
+
 		pos = bitList.size() - 1;
 		picAdapter = new PictureAdapter(AddTwo.this, bitList);
 		grdView.setAdapter(picAdapter);
@@ -219,36 +227,36 @@ public class AddTwo extends Activity {
 		return true;
 	}
 
-	private void getData(final Map<String, String> param) {
+	private void saveData(final Map<String, String> param) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			// String Answer = null;
 			@Override
 			protected String doInBackground(String... params) {
-				return FileUploader.upload(actionUrl, new File("路径"), param, new FileUploadListener() {
+				Map<String, File> files = new HashMap<>();
+				for (String e : setPath) {
+					File f = new File(e);
+					files.put(f.getName(), f);
+				}
+				try {
+					Log.v("TOPIC", param.toString());
+					return FilesUpload.post(actionUrl, param, files);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
-					@Override
-					public void onProgress(long pro, double precent) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onFinish(int code, String res, Map<String, List<String>> headers) {
-						Log.v("result", res);
-
-					}
-				});
+				return null;
 			}
 
 			@Override
 			protected void onPostExecute(String result) {
 				Log.v("result", result + "------");
-			}
-
-			@Override
-			protected void onProgressUpdate(Long... values) {
-				// tv.setText(values + "");
+				res = result;
+				if (res != null && !res.equals("")) {
+					Toast.makeText(AddTwo.this, "上传成功", Toast.LENGTH_SHORT).show();
+					finish();
+				}
 			}
 
 		};
@@ -286,6 +294,15 @@ public class AddTwo extends Activity {
 				Bundle bundle = data.getExtras();
 				setPath = bundle.getStringArrayList("listPhoto");
 				initGridViews(CHOOSE_PHOTO, null);
+			}
+			break;
+
+		// 诗词Id
+		case POEM_ID:
+			if (resultCode == RESULT_OK) {
+				poemId = data.getStringExtra("poemId");
+				tvPoemName.setText(data.getStringExtra("poemName"));
+				Log.v("PoemId and poemName", data.getStringExtra("poemId") + " " + data.getStringExtra("poemName"));
 			}
 			break;
 		default:

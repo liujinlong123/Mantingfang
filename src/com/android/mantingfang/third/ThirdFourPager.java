@@ -1,13 +1,16 @@
 package com.android.mantingfang.third;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfanggsc.CustomListView;
+import com.android.mantingfanggsc.ImageLoad;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
@@ -59,14 +62,40 @@ public class ThirdFourPager extends Fragment {
 				try {
 					if (result != null && !result.equals("")) {
 						listFour = TopicList.parseFour(StringUtils.toJSONArray(result)).getTopicFour();
-						//Log.v("TESTTTT", listFour.get(0).getContent());
-						adapterFour = new ThirdFourAdapter(getActivity(), listFour);
-						thirdFourListView.setAdapter(adapterFour);
+						getImage();
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+			
+		};
+		
+		task.execute();
+	}
+	
+	/**
+	 * 获取图片
+	 */
+	private void getImage() {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				for (int i = 0; i < listFour.size(); i++) {
+					Map<String, String> param = new HashMap<>();
+					param.put("path", listFour.get(i).getHeadPath());
+					listFour.get(i).setHeadPhoto(ImageLoad.upload("http://1696824u8f.51mypc.cn:12755//sendpicture.php", param));
+				}
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				adapterFour = new ThirdFourAdapter(getActivity(), listFour);
+				thirdFourListView.setAdapter(adapterFour);
 			}
 			
 		};

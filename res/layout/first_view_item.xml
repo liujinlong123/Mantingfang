@@ -25,6 +25,7 @@
                 android:ems="1"
                 android:gravity="left"
                 android:text="明月几时有"
+                android:layout_marginTop="30dp"
                 android:layout_marginRight="10dp"
                 android:textSize="25sp" />
 

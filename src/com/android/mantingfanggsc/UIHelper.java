@@ -1,5 +1,7 @@
 package com.android.mantingfanggsc;
 
+import java.io.Serializable;
+
 import com.android.mantingfang.model.PoemM;
 import com.android.mantingfang.third.Comment;
 import com.android.mantingfang.third.CommentMain;
@@ -9,6 +11,7 @@ import com.android.mantingfang.third.UserTwoContent;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 public class UIHelper {
@@ -53,8 +56,8 @@ public class UIHelper {
 		intent.putExtra("flag", flag);
 		Bundle bundle = new Bundle();
 		bundle.putString("userId", userId);
-		bundle.putString("headPath", headPath);
 		bundle.putString("nickName", nickName);
+		bundle.putString("headPath", headPath);
 		intent.putExtras(bundle);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
@@ -121,14 +124,28 @@ public class UIHelper {
 	 * @param context
 	 * @param flag
 	 */
-	public static void showCommentMain(Context context, int flag, UserTwoContent content, String topicId, String typeNum) {
+	public static void showCommentMain(Context context, int flag, UserTwoContent content, String topicId, String typeNum
+			, String headPath) {
 		Intent intent = new Intent(context, CommentMain.class);
 		intent.putExtra("flag", flag);
 		Bundle bundle = new Bundle();
 		bundle.putSerializable("commentM", content);
 		bundle.putString("topicId", topicId);
 		bundle.putString("typeNum", typeNum);
+		bundle.putString("headPath", headPath);
 		intent.putExtras(bundle);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
+	}
+	
+	/**
+	 * 跳转USERTwo
+	 * @param context
+	 * @param flag
+	 */
+	public static void showSearchTwo(Context context, int flag) {
+		Intent intent = new Intent(context, SearchTwo.class);
+		intent.putExtra("flag", flag);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 	}

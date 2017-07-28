@@ -1,17 +1,24 @@
 package com.android.mantingfang.third;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.android.mantingfanggsc.CircleImageView;
+import com.android.mantingfanggsc.ImageLoad;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -39,6 +46,9 @@ public class UserPager extends FragmentActivity {
 	private String headPath;
 	private String nickName;
 	
+	private CircleImageView headPhoto;
+	private Bitmap bitmap;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +60,7 @@ public class UserPager extends FragmentActivity {
 		headPath = bundle.getString("headPath");
 		nickName = bundle.getString("nickName");
 		
+		getImage(headPath);
 		initViews();
 	}
 	
@@ -60,6 +71,7 @@ public class UserPager extends FragmentActivity {
 		mViewPager = (MyViewPager)findViewById(R.id.user_pager_view_pager);
 		scrollview = (VerticalScrollView)findViewById(R.id.user_pager_scrollView);
 		linearHeight = (LinearLayout)findViewById(R.id.user_linear_height);
+		headPhoto = (CircleImageView)findViewById(R.id.user_pager_headphoto);
 		
 		linearHead = (LinearLayout)findViewById(R.id.user_head_linear);
 		userRgp1 = (RadioGroup)findViewById(R.id.user_pager_rgp1);
@@ -173,7 +185,6 @@ public class UserPager extends FragmentActivity {
 				}
 			}
 		});
-		
 	}
 	
 	class MainPagerAdapter extends FragmentPagerAdapter {
@@ -198,5 +209,31 @@ public class UserPager extends FragmentActivity {
 		public int getCount() {
 			return fragmentList.size();
 		}
+	}
+	
+	/**
+	 * 获取头像
+	 * @param path
+	 */
+	private void getImage(final String path) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				Map<String, String> param = new HashMap<>();
+				param.put("path", path);
+				bitmap = ImageLoad.upload("http://1696824u8f.51mypc.cn:12755//sendpicture.php", param);
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				headPhoto.setImageBitmap(bitmap);
+			}
+			
+		};
+		
+		task.execute();
 	}
 }

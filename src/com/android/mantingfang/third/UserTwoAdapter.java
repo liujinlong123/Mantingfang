@@ -9,12 +9,14 @@ import com.android.mantingfang.bean.PoetryList;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.model.PoemM;
 import com.android.mantingfang.second.KindGridView;
+import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,11 +33,13 @@ public class UserTwoAdapter extends BaseAdapter {
 	private Context mContext;
 	private LayoutInflater inflater;
 	private List<UserTwoContent> list;
+	private Bitmap bitmap;
 
-	public UserTwoAdapter(Context context, List<UserTwoContent> list) {
+	public UserTwoAdapter(Context context, List<UserTwoContent> list, Bitmap bitmap) {
 		this.mContext = context;
 		this.list = list;
 		inflater = LayoutInflater.from(context);
+		this.bitmap = bitmap;
 	}
 
 	@Override
@@ -62,7 +66,7 @@ public class UserTwoAdapter extends BaseAdapter {
 			view = inflater.inflate(R.layout.third_pager_one_itemlist, null);
 			holder = new ViewHolder();
 			holder.linearHead = (LinearLayout) view.findViewById(R.id.third_pager_one_listhead);
-			holder.headPhoto = (ImageView) view.findViewById(R.id.third_pager_user_photo);
+			holder.headPhoto = (CircleImageView) view.findViewById(R.id.third_pager_user_photo);
 			holder.userName = (TextView) view.findViewById(R.id.third_pager_user_name);
 			holder.time = (TextView) view.findViewById(R.id.third_pager_user_time);
 			holder.content = (TextView) view.findViewById(R.id.third_pager_user_content);
@@ -91,7 +95,7 @@ public class UserTwoAdapter extends BaseAdapter {
 	final static class ViewHolder {
 		LinearLayout linearHead;
 
-		ImageView headPhoto;
+		CircleImageView headPhoto;
 
 		TextView userName;
 
@@ -120,10 +124,9 @@ public class UserTwoAdapter extends BaseAdapter {
 
 	private void initViews(final UserTwoContent content, final ViewHolder holder, View view) {
 		// 头像路径
-		String path = content.getHeadPath();
-
+		holder.headPhoto.setImageBitmap(bitmap);
 		// 用户昵称
-		//holder.userName.setText(content.getName());
+		holder.userName.setText(content.getName());
 		// 时间
 		holder.time.setText(content.getTime());
 
@@ -158,28 +161,29 @@ public class UserTwoAdapter extends BaseAdapter {
 		});
 		
 		if (content.getPostComNum() == 1) {
-			//����
+			//内容
 			holder.content.setText(content.getContent());
-			//����ͼƬ
+			//初始化图片
 			initGridView(content.getPicture(), holder);
-			//����ʫ��
-			holder.poemName.setText(content.getPoemName());
-			holder.poemQuote.setText(content.getPoemContent());
+			//诗词
+			//holder.poemName.setText(content.getPoemName());
+			//holder.poemQuote.setText(content.getPoemContent());
 			holder.linearPoem.setVisibility(View.GONE);
 			holder.content.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "");
+					UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "",
+							content.getHeadPath());
 				}
 			});
 		} 
 		else if (content.getPostComNum() == 2) {
-			//����
+			//内容
 			holder.content.setText(content.getContent());
-			//����ͼƬ
+			//初始化图片
 			initGridView(content.getPicture(), holder);
-			//����ʫ��
+			//相关诗词
 			holder.poemName.setText(content.getPoemName());
 			holder.poemQuote.setText(content.getPoemContent());
 			holder.linearPoem.setOnClickListener(new OnClickListener() {
@@ -193,21 +197,23 @@ public class UserTwoAdapter extends BaseAdapter {
 
 				@Override
 				public void onClick(View v) {
-					UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "");
+					UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "",
+							content.getHeadPath());
 				}
 			});
 		} 
 		else if (content.getPostComNum() == 3) {
-			//����
+			//内容
 			holder.content.setText(content.getContent());
-			//����ͼƬ
+			//初始化图片
 			initGridView(content.getPicture(), holder);
 			holder.linearPoem.setVisibility(View.GONE);
 			holder.content.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
-					UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "");
+					UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "",
+							content.getHeadPath());
 				}
 			});
 		} 
@@ -224,7 +230,7 @@ public class UserTwoAdapter extends BaseAdapter {
 					
 				}
 			});
-			//����ʫ��
+			//相关诗词
 			holder.poemName.setText(content.getPoemName());
 			holder.poemQuote.setText(content.getPoemContent());
 			holder.linearPoem.setOnClickListener(new OnClickListener() {

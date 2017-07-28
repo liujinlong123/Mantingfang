@@ -1,7 +1,9 @@
 package com.android.mantingfang.third;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -17,9 +19,11 @@ import org.json.JSONException;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfanggsc.CustomListView;
+import com.android.mantingfanggsc.ImageLoad;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,7 +46,6 @@ public class ThirdOnePager extends Fragment {
 		if (view == null) {
 			view = inflater.inflate(R.layout.third_pager_one, null);
 
-			// initViews();
 			sendRequestWithHttpClient();
 
 			return view;
@@ -68,8 +71,8 @@ public class ThirdOnePager extends Fragment {
 								.getTopicList());
 
 						thirdOneListView = (CustomListView) view.findViewById(R.id.third_pager_one_listview);
-						adapterOne = new ThirdOneAdapter(getActivity(), listOne);
-						thirdOneListView.setAdapter(adapterOne);
+						
+						getImage();
 						thirdOneListView.setOnItemClickListener(new OnItemClickListener() {
 
 							@Override
@@ -122,5 +125,34 @@ public class ThirdOnePager extends Fragment {
 			}
 
 		}).start();
+	}
+	
+	/**
+	 * 获取图片
+	 * @param path
+	 */
+	private void getImage() {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				for (int i = 0; i < listOne.size(); i++) {
+					Map<String, String> param = new HashMap<>();
+					param.put("path", listOne.get(i).getHeadPath());
+					listOne.get(i).setHeadPhoto(ImageLoad.upload("http://1696824u8f.51mypc.cn:12755//sendpicture.php", param));
+				}
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				adapterOne = new ThirdOneAdapter(getActivity(), listOne);
+				thirdOneListView.setAdapter(adapterOne);
+			}
+			
+		};
+		
+		task.execute();
 	}
 }

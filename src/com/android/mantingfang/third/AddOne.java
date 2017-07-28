@@ -12,13 +12,13 @@ import java.util.Map;
 
 import com.android.mantingfang.picture.Picture;
 import com.android.mantingfang.second.KindGridView;
-import com.android.mantingfanggsc.FileUploader;
-import com.android.mantingfanggsc.FileUploader.FileUploadListener;
+import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -37,6 +37,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AddOne extends Activity {
 
@@ -47,6 +48,8 @@ public class AddOne extends Activity {
 	public static final int CHOOSE_PHOTO = 3;
 
 	public static final int LIST_PHOTO = 4;
+	
+	public static final int POEM_ID =  5;
 
 	private ImageView imgFinish;
 	private TextView tvAdd;
@@ -54,7 +57,7 @@ public class AddOne extends Activity {
 	private KindGridView grdView;
 	private EditText editer;
 	private String userId;
-	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//picturewander.php";
+	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 
 	private Uri imgUri;
 	private PictureAdapter picAdapter;
@@ -66,6 +69,8 @@ public class AddOne extends Activity {
 	private ArrayList<String> setPath = new ArrayList<>();
 	
 	private int pos = 0;
+	
+	private String res;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +90,8 @@ public class AddOne extends Activity {
 		editer = (EditText) findViewById(R.id.add_one_editer);
 
 		
-		/*SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-		userId = pref.getString("userId", "xx");*/
-		
-		userId = "1";
+		SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+		userId = pref.getString("userId", "-1");
 
 		// 不保存
 		imgFinish.setOnClickListener(new OnClickListener() {
@@ -127,6 +130,7 @@ public class AddOne extends Activity {
 		// 上传
 		tvAdd.setOnClickListener(new OnClickListener() {
 
+			@SuppressWarnings("deprecation")
 			@SuppressLint("SimpleDateFormat")
 			@Override
 			public void onClick(View v) {
@@ -137,6 +141,7 @@ public class AddOne extends Activity {
 				String typeNum = "1";
 
 				Date d = new Date();
+				d.setHours(d.getHours() + 8);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String dateNowStr = sdf.format(d); // 当前时间
 
@@ -145,7 +150,7 @@ public class AddOne extends Activity {
 				param.put("datatime", dateNowStr);
 				param.put("content", content);
 				param.put("type_num", typeNum);
-				getData(param);
+				saveData(param);
 			}
 		});
 	}
@@ -219,36 +224,36 @@ public class AddOne extends Activity {
 		return true;
 	}
 
-	private void getData(final Map<String, String> param) {
+	private void saveData(final Map<String, String> param) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			// String Answer = null;
 			@Override
 			protected String doInBackground(String... params) {
-				return FileUploader.upload(actionUrl, new File("路径"), param, new FileUploadListener() {
-
-					@Override
-					public void onProgress(long pro, double precent) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onFinish(int code, String res, Map<String, List<String>> headers) {
-						Log.v("result", res);
-
-					}
-				});
+				Map<String, File> files = new HashMap<>();
+				for (String e: setPath) {
+					File f = new File(e);
+					files.put(f.getName(), f);
+				}
+				try {
+					Log.v("TOPIC", param.toString());
+					return FilesUpload.post(actionUrl, param, files);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				return null;
 			}
 
 			@Override
 			protected void onPostExecute(String result) {
 				Log.v("result", result + "------");
-			}
-
-			@Override
-			protected void onProgressUpdate(Long... values) {
-				// tv.setText(values + "");
+				res = result;
+				if (res != null && !res.equals("")) {
+					Toast.makeText(AddOne.this, "上传成功", Toast.LENGTH_SHORT).show();
+					finish();
+				}
 			}
 
 		};
@@ -256,6 +261,9 @@ public class AddOne extends Activity {
 		task.execute();
 	}
 
+	/**
+	 * 从上一界面返回结果
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {

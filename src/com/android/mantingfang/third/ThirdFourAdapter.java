@@ -7,6 +7,7 @@ import org.json.JSONException;
 import com.android.mantingfang.bean.PoetryList;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.model.PoemM;
+import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
@@ -59,7 +60,7 @@ public class ThirdFourAdapter extends BaseAdapter {
 			view = inflater.inflate(R.layout.third_pager_one_itemlist, null);
 			holder = new ViewHolder();
 			holder.linearHead = (LinearLayout)view.findViewById(R.id.third_pager_one_listhead);
-			holder.headPhoto = (ImageView)view.findViewById(R.id.third_pager_user_photo);
+			holder.headPhoto = (CircleImageView)view.findViewById(R.id.third_pager_user_photo);
 			holder.userName = (TextView)view.findViewById(R.id.third_pager_user_name);
 			holder.time = (TextView)view.findViewById(R.id.third_pager_user_time);
 			holder.content = (TextView)view.findViewById(R.id.third_pager_user_content);
@@ -88,7 +89,7 @@ public class ThirdFourAdapter extends BaseAdapter {
 	final static class ViewHolder {
 		LinearLayout linearHead;
 		
-		ImageView headPhoto;
+		CircleImageView headPhoto;
 		
 		TextView userName;
 		
@@ -117,8 +118,7 @@ public class ThirdFourAdapter extends BaseAdapter {
 
 	private void initViews(final UserTwoContent content, final ViewHolder holder) {
 		//头像路径
-		//String path = content.getHeadPath();
-		
+		holder.headPhoto.setImageBitmap(content.getHeadPhoto());
 		
 		//用户昵称
 		holder.userName.setText(content.getName());
@@ -148,7 +148,8 @@ public class ThirdFourAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "");
+				UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "",
+						content.getHeadPath());
 			}
 		});
 		

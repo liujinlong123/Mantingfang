@@ -1,16 +1,20 @@
 package com.android.mantingfang.third;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfanggsc.ImageLoad;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -41,6 +45,8 @@ public class CommentMain extends Activity {
 	private ListView listTwo;
 	private CommentAdapter adapterTwo;
 	private List<CommentContent> dataListTwo;
+	private Bitmap bitmap;
+	private String headPath;
 
 	//private EditText editer;
 	//private Button btnSend;
@@ -52,6 +58,8 @@ public class CommentMain extends Activity {
 		
 		Bundle bundle = getIntent().getExtras();
 		UserTwoContent content = (UserTwoContent) bundle.get("commentM");
+		headPath = bundle.getString("headPath");
+		getImage(headPath);
 		initViews(content, bundle.getString("topicId"), bundle.getString("typeNum"));
 	}
 	
@@ -64,7 +72,7 @@ public class CommentMain extends Activity {
 		
 		list = new ArrayList<>();
 		list.add(content);
-		adapter = new UserTwoAdapter(CommentMain.this, list);
+		adapter = new UserTwoAdapter(CommentMain.this, list, bitmap);
 		listview.setAdapter(adapter);
 		setListViewHeightBasedOnChildren(listview);
 		
@@ -75,7 +83,7 @@ public class CommentMain extends Activity {
 		listTv.setAdapter(adapterTv);
 		listTv.setEnabled(false);
 		
-		getData(topicId, typeNum);
+		getData(topicId, typeNum, bitmap);
 		
 		linearBack.setOnClickListener(new OnClickListener() {
 			
@@ -87,7 +95,7 @@ public class CommentMain extends Activity {
 		theme_bg.setText("帖子");
 	}
 	
-	private void getData(final String topicId, final String typeNum) {
+	private void getData(final String topicId, final String typeNum, final Bitmap bitmap) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
@@ -102,7 +110,7 @@ public class CommentMain extends Activity {
 				try {
 					dataListOne = TopicList.parseComment(StringUtils.toJSONArray(result), topicId, typeNum).getCommentList();
 					dataListTwo = TopicList.parseComment(StringUtils.toJSONArray(result), topicId, typeNum).getCommentList();
-					adapter = new UserTwoAdapter(CommentMain.this, list);
+					adapter = new UserTwoAdapter(CommentMain.this, list, bitmap);
 					listview.setAdapter(adapter);
 					setListViewHeightBasedOnChildren(listview);
 					
@@ -118,6 +126,32 @@ public class CommentMain extends Activity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+			}
+			
+		};
+		
+		task.execute();
+	}
+	
+	/**
+	 * 获取图片
+	 * @param path
+	 */
+	private void getImage(final String path) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				Map<String, String> param = new HashMap<>();
+				param.put("path", path);
+				bitmap = ImageLoad.upload("http://1696824u8f.51mypc.cn:12755//sendpicture.php", param);
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				
 			}
 			
 		};
