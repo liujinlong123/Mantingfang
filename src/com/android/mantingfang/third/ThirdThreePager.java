@@ -1,16 +1,13 @@
 package com.android.mantingfang.third;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfanggsc.CustomListView;
-import com.android.mantingfanggsc.ImageLoad;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
@@ -64,7 +61,8 @@ public class ThirdThreePager extends Fragment {
 				try {
 					if (result != null && !result.equals("")) {
 						listThree = TopicList.parseThree(StringUtils.toJSONArray(result)).getTopicThree();
-						getImage();
+						adapterThree = new ThirdThreeAdapter(getActivity(), listThree);
+						thirdThreeListView.setAdapter(adapterThree);
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -80,7 +78,7 @@ public class ThirdThreePager extends Fragment {
 	/**
 	 * 获取图片
 	 */
-	private void getImage() {
+	/*private void getImage() {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
@@ -103,5 +101,5 @@ public class ThirdThreePager extends Fragment {
 		};
 		
 		task.execute();
-	}
+	}*/
 }

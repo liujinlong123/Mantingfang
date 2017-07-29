@@ -47,6 +47,7 @@ public class CommentMain extends Activity {
 	private List<CommentContent> dataListTwo;
 	private Bitmap bitmap;
 	private String headPath;
+	private UserTwoContent content;
 
 	//private EditText editer;
 	//private Button btnSend;
@@ -57,10 +58,9 @@ public class CommentMain extends Activity {
 		setContentView(R.layout.comment);
 		
 		Bundle bundle = getIntent().getExtras();
-		UserTwoContent content = (UserTwoContent) bundle.get("commentM");
+		content = (UserTwoContent) bundle.get("commentM");
 		headPath = bundle.getString("headPath");
-		getImage(headPath);
-		initViews(content, bundle.getString("topicId"), bundle.getString("typeNum"));
+		getImage(headPath, bundle);
 	}
 	
 	private void initViews(UserTwoContent content, String topicId, String typeNum) {
@@ -137,7 +137,7 @@ public class CommentMain extends Activity {
 	 * 获取图片
 	 * @param path
 	 */
-	private void getImage(final String path) {
+	private void getImage(final String path, final Bundle bundle) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
@@ -151,7 +151,7 @@ public class CommentMain extends Activity {
 			
 			@Override
 			protected void onPostExecute(String result) {
-				
+				initViews(content, bundle.getString("topicId"), bundle.getString("typeNum"));
 			}
 			
 		};
@@ -181,17 +181,4 @@ public class CommentMain extends Activity {
 		params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 		listView.setLayoutParams(params);
 	}
-	
-	/**
-	 * ����ͼƬǽ
-	 * @param picture
-	 */
-	/*private void initGridView(ArrayList<String> picture) {
-		userPics.setNumColumns(3);
-		if (picture.size() == 0 || picture == null) {
-			userPics.setVisibility(View.GONE);
-		} else {
-			
-		}
-	}*/
 }

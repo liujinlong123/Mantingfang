@@ -61,7 +61,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("界面" + TypeNum, response);
+				//Log.v("界面" + TypeNum, response);
 				
 				return response;
 			} 
@@ -88,7 +88,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("poetry_id: " + poetry_id, response);
+				//Log.v("poetry_id: " + poetry_id, response);
 				return response;
 			} 
 		} catch(Exception e) {
@@ -115,7 +115,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("user_id: " + user_id, response);
+				//Log.v("user_id: " + user_id, response);
 				return response;
 			} 
 		} catch(Exception e) {
@@ -142,7 +142,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("user_id: " + user_id, response);
+				//Log.v("user_id: " + user_id, response);
 				return response;
 			} 
 		} catch(Exception e) {
@@ -290,7 +290,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("TEST22", response);
+				//Log.v("TEST22", response);
 				
 				return response;
 			} 
@@ -336,6 +336,11 @@ public class MyClient {
 		
 	}
 	
+	/**
+	 * 通过关键字搜索
+	 * @param key
+	 * @return
+	 */
 	public String Http_postPoemKey (String key) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
@@ -348,7 +353,34 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("TEST22", response);
+				//Log.v("TEST22", response);
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 获取一类诗词
+	 * @param keyword
+	 * @return
+	 */
+	public String Http_postPoemKind (String keyword) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//matchpoemkeyword.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("keyword", keyword));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("POEM--KInd", response);
 				
 				return response;
 			} 

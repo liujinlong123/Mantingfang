@@ -8,11 +8,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.mantingfang.first.PoemRhesis;
+import com.android.mantingfang.model.Poem;
 import com.android.mantingfang.third.CommentContent;
 import com.android.mantingfang.third.User;
 import com.android.mantingfang.third.UserTwoContent;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 
 @SuppressWarnings("serial")
@@ -27,6 +27,7 @@ public class TopicList extends Base {
 	private List<PoemRhesis> listRhesis = new ArrayList<>();
 	private List<User> listUserinfo = new ArrayList<>();
 	private List<PoemRhesis> listSearch = new ArrayList<>();
+	private List<Poem> listKindPoem = new ArrayList<>();
 	
 	private int topicCount;
 	private int topicTwoCount;
@@ -37,6 +38,7 @@ public class TopicList extends Base {
 	private int rhesisCount;
 	private int userInfoCount;
 	private int searchCount;
+	private int kindPoemCount;
 	
 	public List<UserTwoContent> getTopicList() {
 		return topicList;
@@ -72,6 +74,10 @@ public class TopicList extends Base {
 	
 	public List<PoemRhesis> getSearchList() {
 		return listSearch;
+	}
+	
+	public List<Poem> getKindPoemList() {
+		return listKindPoem;
 	}
 	
 	public int getTopicCount() {
@@ -110,6 +116,10 @@ public class TopicList extends Base {
 		return searchCount;
 	}
 	
+	public int getKindPoemCount() {
+		return kindPoemCount;
+	}
+	
 	/**
 	 * Topic--One
 	 * @param obj
@@ -141,7 +151,7 @@ public class TopicList extends Base {
 						Integer.parseInt(jo.getString("topic_id")));
 				
 				tList.topicList.add(content);
-				//Log.v("Test", content.getContent());
+				//Log.v("ThirdOnePicture", content.getPicture().toString());
 			}
 		}
 		
@@ -450,6 +460,28 @@ public class TopicList extends Base {
 						jo.optString("poetry_rhesis"));
 				
 				tList.listSearch.add(poem);
+				//Log.v("Test", content.getRhesis());
+			}
+		}
+		
+		return tList;
+	}
+	
+	public static TopicList parseKindPoem (JSONArray obj) throws JSONException {
+		TopicList tList = new TopicList();
+		if (obj != null) {
+			tList.kindPoemCount = obj.length();
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				Poem poem = new Poem(
+						jo.getString("poetry_id"),
+						jo.getString("poetry_name"),
+						jo.getString("poetry_label_id"),
+						jo.getString("poetry_rhesis"),
+						jo.getString("dynasty_name"),
+						jo.getString("writer_name"));
+				
+				tList.listKindPoem.add(poem);
 				//Log.v("Test", content.getRhesis());
 			}
 		}

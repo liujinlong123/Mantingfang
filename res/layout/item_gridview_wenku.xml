@@ -5,18 +5,18 @@
     android:orientation="vertical"
     android:gravity="center" >
     
-    <ImageView
+    <com.android.mantingfanggsc.CircleImageView
         android:id="@+id/secondgrd_img_kind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/welcome" ></com.android.mantingfanggsc.CircleImageView>
     
     <TextView
         android:id="@+id/secondgrd_tv_kindname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="文字"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginTop="3dp" />
 
 </LinearLayout>

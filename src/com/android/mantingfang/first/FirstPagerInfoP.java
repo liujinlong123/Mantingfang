@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -54,14 +55,15 @@ public class FirstPagerInfoP extends Activity {
 		btnInfo = (Button)findViewById(R.id.first_pager_info);
 		imgOn = (ImageView)findViewById(R.id.first_pager_open);
 		imgnext = (ImageView)findViewById(R.id.first_pager_next);
-		tv1 = (TextView)findViewById(R.id.first_pager_info_tv1);
-		tv2 = (TextView)findViewById(R.id.first_pager_info_tv2);
+		tv1 = (TextView)findViewById(R.id.first_pager_info_tv2);
+		tv2 = (TextView)findViewById(R.id.first_pager_info_tv1);
 		tv3 = (TextView)findViewById(R.id.first_pager_info_tv3);
 		
 		Bundle bundle = getIntent().getExtras();
 		rhesis = (PoemRhesis) bundle.get("rhesis");
+		Log.v("TESTRhesis", rhesis.getRhesis());
 		if (rhesis != null) {
-			String[] tokens = rhesis.getRhesis().split("[,，]");
+			String[] tokens = rhesis.getRhesis().split("[,，.。]");
 			tv1.setText(tokens[0]);
 			tv2.setText(tokens[1]);
 			tv3.setText(rhesis.getWriter());

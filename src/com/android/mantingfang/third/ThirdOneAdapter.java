@@ -10,7 +10,6 @@ import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,18 +108,18 @@ public class ThirdOneAdapter extends BaseAdapter {
 
 	private void initViews(final UserTwoContent content, ViewHolder holder, final View view) {
 		//头像路径
-		holder.headPhoto.setImageBitmap(content.getHeadPhoto());
+		//holder.headPhoto.setImageBitmap(content.getHeadPhoto());
+		PictureLoad.getInstance().loadImage(content.getHeadPath(), holder.headPhoto);
 		
 		//昵称
 		//Log.v("userName", content.getName());
 		holder.userName.setText(content.getName());
 		//发表时间
-		//Log.v("time", content.getTime());
 		holder.time.setText(content.getTime());
 		//发表内容
 		holder.content.setText(content.getContent());
 		//初始化图片
-		//initGridView(content.getPicture(), holder);
+		initGridView(content.getPicture(), holder);
 		//相关诗词
 		holder.linearPoem.setVisibility(View.GONE);
 		
@@ -174,12 +173,14 @@ public class ThirdOneAdapter extends BaseAdapter {
 		});
 	}
 	
-	private void initGridView(ArrayList<Bitmap> pictures, ViewHolder holder) {
+	private void initGridView(ArrayList<String> pictures, ViewHolder holder) {
 		holder.grdview.setNumColumns(3);
 		if (pictures.size() == 0 || pictures == null) {
 			holder.grdview.setVisibility(View.GONE);
 		} else {
-			
+			Log.v("PIcture", pictures.toString());
+			TopicGridviewAdapter adapter = new TopicGridviewAdapter(mContext, pictures);
+			holder.grdview.setAdapter(adapter);
 		}
 	}
 }

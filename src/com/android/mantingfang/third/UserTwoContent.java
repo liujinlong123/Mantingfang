@@ -6,8 +6,12 @@ import com.android.mantingfang.bean.Base;
 
 import android.graphics.Bitmap;
 
-@SuppressWarnings("serial")
+
 public class UserTwoContent extends Base {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String userId;		//用户Id
 	private String headPath;	//头像路径
 	private Bitmap headPhoto;	//头像

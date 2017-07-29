@@ -1,9 +1,7 @@
 package com.android.mantingfang.third;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,11 +17,9 @@ import org.json.JSONException;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfanggsc.CustomListView;
-import com.android.mantingfanggsc.ImageLoad;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -72,7 +68,8 @@ public class ThirdOnePager extends Fragment {
 
 						thirdOneListView = (CustomListView) view.findViewById(R.id.third_pager_one_listview);
 						
-						getImage();
+						adapterOne = new ThirdOneAdapter(getActivity(), listOne);
+						thirdOneListView.setAdapter(adapterOne);
 						thirdOneListView.setOnItemClickListener(new OnItemClickListener() {
 
 							@Override
@@ -109,9 +106,9 @@ public class ThirdOnePager extends Fragment {
 
 					if (httpResponse.getStatusLine().getStatusCode() == 200) {
 						HttpEntity httpEntity = httpResponse.getEntity();
-						// Log.v("AAAA", EntityUtils.toString(httpEntity,
-						// "utf-8"));
+						
 						String response = EntityUtils.toString(httpEntity, "utf-8");
+						//Log.v("TESTONE", response);
 						msg.what = 1;
 						Bundle bundle = new Bundle();
 						bundle.putString("tables", response);
@@ -131,7 +128,7 @@ public class ThirdOnePager extends Fragment {
 	 * 获取图片
 	 * @param path
 	 */
-	private void getImage() {
+	/*private void getImage() {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
@@ -154,5 +151,5 @@ public class ThirdOnePager extends Fragment {
 		};
 		
 		task.execute();
-	}
+	}*/
 }

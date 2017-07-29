@@ -3,15 +3,23 @@ package com.android.mantingfang.second;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
+import com.android.mantingfang.bean.LabelDao;
 import com.android.mantingfang.bean.PoetryDao;
+import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.model.Poem;
 import com.android.mantingfanggsc.CustomListView;
+import com.android.mantingfanggsc.MyClient;
+import com.android.mantingfanggsc.NetWork;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class SecondWenkuPoem extends Activity {
@@ -49,8 +56,9 @@ public class SecondWenkuPoem extends Activity {
 	private int imageId;
 	private int label_id;
 	
-	//�����ݿ�Ľӿ�-->�����ݿ��ѯ��ȡ����
 	private PoetryDao poetryDao;
+	private LabelDao labelDao;
+	private boolean isNetwork;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +66,6 @@ public class SecondWenkuPoem extends Activity {
 		setContentView(R.layout.floor2_second_kind);
 		
 		initViews();
-		initListView();
 	}
 	
 	
@@ -70,6 +77,7 @@ public class SecondWenkuPoem extends Activity {
 		tvSingleName = (TextView)findViewById(R.id.floor2_second_tv_name);
 		sum = (TextView)findViewById(R.id.floor2_second_tv_sum);
 		poetryDao = new PoetryDao(SecondWenkuPoem.this);
+		labelDao = new LabelDao(SecondWenkuPoem.this);
 		
 		back.setOnClickListener(new OnClickListener() {
 			
@@ -89,25 +97,59 @@ public class SecondWenkuPoem extends Activity {
 		theme.setText(kindName);
 		imgTheme.setImageResource(imageId);
 		tvSingleName.setText(singleName);
-	}
-	
-	private void initListView() {
 		listview = (CustomListView)findViewById(R.id.floor2_secondlist);
-		madapter = new SecondWenkuPoemListAdapter(SecondWenkuPoem.this, getData());
-		listview.setAdapter(madapter);
-		listview.setOnItemClickListener(new OnItemClickListener() {
-			
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				UIHelper.showPoemDetail(view.getContext(), list.get(position).getPoetryid(), 0);
-			}
-		});
+		isNetwork = NetWork.isNetworkAvailable(SecondWenkuPoem.this);
+		getData(isNetwork, labelDao.getLabelById(label_id));
 	}
 	
-	private List<Poem> getData() {
+	private void getDataFromSQL() {
 		list = new ArrayList<Poem>();
 		
 		list = poetryDao.getPoemByTid(label_id);
-		return list;
+	}
+	
+	private void getData(final boolean isNetwork, final String labelName) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				if (isNetwork) {
+					return MyClient.getInstance().Http_postPoemKind(labelName);
+				} else {
+					getDataFromSQL();
+					return null;
+				}
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				if (isNetwork) {
+					try {
+						list = TopicList.parseKindPoem(StringUtils.toJSONArray(result)).getKindPoemList();
+						madapter = new SecondWenkuPoemListAdapter(SecondWenkuPoem.this, list, true);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					madapter = new SecondWenkuPoemListAdapter(SecondWenkuPoem.this, list, false);
+				}
+				listview.setAdapter(madapter);
+				listview.setOnItemClickListener(new OnItemClickListener() {
+					
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						if (isNetwork) {
+							UIHelper.showPoemMDetailTwoById(SecondWenkuPoem.this, list.get(position - 1).getPoemId(), 0);
+						} else {
+							//UIHelper.showPoemDetail(SecondWenkuPoem.this, list.get(position).getPoetryid(), 0);
+						}
+					}
+				});
+			}
+
+		};
+
+		task.execute();
 	}
 }

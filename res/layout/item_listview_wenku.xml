@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:paddingLeft="5dp"
+        android:paddingLeft="25dp"
         android:text="诗经选集"
-        android:textSize="17sp"
+        android:textSize="16sp"
         android:background="@color/beijingwhite" />
     
     <com.android.mantingfang.second.KindGridView

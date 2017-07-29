@@ -182,7 +182,7 @@ public class UserTwoAdapter extends BaseAdapter {
 			//内容
 			holder.content.setText(content.getContent());
 			//初始化图片
-			initGridView(content.getPicture(), holder);
+			//initGridView(content.getPicture(), holder);
 			//相关诗词
 			holder.poemName.setText(content.getPoemName());
 			holder.poemQuote.setText(content.getPoemContent());
@@ -243,12 +243,14 @@ public class UserTwoAdapter extends BaseAdapter {
 		}
 	}
 	
-	private void initGridView(ArrayList<String> picture, ViewHolder holder) {
+	private void initGridView(ArrayList<String> pictures, ViewHolder holder) {
 		holder.grdview.setNumColumns(3);
-		if (picture.size() == 0 || picture == null) {
+		if (pictures.size() == 0 || pictures == null) {
 			holder.grdview.setVisibility(View.GONE);
 		} else {
-			
+			Log.v("PIcture", pictures.toString());
+			TopicGridviewAdapter adapter = new TopicGridviewAdapter(mContext, pictures);
+			holder.grdview.setAdapter(adapter);
 		}
 	}
 

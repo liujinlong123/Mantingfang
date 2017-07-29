@@ -73,7 +73,7 @@ public class Search extends Activity{
 				currentStr = editer.getText().toString();
 				Log.v("currentStr", "----" + currentStr);
 				if (currentStr != null && !currentStr.equals("")) {
-						adapter = new SecondWenkuPoemListAdapter(Search.this, list);
+						adapter = new SecondWenkuPoemListAdapter(Search.this, list, false);
 						listview.setAdapter(adapter);
 						listview.setOnItemClickListener(new OnItemClickListener() {
 

@@ -7,7 +7,6 @@ import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
-import com.android.mantingfang.fourth.FourthMy;
 import com.android.mantingfang.fourth.LogOn;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;

@@ -66,7 +66,6 @@ public class ThirdFourAdapter extends BaseAdapter {
 			holder.content = (TextView)view.findViewById(R.id.third_pager_user_content);
 			holder.linearSound = (LinearLayout)view.findViewById(R.id.third_pager_sound);
 			holder.imgSound = (ImageView)view.findViewById(R.id.third_pager_img_sound);
-			//holder.grdview = (KindGridView)view.findViewById(R.id.third_pager_user_grdphoto);
 			holder.linearPoem = (LinearLayout)view.findViewById(R.id.third_pager_linearPoem);
 			holder.poemName = (TextView)view.findViewById(R.id.third_pager_tv_poemName);
 			holder.poemQuote = (TextView)view.findViewById(R.id.third_pager_tv_poem);
@@ -101,8 +100,6 @@ public class ThirdFourAdapter extends BaseAdapter {
 		
 		ImageView imgSound;
 		
-		//KindGridView grdview;
-		
 		LinearLayout linearPoem;
 		
 		TextView poemName;
@@ -128,8 +125,6 @@ public class ThirdFourAdapter extends BaseAdapter {
 		holder.content.setVisibility(View.GONE);
 		
 		holder.linearSound.setVisibility(View.VISIBLE);
-		//初始化图片
-		//initGridView(content.getPicture(), holder);
 		//相关诗词
 		holder.poemName.setText(content.getPoemName());
 		holder.poemQuote.setText(content.getPoemContent());

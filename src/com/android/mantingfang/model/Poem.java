@@ -15,6 +15,13 @@ public class Poem extends Base {
 	private String title;
 	private String content;
 	private String rhesis;
+	
+	private String poemId;
+	private String dynasty;
+	private String poemName;
+	private String labelId;
+	
+	public Poem() {}
 
 	public Poem(String kindid, int poid, int dynastyid, int writerid, String writername, String title, String content,
 			String rhesis) {
@@ -29,8 +36,50 @@ public class Poem extends Base {
 		this.rhesis = rhesis;
 
 	}
+	
+	public Poem(String poetryid, String poemName, String labelId, String rhesis, String dynasty, String writername) {
+		this.poemId = poetryid;
+		this.poemName = poemName;
+		this.labelId = labelId;
+		this.rhesis = rhesis;
+		this.dynasty = dynasty;
+		this.writername = writername;
+		
+	}
 
-	// 分类定为10
+	public String getPoemId() {
+		return poemId;
+	}
+
+	public void setPoemId(String poemId) {
+		this.poemId = poemId;
+	}
+
+	public String getDynasty() {
+		return dynasty;
+	}
+
+	public void setDynasty(String dynasty) {
+		this.dynasty = dynasty;
+	}
+
+	public String getPoemName() {
+		return poemName;
+	}
+
+	public void setPoemName(String poemName) {
+		this.poemName = poemName;
+	}
+
+	public String getLabelId() {
+		return labelId;
+	}
+
+	public void setLabelId(String labelId) {
+		this.labelId = labelId;
+	}
+
+	// 锟斤拷锟洁定为10
 	@SuppressLint("UseValueOf")
 	private int parseKind(String kindid) {
 		String str = kindid.charAt(0) + "";

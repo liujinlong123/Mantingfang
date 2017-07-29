@@ -2,8 +2,9 @@ package com.android.mantingfang.third;
 
 import java.util.List;
 
+import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.R;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 public class CommentAdapter extends BaseAdapter {
 
+	@SuppressWarnings("unused")
 	private Context mContext;
 	private List<CommentContent> list;
 	private LayoutInflater inflater;
@@ -39,6 +41,7 @@ public class CommentAdapter extends BaseAdapter {
 		return position;
 	}
 
+	@SuppressLint("InflateParams")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
@@ -47,7 +50,7 @@ public class CommentAdapter extends BaseAdapter {
 			view = inflater.inflate(R.layout.comment_itemlist, null);
 			holder = new ViewHolder();
 			
-			holder.imgHead = (ImageView)view.findViewById(R.id.comment_item_headphoto);
+			holder.imgHead = (CircleImageView)view.findViewById(R.id.comment_item_headphoto);
 			holder.tvName = (TextView)view.findViewById(R.id.comment_item_name);
 			holder.time = (TextView)view.findViewById(R.id.comment_item_time);
 			holder.zan = (ImageView)view.findViewById(R.id.comment_item_zan);
@@ -67,6 +70,7 @@ public class CommentAdapter extends BaseAdapter {
 			holder.tvName.setText(content.getName());
 			holder.time.setText(content.getTime());
 			holder.content.setText(content.getContent());
+			PictureLoad.getInstance().loadImage(content.getHeadPath(), holder.imgHead);
 		}
 		
 		
@@ -74,7 +78,7 @@ public class CommentAdapter extends BaseAdapter {
 	}
 	
 	final static class ViewHolder {
-		ImageView imgHead;
+		CircleImageView imgHead;
 		
 		TextView tvName;
 		

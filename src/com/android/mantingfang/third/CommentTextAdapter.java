@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 public class CommentTextAdapter extends BaseAdapter {
 
+	@SuppressWarnings("unused")
 	private Context mContext;
 	private LayoutInflater inflater;
 	private List<String> list;

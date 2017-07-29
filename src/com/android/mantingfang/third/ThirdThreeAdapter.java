@@ -10,6 +10,7 @@ import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -109,7 +110,7 @@ public class ThirdThreeAdapter extends BaseAdapter {
 
 	private void initViews(final UserTwoContent content, ViewHolder holder) {
 		// 头像路径
-		holder.headPhoto.setImageBitmap(content.getHeadPhoto());
+		PictureLoad.getInstance().loadImage(content.getHeadPath(), holder.headPhoto);
 
 		// 用户昵称
 		// Log.v("userName", content.getName());
@@ -119,11 +120,9 @@ public class ThirdThreeAdapter extends BaseAdapter {
 		// 发表内容
 		holder.content.setText(content.getContent());
 		// 初始化图片
-		// initGridView(content.getPicture(), holder);
+		initGridView(content.getPicture(), holder);
 		// 相关诗词
 		holder.linearPoem.setVisibility(View.GONE);
-		// holder.poemName.setText(content.getPoem().getTitle());
-		// holder.poemQuote.setText(content.getPoem().getContent());
 
 		// 跳转用户详情
 		holder.linearHead.setOnClickListener(new OnClickListener() {
@@ -175,12 +174,14 @@ public class ThirdThreeAdapter extends BaseAdapter {
 		});
 	}
 
-	private void initGridView(ArrayList<String> picture, ViewHolder holder) {
+	private void initGridView(ArrayList<String> pictures, ViewHolder holder) {
 		holder.grdview.setNumColumns(3);
-		if (picture.size() == 0 || picture == null) {
+		if (pictures.size() == 0 || pictures == null) {
 			holder.grdview.setVisibility(View.GONE);
 		} else {
-
+			Log.v("PIcture", pictures.toString());
+			TopicGridviewAdapter adapter = new TopicGridviewAdapter(mContext, pictures);
+			holder.grdview.setAdapter(adapter);
 		}
 	}
 

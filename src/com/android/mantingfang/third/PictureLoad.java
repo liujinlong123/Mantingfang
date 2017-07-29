@@ -1,10 +1,17 @@
-package com.android.mantingfang.picture;
+package com.android.mantingfang.third;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+
+import com.android.mantingfang.picture.ImageLoader.Type;
+import com.android.mantingfanggsc.ImageByteLoad;
+import com.android.mantingfanggsc.ImageLoad;
+
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,9 +30,9 @@ import android.widget.ImageView;
  * @author MrKID
  *
  */
-public class ImageLoader {
+public class PictureLoad {
 
-	private static ImageLoader instance;
+	private static PictureLoad instance;
 	/**
 	 * String 图片路径 图片缓存的核心对象
 	 */
@@ -35,7 +42,7 @@ public class ImageLoader {
 	 * 线程池 默认线程数
 	 */
 	private ExecutorService threadPool;
-	private static final int DEFAULT_THREAD_COUNT = 1;
+	private static final int DEFAULT_THREAD_COUNT = 6;
 
 	/**
 	 * 记录线程的调度方式
@@ -59,16 +66,17 @@ public class ImageLoader {
 
 	private Semaphore semaphorePoolThreadHandler = new Semaphore(0);
 	private Semaphore semaphoreThreadPool;
-
-	/**
-	 * 线程的调度方式
-	 * 
-	 * @author MrKID
-	 *
-	 */
-	public enum Type {
-		FIFO, LIFO
+	
+	private static Map<String, Bitmap> imgMaps = new HashMap<>();
+	
+	public static Bitmap getImage(String path) {
+		if (imgMaps != null) {
+			return imgMaps.get(path);
+		}
+		
+		return null;
 	}
+
 
 	/**
 	 * 构造方法
@@ -78,7 +86,7 @@ public class ImageLoader {
 	 * @param type
 	 *            线程调度方式
 	 */
-	private ImageLoader(int threadCount, Type type) {
+	private PictureLoad(int threadCount, Type type) {
 		init(threadCount, type);
 	}
 
@@ -91,6 +99,7 @@ public class ImageLoader {
 	private void init(int threadCount, Type type) {
 		// 后台轮询线程
 		poolThread = new Thread() {
+			@SuppressLint("HandlerLeak")
 			@Override
 			public void run() {
 				Looper.prepare();
@@ -109,7 +118,6 @@ public class ImageLoader {
 					}
 
 				};
-				// poolThreadHandler��ʼ����ϣ��ͷ��ź���
 				semaphorePoolThreadHandler.release();
 				Looper.loop();
 			}
@@ -119,7 +127,7 @@ public class ImageLoader {
 
 		// 获取我们应用的最大可用内存
 		int maxMemory = (int) Runtime.getRuntime().maxMemory();
-		int cacheMemory = maxMemory / 8;
+		int cacheMemory = maxMemory / 4;
 
 		lruCache = new LruCache<String, Bitmap>(cacheMemory) {
 			protected int sizeOf(String key, Bitmap value) {
@@ -157,22 +165,22 @@ public class ImageLoader {
 	 * 
 	 * @return
 	 */
-	public static ImageLoader getInstance() {
+	public static PictureLoad getInstance() {
 		if (instance == null) {
-			synchronized (ImageLoader.class) {
+			synchronized (PictureLoad.class) {
 				if (instance == null) {
-					instance = new ImageLoader(DEFAULT_THREAD_COUNT, Type.LIFO);
+					instance = new PictureLoad(DEFAULT_THREAD_COUNT, Type.FIFO);
 				}
 			}
 		}
 		return instance;
 	}
 
-	public static ImageLoader getInstance(int threadCount, Type type) {
+	public static PictureLoad getInstances(int threadCount, Type lifo) {
 		if (instance == null) {
-			synchronized (ImageLoader.class) {
+			synchronized (PictureLoad.class) {
 				if (instance == null) {
-					instance = new ImageLoader(threadCount, type);
+					instance = new PictureLoad(threadCount, lifo);
 				}
 			}
 		}
@@ -219,9 +227,12 @@ public class ImageLoader {
 					// 加载图片
 					// 图片的压缩
 					// 1.获得图片需要显示的大小
-					ImageSize imageSize = getImageViewSize(imageView);
+					//ImageSize imageSize = getImageViewSize(imageView);
 					// 2。压缩图片
-					Bitmap bm = decodeSampleBitmapFromPath(imageSize.width, imageSize.height, path);
+					Map<String, String> param = new HashMap<>();
+					param.put("path", path);
+					Bitmap bm = ImageLoad.upload("http://1696824u8f.51mypc.cn:12755//condensepicture.php", param);
+					//Bitmap bm = decodeSampleBitmapFromPath(imageSize.width, imageSize.height, path);
 					// 3.把图片加入到缓存
 					addBitmapToLruCache(path, bm);
 
@@ -261,6 +272,21 @@ public class ImageLoader {
 		}
 	}
 
+	private synchronized void addTasks(Runnable runnable) {
+		taskQueue.add(runnable);
+
+		try {
+			if (poolThreadHandler == null) {
+				semaphorePoolThreadHandler.acquire();
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		poolThreadHandler.sendEmptyMessage(0x110);
+	}
+	
 	/**
 	 * 根据图片需要显示的宽和高对图片进行压缩
 	 * 
@@ -273,18 +299,22 @@ public class ImageLoader {
 		// 获取图片的宽和高，并不把图片加载到内存中
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true; // 不把图片加载到内存中
-		BitmapFactory.decodeFile(path, options);
+		//BitmapFactory.decodeFile(path, options);
+		Map<String, String> param = new HashMap<>();
+		param.put("path", path);
+		byte[] data = ImageByteLoad.upload("http://1696824u8f.51mypc.cn:12755//condensepicture.php", param);
+		BitmapFactory.decodeByteArray(data, 0, data.length, options);
 
 		options.inSampleSize = caculateInSampleSize(options, width, height);
 
 		// 使用获取到的InSampleSize再次解析图片
 		options.inJustDecodeBounds = false; // 把图片加载到内存中
-		Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+		Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
 
 		// 压缩后的图片
 		return bitmap;
 	}
-
+	
 	/**
 	 * 根据需求的宽和高以及图片实际的宽和高计算SampleSize
 	 * 
@@ -313,7 +343,7 @@ public class ImageLoader {
 		}
 		return inSampleSize;
 	}
-
+	
 	/**
 	 * 根据ImageView获取适当的压缩的宽和高
 	 * 
@@ -361,7 +391,7 @@ public class ImageLoader {
 
 		return imageSize;
 	}
-
+	
 	/**
 	 * 通过反射获取ImageView的某个属性值
 	 * 
@@ -392,21 +422,6 @@ public class ImageLoader {
 		return value;
 	}
 
-	private synchronized void addTasks(Runnable runnable) {
-		taskQueue.add(runnable);
-
-		try {
-			if (poolThreadHandler == null) {
-				semaphorePoolThreadHandler.acquire();
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		poolThreadHandler.sendEmptyMessage(0x110);
-	}
-
 	/**
 	 * 根据path在缓存中获取bitmap
 	 * 
@@ -416,9 +431,11 @@ public class ImageLoader {
 	private Bitmap getBitmapFromLruCache(String key) {
 		return lruCache.get(key);
 	}
-
+	
 	private class ImageSize {
+		@SuppressWarnings("unused")
 		int width;
+		@SuppressWarnings("unused")
 		int height;
 	}
 

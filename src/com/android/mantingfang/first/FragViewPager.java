@@ -34,8 +34,8 @@ public class FragViewPager extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (view == null) {
 			view = inflater.inflate(R.layout.first_view_item, null);
-			tv1 = (TextView)view.findViewById(R.id.first_viewpager_info_tv1);
-			tv2 = (TextView)view.findViewById(R.id.first_viewpager_info_tv2);
+			tv1 = (TextView)view.findViewById(R.id.first_viewpager_info_tv2);
+			tv2 = (TextView)view.findViewById(R.id.first_viewpager_info_tv1);
 			tv3 = (TextView)view.findViewById(R.id.first_viewpager_info_tv3);
 			layout = (RelativeLayout)view.findViewById(R.id.relative_layout_viewpager);
 			if (rhesis.getPoemId() != null && rhesis.getWriter() != null && rhesis.getRhesis() != null

@@ -1,6 +1,7 @@
 package com.android.mantingfanggsc;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -10,18 +11,16 @@ import java.net.URL;
 import java.util.Map;
 import java.util.UUID;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
-public class ImageLoad {
+public class ImageByteLoad {
 
 	private static final int TIME_OUT = 10 * 10000000; // 超时时间
 	private static final String CHARSET = "utf-8"; // 设置编码
 	private static final String PREFIX = "--";
 	private static final String LINE_END = "\r\n";
 
-	public static Bitmap upload(String host, Map<String, String> params) {
+	public static byte[] upload(String host, Map<String, String> params) {
 		String BOUNDARY = UUID.randomUUID().toString(); // 边界标识 随机生成 String PREFIX = "--" , LINE_END = "\r\n"；
 		String CONTENT_TYPE = "multipart/form-data"; // 内容类型
 		try {
@@ -64,12 +63,15 @@ public class ImageLoad {
 				//int code = conn.getResponseCode();
 				sb.setLength(0);
 				BufferedInputStream br = new BufferedInputStream(conn.getInputStream());
-				Bitmap bm= BitmapFactory.decodeStream(br); 
-				final Bitmap bm1 = bm;
-				//Log.v("Bitmap", bm1.getWidth() + " Null");
-				br.close();
+				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+				byte[] data = new byte[1024];
+				int count = -1;
+				while ((count = br.read(data, 0, 1024)) != -1)
+					outStream.write(data, 0, count);
 				
-				return bm1;
+				data = null;
+				br.close();
+				return outStream.toByteArray();
 			//}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

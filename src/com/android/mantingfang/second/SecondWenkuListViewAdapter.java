@@ -105,7 +105,6 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 				
 				bundle.putInt("label_id", label.get(position).getLabelId());
 				bundle.putInt("imgId", R.drawable.ic_launcher);
-				//bundle.putString("typeId", (listPosition + 1) + "" + position);
 				intent.putExtras(bundle);
 				mContext.startActivity(intent);
 			}
@@ -118,7 +117,7 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 		dataList = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < text.size(); i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("image", R.drawable.ic_launcher);
+			map.put("image", R.drawable.welcome);
 			map.put("text", text.get(i).getLableName());
 			dataList.add(map);
 		}

@@ -37,7 +37,7 @@
          
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="24" />
+        android:targetSdkVersion="26" />
 
     <application
         android:allowBackup="true"
@@ -75,6 +75,7 @@
         <activity android:name="com.android.mantingfang.first.FirstPagerInfoP" ></activity>
         
         <activity android:name="com.android.mantingfang.second.SecondWenkuPoem" ></activity>
+        <activity android:name="com.android.mantingfang.second.PoemMDetailTwo" ></activity>
         
         <activity android:name="com.android.mantingfang.third.UserPager" ></activity>
         <activity android:name="com.android.mantingfang.third.Comment" ></activity>

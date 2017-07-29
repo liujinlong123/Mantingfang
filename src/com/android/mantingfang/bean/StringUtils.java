@@ -101,12 +101,13 @@ public class StringUtils {
 	 * @return
 	 */
 	public static ArrayList<String> getPictures(String pic) {
+		//Log.v("Stringutils--1", pic);
 		ArrayList<String> pictures = new ArrayList<>();
-		String[] tokens = pic.split("[ ]");
+		String[] tokens = pic.split("[,]");
 		for (int i = 0; i < tokens.length; i++) {
 			pictures.add(tokens[i]);
 		}
-
+		//Log.v("Stringutils--2", pictures.toString());
 		return pictures;
 	}
 

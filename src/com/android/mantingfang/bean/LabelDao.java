@@ -4,7 +4,9 @@ import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class LabelDao {
 
@@ -38,5 +40,28 @@ public class LabelDao {
 				database.close();
 			}
 		}
+	}
+	
+	public String getLabelById(int label_id) {
+		String labelName = null;
+		SQLiteDatabase database = null;
+		try {
+			database = helper.getReadableDatabase();
+			String sql = "select * from Label where label_id = " + label_id;
+			Log.v("sql", sql);
+			Cursor cursor = database.rawQuery(sql, null);
+			if (cursor.moveToFirst()) {
+				labelName = cursor.getString(cursor.getColumnIndexOrThrow("label_name"));
+				return labelName;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (database != null) {
+				database.close();
+			}
+		}
+		
+		return null;
 	}
 }
