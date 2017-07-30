@@ -1,5 +1,6 @@
 package com.android.mantingfanggsc;
 
+import com.android.mantingfang.bean.Writer;
 import com.android.mantingfang.model.PoemM;
 import com.android.mantingfang.second.PoemMDetailTwo;
 import com.android.mantingfang.third.Comment;
@@ -76,9 +77,22 @@ public class UIHelper {
 	 * @param context
 	 * @param writerId
 	 */
-	public static void showWriterDetail(Context context, int writer_id) {
+	public static void showWriterDetail(Context context, int writer_id, boolean isNetwork) {
 		Intent intent = new Intent(context, WriterDetail.class);
-		intent.putExtra("writer_id", writer_id);
+		Bundle bundle = new Bundle();
+		bundle.putInt("writerId", writer_id);
+		bundle.putBoolean("isNetwork", isNetwork);
+		intent.putExtras(bundle);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
+	}
+	
+	public static void showWriterDetail(Context context, Writer writer, boolean isNetwork) {
+		Intent intent = new Intent(context, WriterDetail.class);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("writer", writer);
+		bundle.putBoolean("isNetwork", isNetwork);
+		intent.putExtras(bundle);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 	}

@@ -19,11 +19,12 @@
         android:padding="5dp"
         android:gravity="center_vertical" >
         
-        <ImageView
+        <com.android.mantingfanggsc.CircleImageView
             android:id="@+id/floor2_second_img_theme"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@drawable/ic_launcher" />
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_launcher" ></com.android.mantingfanggsc.CircleImageView>
         
         <LinearLayout
             android:layout_width="wrap_content"

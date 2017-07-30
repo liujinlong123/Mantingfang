@@ -78,9 +78,7 @@ public class SecondWriterListViewAdapter extends BaseAdapter implements SectionI
 	private void initViews(ViewHolder holder, SortModel sort, int section, int position) {
 		holder.dynasty.setText(sort.getDynastyName());
 		holder.writerName.setText(sort.getName());
-		holder.poemRhesis.setText("关关雎鸠，在河之洲");
-		//holder.poemRhesis.setText(sort.getPoetryRhesis());ֵ
-		
+		holder.poemRhesis.setText(sort.getWriter_career().substring(0, 20) + "...");
 		
 		if(position == getPositionForSection(section)){
 			holder.dynasty.setVisibility(View.VISIBLE);

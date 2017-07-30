@@ -11,13 +11,14 @@ import java.util.Map;
 import com.android.mantingfanggsc.FileUploader;
 import com.android.mantingfanggsc.FileUploader.FileUploadListener;
 import com.android.mantingfanggsc.R;
-import com.android.mantingfanggsc.RecordPlayer;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class AddFour extends Activity implements OnClickListener {
+public class AddFour extends Activity{
 
 	private ImageView imgFinish;
 	private TextView tvAdd;
@@ -33,6 +34,8 @@ public class AddFour extends Activity implements OnClickListener {
 	private String userId;
 	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//picturewander.php";
 
+	private static final String LOG_TAG = "AudioRecordTest";
+	
 	private TextView poemName;
 	private TextView poemWriter;
 	private TextView poemContent;
@@ -41,18 +44,15 @@ public class AddFour extends Activity implements OnClickListener {
 	private TextView sing;
 
 	// 录音类
-	private MediaRecorder mediaRecorder;
-	// 以文件形式保存
-	private File recordFile;
-
-	private RecordPlayer player;
+	private MediaPlayer mPlayer = null;  
+    private MediaRecorder mRecorder = null;
+    //语音文件保存路径
+    private String FileName = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_four);
-
-		recordFile = new File("/mnt/sdcard", "kk.amr");
 		initViews();
 	}
 
@@ -96,9 +96,13 @@ public class AddFour extends Activity implements OnClickListener {
 		});
 
 		// 录音播放
-		stop.setOnClickListener(this);
-		start.setOnClickListener(this);
-		sing.setOnClickListener(this);
+		stop.setOnClickListener(new stopRecordListener());		//停止录音
+		start.setOnClickListener(new startRecordListener());	//开始录音
+		sing.setOnClickListener(new startPlayListener());		//开始播放
+		
+		//设置sdcard的路径  
+        FileName = Environment.getExternalStorageDirectory().getAbsolutePath();  
+        FileName += "/audiorecordtest.3gp";
 
 		// 上传
 		tvAdd.setOnClickListener(new OnClickListener() {
@@ -123,63 +127,65 @@ public class AddFour extends Activity implements OnClickListener {
 			}
 		});
 	}
-
-	@Override
-	public void onClick(View v) {
-		player = new RecordPlayer(AddFour.this);
-		int Id = v.getId();
-
-		switch (Id) {
-		case R.id.add_four_start:
-			startRecording();
-			break;
-		case R.id.add_four_stop:
-			stopRecording();
-			break;
-		case R.id.add_four_sing:
-			playRecording();
-			break;
-		}
-	}
 	
-	private void startRecording() {
-		mediaRecorder = new MediaRecorder();
-		// 判断，若当前文件已存在，则删除
-		if (recordFile.exists()) {
-			recordFile.delete();
-		}
-		mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-		mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
-		mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-		mediaRecorder.setOutputFile(recordFile.getAbsolutePath());
-
-		try {
-			// 准备好开始录音
-			mediaRecorder.prepare();
-
-			mediaRecorder.start();
-			start.setImageResource(R.drawable.record_start);
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	
-	private void stopRecording() {
-		if (recordFile != null) {
-			start.setImageResource(R.drawable.record_end);
-			mediaRecorder.stop();
-			mediaRecorder.release();
-		}
-	}
-
-	private void playRecording() {
-		player.playRecordFile(recordFile);
-	}
+	//开始录音 
+    class startRecordListener implements OnClickListener{  
+  
+        @Override  
+        public void onClick(View v) {  
+            // TODO Auto-generated method stub  
+             mRecorder = new MediaRecorder();  
+             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);  
+             mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);  
+             mRecorder.setOutputFile(FileName);  
+             mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);  
+             try {  
+                 mRecorder.prepare();  
+             } catch (IOException e) {  
+                 Log.e(LOG_TAG, "prepare() failed");  
+             }  
+             mRecorder.start();  
+        }  
+          
+    }  
+    //停止录音 
+    class stopRecordListener implements OnClickListener{  
+  
+        @Override  
+        public void onClick(View v) {  
+            // TODO Auto-generated method stub  
+             mRecorder.stop();  
+             mRecorder.release();  
+             mRecorder = null;  
+        }  
+          
+    }  
+    //播放录音
+    class startPlayListener implements OnClickListener{  
+  
+        @Override  
+        public void onClick(View v) {  
+            // TODO Auto-generated method stub  
+            mPlayer = new MediaPlayer();  
+            try{  
+                mPlayer.setDataSource(FileName);  
+                mPlayer.prepare();  
+                mPlayer.start();  
+            }catch(IOException e){  
+                Log.e(LOG_TAG,"播放失败");  
+            }  
+        }  
+    }  
+    //停止播放录音  
+    class stopPlayListener implements OnClickListener{  
+  
+        @Override  
+        public void onClick(View v) {  
+            // TODO Auto-generated method stub  
+            mPlayer.release();  
+            mPlayer = null;  
+        }     
+    }  
 
 	private void getData(final Map<String, String> param) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {

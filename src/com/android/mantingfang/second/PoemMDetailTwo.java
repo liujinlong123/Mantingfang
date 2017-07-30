@@ -48,7 +48,6 @@ public class PoemMDetailTwo extends Activity {
 		setContentView(R.layout.poetrydetail);
 		
 		initViews();
-		getData();
 	}
 	
 	private void initViews() {
@@ -60,6 +59,7 @@ public class PoemMDetailTwo extends Activity {
 		kindDetail = (TextView)findViewById(R.id.poetrydetail_tv_kind_detail);
 		
 		poemId = getIntent().getExtras().getString("poemId");
+		Log.v("PoemId", poemId);
 		
 		//topbar
 		linearback = (LinearLayout)findViewById(R.id.topbar_all_back);
@@ -105,6 +105,8 @@ public class PoemMDetailTwo extends Activity {
 				Toast.makeText(PoemMDetailTwo.this, "more", Toast.LENGTH_SHORT).show();
 			}
 		});
+		
+		getData(poemId);
 	}
 	
 	private void initshow(final PoemM poem) {
@@ -185,7 +187,7 @@ public class PoemMDetailTwo extends Activity {
 		});
 	}
 	
-	private void getData() {
+	private void getData(final String poemId) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override

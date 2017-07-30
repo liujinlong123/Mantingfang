@@ -82,7 +82,7 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 		GridView grdKind;
 	}
 	
-	private void initGridView(KindContent content, ViewHolder holder, final int listPosition) {
+	private void initGridView(final KindContent content, ViewHolder holder, final int listPosition) {
 		holder.tvKind.setText(content.getKindName());
 		holder.grdKind.setNumColumns(4);
 		if (content.getSingleName() != null) {
@@ -104,7 +104,8 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 				Log.v("singlename: ", label.get(position).getLableName());
 				
 				bundle.putInt("label_id", label.get(position).getLabelId());
-				bundle.putInt("imgId", R.drawable.ic_launcher);
+				//bundle.putInt("imgId", content.getImages()[position]);
+				bundle.putInt("imgId", R.drawable.welcome);
 				intent.putExtras(bundle);
 				mContext.startActivity(intent);
 			}

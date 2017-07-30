@@ -13,8 +13,6 @@ import com.android.mantingfang.third.CommentContent;
 import com.android.mantingfang.third.User;
 import com.android.mantingfang.third.UserTwoContent;
 
-import android.util.Log;
-
 @SuppressWarnings("serial")
 public class TopicList extends Base {
 
@@ -28,6 +26,8 @@ public class TopicList extends Base {
 	private List<User> listUserinfo = new ArrayList<>();
 	private List<PoemRhesis> listSearch = new ArrayList<>();
 	private List<Poem> listKindPoem = new ArrayList<>();
+	private List<Writer> listAllWriters = new ArrayList<>();
+	private List<Poem> listWriterPoem = new ArrayList<>();
 	
 	private int topicCount;
 	private int topicTwoCount;
@@ -39,6 +39,8 @@ public class TopicList extends Base {
 	private int userInfoCount;
 	private int searchCount;
 	private int kindPoemCount;
+	private int allWritersCount;
+	private int writerPoemCount;
 	
 	public List<UserTwoContent> getTopicList() {
 		return topicList;
@@ -78,6 +80,14 @@ public class TopicList extends Base {
 	
 	public List<Poem> getKindPoemList() {
 		return listKindPoem;
+	}
+	
+	public List<Writer> getAllWritersList() {
+		return listAllWriters;
+	}
+	
+	public List<Poem> getWriterPoemList() {
+		return listWriterPoem;
 	}
 	
 	public int getTopicCount() {
@@ -120,6 +130,14 @@ public class TopicList extends Base {
 		return kindPoemCount;
 	}
 	
+	public int getAllWritersCount() {
+		return allWritersCount;
+	}
+	
+	public int getWrterPoemCount() {
+		return writerPoemCount;
+	}
+	
 	/**
 	 * Topic--One
 	 * @param obj
@@ -134,7 +152,6 @@ public class TopicList extends Base {
 			tList.topicCount = obj.length();
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
-				Log.v("TEST", jo.toString());
 				UserTwoContent content = new UserTwoContent(
 						jo.getString("topic_user_id"),
 						jo.getString("user_photo"),
@@ -277,7 +294,6 @@ public class TopicList extends Base {
 			tList.userCount = obj.length();
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
-				Log.v("JO", jo.toString());
 				String topicTime = jo.optString("topic_time");
 				String noteTime = jo.optString("note_time");
 				String originalTime = jo.optString("original_time");
@@ -346,7 +362,6 @@ public class TopicList extends Base {
 				}
 				
 				tList.listUser.add(content);
-				Log.v("TEST" + content.getPostComNum(), content.getTime());
 			}
 		}
 		
@@ -377,7 +392,6 @@ public class TopicList extends Base {
 						jo.getString("comment_user_id"));
 				
 				tList.listComment.add(content);
-				Log.v("Test", content.getContent());
 			}
 		}
 		
@@ -467,6 +481,12 @@ public class TopicList extends Base {
 		return tList;
 	}
 	
+	/**
+	 * 解析一类诗词
+	 * @param obj
+	 * @return
+	 * @throws JSONException
+	 */
 	public static TopicList parseKindPoem (JSONArray obj) throws JSONException {
 		TopicList tList = new TopicList();
 		if (obj != null) {
@@ -483,6 +503,61 @@ public class TopicList extends Base {
 				
 				tList.listKindPoem.add(poem);
 				//Log.v("Test", content.getRhesis());
+			}
+		}
+		
+		return tList;
+	}
+	
+	/**
+	 * 解析获取到的所有诗人
+	 * @param obj
+	 * @return
+	 * @throws JSONException
+	 */
+	public static TopicList parseAllWriters (JSONArray obj) throws JSONException {
+		TopicList tList = new TopicList();
+		if (obj != null) {
+			tList.allWritersCount = obj.length();
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				Writer writer = new Writer(
+						jo.getString("writer_id"),
+						jo.optString("writer_name"),
+						jo.optString("dynasty_name"),
+						jo.optString("writer_career"));
+				
+				tList.listAllWriters.add(writer);
+			}
+		}
+		
+		return tList;
+	}
+	
+	/**
+	 * 解析一个诗人的所有诗
+	 * @param obj
+	 * @param dynastyName
+	 * @param writerName
+	 * @return
+	 * @throws JSONException
+	 */
+	public static TopicList parseWritersPoem (JSONArray obj, String dynastyName, String writerName) throws JSONException {
+		TopicList tList = new TopicList();
+		if (obj != null) {
+			tList.writerPoemCount = obj.length();
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				Poem poem = new Poem(
+						jo.getString("poetry_id"),
+						jo.getString("poetry_name"),
+						null,
+						jo.getString("poetry_rhesis"),
+						dynastyName,
+						writerName);
+				
+				tList.listWriterPoem.add(poem);
+				//Log.v("POMEEEE", poem.getPoemId() + "---" + poem.getPoemName());
 			}
 		}
 		

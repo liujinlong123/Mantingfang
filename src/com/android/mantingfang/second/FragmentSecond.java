@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.android.mantingfang.bean.DynastyDao;
+import org.json.JSONException;
+
 import com.android.mantingfang.bean.KindDao;
+import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.bean.Writer;
 import com.android.mantingfang.bean.WriterDao;
 import com.android.mantingfang.second.SideBar.OnTouchingLetterChangedListener;
 import com.android.mantingfanggsc.CharacterParser;
 import com.android.mantingfanggsc.CustomListView;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.NetWork;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
@@ -19,7 +23,6 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,7 +34,6 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FragmentSecond extends Fragment {
 
@@ -48,7 +50,6 @@ public class FragmentSecond extends Fragment {
 	private List<Writer> writers;
 	private FrameLayout frame;
 	private WriterDao writerDao;
-	private DynastyDao dynastyDao;
 
 	private SideBar sideBar;
 	private TextView dialog;
@@ -143,46 +144,86 @@ public class FragmentSecond extends Fragment {
 
 		pinyinComparator = new PinyinComparator();
 
-		dynastyDao = new DynastyDao(getActivity());
-
 		sideBar = (SideBar) view.findViewById(R.id.sidrbar);
 		dialog = (TextView) view.findViewById(R.id.dialog);
 		sideBar.setTextView(dialog);
-
-		sideBar.setOnTouchingLetterChangedListener(new OnTouchingLetterChangedListener() {
+		
+		getWriterDatas(true);
+		
+	}
+	
+	private void getWriterDatas(final boolean isNetwork) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
-			public void onTouchingLetterChanged(String s) {
-
-				int position = writerAdapter.getPositionForSection(s.charAt(0));
-				if (position != -1) {
-					writerListView.setSelection(position);
+			protected String doInBackground(String... params) {
+				if (isNetwork) {
+					return MyClient.getInstance().Http_postWriters("1");
+				} else {
+					writerDao = new WriterDao(getActivity());
+					writers = writerDao.getAllWriter();
+					String[] writerss = new String[writers.size()];
+					for (int i = 0; i < writers.size(); i++) {
+						writerss[i] = writers.get(i).getWriterName();
+					}
+					SourceDateList = filledData(writerss, writers);
+					Collections.sort(SourceDateList, pinyinComparator);
+					return null;
 				}
-
 			}
-		});
-
-		writerDao = new WriterDao(getActivity());
-		writers = writerDao.getAllWriter();
-		Log.v("writer", writers.isEmpty() + " ");
-		String[] writerss = new String[writers.size()];
-		for (int i = 0; i < writers.size(); i++) {
-			writerss[i] = writers.get(i).getWriterName();
-		}
-
-		SourceDateList = filledData(writerss, writers);
-
-		Collections.sort(SourceDateList, pinyinComparator);
-
-		writerAdapter = new SecondWriterListViewAdapter(getActivity(), SourceDateList);
-		writerListView.setAdapter(writerAdapter);
-		writerListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				UIHelper.showWriterDetail(getActivity(), 1);
+			protected void onPostExecute(String result) {
+				if (isNetwork) {
+					try {
+						if (result != null && !result.equals("")) {
+							writers = TopicList.parseAllWriters(StringUtils.toJSONArray(result)).getAllWritersList();
+							String[] writerss = new String[writers.size()];
+							for (int i = 0; i < writers.size(); i++) {
+								writerss[i] = writers.get(i).getWriterName();
+							}
+							SourceDateList = filledData(writerss, writers);
+							Collections.sort(SourceDateList, pinyinComparator);
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				writerAdapter = new SecondWriterListViewAdapter(getActivity(), SourceDateList);
+				writerListView.setAdapter(writerAdapter);
+				writerListView.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						if (isNetwork) {
+							SortModel model = SourceDateList.get(position - 1);
+							Writer w = new Writer(model.getwId(), model.getName(),
+									model.getDynastyName(), model.getWriter_career());
+							UIHelper.showWriterDetail(getActivity(), w, isNetwork);
+						} else {
+							UIHelper.showWriterDetail(getActivity(), SourceDateList.get(position - 1).getWriterId(), isNetwork);
+						}
+					}
+				});
+				
+				sideBar.setOnTouchingLetterChangedListener(new OnTouchingLetterChangedListener() {
+
+					@Override
+					public void onTouchingLetterChanged(String s) {
+
+						int position = writerAdapter.getPositionForSection(s.charAt(0));
+						if (position != -1) {
+							writerListView.setSelection(position);
+						}
+
+					}
+				});
 			}
-		});
+
+		};
+
+		task.execute();
 	}
 
 	/**
@@ -200,8 +241,9 @@ public class FragmentSecond extends Fragment {
 			SortModel sortModel = new SortModel();
 			sortModel.setName(date[i]);
 			sortModel.setWriterId(writer.get(i).getWriterId());
-			sortModel.setDynastyName(dynastyDao.getDynastyById(writer.get(i).getDynastyId()).getDynastyName());
-			System.out.println("ming--" + sortModel.getName() + "----" + date[i]);
+			sortModel.setDynastyName(writer.get(i).getDynastyName());
+			sortModel.setWriter_career(writer.get(i).getWriterCareer());
+			sortModel.setwId(writer.get(i).getStringWriterId());
 
 			String pinyin = characterParser.getSelling(date[i]);
 

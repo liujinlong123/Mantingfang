@@ -21,7 +21,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -151,7 +150,7 @@ public class FragmentFrist extends Fragment {
 			
 			@Override
 			protected void onPostExecute(String result) {
-				Log.v("TEEEEE", result);
+				//Log.v("TEEEEE", result);
 				/*for (int i = 0; i < 100; i++) {
 					fragmentList.add(new FragViewPager(new PoemRhesis("1", "无名氏" + i, "关关雎鸠，在河之洲")));
 				}*/

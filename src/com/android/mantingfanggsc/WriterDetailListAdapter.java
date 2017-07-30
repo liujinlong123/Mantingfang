@@ -2,7 +2,9 @@ package com.android.mantingfanggsc;
 
 import java.util.List;
 
-import com.android.mantingfang.bean.Base;
+import com.android.mantingfang.bean.Writer;
+import com.android.mantingfang.model.Poem;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,14 +19,16 @@ public class WriterDetailListAdapter extends BaseAdapter {
 	private static final int TYPE_TWO = 1;
 	
 	//private Context context;
-	private List<? extends Base> list;
+	private List<Poem> list;
 	private LayoutInflater inflater;
+	private Writer writer;
 	
 	
-	public WriterDetailListAdapter(Context context, List<? extends Base>list) {
+	public WriterDetailListAdapter(Context context, List<Poem>list, Writer writer) {
 		//this.context = context;
 		this.list = list;
 		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.writer = writer;
 	}
 	
 	@Override
@@ -44,7 +48,7 @@ public class WriterDetailListAdapter extends BaseAdapter {
 	
 	@Override
 	public int getCount() {
-		return list.size();
+		return list.size() + 1;
 	}
 
 	@Override
@@ -91,19 +95,25 @@ public class WriterDetailListAdapter extends BaseAdapter {
 			switch (type) {
 			case TYPE_ONE:
 				holder1 = (ViewHolder1)convertView.getTag();
-				holder1.writername.setText("白居易");
-				holder1.themename.setText("���");
-				holder1.themedetail.setText("�׾��׵ļ��");
-				holder1.works.setText("��Ʒ/118");
 				break;
 				
 			case TYPE_TWO:
 				holder2 = (ViewHolder2)convertView.getTag();
-				holder2.poemname.setText("®ɽ���ü�");
-				holder2.kindname.setText("[��]");
-				holder2.poemrhesis.setText("��®���㣬������ɽ");
 				break;
 			}
+		}
+		switch(type) {
+		case TYPE_ONE:
+			holder1.writername.setText(writer.getWriterName() + "--" + writer.getDynastyName());
+			holder1.themedetail.setText(writer.getWriter_career());
+			holder1.works.setText("作品/" + writer.getWorksNum() + " ");
+			break;
+			
+		case TYPE_TWO:
+			Poem poem = list.get(position - 1);
+			holder2.poemname.setText(poem.getPoemName());
+			holder2.poemrhesis.setText(poem.getRhesis());
+			break;
 		}
 		
 		return convertView;

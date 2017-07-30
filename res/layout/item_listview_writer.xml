@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="床前明月光，疑是地上霜"
-        android:textSize="15sp"
+        android:textSize="12sp"
         android:paddingLeft="5dp"
         android:paddingBottom="5dp"
         android:textColor="@color/gray" />

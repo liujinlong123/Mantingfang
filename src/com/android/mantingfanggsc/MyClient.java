@@ -380,7 +380,61 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("POEM--KInd", response);
+				//Log.v("POEM--KInd", response);
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 请求返回所有诗人
+	 * @param code
+	 * @return
+	 */
+	public String Http_postWriters (String code) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchwritermessage.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("writer", code));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("Writer--", response);
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 通过诗人id获取诗人信息 和 诗词
+	 * @param writerId
+	 * @return
+	 */
+	public String Http_postWriterById (String writerId) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchwriterallpoem.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("writer_id", writerId));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("Writer--Detail", response);
 				
 				return response;
 			} 

@@ -125,27 +125,34 @@ public class SecondWenkuPoem extends Activity {
 			protected void onPostExecute(String result) {
 				if (isNetwork) {
 					try {
-						list = TopicList.parseKindPoem(StringUtils.toJSONArray(result)).getKindPoemList();
-						madapter = new SecondWenkuPoemListAdapter(SecondWenkuPoem.this, list, true);
+						if (result != null && !result.equals("")) {
+							list = TopicList.parseKindPoem(StringUtils.toJSONArray(result)).getKindPoemList();
+							madapter = new SecondWenkuPoemListAdapter(SecondWenkuPoem.this, list, true);
+							listview.setAdapter(madapter);
+							listview.setOnItemClickListener(new OnItemClickListener() {
+								
+								@Override
+								public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+									UIHelper.showPoemMDetailTwoById(SecondWenkuPoem.this, list.get(position - 1).getPoemId(), 0);
+								}
+							});
+						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				} else {
 					madapter = new SecondWenkuPoemListAdapter(SecondWenkuPoem.this, list, false);
-				}
-				listview.setAdapter(madapter);
-				listview.setOnItemClickListener(new OnItemClickListener() {
-					
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-						if (isNetwork) {
-							UIHelper.showPoemMDetailTwoById(SecondWenkuPoem.this, list.get(position - 1).getPoemId(), 0);
-						} else {
-							//UIHelper.showPoemDetail(SecondWenkuPoem.this, list.get(position).getPoetryid(), 0);
+					listview.setAdapter(madapter);
+					listview.setOnItemClickListener(new OnItemClickListener() {
+						
+						@Override
+						public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+							UIHelper.showPoemDetail(SecondWenkuPoem.this, list.get(position).getPoetryid(), 0);
 						}
-					}
-				});
+					});
+				}
+				
 			}
 
 		};

@@ -199,6 +199,37 @@ public class WriterDao {
 		return null;
 	}
 	
+public Writer getWriterMById(int writerid) {
+		
+		SQLiteDatabase database = null;
+		try {
+			database = helper.getReadableDatabase();
+			//String sql = "select * from Writer where writer_id = " + writerid;
+			String sql = "select w.writer_id,w.writer_name,w.writer_career,d.dynasty_name from Writer w "
+					+ " join Dynasty d on w.writer_dynasty_id = d.dynasty_id where w.writer_id = "
+					+ writerid;
+			Log.v("sql", sql);
+			Cursor cursor;
+			cursor = database.rawQuery(sql, null);
+			if (cursor.moveToFirst()) {
+				Writer w = new Writer(
+						cursor.getInt(cursor.getColumnIndexOrThrow("writer_id")) + "",
+						cursor.getString(cursor.getColumnIndexOrThrow("writer_name")),
+						cursor.getString(cursor.getColumnIndexOrThrow("dynasty_name")),
+						cursor.getString(cursor.getColumnIndexOrThrow("writer_career")));
+				return w;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (database != null) {
+				database.close();
+			}
+		}
+		
+		return null;
+	}
+	
 	
 	/**
 	 *get Writers by country_id
