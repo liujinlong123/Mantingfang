@@ -28,6 +28,14 @@ public class TopicList extends Base {
 	private List<Poem> listKindPoem = new ArrayList<>();
 	private List<Writer> listAllWriters = new ArrayList<>();
 	private List<Poem> listWriterPoem = new ArrayList<>();
+	//-------------------Search-----------------------------//
+	private List<PoemRhesis> listSearchPoem = new ArrayList<>();
+	private List<Writer> listSearchWriter = new ArrayList<>();
+	private List<PoemRhesis> listSearchContent = new ArrayList<>();
+	private int searchPoemCount;
+	private int searchWriterCount;
+	private int searchContentCount;
+	//-------------------Search-----------------------------//
 	
 	private int topicCount;
 	private int topicTwoCount;
@@ -41,6 +49,8 @@ public class TopicList extends Base {
 	private int kindPoemCount;
 	private int allWritersCount;
 	private int writerPoemCount;
+	
+	//------------------------------返回ArrayList-----------------------------------
 	
 	public List<UserTwoContent> getTopicList() {
 		return topicList;
@@ -90,6 +100,21 @@ public class TopicList extends Base {
 		return listWriterPoem;
 	}
 	
+	public List<PoemRhesis> getSearchPoemList() {
+		return listSearchPoem;
+	}
+	
+	public List<Writer> getSearchWriterList() {
+		return listSearchWriter;
+	}
+	
+	public List<PoemRhesis> getSearchContentList() {
+		return listSearchContent;
+	}
+	
+	
+	//------------------------------返回ArrayList Size()-----------------------------------
+	
 	public int getTopicCount() {
 		return topicCount;
 	}
@@ -137,6 +162,20 @@ public class TopicList extends Base {
 	public int getWrterPoemCount() {
 		return writerPoemCount;
 	}
+	
+	public int getSearchPoemCount() {
+		return searchPoemCount;
+	}
+	
+	public int getSearchWriterCount() {
+		return searchWriterCount;
+	}
+	
+	public int getSearchContentCount() {
+		return searchContentCount;
+	}
+	
+	//------------------------------返回处理结果-----------------------------------
 	
 	/**
 	 * Topic--One
@@ -471,7 +510,8 @@ public class TopicList extends Base {
 						jo.optString("poetry_name"),
 						jo.optString("dynasty_name"),
 						jo.optString("writer_name"),
-						jo.optString("poetry_rhesis"));
+						jo.optString("poetry_rhesis"),
+						jo.optString("poetry_content"));
 				
 				tList.listSearch.add(poem);
 				//Log.v("Test", content.getRhesis());
@@ -557,6 +597,70 @@ public class TopicList extends Base {
 						writerName);
 				
 				tList.listWriterPoem.add(poem);
+				//Log.v("POMEEEE", poem.getPoemId() + "---" + poem.getPoemName());
+			}
+		}
+		
+		return tList;
+	}
+	
+	
+	//----------------------------------------------解析搜索-------------------------------------------------------------
+	public static TopicList parseSearchPoemList (JSONArray obj) throws JSONException {
+		TopicList tList = new TopicList();
+		if (obj != null) {
+			tList.searchPoemCount = obj.length();
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				PoemRhesis rhesis = new PoemRhesis(
+						jo.getString("poetry_id"),
+						jo.getString("poetry_name"),
+						jo.getString("dynasty_name"),
+						jo.getString("writer_name"),
+						jo.getString("poetry_rhesis"));
+				
+				tList.listSearchPoem.add(rhesis);
+				//Log.v("POMEEEE", poem.getPoemId() + "---" + poem.getPoemName());
+			}
+		}
+		
+		return tList;
+	}
+	
+	public static TopicList parseSearchWriterList (JSONArray obj) throws JSONException {
+		TopicList tList = new TopicList();
+		if (obj != null) {
+			tList.searchWriterCount = obj.length();
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				Writer writer = new Writer(
+						jo.getString("writer_id"),
+						jo.optString("writer_name"),
+						jo.optString("dynasty_name"),
+						jo.optString("writer_career"));
+				
+				tList.listSearchWriter.add(writer);
+				//Log.v("POMEEEE", poem.getPoemId() + "---" + poem.getPoemName());
+			}
+		}
+		
+		return tList;
+	}
+	
+	public static TopicList parseSearchContentList (JSONArray obj) throws JSONException {
+		TopicList tList = new TopicList();
+		if (obj != null) {
+			tList.searchContentCount = obj.length();
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				PoemRhesis rhesis = new PoemRhesis(
+						jo.getString("poetry_id"),
+						jo.getString("poetry_name"),
+						null,
+						null,
+						jo.getString("poetry_content"));
+				
+				tList.listSearchContent.add(rhesis);
 				//Log.v("POMEEEE", poem.getPoemId() + "---" + poem.getPoemName());
 			}
 		}

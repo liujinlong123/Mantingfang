@@ -2,9 +2,7 @@ package com.android.mantingfanggsc;
 
 import java.util.List;
 
-import com.android.mantingfang.bean.URLs;
 import com.android.mantingfang.first.PoemRhesis;
-import com.android.mantingfang.model.Poem;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

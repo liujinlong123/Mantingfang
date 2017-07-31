@@ -141,7 +141,7 @@ public class AddOne extends Activity {
 				String typeNum = "1";
 
 				Date d = new Date();
-				d.setHours(d.getHours() + 8);
+				d.setHours(d.getHours());
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String dateNowStr = sdf.format(d); // 当前时间
 

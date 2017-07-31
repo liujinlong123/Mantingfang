@@ -160,7 +160,7 @@ public class CommentMain extends Activity {
 	}
 
 	/**
-	 * ScrollViewǶ��listview
+	 * ScrollView -- ListView
 	 * 
 	 * @param listView
 	 */

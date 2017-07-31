@@ -93,7 +93,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:text="蜀道难"
                     android:textSize="18sp" />
 
                 <TextView
@@ -101,17 +100,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:text="[明]卢云龙" />
+                    android:gravity="center" />
 
                 <TextView
                     android:id="@+id/add_four_poem_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:text="[明]卢云龙" />
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginRight="55dp"
+                    android:gravity="center_horizontal"
+                    android:textDirection="inherit"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

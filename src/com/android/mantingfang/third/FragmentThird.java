@@ -86,7 +86,7 @@ public class FragmentThird extends Fragment {
 									startActivity(intent1);
 									break;
 								case 2:
-									Intent intent2 = new Intent(getActivity(), AddOne.class);
+									Intent intent2 = new Intent(getActivity(), AddThree.class);
 									startActivity(intent2);
 									break;
 								case 3:
@@ -101,6 +101,7 @@ public class FragmentThird extends Fragment {
 		});
 	}
 
+	@SuppressWarnings("deprecation")
 	private void initViewPager() {
 		pagerOne = new ThirdOnePager();
 		pagerTwo = new ThirdTwoPager();
@@ -126,6 +127,7 @@ public class FragmentThird extends Fragment {
 
 		// private FragmentManager fm;
 		private List<Fragment> fragments = null;
+		@SuppressWarnings("unused")
 		private FragmentManager fm;
 
 		public HomePageAdapter(FragmentManager fm, List<Fragment> fragments) {

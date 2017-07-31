@@ -40,7 +40,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AddTwo extends Activity {
+public class AddThree extends Activity {
 
 	public static final int TAKE_PHOTO = 1;
 
@@ -50,28 +50,28 @@ public class AddTwo extends Activity {
 
 	public static final int LIST_PHOTO = 4;
 	
-	public static final int POEM_ID = 5;
+	public static final int POEM_ID =  5;
 
 	private ImageView imgFinish;
 	private TextView tvAdd;
 	private LinearLayout linearAdd;
 	private KindGridView grdView;
 	private EditText editer;
-	private TextView tvPoemName;
 	private String userId;
 	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 
 	private Uri imgUri;
 	private PictureAdapter picAdapter;
 	private List<Bitmap> bitList;
-	private String res;
+	
 	/**
 	 * 选中图片的路径集合
 	 */
 	private ArrayList<String> setPath = new ArrayList<>();
-
+	
 	private int pos = 0;
-	private String poemId;
+	
+	private String res;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +89,8 @@ public class AddTwo extends Activity {
 		linearAdd = (LinearLayout) findViewById(R.id.add_one_linear_add);
 		grdView = (KindGridView) findViewById(R.id.add_one_grd_photo);
 		editer = (EditText) findViewById(R.id.add_one_editer);
-		tvPoemName = (TextView)findViewById(R.id.add_one_tv_poemName);
 
+		
 		SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
 		userId = pref.getString("userId", "-1");
 
@@ -102,10 +102,21 @@ public class AddTwo extends Activity {
 				finish();
 			}
 		});
-
+		
 		// 添加图片
 		initGridViews(CHOOSE_PHOTO, null);
+		
+		// 添加诗词
+		linearAdd.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(AddThree.this, SearchTwo.class);
+				startActivityForResult(intent, POEM_ID);
+			}
+		});
+		
 		grdView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -116,19 +127,7 @@ public class AddTwo extends Activity {
 				Log.v("TestPosition", position + "");
 			}
 		});
-
-		// 添加诗词
-		// linearAdd.setVisibility(View.GONE);
-		linearAdd.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(AddTwo.this, SearchTwo.class);
-				startActivityForResult(intent, POEM_ID);
-			}
-		});
-
+		
 		// 上传
 		tvAdd.setOnClickListener(new OnClickListener() {
 
@@ -140,7 +139,7 @@ public class AddTwo extends Activity {
 				// 内容content
 				String content = editer.getText().toString();
 				// 帖子标号
-				String typeNum = "2";
+				String typeNum = "3";
 
 				Date d = new Date();
 				d.setHours(d.getHours());
@@ -149,7 +148,6 @@ public class AddTwo extends Activity {
 
 				Map<String, String> param = new HashMap<>();
 				param.put("user_id", userId);
-				param.put("poetry_id", poemId);
 				param.put("datatime", dateNowStr);
 				param.put("content", content);
 				param.put("type_num", typeNum);
@@ -173,16 +171,16 @@ public class AddTwo extends Activity {
 			for (int i = setPath.size() - 1; i >= 0; i--) {
 				bitList.add(new BitmapFactory().decodeFile(setPath.get(i)));
 			}
-
+			
 			if (code == TAKE_PHOTO) {
 				bitList.add(bmp);
 			}
 			Bitmap bm = new BitmapFactory().decodeResource(getResources(), R.drawable.icon_addpic_unfocused);
 			bitList.add(bm);
 		}
-
+		
 		pos = bitList.size() - 1;
-		picAdapter = new PictureAdapter(AddTwo.this, bitList);
+		picAdapter = new PictureAdapter(AddThree.this, bitList);
 		grdView.setAdapter(picAdapter);
 	}
 
@@ -217,7 +215,7 @@ public class AddTwo extends Activity {
 
 		case R.id.choose_from_album:
 			// 跳转相册
-			Intent intent2 = new Intent(AddTwo.this, Picture.class);
+			Intent intent2 = new Intent(AddThree.this, Picture.class);
 			intent2.putStringArrayListExtra("photos", setPath);
 			Log.v("跳转相册", setPath.toString());
 			startActivityForResult(intent2, LIST_PHOTO);
@@ -234,7 +232,7 @@ public class AddTwo extends Activity {
 			@Override
 			protected String doInBackground(String... params) {
 				Map<String, File> files = new HashMap<>();
-				for (String e : setPath) {
+				for (String e: setPath) {
 					File f = new File(e);
 					files.put(f.getName(), f);
 				}
@@ -245,7 +243,7 @@ public class AddTwo extends Activity {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
+				
 				return null;
 			}
 
@@ -254,7 +252,7 @@ public class AddTwo extends Activity {
 				Log.v("result", result + "------");
 				res = result;
 				if (res != null && !res.equals("")) {
-					Toast.makeText(AddTwo.this, "上传成功", Toast.LENGTH_SHORT).show();
+					Toast.makeText(AddThree.this, "上传成功", Toast.LENGTH_SHORT).show();
 					finish();
 				}
 			}
@@ -264,6 +262,9 @@ public class AddTwo extends Activity {
 		task.execute();
 	}
 
+	/**
+	 * 从上一界面返回结果
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
@@ -294,15 +295,6 @@ public class AddTwo extends Activity {
 				Bundle bundle = data.getExtras();
 				setPath = bundle.getStringArrayList("listPhoto");
 				initGridViews(CHOOSE_PHOTO, null);
-			}
-			break;
-
-		// 诗词Id
-		case POEM_ID:
-			if (resultCode == RESULT_OK) {
-				poemId = data.getStringExtra("poemId");
-				tvPoemName.setText(data.getStringExtra("poetry_name"));
-				Log.v("PoemId and poemName", data.getStringExtra("poemId") + " " + data.getStringExtra("poetry_writer"));
 			}
 			break;
 		default:

@@ -31,7 +31,7 @@ public class SearchTwo extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.search);
+		setContentView(R.layout.searchtwo);
 
 		editor = (EditText) findViewById(R.id.search_editer);
 		listview = (ListView) findViewById(R.id.search_list);
@@ -91,7 +91,9 @@ public class SearchTwo extends Activity {
 							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 								Intent intent = new Intent();
 								intent.putExtra("poemId", dataList.get(position).getPoemId());
-								intent.putExtra("poemName", dataList.get(position).getPoemName());
+								intent.putExtra("poetry_name", dataList.get(position).getPoemName());
+								intent.putExtra("poetry_writer", dataList.get(position).getWriter());
+								intent.putExtra("poetry_content", dataList.get(position).getContent());
 								setResult(RESULT_OK, intent);
 								finish();
 							}

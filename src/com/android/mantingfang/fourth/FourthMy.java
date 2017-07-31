@@ -16,11 +16,11 @@ import com.android.mantingfang.third.User;
 import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.FileUploader;
 import com.android.mantingfanggsc.FileUploader.FileUploadListener;
-import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.ImageLoad;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -30,6 +30,7 @@ import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -41,6 +42,9 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,7 +55,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class FourthMy extends Activity {
+@SuppressLint("Override")
+public class FourthMy extends Activity implements OnRequestPermissionsResultCallback{
 	
 	public static final int TAKE_PHOTO = 1;
 
@@ -87,11 +92,17 @@ public class FourthMy extends Activity {
 	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receiveusermessage.php";
 	private Bitmap bitmap;
 	
+	
+	private static final int MY_PERMISSIONS_REQUEST_CAMERA = 4;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fourth_my);
-		
+		//initViews();
+		Accessibility();
+	}
+	
+	private void initViews() {
 		linearBack = (LinearLayout)findViewById(R.id.topbar_all_back);
 		linearBack.setOnClickListener(new OnClickListener() {
 			
@@ -124,10 +135,7 @@ public class FourthMy extends Activity {
 				finish();
 			}
 		});
-		initViews();
-	}
-	
-	private void initViews() {
+		
 		nickName = (TextView)findViewById(R.id.fourth_my_nicheng);
 		label = (TextView)findViewById(R.id.fourth_my_qianming);
 		sex = (TextView)findViewById(R.id.fourth_my_xingbie);
@@ -472,5 +480,42 @@ public class FourthMy extends Activity {
 		} else {
 			Toast.makeText(FourthMy.this, "failed to get image", Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	@SuppressLint("InlinedApi")
+	public void Accessibility() {
+		if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED)
+        {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    		Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_CAMERA);
+        } else
+        {
+        	initViews();
+        }
+
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] arg1, int[] grantResults) {
+		if (requestCode == MY_PERMISSIONS_REQUEST_CAMERA)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                initViews();
+                
+            } else
+            {
+                // Permission Denied
+                Toast.makeText(FourthMy.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                userPhoto.setClickable(false);
+            }
+            return;
+        }
+
 	}
 }

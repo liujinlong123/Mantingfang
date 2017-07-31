@@ -10,6 +10,7 @@ public class PoemRhesis extends Base {
 	private String rhesis;
 	private String dynasty;
 	private String poemName;
+	private String content;
 	
 	public PoemRhesis() {};
 	
@@ -21,10 +22,27 @@ public class PoemRhesis extends Base {
 	
 	public PoemRhesis(String poemId, String poemName, String dynasty, String writer, String rhesis) {
 		this.poemId = poemId;
+		this.writer = writer;
+		this.rhesis = rhesis;
+		this.dynasty = dynasty;
+		this.poemName = poemName;
+	}
+	
+	public PoemRhesis(String poemId, String poemName, String dynasty, String writer, String rhesis, String content) {
+		this.poemId = poemId;
 		this.poemName = poemName;
 		this.dynasty = dynasty;
 		this.writer = writer;
 		this.rhesis = rhesis;
+		this.content = content;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public String getPoemName() {

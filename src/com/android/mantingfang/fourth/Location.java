@@ -6,9 +6,15 @@ import com.amap.api.location.LocationManagerProxy;
 import com.amap.api.location.LocationProviderProxy;
 import com.android.mantingfanggsc.R;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -16,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Location extends Activity implements OnClickListener{
+public class Location extends Activity implements OnClickListener, OnRequestPermissionsResultCallback{
 	
 	private LinearLayout linearBack;
 	private TextView title;
@@ -26,6 +32,7 @@ public class Location extends Activity implements OnClickListener{
 	private TextView getLoc;
 	//amap
 	private LocationManagerProxy aMapManager;
+	private static final int MY_PERMISSIONS_REQUEST_LOCATION = 5;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +40,6 @@ public class Location extends Activity implements OnClickListener{
 		setContentView(R.layout.locate);
 		
 		editor = (EditText)findViewById(R.id.location_editor);
-		getLoc = (TextView)findViewById(R.id.get_location);
-		
-		getLoc.setOnClickListener(this);
 		
 		linearBack = (LinearLayout)findViewById(R.id.topbar_all_back);
 		linearBack.setOnClickListener(new OnClickListener() {
@@ -63,6 +67,13 @@ public class Location extends Activity implements OnClickListener{
 				finish();
 			}
 		});
+		
+		Accessibility();
+	}
+	
+	private void initViews() {
+		getLoc = (TextView)findViewById(R.id.get_location);
+		getLoc.setOnClickListener(this);
 	}
 	
 	@Override
@@ -136,5 +147,41 @@ public class Location extends Activity implements OnClickListener{
 			
 		}
 	};
+	
+	public void Accessibility() {
+		if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED)
+        {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_LOCATION);
+        } else
+        {
+        	initViews();
+        }
+
+	}
+
+	@SuppressLint("Override")
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] arg1, int[] grantResults) {
+		if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                initViews();
+                
+            } else
+            {
+                // Permission Denied
+                Toast.makeText(Location.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                getLoc.setClickable(false);
+            }
+            return;
+        }
+
+	}
 
 }
