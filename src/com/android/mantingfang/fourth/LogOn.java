@@ -99,8 +99,9 @@ public class LogOn extends Activity {
 						SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 						editor.putString("userId", result);
 						editor.commit();
-						Intent intent = new Intent("com.android.mantingfang.fourth.LOG_ON");
-						sendBroadcast(intent);
+						Intent intent = new Intent();
+						intent.putExtra("userId", result);
+						setResult(RESULT_OK, intent);
 						finish();
 					}
 				}

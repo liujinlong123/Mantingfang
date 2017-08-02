@@ -61,7 +61,7 @@ public class ThirdThreePager extends Fragment {
 				try {
 					if (result != null && !result.equals("")) {
 						listThree = TopicList.parseThree(StringUtils.toJSONArray(result)).getTopicThree();
-						adapterThree = new ThirdThreeAdapter(getActivity(), listThree);
+						adapterThree = new ThirdThreeAdapter(getActivity(), listThree, thirdThreeListView);
 						thirdThreeListView.setAdapter(adapterThree);
 					}
 				} catch (JSONException e) {

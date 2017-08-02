@@ -75,14 +75,14 @@ public class PoetryList extends Base {
 						jo.getString("poetry_name"),
 						jo.getString("poetry_content"),
 						null,
-						jo.getString("writer_name"),
-						jo.getString("dynasty_name"),
-						jo.getString("info_background"),
-						jo.getString("writer_career"),
-						jo.getString("poetry_note"),
-						jo.getString("info_tonow"),		//����
+						jo.optString("writer_name"),
+						jo.optString("dynasty_name"),
+						jo.optString("info_background"),
+						jo.optString("writer_career"),
+						jo.optString("poetry_note"),
+						jo.optString("info_tonow"),		//����
 						null,							//����
-						jo.getString("info_praise"));
+						jo.optString("info_praise"));
 				
 				pList.poemList.add(p);
 				Log.v("PoemM---", p.getPoemContent());

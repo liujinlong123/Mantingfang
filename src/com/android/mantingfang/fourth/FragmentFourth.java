@@ -1,12 +1,24 @@
 package com.android.mantingfang.fourth;
 
+import java.util.List;
+
+import org.json.JSONException;
+
+import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.third.PictureLoad;
+import com.android.mantingfang.third.User;
+import com.android.mantingfanggsc.CircleImageView;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,10 +26,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class FragmentFourth extends Fragment implements OnClickListener{
+	
+	private static final int USERID = 7;
+	private static final int LOGON = 8;
 
 	private View view;
 	private LinearLayout linearMy;
@@ -28,12 +44,18 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 	private LinearLayout linearTuijian;
 	private LinearLayout linearTongzhi;
 	private LinearLayout linearGuanyu;
-	private TextView quit;
 	private String userId;
 	private SharedPreferences pref;
 	
-	private IntentFilter intentFilter;
-	private MyBroadcast myBroadcast;
+	private static ImageView imgHead;
+	private static TextView nickName;
+	private static TextView label;
+	
+	private ImageView setting;
+	
+	
+	private IntentFilter intentFilterOne;
+	private MyBroadcastOff myBroadcastoff;
 	
 	@SuppressLint("InflateParams")
 	@Override
@@ -43,10 +65,6 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 			
 			
 			initViews();
-			intentFilter = new IntentFilter();
-			intentFilter.addAction("com.android.mantingfang.fourth.LOG_ON");
-			myBroadcast = new MyBroadcast(quit);
-			getActivity().registerReceiver(myBroadcast, intentFilter);
 			
 			return view;
 		}
@@ -56,7 +74,7 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 	private void initViews() {
 		pref = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
 		userId = pref.getString("userId", "-1");
-		Log.v("userIdTwo", userId);
+		Log.v("userIdFour", userId);
 		
 		linearMy = (LinearLayout)view.findViewById(R.id.fourth_linear_my);
 		linearZhuye = (LinearLayout)view.findViewById(R.id.fourth_linear_zhuye);
@@ -66,7 +84,7 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 		linearTuijian = (LinearLayout)view.findViewById(R.id.fourth_linear_tuijian);
 		linearTongzhi = (LinearLayout)view.findViewById(R.id.fourth_linear_tongzhi);
 		linearGuanyu = (LinearLayout)view.findViewById(R.id.fourth_linear_guanyu);
-		quit = (TextView)view.findViewById(R.id.fourth_tv_logoff);
+		setting = (ImageView)view.findViewById(R.id.topbar_fourth_setting);
 		
 		
 		linearMy.setOnClickListener(this);
@@ -77,13 +95,30 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 		linearTuijian.setOnClickListener(this);
 		linearTongzhi.setOnClickListener(this);
 		linearGuanyu.setOnClickListener(this);
-		quit.setOnClickListener(this);
 		
-		if (Integer.parseInt(userId) < 0) {
-			quit.setVisibility(View.GONE);
+		//设置按钮
+		setting.setOnClickListener(this);
+		
+		userId = pref.getString("userId", "-1");
+		imgHead = (CircleImageView)view.findViewById(R.id.fourth_img_user);
+		nickName = (TextView)view.findViewById(R.id.fourth_tv_username);
+		label = (TextView)view.findViewById(R.id.fourth_tv_userQ);
+		if (userId != null && !userId.equals("")) {
+			if (Integer.parseInt(userId) >= 0) {
+				getImage(userId);
+			} else {
+				nickName.setText("点击登录");
+				label.setText(".....");
+			}
 		} else {
-			quit.setVisibility(View.VISIBLE);
+			nickName.setText("点击登录");
+			label.setText(".....");
 		}
+		
+		intentFilterOne = new IntentFilter();
+		intentFilterOne.addAction("com.android.mantingfang.fourth.MyBroadcast.LOG_OFF");
+		myBroadcastoff = new MyBroadcastOff();
+		getActivity().registerReceiver(myBroadcastoff, intentFilterOne);
 	}
 
 	@Override
@@ -97,7 +132,7 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 		//0
 		case R.id.fourth_linear_my:
 			if (Integer.parseInt(userId) < 0) {
-				startActivity(intent);
+				startActivityForResult(intent, LOGON);
 			} else if (Integer.parseInt(userId) > -1) {
 				Intent intent0 = new Intent(getActivity(), FourthMy.class);
 				startActivity(intent0);
@@ -107,7 +142,7 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 		//1
 		case R.id.fourth_linear_zhuye:
 			if (Integer.parseInt(userId) < 0) {
-				startActivity(intent);
+				startActivityForResult(intent, LOGON);
 			} else if (Integer.parseInt(userId) > -1) {
 				/*Intent intent0 = new Intent(getActivity(), FourthMy.class);
 				startActivity(intent0);*/
@@ -117,7 +152,7 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 		//2
 		case R.id.fourth_linear_guanzhu:
 			if (Integer.parseInt(userId) < 0) {
-				startActivity(intent);
+				startActivityForResult(intent, LOGON);
 			} else if (Integer.parseInt(userId) > -1) {
 				Intent intent2 = new Intent(getActivity(), FourthGuanzhu.class);
 				startActivity(intent2);
@@ -127,7 +162,7 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 		//3
 		case R.id.fourth_linear_shoucang:
 			if (Integer.parseInt(userId) < 0) {
-				startActivity(intent);
+				startActivityForResult(intent, LOGON);
 			} else if (Integer.parseInt(userId) > -1) {
 				Intent intent3 = new Intent(getActivity(), FourthShoucang.class);
 				startActivity(intent3);
@@ -137,7 +172,7 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 		//4
 		case R.id.fourth_linear_dianzan:
 			if (Integer.parseInt(userId) < 0) {
-				startActivity(intent);
+				startActivityForResult(intent, LOGON);
 			} else if (Integer.parseInt(userId) > -1) {
 				Intent intent4 = new Intent(getActivity(), FourthDianzan.class);
 				startActivity(intent4);
@@ -147,7 +182,7 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 		//5
 		case R.id.fourth_linear_tuijian:
 			if (Integer.parseInt(userId) < 0) {
-				startActivity(intent);
+				startActivityForResult(intent, LOGON);
 			} else if (Integer.parseInt(userId) > -1) {
 				Intent intent5 = new Intent(getActivity(), FourthTuijian.class);
 				startActivity(intent5);
@@ -157,7 +192,7 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 		//6
 		case R.id.fourth_linear_tongzhi:
 			if (Integer.parseInt(userId) < 0) {
-				startActivity(intent);
+				startActivityForResult(intent, LOGON);
 			} else if (Integer.parseInt(userId) > -1) {
 				Intent intent6 = new Intent(getActivity(), FourthTongzhi.class);
 				startActivity(intent6);
@@ -170,17 +205,14 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 			break;
 			
 		//8
-		case R.id.fourth_tv_logoff:
+		case R.id.topbar_fourth_setting:
 			if (Integer.parseInt(userId) < 0) {
-				
+				startActivityForResult(intent, LOGON);
 			} else if (Integer.parseInt(userId) > -1) {
-				SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE).edit();
-				editor.putString("userId", "-1");
-				editor.commit();
-				quit.setVisibility(View.GONE);
+				Intent intent8 = new Intent(getContext(), Setting.class);
+				startActivity(intent8);
 			}
 			break;
-			
 		default:
 			break;
 		}
@@ -188,7 +220,90 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 	
 	@Override
 	public void onDestroy() {
-		getActivity().unregisterReceiver(myBroadcast);
+		getActivity().unregisterReceiver(myBroadcastoff);
 		super.onDestroy();
+	}
+	
+	private void getImage(final String userId) {
+	AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+		@Override
+		protected String doInBackground(String... params) {
+			
+			return MyClient.getInstance().Http_postUserInfo(userId);
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			try {
+				if (result != null && !result.equals("")) {
+					List<User> list = TopicList.parseUserInfo(StringUtils.toJSONArray(result), userId).getUserInfoList();
+					if (list != null && list.size() > 0) {
+						User user = list.get(0);
+						nickName.setText(user.getUserNickname());
+						label.setText(user.getUserLabel());
+						PictureLoad.getInstance().loadImage(user.getUserPhoto(), imgHead);
+					}
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	};
+	
+	task.execute();
+	}
+	
+	@SuppressWarnings("static-access")
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch(requestCode) {
+		case USERID:
+			if (resultCode == getActivity().RESULT_OK) {
+				userId = data.getStringExtra("userId");
+				if (userId != null && !userId.equals("")) {
+					if (Integer.parseInt(userId) >= 0) {
+						getImage(userId);
+					} else {
+						nickName.setText("点击登录");
+						label.setText("......");
+					}
+				} else {
+					nickName.setText("点击登录");
+					label.setText("......");
+				}
+			}
+			break;
+			
+		case LOGON:
+			if (resultCode == getActivity().RESULT_OK) {
+				userId = data.getStringExtra("userId");
+				if (userId != null && !userId.equals("")) {
+					if (Integer.parseInt(userId) >= 0) {
+						getImage(userId);
+					} else {
+						nickName.setText("点击登录");
+						label.setText("......");
+					}
+				} else {
+					nickName.setText("点击登录");
+					label.setText("......");
+				}
+			}
+			break;
+		}
+	}
+	
+	public static class MyBroadcastOff extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			nickName.setText("点击登录");
+			label.setText(".....");
+			imgHead.setImageResource(R.drawable.welcome);
+		}
+		
 	}
 }

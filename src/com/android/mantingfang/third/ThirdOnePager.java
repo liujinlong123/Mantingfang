@@ -68,7 +68,7 @@ public class ThirdOnePager extends Fragment {
 
 						thirdOneListView = (CustomListView) view.findViewById(R.id.third_pager_one_listview);
 						
-						adapterOne = new ThirdOneAdapter(getActivity(), listOne);
+						adapterOne = new ThirdOneAdapter(getActivity(), listOne, thirdOneListView);
 						thirdOneListView.setAdapter(adapterOne);
 						thirdOneListView.setOnItemClickListener(new OnItemClickListener() {
 

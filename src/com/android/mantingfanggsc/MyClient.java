@@ -61,7 +61,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				//Log.v("界面" + TypeNum, response);
+				Log.v("界面" + TypeNum, response);
 				
 				return response;
 			} 
@@ -241,7 +241,7 @@ public class MyClient {
 	}
 	
 	/**
-	 * 保存
+	 * 保存ViewPager
 	 * @param userId
 	 * @param rhesis
 	 * @param writer
@@ -457,7 +457,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("Search--Poem--Detail", response);
+				//Log.v("Search--Poem--Detail", response);
 				
 				return response;
 			} 
@@ -479,7 +479,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("Search--Writer--Detail", response);
+				//Log.v("Search--Writer--Detail", response);
 				
 				return response;
 			} 
@@ -501,7 +501,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("Search--PoemContent--Detail", response);
+				//Log.v("Search--PoemContent--Detail", response);
 				
 				return response;
 			} 
@@ -511,5 +511,78 @@ public class MyClient {
 		return null;
 	}
 	
-	//-------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------------
+	
+	//---------------------------------用户注册----------------------------------------------------------------
+	
+	public String Http_postPhone (String phoneNum) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//user_reg1.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("phone_number", phoneNum));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("POST--PHone--Detail", response);
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String Http_postPhoneVerCode (String phoneNum, String verCode) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//user_reg2.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_phonenumber", phoneNum));
+			param.add(new BasicNameValuePair("ver_code", verCode));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("POST--VerCode--Detail", response);
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String Http_postSendUserName (String phoneNum, String nickName, String password) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//user_reg3.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_phonenumber", phoneNum));
+			param.add(new BasicNameValuePair("user_nickname", nickName));
+			param.add(new BasicNameValuePair("user_password", password));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("POST--User--Detail", response);
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//---------------------------------用户注册----------------------------------------------------------------
 }

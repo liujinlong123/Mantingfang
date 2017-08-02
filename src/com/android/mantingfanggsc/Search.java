@@ -18,6 +18,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -60,7 +62,6 @@ public class Search extends Activity {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
@@ -105,6 +106,13 @@ public class Search extends Activity {
 						poemAdapter = new PoemAdapter();
 						listviewPome.setAdapter(poemAdapter);
 						setListViewHeightBasedOnChildren(listviewPome);
+						listviewPome.setOnItemClickListener(new OnItemClickListener() {
+
+							@Override
+							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+								UIHelper.showPoemMDetailTwoById(Search.this, dataListPoem.get(position - 1).getPoemId(), 0);
+							}
+						});
 					}
 					
 				} catch (JSONException e) {
@@ -135,6 +143,14 @@ public class Search extends Activity {
 						writerAdapter = new WriterAdapter();
 						listviewWriter.setAdapter(writerAdapter);
 						setListViewHeightBasedOnChildren(listviewWriter);
+						listviewWriter.setOnItemClickListener(new OnItemClickListener() {
+
+							@Override
+							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+								UIHelper.showWriterDetail(Search.this, dataListWriter.get(position - 1), true);
+							}
+						});
+						
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -164,6 +180,13 @@ public class Search extends Activity {
 						contentAdapter = new ContentAdapter();
 						listviewContent.setAdapter(contentAdapter);
 						setListViewHeightBasedOnChildren(listviewContent);
+						listviewContent.setOnItemClickListener(new OnItemClickListener() {
+
+							@Override
+							public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+								UIHelper.showPoemMDetailTwoById(Search.this, dataListContent.get(position - 1).getPoemId(), 0);
+							}
+						});
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -180,10 +203,11 @@ public class Search extends Activity {
 	class PoemAdapter extends BaseAdapter {
 		private static final int TYPE_ONE = 0;
 		private static final int TYPE_TWO = 1;
+		/*private List<PoemRhesis> dataListPoem;
 		
-		public PoemAdapter() {
-			
-		}
+		public PoemAdapter(List<PoemRhesis> dataList) {
+			this.dataListPoem = dataList;
+		}*/
 		
 		@Override
 		public int getItemViewType(int position) {
@@ -287,6 +311,11 @@ public class Search extends Activity {
 	class WriterAdapter extends BaseAdapter {
 		private static final int TYPE_ONE = 0;
 		private static final int TYPE_TWO = 1;
+		/*private List<Writer> dataListWriter;
+		
+		public WriterAdapter(List<Writer> dataList) {
+			this.dataListWriter = dataList;
+		}*/
 		
 		@Override
 		public int getItemViewType(int position) {
@@ -391,7 +420,11 @@ public class Search extends Activity {
 	class ContentAdapter extends BaseAdapter {
 		private static final int TYPE_ONE = 0;
 		private static final int TYPE_TWO = 1;
+		/*private List<PoemRhesis> dataListContent;
 		
+		public ContentAdapter(List<PoemRhesis> dataList) {
+			this.dataListContent = dataList;
+		}*/
 		@Override
 		public int getItemViewType(int position) {
 			int p = position;
@@ -409,12 +442,12 @@ public class Search extends Activity {
 
 		@Override
 		public int getCount() {
-			return dataListPoem.size() + 1;
+			return dataListContent.size() + 1;
 		}
 
 		@Override
 		public Object getItem(int position) {
-			return dataListPoem.get(position);
+			return dataListContent.get(position);
 		}
 
 		@Override
@@ -468,9 +501,19 @@ public class Search extends Activity {
 				
 			case TYPE_TWO:
 				PoemRhesis content = dataListContent.get(position - 1);
-				holder2.poem_content.setText(content.getRhesis().substring(0, 12) + "...");
+				String rhesis = content.getRhesis();
+				if (rhesis.length() >= 12) {
+					holder2.poem_content.setText(rhesis.substring(0, 12) + "...");
+				} else if (rhesis.length() < 12) {
+					holder2.poem_content.setText(rhesis);
+				}
 				holder2.poem_rhesis.setVisibility(View.GONE);
-				holder2.poem_name.setText(content.getPoemName().substring(0, 3) + "..");
+				
+				if (content.getPoemName().length() >= 3) {
+					holder2.poem_name.setText(content.getPoemName().substring(0, 3) + "..");
+				} else if (content.getPoemName().length() < 3) {
+					holder2.poem_name.setText(content.getPoemName() + " ...");
+				}
 				break;
 			}
 			

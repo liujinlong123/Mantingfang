@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import com.android.mantingfanggsc.FileUploader;
-import com.android.mantingfanggsc.FileUploader.FileUploadListener;
+import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.SearchTwo;
 
@@ -41,7 +39,7 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 	private TextView tvAdd;
 	private LinearLayout linearAdd;
 	private String userId;
-	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//picturewander.php";
+	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 
 	private static final String LOG_TAG = "AudioRecordTest";
 	
@@ -61,6 +59,7 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
     private String FileName = null;
     
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
+    private String poemId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +113,7 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 		
 		//设置sdcard的路径  
         FileName = Environment.getExternalStorageDirectory().getAbsolutePath();  
-        FileName += "/audiorecordtest.3gp";
+        FileName += "/audiorecordtest.mp3";
 
 		// 上传
 		tvAdd.setOnClickListener(new OnClickListener() {
@@ -133,10 +132,12 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 
 				Map<String, String> param = new HashMap<>();
 				param.put("user_id", userId);
+				param.put("poetry_id", poemId);
 				param.put("datatime", dateNowStr);
 				param.put("type_num", typeNum);
 				if (FileName != null && !FileName.equals("")) {
-					getData(param);
+					saveData(param);
+					//Log.v("FileName", FileName + "---");
 				} else {
 					Toast.makeText(AddFour.this, "没有音频文件", Toast.LENGTH_SHORT).show();
 				}
@@ -206,31 +207,35 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
         }     
     }  
 
-	private void getData(final Map<String, String> param) {
+	private void saveData(final Map<String, String> param) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			// String Answer = null;
 			@Override
 			protected String doInBackground(String... params) {
-				return FileUploader.upload(actionUrl, new File(FileName), param, new FileUploadListener() {
-
-					@Override
-					public void onProgress(long pro, double precent) {
-						// TODO Auto-generated method stub
-						
+				if (FileName != null && !FileName.equals("")) {
+					Map<String, File> files = new HashMap<>();
+					File f = new File(FileName);
+					if (f.exists()) {
+						files.put(f.getName(), f);
+						try {
+							return FilesUpload.post(actionUrl, param, files);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
-
-					@Override
-					public void onFinish(int code, String res, Map<String, List<String>> headers) {
-						Log.v("result", res);
-
-					}
-				});
+				}
+				return null;
 			}
 
 			@Override
 			protected void onPostExecute(String result) {
 				Log.v("result", result + "------");
+				if (result != null && !result.equals("")) {
+					Toast.makeText(AddFour.this, "上传成功", Toast.LENGTH_SHORT).show();
+					finish();
+				}
 			}
 
 			@Override
@@ -284,6 +289,7 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 		switch (requestCode) {
 		case POETRY:
 			if (resultCode == RESULT_OK) {
+				poemId = data.getStringExtra("poemId");
 				String poetry_name = data.getStringExtra("poetry_name");
 				String poetry_writer = data.getStringExtra("poetry_writer");
 				String poetry_content = data.getStringExtra("poetry_content");

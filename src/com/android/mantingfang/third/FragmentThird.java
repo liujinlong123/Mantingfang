@@ -3,15 +3,18 @@ package com.android.mantingfang.third;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.android.mantingfang.fourth.LogOn;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -26,9 +29,10 @@ import android.widget.RadioButton;
 @SuppressLint("ResourceAsColor")
 public class FragmentThird extends Fragment {
 
+	private static final int LOGON = 8;
+	
 	private View view;
 	private ViewPager viewPager;
-	// private RadioGroup btnTeam;
 	private RadioButton btnOne;
 	private RadioButton btnTwo;
 	private RadioButton btnThree;
@@ -39,6 +43,7 @@ public class FragmentThird extends Fragment {
 	private Fragment pagerThree;
 	private Fragment pagerFour;
 	private ImageView imgAdd;
+	private String userId;
 
 	@SuppressLint("InflateParams")
 	@Override
@@ -46,6 +51,8 @@ public class FragmentThird extends Fragment {
 		if (view == null) {
 			view = inflater.inflate(R.layout.frag_third_pager, null);
 
+			
+			getActivity();
 			initViews();
 			initViewPager();
 
@@ -68,12 +75,19 @@ public class FragmentThird extends Fragment {
 		btnTwo.setOnClickListener(new MyOnClickListener(1));
 		btnThree.setOnClickListener(new MyOnClickListener(2));
 		btnFour.setOnClickListener(new MyOnClickListener(3));
-
+		
 		imgAdd.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				new AlertDialog.Builder(getActivity()).setTitle("选择")
+				SharedPreferences pref = getActivity().getSharedPreferences("data", FragmentActivity.MODE_PRIVATE);
+				userId = pref.getString("userId", "-1");
+				if (userId != null) {
+					if (Integer.parseInt(userId) < 0) {
+						Intent intent = new Intent(getActivity(), LogOn.class);
+						startActivityForResult(intent, LOGON);
+					} else {
+						new AlertDialog.Builder(getActivity()).setTitle("选择")
 						.setItems(R.array.item_irdc_dialog, new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int whichcountry) {
 								switch (whichcountry) {
@@ -97,6 +111,8 @@ public class FragmentThird extends Fragment {
 								
 							}
 						}).show();
+					}
+				}
 			}
 		});
 	}
@@ -181,7 +197,7 @@ public class FragmentThird extends Fragment {
 				btnTwo.setTextColor(Color.BLACK);
 				btnThree.setTextColor(Color.BLACK);
 				btnFour.setTextColor(Color.BLACK);
-
+				
 				break;
 			case 1:
 				btnOne.setTextColor(Color.BLACK);

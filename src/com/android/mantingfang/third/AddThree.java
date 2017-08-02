@@ -14,7 +14,6 @@ import com.android.mantingfang.picture.Picture;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.R;
-import com.android.mantingfanggsc.SearchTwo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -49,8 +48,6 @@ public class AddThree extends Activity {
 	public static final int CHOOSE_PHOTO = 3;
 
 	public static final int LIST_PHOTO = 4;
-	
-	public static final int POEM_ID =  5;
 
 	private ImageView imgFinish;
 	private TextView tvAdd;
@@ -107,7 +104,8 @@ public class AddThree extends Activity {
 		initGridViews(CHOOSE_PHOTO, null);
 		
 		// 添加诗词
-		linearAdd.setOnClickListener(new OnClickListener() {
+		linearAdd.setVisibility(View.GONE);
+		/*linearAdd.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -115,7 +113,7 @@ public class AddThree extends Activity {
 				Intent intent = new Intent(AddThree.this, SearchTwo.class);
 				startActivityForResult(intent, POEM_ID);
 			}
-		});
+		});*/
 		
 		grdView.setOnItemClickListener(new OnItemClickListener() {
 
