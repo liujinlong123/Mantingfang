@@ -6,6 +6,7 @@ import org.json.JSONException;
 
 import com.android.mantingfang.bean.PoetryList;
 import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.model.PoemM;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
@@ -40,6 +41,9 @@ public class FirstPagerInfoP extends Activity {
 	private TextView tv2;
 	private TextView tv3;
 	private PoemRhesis rhesis;
+	private List<PoemRhesis> rhesisList;
+	private SetFronts fonts;
+	private int type;
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,13 +66,15 @@ public class FirstPagerInfoP extends Activity {
 		Bundle bundle = getIntent().getExtras();
 		rhesis = (PoemRhesis) bundle.get("rhesis");
 		Log.v("TESTRhesis", rhesis.getRhesis());
+		type = Fonts.getInstance(FirstPagerInfoP.this).getType();
 		if (rhesis != null) {
 			String[] tokens = rhesis.getRhesis().split("[,，.。]");
 			tv1.setText(tokens[0]);
 			tv2.setText(tokens[1]);
 			tv3.setText(rhesis.getWriter());
+			
+			setFronts(type);
 		}
-		
 		
 		btnInfo.setOnClickListener(new OnClickListener() {
 			
@@ -78,11 +84,29 @@ public class FirstPagerInfoP extends Activity {
 			}
 		});
 		
+		rhesisList = RhesisList.getInstance().getList();
+		if (rhesisList == null) {
+			getDataOne();
+		}
+		
 		imgnext.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				getDataOne();
+				if (rhesisList != null) {
+					rhesis = rhesisList.get((int)(rhesisList.size() * Math.random()));
+					String[] tokens = rhesis.getRhesis().split("[，,.。!?！？]");
+					if (tokens.length >= 2) {
+						tv1.setText(tokens[0]);
+						tv2.setText(tokens[1]);
+						if (rhesis.getWriter() != null && !rhesis.getWriter().equals("")) {
+							tv3.setText(rhesis.getWriter());
+						} else {
+							tv3.setText("无名");
+						}
+						setFronts(type);
+					}
+				}
 			}
 		});
 		
@@ -192,9 +216,11 @@ public class FirstPagerInfoP extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mTts.stopSpeaking();
-        // 退出时释放连接
-        mTts.destroy();
+        if (mTts != null) {
+        	mTts.stopSpeaking();
+            // 退出时释放连接
+            mTts.destroy();
+        }
     }
     
     private void getDataOne() {
@@ -202,20 +228,19 @@ public class FirstPagerInfoP extends Activity {
 
 			@Override
 			protected String doInBackground(String... params) {
-				rhesis.setPoemId("1");
-				rhesis.setRhesis("我在人民广场吃了，" + (int)(Math.random() * 10)  + "只炸鸡");
-				rhesis.setWriter("李白" + (int)(Math.random() * 10));
-				//return MyClient.getInstance().Http_postViewPager("", "");
-				return null;
+				
+				return MyClient.getInstance().Http_postViewPager();
 			}
 			
 			@Override
 			protected void onPostExecute(String result) {
-				if (rhesis != null) {
-					String[] tokens = rhesis.getRhesis().split("[,，]");
-					tv1.setText(tokens[0]);
-					tv2.setText(tokens[1]);
-					tv3.setText(rhesis.getWriter());
+				if (result != null && !result.equals("")) {
+					try {
+						rhesisList = TopicList.parseRhesis(StringUtils.toJSONArray(result)).getRhesisList();
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			
@@ -255,5 +280,36 @@ public class FirstPagerInfoP extends Activity {
 		};
 
 		task.execute();
+	}
+    
+    private void setFronts(int type) {
+		switch (type) {
+		case 0:
+			fonts = new SetFronts(FirstPagerInfoP.this, tv1);
+			fonts.setKT();
+			fonts.setTv(tv2);
+			fonts.setKT();
+			fonts.setTv(tv3);
+			fonts.setKT();
+			break;
+			
+		case 1:
+			fonts = new SetFronts(FirstPagerInfoP.this, tv1);
+			fonts.setLS();
+			fonts.setTv(tv2);
+			fonts.setLS();
+			fonts.setTv(tv3);
+			fonts.setLS();
+			break;
+			
+		case 2:
+			fonts = new SetFronts(FirstPagerInfoP.this, tv1);
+			fonts.setHWXK();
+			fonts.setTv(tv2);
+			fonts.setHWXK();
+			fonts.setTv(tv3);
+			fonts.setHWXK();
+			break;
+		}
 	}
 }

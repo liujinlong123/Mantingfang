@@ -18,18 +18,14 @@ import com.android.mantingfang.bean.Country;
 import com.android.mantingfang.bean.CountryList;
 import com.android.mantingfang.bean.Dynasty;
 import com.android.mantingfang.bean.DynastyList;
-import com.android.mantingfang.bean.Info;
-import com.android.mantingfang.bean.InfoList;
 import com.android.mantingfang.bean.Kind;
 import com.android.mantingfang.bean.KindList;
 import com.android.mantingfang.bean.Label;
 import com.android.mantingfang.bean.LabelList;
 import com.android.mantingfang.bean.Language;
 import com.android.mantingfang.bean.LanguageList;
-import com.android.mantingfang.bean.Poetry;
 import com.android.mantingfang.bean.PoetryList;
 import com.android.mantingfang.bean.StringUtils;
-import com.android.mantingfang.bean.Writer;
 import com.android.mantingfang.bean.WriterList;
 
 import android.content.Context;
@@ -85,7 +81,7 @@ public class ApiClient{
 	 * @return
 	 * @throws JSONException
 	 */
-	public static InfoList getInfoList(Context context) throws JSONException {
+	/*public static InfoList getInfoList(Context context) throws JSONException {
 		String newUrl = null;
 		try {
 			String resultString = http_get(newUrl);
@@ -99,7 +95,7 @@ public class ApiClient{
 		}
 		
 		return null;
-	}
+	}*/
 	
 	/**
 	 * �ӷ�������ȡ����
@@ -147,20 +143,20 @@ public class ApiClient{
 	 * @return
 	 * @throws JSONException
 	 */
-	public static List<Info> getInfoListByAs(String infoname, Context context) throws JSONException {
+	/*public static List<Info> getInfoListByAs(String infoname, Context context) throws JSONException {
 		String resultString = getFromAssets(infoname, context);
 		return InfoList.parse(StringUtils.toJSONArray(resultString)).getInfoList();
-	}
+	}*/
 	
-	public static List<Writer> getWriterListByAs(String writername, Context context) throws JSONException {
+	/*public static List<Writer> getWriterListByAs(String writername, Context context) throws JSONException {
 		String resultString = getFromAssets(writername, context);
 		return WriterList.parse(StringUtils.toJSONArray(resultString)).getWriterList();
-	}
+	}*/
 	
-	public static List<Poetry> getPoetryListByAs(String poetryname, Context context) throws JSONException {
+	/*public static List<Poetry> getPoetryListByAs(String poetryname, Context context) throws JSONException {
 		String resultString = getFromAssets(poetryname, context);
 		return PoetryList.parse(StringUtils.toJSONArray(resultString)).getPoetryList();
-	}
+	}*/
 	
 	public static List<Dynasty> getDynastyListByAs(String dynastyname, Context context) throws JSONException {
 		String resultString = getFromAssets(dynastyname, context);

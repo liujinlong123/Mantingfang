@@ -1,4 +1,4 @@
-package com.android.mantingfang.bean;
+/*package com.android.mantingfang.bean;
 
 @SuppressWarnings("serial")
 public class Info extends Base {
@@ -78,3 +78,4 @@ public class Info extends Base {
 		this.info_translation = info_translation;
 	}
 }
+*/

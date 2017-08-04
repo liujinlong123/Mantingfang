@@ -24,14 +24,14 @@ public class UserTwoContent extends Base {
 	private String poemId;		//诗词Id
 	private String poemContent;	//诗词内容
 	private String poemName;	//诗词名字
-	private boolean zan;		//是否被赞
+	private String zan;		//是否被赞
 	private int post_com_num;	//帖子标号
 	private int post_com_pId;	//帖子Id
 	
 	public UserTwoContent() {}
 	
 	public UserTwoContent(String userId, String headPath, String name, String time, String content, ArrayList<String> picture,
-			String soundPath, String poemId, String poemContent, String poemName, boolean zan, int post_com_num, int post_com_pId) {
+			String soundPath, String poemId, String poemContent, String poemName, String zan, int post_com_num, int post_com_pId) {
 		this.userId = userId;
 		this.headPath = headPath;
 		this.name = name;
@@ -48,7 +48,7 @@ public class UserTwoContent extends Base {
 	}
 	
 	public UserTwoContent(String userId, Bitmap headPhoto, String name, String time, String content, ArrayList<String> picture,
-			String soundPath, String poemId, String poemContent, String poemName, boolean zan, int post_com_num, int post_com_pId) {
+			String soundPath, String poemId, String poemContent, String poemName, String zan, int post_com_num, int post_com_pId) {
 		this.userId = userId;
 		this.headPhoto = headPhoto;
 		this.name = name;
@@ -168,11 +168,11 @@ public class UserTwoContent extends Base {
 		return poemName;
 	}
 	
-	public void setZan(boolean zan) {
+	public void setZan(String zan) {
 		this.zan = zan;
 	}
 	
-	public boolean getZan() {
+	public String getZan() {
 		return zan;
 	}
 	

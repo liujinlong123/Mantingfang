@@ -2,67 +2,110 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white" >
-    
-    <include layout="@layout/topbar_all"/>
-    
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/topbar_all" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/gray" />
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:layout_marginTop="20dp" >
-        
-        <EditText 
-            android:id="@+id/user_register_name"
-            android:layout_height="wrap_content"
-            android:layout_width="200dp"
-            android:hint="用户昵称"
+        android:orientation="vertical" >
+
+        <!--
+             <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:layout_marginTop="20dp"
+            android:background="#33000000" />
+        -->
+
+        <EditText
+            android:id="@+id/user_register_name"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="top"
+            android:hint="用户昵称"
+            android:maxLength="10"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:singleLine="true"
+            android:layout_marginTop="20dp" />
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="1dp"
             android:layout_marginBottom="15dp"
-            android:gravity="center"
-            android:singleLine="true"
-            android:maxLength="10" />
-        
-        <EditText 
-            android:id="@+id/user_register_password"
+            android:background="#33000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="200dp"
-            android:hint="密码"
-            android:inputType="textPassword"
             android:layout_marginBottom="20dp"
-            android:singleLine="true"
-            android:gravity="center"
-            android:maxLength="15" />
-        
-        <EditText 
-            android:id="@+id/user_register_sure_password"
-            android:layout_height="wrap_content"
-            android:layout_width="200dp"
-            android:hint="确认密码"
-            android:inputType="textPassword"
-            android:layout_marginBottom="20dp"
-            android:singleLine="true"
-            android:gravity="center"
-            android:maxLength="15" />
-        
+            android:layout_marginTop="40dp"
+            android:orientation="vertical"
+            android:gravity="center_horizontal" >
+
+            <EditText
+                android:id="@+id/user_register_password"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="top"
+                android:hint="登录密码"
+                android:inputType="textPassword"
+                android:maxLength="15"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:singleLine="true" />
+
+            <View
+                android:layout_width="200dp"
+                android:layout_height="1dp"
+                android:background="#33000000" />
+
+            <EditText
+                android:id="@+id/user_register_sure_password"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="top"
+                android:hint="确认密码"
+                android:inputType="textPassword"
+                android:maxLength="15"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:singleLine="true" />
+
+            <View
+                android:layout_width="200dp"
+                android:layout_height="1dp"
+                android:background="#33000000" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/login_finish"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="完成"
-            android:textSize="20sp"
-            android:background="@drawable/logoff"
-            android:paddingTop="8dp"
+            android:background="@drawable/textview_bg_gray"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:paddingBottom="8dp"
-            android:gravity="center" />
-        
+            android:paddingTop="8dp"
+            android:text="完成"
+            android:textColor="@color/red"
+            android:textSize="20sp" />
     </LinearLayout>
 
 </LinearLayout>

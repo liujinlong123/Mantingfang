@@ -52,6 +52,7 @@ public class LogOn extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				RegisterAll.getInstance().addActivity(LogOn.this);
 				Intent intent = new Intent(LogOn.this, Phone.class);
 				startActivity(intent);
 			}

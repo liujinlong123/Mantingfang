@@ -1,12 +1,10 @@
 package com.android.mantingfang.second;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
 
 import com.android.mantingfang.bean.LabelDao;
-import com.android.mantingfang.bean.PoetryDao;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.model.Poem;
@@ -56,7 +54,7 @@ public class SecondWenkuPoem extends Activity {
 	private int imageId;
 	private int label_id;
 	
-	private PoetryDao poetryDao;
+	//private PoetryDao poetryDao;
 	private LabelDao labelDao;
 	private boolean isNetwork;
 	
@@ -76,7 +74,7 @@ public class SecondWenkuPoem extends Activity {
 		imgTheme = (ImageView)findViewById(R.id.floor2_second_img_theme);
 		tvSingleName = (TextView)findViewById(R.id.floor2_second_tv_name);
 		sum = (TextView)findViewById(R.id.floor2_second_tv_sum);
-		poetryDao = new PoetryDao(SecondWenkuPoem.this);
+		//poetryDao = new PoetryDao(SecondWenkuPoem.this);
 		labelDao = new LabelDao(SecondWenkuPoem.this);
 		
 		back.setOnClickListener(new OnClickListener() {
@@ -102,23 +100,19 @@ public class SecondWenkuPoem extends Activity {
 		getData(isNetwork, labelDao.getLabelById(label_id));
 	}
 	
-	private void getDataFromSQL() {
+	/*private void getDataFromSQL() {
 		list = new ArrayList<Poem>();
 		
 		list = poetryDao.getPoemByTid(label_id);
-	}
+	}*/
 	
 	private void getData(final boolean isNetwork, final String labelName) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
 			protected String doInBackground(String... params) {
-				if (isNetwork) {
+				
 					return MyClient.getInstance().Http_postPoemKind(labelName);
-				} else {
-					getDataFromSQL();
-					return null;
-				}
 			}
 
 			@Override
@@ -141,7 +135,7 @@ public class SecondWenkuPoem extends Activity {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				} else {
+				}/* else {
 					madapter = new SecondWenkuPoemListAdapter(SecondWenkuPoem.this, list, false);
 					listview.setAdapter(madapter);
 					listview.setOnItemClickListener(new OnItemClickListener() {
@@ -151,7 +145,7 @@ public class SecondWenkuPoem extends Activity {
 							UIHelper.showPoemDetail(SecondWenkuPoem.this, list.get(position).getPoetryid(), 0);
 						}
 					});
-				}
+				}*/
 				
 			}
 

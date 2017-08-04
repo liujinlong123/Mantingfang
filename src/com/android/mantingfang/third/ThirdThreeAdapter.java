@@ -7,6 +7,7 @@ import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.CustomListView;
@@ -121,7 +122,7 @@ public class ThirdThreeAdapter extends BaseAdapter {
 		ImageView share;
 	}
 
-	private void initViews(final UserTwoContent content, ViewHolder holder) {
+	private void initViews(final UserTwoContent content, final ViewHolder holder) {
 		// 头像路径
 		PictureLoad.getInstance().loadImage(content.getHeadPath(), holder.headPhoto);
 
@@ -157,12 +158,28 @@ public class ThirdThreeAdapter extends BaseAdapter {
 		});
 
 		// 点赞
+		if (content.getZan() != null) {
+			if (content.getZan().equals("0")) {
+				holder.zan.setImageResource(R.drawable.a7r);
+			} else if (content.getZan().equals("1")){
+				holder.zan.setImageResource(R.drawable.a7u);
+			}
+		}
 		holder.zan.setOnClickListener(new OnClickListener() {
-
+			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
+				if (content.getZan() != null) {
+					if (content.getZan().equals("0")) {
+						holder.zan.setImageResource(R.drawable.a7u);
+						content.setZan("1");
+						sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "1");
+					} else if (content.getZan().equals("1")){
+						holder.zan.setImageResource(R.drawable.a7r);
+						content.setZan("0");
+						sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "0");
+					}
+				}
 			}
 		});
 
@@ -228,11 +245,11 @@ public class ThirdThreeAdapter extends BaseAdapter {
 			public void run() {
 				switch (type) {
 				case 0:
-					getData("0");
+					getData(UserId.getInstance(mContext).getUserId(), "0");
 					break;
 					
 				case 1:
-					getData(list.size() + "");
+					getData(UserId.getInstance(mContext).getUserId(), list.size() + "");
 					break;
 				}
 				try {
@@ -273,13 +290,13 @@ public class ThirdThreeAdapter extends BaseAdapter {
 		};
 	};
 	
-	private void getData(final String num) {
+	private void getData(final String userId, final String num) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
 			protected String doInBackground(String... params) {
 				
-				return MyClient.getInstance().http_postOne("2", num);
+				return MyClient.getInstance().http_postOne(userId, "3", num);
 			}
 			
 			@Override
@@ -300,6 +317,25 @@ public class ThirdThreeAdapter extends BaseAdapter {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+			}
+			
+		};
+		
+		task.execute();
+	}
+	
+	private void sendZan(final String userId, final String topicId, final String zan) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_postDianZan(userId, "3", topicId, zan);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				
 			}
 			
 		};

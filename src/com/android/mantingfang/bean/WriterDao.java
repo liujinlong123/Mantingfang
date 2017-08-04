@@ -1,4 +1,4 @@
-package com.android.mantingfang.bean;
+/*package com.android.mantingfang.bean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +17,10 @@ public class WriterDao {
 		helper = new DbHelper(context);
 	}
 	
-	/**
+	*//**
 	 * writer into the database
 	 * @param writerList
-	 */
+	 *//*
 	public void insertWR(List<Writer> writerList) {
 		SQLiteDatabase database = null;
 		try {
@@ -50,11 +50,11 @@ public class WriterDao {
 		}
 	}
 	
-	/**
+	*//**
 	 *get All Writer
 	 * @param dynastyid
 	 * @return
-	 */
+	 *//*
 	public List<Writer> getAllWriter(int dynastyid) {
 		
 		List<Writer> writerList = new ArrayList<Writer>();
@@ -132,11 +132,11 @@ public class WriterDao {
 		return writerList;
 	}
 	
-	/**
+	*//**
 	 * get the number of writer in special dynasty
 	 * @param dynastyid
 	 * @return
-	 */
+	 *//*
 	public int getWriterSumByDynastyid(int dynastyid) {
 		
 		int sum = 0;
@@ -163,11 +163,11 @@ public class WriterDao {
 		return sum;
 	}
 	
-	/**
+	*//**
 	 *get writer by writerId
 	 * @param writerid
 	 * @return
-	 */
+	 *//*
 	public Writer getWriterById(int writerid) {
 		
 		SQLiteDatabase database = null;
@@ -231,11 +231,11 @@ public Writer getWriterMById(int writerid) {
 	}
 	
 	
-	/**
+	*//**
 	 *get Writers by country_id
 	 * @param writer_country_id
 	 * @return
-	 */
+	 *//*
 	public List<Writer> getWriterByCountryId(int writer_country_id) {
 		
 		List<Writer> writerList = new ArrayList<Writer>();
@@ -272,11 +272,11 @@ public Writer getWriterMById(int writerid) {
 		return null;
 	}
 	
-	/**
+	*//**
 	 * get writers by label_id
 	 * @param writer_label_id
 	 * @return
-	 */
+	 *//*
 	public List<Writer> getWriterByLabelId(int writer_label_id) {
 		
 		List<Writer> writerList = new ArrayList<Writer>();
@@ -311,3 +311,4 @@ public Writer getWriterMById(int writerid) {
 		return null;
 	}
 }
+*/

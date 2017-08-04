@@ -25,7 +25,7 @@ public class RegisterAll {
 	
 	public void destroyAll() {
 		while (!stack.isEmpty()) {
-			stack.pop();
+			stack.pop().finish();
 		}
 	}
 }

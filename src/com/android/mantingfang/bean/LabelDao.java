@@ -24,7 +24,6 @@ public class LabelDao {
 				Label label = labelList.get(i);
 				ContentValues cv = new ContentValues();
 				cv.put("label_id", label.getLabelId());
-				cv.put("label_poetry_id", label.getPoetryId());
 				cv.put("label_kind_id", label.getKindId());
 				cv.put("label_name", label.getLabelName());
 				if (!helper.isExist("Label", "label_id", label.getLabelId(), database)) {

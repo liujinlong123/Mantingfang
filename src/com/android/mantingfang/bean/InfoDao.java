@@ -1,4 +1,4 @@
-package com.android.mantingfang.bean;
+/*package com.android.mantingfang.bean;
 
 import java.util.List;
 
@@ -45,11 +45,11 @@ public class InfoDao {
 		}
 	}
 	
-	/**
-	 * Í¨¹ýÊ«´Êid ·µ»Ø¶ÔÓ¦ÐÅÏ¢
+	*//**
+	 * Í¨ï¿½ï¿½Ê«ï¿½ï¿½id ï¿½ï¿½ï¿½Ø¶ï¿½Ó¦ï¿½ï¿½Ï¢
 	 * @param info_poetry_id
 	 * @return
-	 */
+	 *//*
 	public Info getInfoByPId(int info_poetry_id) {
 		Info info = null;
 		SQLiteDatabase database = null;
@@ -83,3 +83,4 @@ public class InfoDao {
 		return null;
 	}
 }
+*/

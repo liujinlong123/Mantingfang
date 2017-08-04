@@ -12,7 +12,9 @@ import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -37,7 +39,7 @@ public class FragmentFrist extends Fragment {
 	private List<PoemRhesis> dataList;
 	private ViewAdapter adapter;
 	
-	private List<Fragment> fragmentList = new ArrayList<Fragment>();
+	private List<FragViewPager> fragmentList = new ArrayList<>();
 	
 	private Button btnAdd;
 	private ImageView imgCollect;
@@ -96,8 +98,23 @@ public class FragmentFrist extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
+				new AlertDialog.Builder(getActivity()).setTitle("字体")
+				.setItems(R.array.item_fonts_dialog, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichcountry) {
+						switch (whichcountry) {
+						case 0:
+							setFonts(0);
+							break;
+						case 1:
+							setFonts(1);
+							break;
+						case 2:
+							setFonts(2);
+							break;
+						}
+						
+					}
+				}).show();
 			}
 		});
 		
@@ -110,31 +127,36 @@ public class FragmentFrist extends Fragment {
 	}
 	
 	class ViewAdapter extends FragmentPagerAdapter {
-		private List<Fragment> fragmentsList;
 		
 		public ViewAdapter(FragmentManager fm) {
 			super(fm);
 		}
 
-		public ViewAdapter(FragmentManager fm, List<Fragment> fragments) {
+		/*public ViewAdapter(FragmentManager fm, List<FragViewPager> fragments) {
 			super(fm);
 			this.fragmentsList = fragments;
-		}
+		}*/
 
 		@Override
 		public int getCount() {
-			return fragmentsList.size();
+			return fragmentList.size();
 		}
 
 		@Override
 		public Fragment getItem(int position) {
-			return fragmentsList.get(position);
+			return fragmentList.get(position);
 		}
 
 		@Override
 		public int getItemPosition(Object object) {
 			//return super.getItemPosition(object);
 			return POSITION_NONE;
+		}
+		
+		public void setFonts(int type) {
+			for (FragViewPager e: fragmentList) {
+				e.setFronts(type);
+			}
 		}
 	}
 	
@@ -150,19 +172,15 @@ public class FragmentFrist extends Fragment {
 			
 			@Override
 			protected void onPostExecute(String result) {
-				//Log.v("TEEEEE", result);
-				/*for (int i = 0; i < 100; i++) {
-					fragmentList.add(new FragViewPager(new PoemRhesis("1", "无名氏" + i, "关关雎鸠，在河之洲")));
-				}*/
 				try {
 					if (result != null && !result.equals("")) {
 						dataList = TopicList.parseRhesis(StringUtils.toJSONArray(result)).getRhesisList();
 						for (PoemRhesis e: dataList) {
-							fragmentList.add(new FragViewPager(e));
+							fragmentList.add(new FragViewPager(e, getActivity(), Fonts.getInstance(getActivity()).getType()));
 						}
-						
+						RhesisList.getInstance().setRhesisList(dataList);
 						viewPager.setOffscreenPageLimit(fragmentList.size());
-						adapter = new ViewAdapter(getChildFragmentManager(), fragmentList);
+						adapter = new ViewAdapter(getChildFragmentManager());
 						viewPager.setAdapter(adapter);
 						viewPager.setCurrentItem(0);
 					} else {
@@ -178,4 +196,61 @@ public class FragmentFrist extends Fragment {
 		
 		task.execute();
 	}
+	
+	private void setFonts(int type) {
+		switch(type) {
+		case 0:
+			if (Fonts.getInstance(getActivity()).getType() != 0) {
+				setViewPagerAdapter(0); 
+			}
+			break;
+			
+		case 1:
+			if (Fonts.getInstance(getActivity()).getType() != 1) {
+				setViewPagerAdapter(1); 
+			}
+			break;
+			
+		case 2:
+			if (Fonts.getInstance(getActivity()).getType() != 2) {
+				setViewPagerAdapter(2); 
+			}
+			break;
+		}
+	}
+	
+	private void setViewPagerAdapter(int type) {
+		@SuppressWarnings("static-access")
+		SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", getActivity().MODE_PRIVATE).edit();
+		editor.putInt("fonts_type", type);
+		editor.commit();
+		adapter.setFonts(type);
+	}
+	
+	/*private void setViewPagerAdapter(final int type) {
+		new Thread() {
+			@Override
+			public void run() {
+				fragmentList.clear();
+				for (PoemRhesis e: dataList) {
+					fragmentList.add(new FragViewPager(e, getActivity(), type));
+				}
+				handler.sendEmptyMessage(1);
+			};
+		}.start();
+	}
+	
+	@SuppressLint("HandlerLeak")
+	Handler handler = new Handler() {
+		@Override
+		public void handleMessage(android.os.Message msg) {
+			if (msg.what == 1) {
+				if (new ViewAdapter(getChildFragmentManager()) != null) {
+					new ViewAdapter(getChildFragmentManager()).notifyDataSetChanged();
+					viewPager.setAdapter(new ViewAdapter(getChildFragmentManager()));
+					Log.v("ViewPager", "----tst");
+				}
+			}
+		};
+	};*/
 }

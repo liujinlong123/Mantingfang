@@ -47,11 +47,12 @@ public class MyClient {
 	 *界面一
 	 * @return
 	 */
-	public String http_postOne(String TypeNum, String number) {
+	public String http_postOne(String userId, String TypeNum, String number) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//returndata.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", userId));
 			param.add(new BasicNameValuePair("TypeNum", TypeNum));
 			param.add(new BasicNameValuePair("number", number));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -183,7 +184,7 @@ public class MyClient {
 	
 	
 	/**
-	 * viewpager
+	 * ViewPager
 	 * @param tpye_num
 	 * @param post_id
 	 * @return
@@ -201,7 +202,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				
+				//Log.v("TESTViewP", response);
 				return response;
 			} 
 		} catch(Exception e) {
@@ -527,7 +528,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("POST--PHone--Detail", response);
+				//Log.v("POST--PHone--Detail", response);
 				
 				return response;
 			} 
@@ -550,7 +551,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("POST--VerCode--Detail", response);
+				//Log.v("POST--VerCode--Detail", response);
 				
 				return response;
 			} 
@@ -574,7 +575,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("POST--User--Detail", response);
+				//Log.v("POST--User--Detail", response);
 				
 				return response;
 			} 
@@ -585,4 +586,33 @@ public class MyClient {
 	}
 	
 	//---------------------------------用户注册----------------------------------------------------------------
+	
+	//---------------------------------用户点赞----------------------------------------------------------------
+	
+	public String Http_postDianZan (String userId, String topicId, String typeNum, String zan) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//user_reg3.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", userId));
+			param.add(new BasicNameValuePair("type_num", typeNum));
+			param.add(new BasicNameValuePair("post_id", topicId));
+			param.add(new BasicNameValuePair("zan_post", zan));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				//Log.v("POST--Dian--Detail", response + "----");
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//---------------------------------用户点赞----------------------------------------------------------------
 }

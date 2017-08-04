@@ -16,20 +16,6 @@ import android.os.Bundle;
 public class UIHelper {
 	
 	/**
-	 * 诗词详情
-	 * @param context
-	 * @param poetryId
-	 * @param flag
-	 */
-	public static void showPoemDetail(Context context, int poetry_id, int flag) {
-		Intent intent = new Intent(context, PoetryDetail.class);
-		intent.putExtra("poetry_id", poetry_id);
-		intent.putExtra("flag", flag);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		context.startActivity(intent);
-	}
-	
-	/**
 	 * 诗词PoemM详情页
 	 * @param context
 	 * @param poem

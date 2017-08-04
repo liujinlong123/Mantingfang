@@ -3,6 +3,7 @@ package com.android.mantingfang.first;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,11 +23,16 @@ public class FragViewPager extends Fragment{
 	private RelativeLayout layout;
 	
 	private PoemRhesis rhesis;
+	private Context context;
+	private SetFronts fonts;
+	private int type;
 	
 	public FragViewPager() {}
 	
-	public FragViewPager(PoemRhesis rhesis) {
+	public FragViewPager(PoemRhesis rhesis, Context context, int type) {
 		this.rhesis = rhesis;
+		this.context = context;
+		this.type = type;
 	}
 	
 	@SuppressLint("InflateParams")
@@ -38,12 +44,20 @@ public class FragViewPager extends Fragment{
 			tv2 = (TextView)view.findViewById(R.id.first_viewpager_info_tv1);
 			tv3 = (TextView)view.findViewById(R.id.first_viewpager_info_tv3);
 			layout = (RelativeLayout)view.findViewById(R.id.relative_layout_viewpager);
-			if (rhesis.getPoemId() != null && rhesis.getWriter() != null && rhesis.getRhesis() != null
-					&& !rhesis.getPoemId().equals("") && !rhesis.getWriter().equals("") && !rhesis.getRhesis().equals("")) {
+			if (rhesis.getPoemId() != null && rhesis.getRhesis() != null
+					&& !rhesis.getPoemId().equals("") && !rhesis.getRhesis().equals("")) {
 				String[] tokens = rhesis.getRhesis().split("[，,.。!?！？]");
-				tv1.setText(tokens[0]);
-				tv2.setText(tokens[1]);
-				tv3.setText(rhesis.getWriter());
+				if (tokens.length >= 2) {
+					tv1.setText(tokens[0]);
+					tv2.setText(tokens[1]);
+					if (rhesis.getWriter() != null && !rhesis.getWriter().equals("")) {
+						
+						tv3.setText(rhesis.getWriter());
+					} else {
+						tv3.setText("无名");
+					}
+					setFronts(type);
+				}
 			}
 			
 			return view;
@@ -67,5 +81,36 @@ public class FragViewPager extends Fragment{
 			}
 		});
 		super.onActivityCreated(savedInstanceState);
+	}
+	
+	public void setFronts(int type) {
+		switch (type) {
+		case 0:
+			fonts = new SetFronts(context, tv1);
+			fonts.setKT();
+			fonts.setTv(tv2);
+			fonts.setKT();
+			fonts.setTv(tv3);
+			fonts.setKT();
+			break;
+			
+		case 1:
+			fonts = new SetFronts(context, tv1);
+			fonts.setLS();
+			fonts.setTv(tv2);
+			fonts.setLS();
+			fonts.setTv(tv3);
+			fonts.setLS();
+			break;
+			
+		case 2:
+			fonts = new SetFronts(context, tv1);
+			fonts.setHWXK();
+			fonts.setTv(tv2);
+			fonts.setHWXK();
+			fonts.setTv(tv3);
+			fonts.setHWXK();
+			break;
+		}
 	}
 }

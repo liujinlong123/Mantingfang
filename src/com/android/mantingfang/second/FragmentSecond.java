@@ -10,7 +10,6 @@ import com.android.mantingfang.bean.KindDao;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.bean.Writer;
-import com.android.mantingfang.bean.WriterDao;
 import com.android.mantingfang.second.SideBar.OnTouchingLetterChangedListener;
 import com.android.mantingfanggsc.CharacterParser;
 import com.android.mantingfanggsc.CustomListView;
@@ -49,7 +48,7 @@ public class FragmentSecond extends Fragment {
 	private SecondWriterListViewAdapter writerAdapter;
 	private List<Writer> writers;
 	private FrameLayout frame;
-	private WriterDao writerDao;
+	//private WriterDao writerDao;
 
 	private SideBar sideBar;
 	private TextView dialog;
@@ -159,7 +158,7 @@ public class FragmentSecond extends Fragment {
 			protected String doInBackground(String... params) {
 				if (isNetwork) {
 					return MyClient.getInstance().Http_postWriters("1");
-				} else {
+				}/* else {
 					writerDao = new WriterDao(getActivity());
 					writers = writerDao.getAllWriter();
 					String[] writerss = new String[writers.size()];
@@ -169,7 +168,8 @@ public class FragmentSecond extends Fragment {
 					SourceDateList = filledData(writerss, writers);
 					Collections.sort(SourceDateList, pinyinComparator);
 					return null;
-				}
+				}*/
+				return null;
 			}
 
 			@Override

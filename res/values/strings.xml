@@ -21,6 +21,12 @@
         <item>朗读</item>
     </array>
     
+    <array name="item_fonts_dialog">
+        <item>楷体</item>
+        <item>隶书</item>
+        <item>华文行楷</item>
+    </array>
+    
     <array name="item_sex">
         <item>男</item>
         <item>女</item>

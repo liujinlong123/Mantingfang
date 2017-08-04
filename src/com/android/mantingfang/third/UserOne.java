@@ -57,7 +57,7 @@ public class UserOne extends Fragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				UIHelper.showPoemDetail(getActivity(), list.get(position), 0);
+				//UIHelper.showPoemDetail(getActivity(), list.get(position), 0);
 			}
 		});
 	}

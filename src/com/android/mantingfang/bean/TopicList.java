@@ -202,7 +202,7 @@ public class TopicList extends Base {
 						null,
 						null,
 						null,
-						false,
+						jo.optString("zan_post"),
 						1,
 						Integer.parseInt(jo.getString("topic_id")));
 				
@@ -228,16 +228,16 @@ public class TopicList extends Base {
 				JSONObject jo = obj.getJSONObject(i);
 				UserTwoContent content = new UserTwoContent(
 						jo.getString("note_user_id"),
-						jo.getString("user_photo"),
-						jo.getString("user_nickname"),
-						jo.getString("note_time"),
-						jo.getString("note_content"),
+						jo.optString("user_photo"),
+						jo.optString("user_nickname"),
+						jo.optString("note_time"),
+						jo.optString("note_content"),
 						null,
 						null,
-						jo.getString("note_poem_id"),
-						jo.getString("poetry_content"),
-						jo.getString("poetry_name"),
-						false,
+						jo.optString("note_poem_id"),
+						jo.optString("poetry_content"),
+						jo.optString("poetry_name"),
+						jo.optString("zan_post"),
 						2,
 						Integer.parseInt(jo.getString("note_id")));
 				
@@ -262,16 +262,16 @@ public class TopicList extends Base {
 				JSONObject jo = obj.getJSONObject(i);
 				UserTwoContent content = new UserTwoContent(
 						jo.getString("original_user_id"),
-						jo.getString("user_photo"),
-						jo.getString("user_nickname"),
-						jo.getString("original_time"),
-						jo.getString("original_content"),
+						jo.optString("user_photo"),
+						jo.optString("user_nickname"),
+						jo.optString("original_time"),
+						jo.optString("original_content"),
 						StringUtils.getPictures(jo.getString("original_picture")),
 						null,
 						null,
 						null,
 						null,
-						false,
+						jo.optString("zan_post"),
 						3,
 						Integer.parseInt(jo.getString("original_id")));
 				
@@ -306,7 +306,7 @@ public class TopicList extends Base {
 						jo.optString("audio_poem_id"),
 						jo.optString("poetry_content"),
 						jo.optString("poetry_name"),
-						false,
+						jo.optString("zan_post"),
 						4,
 						Integer.parseInt(jo.getString("audio_id")));
 				
@@ -350,7 +350,7 @@ public class TopicList extends Base {
 							null,
 							null,
 							null,
-							false,
+							jo.optString("zan_post"),
 							1,
 							Integer.parseInt(jo.getString("topic_id")));
 				} else if (noteTime != null && !noteTime.equals("")) {
@@ -365,7 +365,7 @@ public class TopicList extends Base {
 							jo.getString("note_poem_id"),
 							jo.getString("poetry_content"),
 							jo.getString("poetry_name"),
-							false,
+							jo.optString("zan_post"),
 							2,
 							Integer.parseInt(jo.getString("note_id")));
 				} else if (originalTime != null && !originalTime.equals("")) {
@@ -380,7 +380,7 @@ public class TopicList extends Base {
 							null,
 							null,
 							null,
-							false,
+							jo.optString("zan_post"),
 							3,
 							Integer.parseInt(jo.getString("original_id")));
 				} else if (audioTime != null && !audioTime.equals("")) {
@@ -395,7 +395,7 @@ public class TopicList extends Base {
 							jo.getString("audio_poem_id"),
 							jo.getString("poetry_content"),
 							jo.getString("poetry_name"),
-							false,
+							jo.optString("zan_post"),
 							4,
 							Integer.parseInt(jo.getString("audio_id")));
 				}
@@ -424,11 +424,11 @@ public class TopicList extends Base {
 				CommentContent content = new CommentContent(
 						topicId,
 						topicNum,
-						jo.getString("user_photo"),
-						jo.getString("user_nickname"),
-						jo.getString("comment_time"),
-						jo.getString("comment_content"),
-						jo.getString("comment_user_id"));
+						jo.optString("user_photo"),
+						jo.optString("user_nickname"),
+						jo.optString("comment_time"),
+						jo.optString("comment_content"),
+						jo.optString("comment_user_id"));
 				
 				tList.listComment.add(content);
 			}
@@ -454,7 +454,10 @@ public class TopicList extends Base {
 						jo.optString("writer_name"),
 						jo.optString("poetry_rhesis"));
 				
-				tList.listRhesis.add(content);
+				if (content.getRhesis() != null && !content.getRhesis().equals("") && content.getPoemId() != null
+						&& !content.getPoemId().equals("")) {
+					tList.listRhesis.add(content);
+				}
 				//Log.v("Test", content.getRhesis());
 			}
 		}

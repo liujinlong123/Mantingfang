@@ -1,4 +1,4 @@
-package com.android.mantingfang.bean;
+/*package com.android.mantingfang.bean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +19,11 @@ public class PoetryDao {
 		helper = new DbHelper(context);
 	}
 
-	/**
+	*//**
 	 * insert Poem
 	 * 
 	 * @param poetryList
-	 */
+	 *//*
 	public void insertPO(List<Poetry> poetryList) {
 		SQLiteDatabase database = null;
 		try {
@@ -55,11 +55,11 @@ public class PoetryDao {
 		}
 	}
 
-	/**
+	*//**
 	 * GEt All Poem
 	 * 
 	 * @return
-	 */
+	 *//*
 	public List<Poem> getAllPoem() {
 
 		List<Poem> pList = new ArrayList<Poem>();
@@ -132,12 +132,12 @@ public class PoetryDao {
 		return pList;
 	}
 
-	/**
+	*//**
 	 * 通过Id 获取 诗词
 	 * 
 	 * @param pid
 	 * @return
-	 */
+	 *//*
 	public Poem findPoemById(int pid) {
 
 		Poem p = null;
@@ -170,12 +170,12 @@ public class PoetryDao {
 		return p;
 	}
 
-	/**
+	*//**
 	 * 通过诗词ID获取信息
 	 * 
 	 * @param poetry_id
 	 * @return
-	 */
+	 *//*
 	public List<Info> findInfoById(int poetry_id) {
 
 		List<Info> infos = new ArrayList<Info>();
@@ -211,7 +211,7 @@ public class PoetryDao {
 		return null;
 	}
 
-	/*
+	
 	 * public int getSumById(int kindid) {
 	 * 
 	 * int sum = 0; SQLiteDatabase db = null; try { db =
@@ -222,14 +222,14 @@ public class PoetryDao {
 	 * finally { if (db != null) { db.close(); } }
 	 * 
 	 * return sum; }
-	 */
+	 
 
-	/**
+	*//**
 	 * get poem by writer Id
 	 * 
 	 * @param writerid
 	 * @return
-	 */
+	 *//*
 	public List<Poem> getPoemByWid(int writerid) {
 
 		List<Poem> pList = new ArrayList<Poem>();
@@ -271,12 +271,12 @@ public class PoetryDao {
 		return null;
 	}
 
-	/**
+	*//**
 	 * get my collect poems
 	 * 
 	 * @param myids
 	 * @return
-	 */
+	 *//*
 	public List<Poem> getPoemByMy(int[] myids) {
 
 		String myString = StringUtils.getString4Array(myids);
@@ -319,12 +319,12 @@ public class PoetryDao {
 		return null;
 	}
 
-	/**
+	*//**
 	 * get Poem by type ID
 	 * 
 	 * @param tid
 	 * @return
-	 */
+	 *//*
 	public List<Poem> getPoemByTid(int tid) {
 
 		List<Poem> pList = new ArrayList<Poem>();
@@ -366,12 +366,12 @@ public class PoetryDao {
 		return null;
 	}
 
-	/**
+	*//**
 	 * get Poem by search
 	 * 
 	 * @param sStr
 	 * @return
-	 */
+	 *//*
 	public List<Poem> getPoemBySearch(String sStr) {
 
 		List<Poem> pList = new ArrayList<Poem>();
@@ -452,3 +452,4 @@ public class PoetryDao {
 	}
 
 }
+*/

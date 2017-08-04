@@ -23,40 +23,66 @@
             android:id="@+id/phoneNum"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
             android:layout_marginTop="20dp"
-            android:gravity="center"
+            android:background="@color/white"
+            android:gravity="top"
             android:hint="请输入手机号"
+            android:inputType="number"
             android:maxLength="11"
-            android:singleLine="true"
-            android:inputType="number" />
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:singleLine="true" />
+
+        <View
+            android:layout_width="250dp"
+            android:layout_height="1dp"
+            android:background="#33000000" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp" >
 
-            <EditText
-                android:id="@+id/verCode"
-                android:layout_width="125dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:gravity="center"
-                android:hint="输入验证码.."
-                android:maxLength="17"
-                android:singleLine="true"
-                android:inputType="number" />
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/verCode"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="top"
+                    android:hint="输入验证码"
+                    android:inputType="number"
+                    android:maxLength="17"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="true" />
+
+                <View
+                    android:layout_width="150dp"
+                    android:layout_height="1dp"
+                    android:background="#33000000" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/btn_getNum"
-                android:layout_width="125dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/logoff"
                 android:gravity="center"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
+                android:layout_marginLeft="10dp"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
                 android:text="获取验证码"
-                android:textSize="20sp" />
+                android:textSize="15sp"
+                android:textColor="@color/red" />
         </LinearLayout>
 
         <TextView
@@ -65,10 +91,12 @@
             android:layout_height="wrap_content"
             android:background="@drawable/logoff"
             android:gravity="center"
+            android:layout_marginTop="10dp"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:text="下一步"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/red" />
     </LinearLayout>
 
 </LinearLayout>

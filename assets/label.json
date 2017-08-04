@@ -1,1146 +1,450 @@
 [{
 "label_id":1,
-"label_poetry_id":" ",
-"label_kind_id":0,
-"label_name":"文言文"
+"label_kind_id":1,
+"label_name":"民谣"
 },
 {
 "label_id":2,
-"label_poetry_id":"2,",
-"label_kind_id":0,
-"label_name":"律诗"
+"label_kind_id":1,
+"label_name":"民歌"
 },
 {
 "label_id":3,
-"label_poetry_id":"3,8,",
-"label_kind_id":0,
-"label_name":"绝句"
+"label_kind_id":1,
+"label_name":"乐府"
 },
 {
 "label_id":4,
-"label_poetry_id":"4,",
-"label_kind_id":0,
-"label_name":"词"
+"label_kind_id":1,
+"label_name":"寓言"
 },
 {
 "label_id":5,
-"label_poetry_id":" ",
-"label_kind_id":0,
-"label_name":"曲"
+"label_kind_id":1,
+"label_name":"典故"
 },
 {
 "label_id":6,
-"label_poetry_id":" ",
-"label_kind_id":0,
-"label_name":"现代诗"
+"label_kind_id":1,
+"label_name":"唐诗"
 },
 {
 "label_id":7,
-"label_poetry_id":"7,",
-"label_kind_id":0,
-"label_name":"古诗"
+"label_kind_id":1,
+"label_name":"宋词"
 },
 {
 "label_id":8,
-"label_poetry_id":"1,",
-"label_kind_id":0,
-"label_name":"歌行体"
+"label_kind_id":1,
+"label_name":"辞赋"
 },
 {
 "label_id":9,
-"label_poetry_id":null,
-"label_kind_id":0,
-"label_name":"赋"
-},
-{
-"label_id":1000,
-"label_poetry_id":"1,19,21,",
-"label_kind_id":1,
+"label_kind_id":2,
 "label_name":"爱情"
 },
 {
-"label_id":1001,
-"label_poetry_id":" ",
-"label_kind_id":1,
-"label_name":"分手"
+"label_id":10,
+"label_kind_id":2,
+"label_name":"友情"
 },
 {
-"label_id":1002,
-"label_poetry_id":" ",
-"label_kind_id":1,
-"label_name":"婚姻"
+"label_id":11,
+"label_kind_id":2,
+"label_name":"思乡"
 },
 {
-"label_id":1003,
-"label_poetry_id":" ",
-"label_kind_id":1,
-"label_name":"拒绝"
+"label_id":12,
+"label_kind_id":2,
+"label_name":"怀念"
 },
 {
-"label_id":1004,
-"label_poetry_id":" ",
-"label_kind_id":1,
-"label_name":"求婚"
-},
-{
-"label_id":1005,
-"label_poetry_id":" ",
-"label_kind_id":1,
-"label_name":"热恋"
-},
-{
-"label_id":1006,
-"label_poetry_id":"29,",
-"label_kind_id":1,
-"label_name":"失恋"
-},
-{
-"label_id":1007,
-"label_poetry_id":" ",
-"label_kind_id":1,
+"label_id":13,
+"label_kind_id":2,
 "label_name":"相思"
 },
 {
-"label_id":1008,
-"label_poetry_id":" ",
-"label_kind_id":1,
+"label_id":14,
+"label_kind_id":2,
+"label_name":"追忆"
+},
+{
+"label_id":15,
+"label_kind_id":2,
+"label_name":"怀旧"
+},
+{
+"label_id":16,
+"label_kind_id":2,
 "label_name":"闺怨"
 },
 {
-"label_id":1100,
-"label_poetry_id":" ",
-"label_kind_id":2,
+"label_id":17,
+"label_kind_id":3,
+"label_name":"相思"
+},
+{
+"label_id":18,
+"label_kind_id":3,
+"label_name":"闺怨"
+},
+{
+"label_id":19,
+"label_kind_id":3,
 "label_name":"儿童"
 },
 {
-"label_id":1101,
-"label_poetry_id":" ",
-"label_kind_id":2,
+"label_id":20,
+"label_kind_id":3,
 "label_name":"发肤"
 },
 {
-"label_id":1102,
-"label_poetry_id":" ",
-"label_kind_id":2,
+"label_id":21,
+"label_kind_id":3,
 "label_name":"妇女"
 },
 {
-"label_id":1103,
-"label_poetry_id":" ",
-"label_kind_id":2,
+"label_id":22,
+"label_kind_id":3,
 "label_name":"乐舞"
 },
 {
-"label_id":1104,
-"label_poetry_id":" ",
-"label_kind_id":2,
+"label_id":23,
+"label_kind_id":3,
 "label_name":"老人"
 },
 {
-"label_id":1105,
-"label_poetry_id":" ",
-"label_kind_id":2,
+"label_id":24,
+"label_kind_id":3,
 "label_name":"老师"
 },
 {
-"label_id":1106,
-"label_poetry_id":" ",
-"label_kind_id":2,
+"label_id":25,
+"label_kind_id":3,
 "label_name":"眉眼"
 },
 {
-"label_id":1107,
-"label_poetry_id":" ",
-"label_kind_id":2,
+"label_id":26,
+"label_kind_id":3,
 "label_name":"美人"
 },
 {
-"label_id":1108,
-"label_poetry_id":" ",
-"label_kind_id":2,
+"label_id":27,
+"label_kind_id":3,
 "label_name":"农民"
 },
 {
-"label_id":1109,
-"label_poetry_id":" ",
-"label_kind_id":2,
+"label_id":28,
+"label_kind_id":3,
 "label_name":"男子"
 },
 {
-"label_id":1110,
-"label_poetry_id":" ",
-"label_kind_id":2,
-"label_name":"气质"
-},
-{
-"label_id":1111,
-"label_poetry_id":" ",
-"label_kind_id":2,
-"label_name":"声音"
-},
-{
-"label_id":1112,
-"label_poetry_id":" ",
-"label_kind_id":2,
-"label_name":"游子"
-},
-{
-"label_id":1113,
-"label_poetry_id":" ",
-"label_kind_id":2,
-"label_name":"衣饰"
-},
-{
-"label_id":1114,
-"label_poetry_id":" ",
-"label_kind_id":2,
-"label_name":"战士"
-},
-{
-"label_id":1200,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"嵩山"
-},
-{
-"label_id":1201,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"滕王阁"
-},
-{
-"label_id":1202,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"草原"
-},
-{
-"label_id":1203,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"长江"
-},
-{
-"label_id":1204,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"大漠"
-},
-{
-"label_id":1205,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"洞庭湖"
-},
-{
-"label_id":1206,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"峨眉山"
-},
-{
-"label_id":1207,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"华山"
-},
-{
-"label_id":1208,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"恒山"
-},
-{
-"label_id":1209,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"衡山"
-},
-{
-"label_id":1210,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"黄山"
-},
-{
-"label_id":1211,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"黄河"
-},
-{
-"label_id":1212,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"黄鹤楼"
-},
-{
-"label_id":1213,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"九华山"
-},
-{
-"label_id":1214,
-"label_poetry_id":"4,",
-"label_kind_id":3,
-"label_name":"江南"
-},
-{
-"label_id":1215,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"庐山"
-},
-{
-"label_id":1216,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"钱塘江"
-},
-{
-"label_id":1217,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"三峡"
-},
-{
-"label_id":1218,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"天门山"
-},
-{
-"label_id":1219,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"太湖"
-},
-{
-"label_id":1220,
-"label_poetry_id":" ",
-"label_kind_id":3,
-"label_name":"泰山"
-},
-{
-"label_id":1221,
-"label_poetry_id":"2,34,",
-"label_kind_id":3,
-"label_name":"西湖"
-},
-{
-"label_id":1222,
-"label_poetry_id":"70",
-"label_kind_id":3,
-"label_name":"岳阳楼"
-},
-{
-"label_id":1223,
-"label_poetry_id":"5",
-"label_kind_id":3,
-"label_name":"终南山"
-},
-{
-"label_id":1300,
-"label_poetry_id":" ",
+"label_id":29,
 "label_kind_id":4,
-"label_name":"春节"
+"label_name":"春"
 },
 {
-"label_id":1301,
-"label_poetry_id":" ",
+"label_id":30,
 "label_kind_id":4,
-"label_name":"端午"
+"label_name":"夏"
 },
 {
-"label_id":1302,
-"label_poetry_id":" ",
+"label_id":31,
 "label_kind_id":4,
-"label_name":"儿童节"
+"label_name":"秋"
 },
 {
-"label_id":1303,
-"label_poetry_id":" ",
+"label_id":32,
 "label_kind_id":4,
-"label_name":"国庆节"
+"label_name":"冬"
 },
 {
-"label_id":1304,
-"label_poetry_id":"13,",
+"label_id":33,
 "label_kind_id":4,
-"label_name":"寒食"
+"label_name":"惜时"
 },
 {
-"label_id":1305,
-"label_poetry_id":" ",
+"label_id":34,
 "label_kind_id":4,
-"label_name":"建军节"
+"label_name":"闲适"
 },
 {
-"label_id":1306,
-"label_poetry_id":" ",
-"label_kind_id":4,
-"label_name":"教师节"
-},
-{
-"label_id":1307,
-"label_poetry_id":" ",
-"label_kind_id":4,
-"label_name":"节气"
-},
-{
-"label_id":1308,
-"label_poetry_id":" ",
-"label_kind_id":4,
-"label_name":"劳动节"
-},
-{
-"label_id":1309,
-"label_poetry_id":" ",
-"label_kind_id":4,
-"label_name":"母亲节"
-},
-{
-"label_id":1310,
-"label_poetry_id":"92",
-"label_kind_id":4,
-"label_name":"七夕"
-},
-{
-"label_id":1311,
-"label_poetry_id":" ",
-"label_kind_id":4,
-"label_name":"情人节"
-},
-{
-"label_id":1312,
-"label_poetry_id":"18",
-"label_kind_id":4,
-"label_name":"清明"
-},
-{
-"label_id":1313,
-"label_poetry_id":" ",
-"label_kind_id":4,
-"label_name":"元宵节"
-},
-{
-"label_id":1314,
-"label_poetry_id":" ",
-"label_kind_id":4,
-"label_name":"元旦"
-},
-{
-"label_id":1315,
-"label_poetry_id":"17",
-"label_kind_id":4,
-"label_name":"中秋"
-},
-{
-"label_id":1316,
-"label_poetry_id":" ",
-"label_kind_id":4,
-"label_name":"重阳节"
-},
-{
-"label_id":1400,
-"label_poetry_id":"25,",
+"label_id":35,
 "label_kind_id":5,
-"label_name":"羁旅"
+"label_name":"婉约"
 },
 {
-"label_id":1401,
-"label_poetry_id":"4,",
+"label_id":36,
 "label_kind_id":5,
-"label_name":"回忆"
+"label_name":"抒情"
 },
 {
-"label_id":1402,
-"label_poetry_id":" ",
+"label_id":37,
 "label_kind_id":5,
-"label_name":"品格"
+"label_name":"豪放"
 },
 {
-"label_id":1403,
-"label_poetry_id":" ",
+"label_id":38,
 "label_kind_id":5,
-"label_name":"仕途"
+"label_name":"坚贞"
 },
 {
-"label_id":1404,
-"label_poetry_id":"27,32,",
+"label_id":39,
 "label_kind_id":5,
-"label_name":"抒怀"
+"label_name":"壮志"
 },
 {
-"label_id":1405,
-"label_poetry_id":" ",
+"label_id":40,
 "label_kind_id":5,
-"label_name":"述志"
+"label_name":"励志"
 },
 {
-"label_id":1406,
-"label_poetry_id":" ",
+"label_id":41,
 "label_kind_id":5,
-"label_name":"叙梦"
+"label_name":"喜悦"
 },
 {
-"label_id":1407,
-"label_poetry_id":" ",
+"label_id":42,
 "label_kind_id":5,
-"label_name":"咏史"
+"label_name":"感慨"
 },
 {
-"label_id":1408,
-"label_poetry_id":" ",
+"label_id":43,
 "label_kind_id":5,
-"label_name":"隐逸"
+"label_name":"孤独"
 },
 {
-"label_id":1409,
-"label_poetry_id":"20,",
+"label_id":44,
 "label_kind_id":5,
+"label_name":"悲叹"
+},
+{
+"label_id":45,
+"label_kind_id":5,
+"label_name":"愁苦"
+},
+{
+"label_id":46,
+"label_kind_id":5,
+"label_name":"惜别"
+},
+{
+"label_id":47,
+"label_kind_id":6,
+"label_name":"命运"
+},
+{
+"label_id":48,
+"label_kind_id":6,
 "label_name":"哲理"
 },
 {
-"label_id":1410,
-"label_poetry_id":" ",
-"label_kind_id":5,
-"label_name":"壮志未酬"
-},
-{
-"label_id":1500,
-"label_poetry_id":" ",
+"label_id":49,
 "label_kind_id":6,
-"label_name":"父母"
+"label_name":"故事"
 },
 {
-"label_id":1501,
-"label_poetry_id":" ",
+"label_id":50,
 "label_kind_id":6,
-"label_name":"思亲"
+"label_name":"人生"
 },
 {
-"label_id":1502,
-"label_poetry_id":" ",
+"label_id":51,
 "label_kind_id":6,
-"label_name":"兄弟"
+"label_name":"爱国"
 },
 {
-"label_id":1503,
-"label_poetry_id":" ",
+"label_id":52,
 "label_kind_id":6,
-"label_name":"孝道"
+"label_name":"战争"
 },
 {
-"label_id":1504,
-"label_poetry_id":" ",
+"label_id":53,
 "label_kind_id":6,
-"label_name":"子女"
+"label_name":"边塞"
 },
 {
-"label_id":1600,
-"label_poetry_id":" ",
+"label_id":54,
+"label_kind_id":6,
+"label_name":"羁旅"
+},
+{
+"label_id":55,
+"label_kind_id":6,
+"label_name":"抱负"
+},
+{
+"label_id":56,
+"label_kind_id":6,
+"label_name":"失意"
+},
+{
+"label_id":57,
+"label_kind_id":6,
+"label_name":"贬谪"
+},
+{
+"label_id":58,
+"label_kind_id":6,
+"label_name":"怀才不遇"
+},
+{
+"label_id":59,
 "label_kind_id":7,
-"label_name":"酬赠"
+"label_name":"宴饮"
 },
 {
-"label_id":1601,
-"label_poetry_id":"33,",
+"label_id":60,
+"label_kind_id":7,
+"label_name":"赠别"
+},
+{
+"label_id":61,
+"label_kind_id":7,
+"label_name":"知音"
+},
+{
+"label_id":62,
+"label_kind_id":7,
+"label_name":"重逢"
+},
+{
+"label_id":63,
+"label_kind_id":7,
+"label_name":"访友"
+},
+{
+"label_id":64,
+"label_kind_id":7,
+"label_name":"书信"
+},
+{
+"label_id":65,
+"label_kind_id":7,
+"label_name":"品质"
+},
+{
+"label_id":66,
+"label_kind_id":7,
+"label_name":"劝勉"
+},
+{
+"label_id":67,
+"label_kind_id":7,
+"label_name":"赞颂"
+},
+{
+"label_id":68,
 "label_kind_id":7,
 "label_name":"悼亡"
 },
 {
-"label_id":1602,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"回乡"
-},
-{
-"label_id":1603,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"怀人"
-},
-{
-"label_id":1604,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"贺婚"
-},
-{
-"label_id":1605,
-"label_poetry_id":"15,",
-"label_kind_id":7,
-"label_name":"聚会"
-},
-{
-"label_id":1606,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"宽慰"
-},
-{
-"label_id":1607,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"考学"
-},
-{
-"label_id":1608,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"勉励"
-},
-{
-"label_id":1609,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"谋略"
-},
-{
-"label_id":1610,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"乔迁"
-},
-{
-"label_id":1611,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"求贤"
-},
-{
-"label_id":1612,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"升职"
-},
-{
-"label_id":1613,
-"label_poetry_id":"2,9,",
-"label_kind_id":7,
-"label_name":"送别"
-},
-{
-"label_id":1614,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"探病"
-},
-{
-"label_id":1615,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"外交"
-},
-{
-"label_id":1616,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"治丧"
-},
-{
-"label_id":1617,
-"label_poetry_id":" ",
-"label_kind_id":7,
-"label_name":"祝寿"
-},
-{
-"label_id":1700,
-"label_poetry_id":" ",
+"label_id":69,
 "label_kind_id":8,
-"label_name":"百兽"
+"label_name":"儿童"
 },
 {
-"label_id":1701,
-"label_poetry_id":" ",
+"label_id":70,
 "label_kind_id":8,
-"label_name":"百鸟"
+"label_name":"少年"
 },
 {
-"label_id":1702,
-"label_poetry_id":" ",
+"label_id":71,
 "label_kind_id":8,
-"label_name":"边疆"
+"label_name":"子女"
 },
 {
-"label_id":1703,
-"label_poetry_id":" ",
+"label_id":72,
 "label_kind_id":8,
-"label_name":"池塘"
+"label_name":"女子"
 },
 {
-"label_id":1704,
-"label_poetry_id":" ",
+"label_id":73,
 "label_kind_id":8,
-"label_name":"风云"
+"label_name":"美人"
 },
 {
-"label_id":1705,
-"label_poetry_id":" ",
+"label_id":74,
 "label_kind_id":8,
-"label_name":"花草"
+"label_name":"将士"
 },
 {
-"label_id":1706,
-"label_poetry_id":" ",
+"label_id":75,
 "label_kind_id":8,
-"label_name":"瀑布"
+"label_name":"农民"
 },
 {
-"label_id":1707,
-"label_poetry_id":"12,",
+"label_id":76,
 "label_kind_id":8,
-"label_name":"日月"
+"label_name":"歌女"
 },
 {
-"label_id":1708,
-"label_poetry_id":" ",
+"label_id":77,
 "label_kind_id":8,
-"label_name":"寺庙"
+"label_name":"弃妇"
 },
 {
-"label_id":1709,
-"label_poetry_id":"8,",
+"label_id":78,
 "label_kind_id":8,
-"label_name":"山水"
+"label_name":"宫怨"
 },
 {
-"label_id":1710,
-"label_poetry_id":" ",
-"label_kind_id":8,
-"label_name":"树木"
-},
-{
-"label_id":1711,
-"label_poetry_id":" ",
-"label_kind_id":8,
-"label_name":"田园"
-},
-{
-"label_id":1712,
-"label_poetry_id":"2,",
-"label_kind_id":8,
-"label_name":"咏物"
-},
-{
-"label_id":1713,
-"label_poetry_id":"14,",
-"label_kind_id":8,
-"label_name":"雨雪"
-},
-{
-"label_id":1800,
-"label_poetry_id":"10,23,",
+"label_id":79,
 "label_kind_id":9,
-"label_name":"春天"
+"label_name":"春节"
 },
 {
-"label_id":1801,
-"label_poetry_id":" ",
+"label_id":80,
 "label_kind_id":9,
-"label_name":"晨昏"
+"label_name":"七夕节"
 },
 {
-"label_id":1802,
-"label_poetry_id":"31,",
+"label_id":81,
 "label_kind_id":9,
-"label_name":"冬天"
+"label_name":"中秋节"
 },
 {
-"label_id":1803,
-"label_poetry_id":" ",
+"label_id":82,
 "label_kind_id":9,
-"label_name":"晴天"
+"label_name":"寒食节"
 },
 {
-"label_id":1804,
-"label_poetry_id":"8,",
+"label_id":83,
 "label_kind_id":9,
-"label_name":"秋天"
+"label_name":"元宵节"
 },
 {
-"label_id":1805,
-"label_poetry_id":" ",
+"label_id":84,
 "label_kind_id":9,
-"label_name":"青春"
+"label_name":"重阳节"
 },
 {
-"label_id":1806,
-"label_poetry_id":" ",
+"label_id":85,
 "label_kind_id":9,
-"label_name":"夏天"
+"label_name":"端午节"
 },
 {
-"label_id":1807,
-"label_poetry_id":" ",
+"label_id":86,
 "label_kind_id":9,
-"label_name":"惜时"
+"label_name":"清明节"
 },
 {
-"label_id":1808,
-"label_poetry_id":" ",
-"label_kind_id":9,
-"label_name":"阴天"
-},
-{
-"label_id":1900,
-"label_poetry_id":"13,16,",
+"label_id":87,
 "label_kind_id":10,
-"label_name":"悲伤"
+"label_name":"咏史"
 },
 {
-"label_id":1901,
-"label_poetry_id":"28，",
+"label_id":88,
 "label_kind_id":10,
-"label_name":"悲愤"
+"label_name":"讽刺"
 },
 {
-"label_id":1902,
-"label_poetry_id":" ",
+"label_id":89,
 "label_kind_id":10,
-"label_name":"愤怒"
+"label_name":"吊古伤今"
 },
 {
-"label_id":1903,
-"label_poetry_id":"12,",
+"label_id":90,
 "label_kind_id":10,
-"label_name":"孤独"
-},
-{
-"label_id":1904,
-"label_poetry_id":"24,",
-"label_kind_id":10,
-"label_name":"歌颂"
-},
-{
-"label_id":1905,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"怀古"
-},
-{
-"label_id":1906,
-"label_poetry_id":"10,11,",
-"label_kind_id":10,
-"label_name":"欢喜"
-},
-{
-"label_id":1907,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"豪放"
-},
-{
-"label_id":1908,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"圣贤"
-},
-{
-"label_id":1909,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"眷恋"
-},
-{
-"label_id":1910,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"谨慎"
-},
-{
-"label_id":1911,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"旷达"
-},
-{
-"label_id":1912,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"狂放"
-},
-{
-"label_id":1913,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"泼辣"
-},
-{
-"label_id":1914,
-"label_poetry_id":"9,22,",
-"label_kind_id":10,
-"label_name":"凄凉"
-},
-{
-"label_id":1915,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"失意"
-},
-{
-"label_id":1916,
-"label_poetry_id":"26,",
-"label_kind_id":10,
-"label_name":"思乡"
-},
-{
-"label_id":1917,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"婉约"
-},
-{
-"label_id":1918,
-"label_poetry_id":"6,35,",
-"label_kind_id":10,
-"label_name":"无奈"
-},
-{
-"label_id":1919,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"温厚"
-},
-{
-"label_id":1920,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"羞怯"
-},
-{
-"label_id":1921,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"闲适"
-},
-{
-"label_id":1922,
-"label_poetry_id":"8,16,",
-"label_kind_id":10,
-"label_name":"咏怀"
-},
-{
-"label_id":1923,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"自由"
-},
-{
-"label_id":1924,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"醉酒"
-},
-{
-"label_id":1925,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"忧愁"
-},
-{
-"label_id":1926,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"惋惜"
-},
-{
-"label_id":1927,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"仰慕"
-},
-{
-"label_id":1928,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"建功立业"
-},
-{
-"label_id":1929,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"忧虑"
-},
-{
-"label_id":1930,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"同情"
-},
-{
-"label_id":1931,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"乐观"
-},
-{
-"label_id":1932,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"赞赏"
-},
-{
-"label_id":1933,
-"label_poetry_id":" ",
-"label_kind_id":10,
-"label_name":"规劝"
-},
-{
-"label_id":2000,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"狩猎"
-},
-{
-"label_id":2001,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"垂钓"
-},
-{
-"label_id":2002,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"登高"
-},
-{
-"label_id":2003,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"读书"
-},
-{
-"label_id":2004,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"佛事"
-},
-{
-"label_id":2005,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"祭祀"
-},
-{
-"label_id":2006,
-"label_poetry_id":"6,",
-"label_kind_id":11,
-"label_name":"劳作"
-},
-{
-"label_id":2007,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"农事"
-},
-{
-"label_id":2008,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"踏青"
-},
-{
-"label_id":2009,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"舞蹈"
-},
-{
-"label_id":2010,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"学习"
-},
-{
-"label_id":2011,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"行路"
-},
-{
-"label_id":2012,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"游仙"
-},
-{
-"label_id":2013,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"游戏"
-},
-{
-"label_id":2014,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"音乐"
-},
-{
-"label_id":2015,
-"label_poetry_id":" ",
-"label_kind_id":11,
-"label_name":"军旅"
-},
-{
-"label_id":2100,
-"label_poetry_id":" ",
-"label_kind_id":12,
-"label_name":"爱国"
-},
-{
-"label_id":2101,
-"label_poetry_id":" ",
-"label_kind_id":12,
-"label_name":"暴力"
-},
-{
-"label_id":2102,
-"label_poetry_id":"5,7,",
-"label_kind_id":12,
-"label_name":"腐败"
-},
-{
-"label_id":2103,
-"label_poetry_id":" ",
-"label_kind_id":12,
-"label_name":"感时"
-},
-{
-"label_id":2104,
-"label_poetry_id":" ",
-"label_kind_id":12,
-"label_name":"贫穷"
-},
-{
-"label_id":2105,
-"label_poetry_id":"23,",
-"label_kind_id":12,
-"label_name":"忧国"
-},
-{
-"label_id":2106,
-"label_poetry_id":" ",
-"label_kind_id":12,
-"label_name":"忧民"
-},
-{
-"label_id":2107,
-"label_poetry_id":"1,5,6,7,30,",
-"label_kind_id":12,
-"label_name":"讽喻"
-},
-{
-"label_id":2108,
-"label_poetry_id":"12,",
-"label_kind_id":12,
-"label_name":"战事"
-},
-{
-"label_id":2109,
-"label_poetry_id":" ",
-"label_kind_id":12,
-"label_name":"灾难"
+"label_name":"忧国忧民"
 }]

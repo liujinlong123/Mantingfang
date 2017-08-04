@@ -73,15 +73,6 @@ public class RegisterUser extends Activity {
 				}
 			}
 		});
-		
-		/*finishR.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				RegisterAll.getInstance().destroyAll();
-				finish();
-			}
-		});*/
 	}
 	
 	private void saveUser(final String phoneNum, final String nickname, final String password) {
@@ -101,6 +92,8 @@ public class RegisterUser extends Activity {
 					SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 					editor.putString("userId", result);
 					editor.commit();
+					RegisterAll.getInstance().destroyAll();
+					finish();
 				}
 			}
 

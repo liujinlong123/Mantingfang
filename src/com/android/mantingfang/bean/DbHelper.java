@@ -18,7 +18,7 @@ public class DbHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		
 		//poetry
-		String POsql = "create table Poetry (poetry_id integer, poetry_label_id integer, "
+		/*String POsql = "create table Poetry (poetry_id integer, poetry_label_id integer, "
 				+ "poetry_writer_id integer, poetry_language_id integer, poetry_name text,"
 				+ "poetry_content text, poetry_rhesis text)";
 		db.execSQL(POsql);
@@ -31,7 +31,7 @@ public class DbHelper extends SQLiteOpenHelper {
 		//info
 		String INsql = "create table Info (info_id integer, info_poetry_id integer, info_background text, info_praise text,"
 				+ "info_note text, info_tonow text, info_translation text)";
-		db.execSQL(INsql);
+		db.execSQL(INsql);*/
 		
 		//country
 		String COUNTRYsql = "create table Country (country_id integer, country_name text)";

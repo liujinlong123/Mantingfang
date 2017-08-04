@@ -5,7 +5,6 @@ import com.android.mantingfanggsc.R;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -91,16 +90,6 @@ public class Phone extends Activity {
 				}
 			}
 		});
-		
-		/*next.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				RegisterAll.getInstance().addActivity(Phone.this);
-				Intent intent = new Intent(Phone.this, RegisterUser.class);
-				startActivity(intent);
-			}
-		});*/
 	}
 
 	private void getVerCode(final String phoneNum) {
@@ -135,6 +124,7 @@ public class Phone extends Activity {
 			protected void onPostExecute(String result) {
 				Log.v("TESTREG", result + "---");
 				if (result != null && !result.equals("") && result.equals("validate succeed")) {
+					RegisterAll.getInstance().addActivity(Phone.this);
 					Intent intent = new Intent(Phone.this, RegisterUser.class);
 					intent.putExtra("phoneNum", phoneNum);
 					startActivity(intent);

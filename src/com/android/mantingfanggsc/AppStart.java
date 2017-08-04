@@ -9,18 +9,12 @@ import com.android.mantingfang.bean.Country;
 import com.android.mantingfang.bean.CountryDao;
 import com.android.mantingfang.bean.Dynasty;
 import com.android.mantingfang.bean.DynastyDao;
-import com.android.mantingfang.bean.Info;
-import com.android.mantingfang.bean.InfoDao;
 import com.android.mantingfang.bean.Kind;
 import com.android.mantingfang.bean.KindDao;
 import com.android.mantingfang.bean.Label;
 import com.android.mantingfang.bean.LabelDao;
 import com.android.mantingfang.bean.Language;
 import com.android.mantingfang.bean.LanguageDao;
-import com.android.mantingfang.bean.Poetry;
-import com.android.mantingfang.bean.PoetryDao;
-import com.android.mantingfang.bean.Writer;
-import com.android.mantingfang.bean.WriterDao;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -39,17 +33,17 @@ import android.widget.Toast;
 public class AppStart extends Activity {
 
 	private Context context;
-	private List<Writer> writerList;
+	/*private List<Writer> writerList;
 	private List<Poetry> poetryList;
-	private List<Info> infoList;
+	private List<Info> infoList;*/
 	private List<Dynasty> dynastyList;
 	private List<Country> countryList;
 	private List<Language> languageList;
 	private List<Kind> kindList;
 	private List<Label> labelList;
-	List<Writer> wrs = new ArrayList<Writer>();
-	List<Poetry> pos = new ArrayList<Poetry>();
-	List<Info> ins = new ArrayList<Info>();
+	//List<Writer> wrs = new ArrayList<Writer>();
+	//List<Poetry> pos = new ArrayList<Poetry>();
+	//List<Info> ins = new ArrayList<Info>();
 	List<Dynasty> dys = new ArrayList<Dynasty>();
 	List<Country> cos = new ArrayList<Country>();
 	List<Language> lans = new ArrayList<Language>();
@@ -65,7 +59,7 @@ public class AppStart extends Activity {
 		
 		
 		//final String isInsert = this.getProperty("isInsert");
-		int waitTime = 4000;
+		int waitTime = 1000;
 		/*if(StringUtils.isEmpty(isInsert)){
 			waitTime = 4000;
 		}*/
@@ -98,7 +92,7 @@ public class AppStart extends Activity {
 				@SuppressWarnings("rawtypes")
 				ArrayList list = bundle.getParcelableArrayList("list");
 				long startTime = System.currentTimeMillis();
-				writerList = (List<Writer>) list.get(0);
+				/*writerList = (List<Writer>) list.get(0);
 				if (writerList != null) {
 					WriterDao ww = new WriterDao(context);
 					ww.insertWR(writerList);
@@ -117,38 +111,38 @@ public class AppStart extends Activity {
 					InfoDao ii = new InfoDao(context);
 					ii.insertIN(infoList);
 					Log.v("info", "------successful");
-				}
+				}*/
 				
 				
-				dynastyList = (List<Dynasty>)list.get(3);
+				dynastyList = (List<Dynasty>)list.get(0);
 				if (dynastyList != null) {
 					DynastyDao dd = new DynastyDao(context);
 					dd.insertDY(dynastyList);
 					Log.v("dynasty", "------successful");
 				}
 				
-				countryList = (List<Country>)list.get(4);
+				countryList = (List<Country>)list.get(1);
 				if (countryList != null) {
 					CountryDao cc = new CountryDao(context);
 					cc.insertCountry(countryList);
 					Log.v("country", "------successful");
 				}
 				
-				languageList = (List<Language>)list.get(5);
+				languageList = (List<Language>)list.get(2);
 				if (languageList != null) {
 					LanguageDao ll = new LanguageDao(context);
 					ll.insertLan(languageList);
 					Log.v("Language", "------successful");
 				}
 				
-				kindList = (List<Kind>)list.get(6);
+				kindList = (List<Kind>)list.get(3);
 				if (kindList != null) {
 					KindDao kk = new KindDao(context);
 					kk.insertKIND(kindList);
 					Log.v("kind", "------successful");
 				}
 				
-				labelList = (List<Label>)list.get(7);
+				labelList = (List<Label>)list.get(4);
 				if (labelList != null) {
 					LabelDao lla = new LabelDao(context);
 					lla.insertLabel(labelList);
@@ -171,9 +165,9 @@ public class AppStart extends Activity {
 			public void run() {
 				Message msg = new Message();
 				try {
-					ins = ApiClient.getInfoListByAs("info.json", context);
-					wrs = ApiClient.getWriterListByAs("writer.json", context);
-					pos = ApiClient.getPoetryListByAs("poetry.json", context);
+					//ins = ApiClient.getInfoListByAs("info.json", context);
+					//wrs = ApiClient.getWriterListByAs("writer.json", context);
+					//pos = ApiClient.getPoetryListByAs("poetry.json", context);
 					dys = ApiClient.getDynastyListByAs("dynasty.json", context);
 					cos = ApiClient.getCountryListByAs("country.json", context);
 					lans = ApiClient.getLanguageListByAs("language.json", context);
@@ -181,14 +175,14 @@ public class AppStart extends Activity {
 					labs = ApiClient.getLabelListByAs("label.json", context);
 					Log.v("Appstart", "initData");
 					
-					if ((wrs.size() > 0) || (pos.size() > 0) || (ins.size() > 0)) {
+					//if ((wrs.size() > 0) || (pos.size() > 0) || (ins.size() > 0)) {
 						msg.what = 1;
 						Bundle data = new Bundle();
 						@SuppressWarnings("rawtypes")
 						ArrayList list = new ArrayList();
-						list.add(wrs);
-						list.add(pos);
-						list.add(ins);
+						//list.add(wrs);
+						//list.add(pos);
+						//list.add(ins);
 						list.add(dys);
 						list.add(cos);
 						list.add(lans);
@@ -196,9 +190,9 @@ public class AppStart extends Activity {
 						list.add(labs);
 						data.putParcelableArrayList("list", list);
 						msg.setData(data);
-					} else {
-						msg.what = -1;
-					}
+					//} else {
+						//msg.what = -1;
+					//}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}

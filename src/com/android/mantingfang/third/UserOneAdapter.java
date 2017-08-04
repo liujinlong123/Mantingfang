@@ -4,16 +4,12 @@ import java.util.List;
 
 import com.android.mantingfang.bean.DynastyDao;
 import com.android.mantingfang.bean.MyDao;
-import com.android.mantingfang.bean.PoetryDao;
-import com.android.mantingfang.model.Poem;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -24,7 +20,7 @@ public class UserOneAdapter extends BaseAdapter {
 	private Context mContext;
 	private LayoutInflater inflater;
 	private List<Integer> list;
-	private PoetryDao poetryDao;
+	//private PoetryDao poetryDao;
 	private DynastyDao dynastyDao;
 	private MyDao myDao;
 	private boolean isCancel;
@@ -33,7 +29,7 @@ public class UserOneAdapter extends BaseAdapter {
 		this.mContext = context;
 		this.list = myIds;
 		inflater = LayoutInflater.from(context);
-		this.poetryDao = new PoetryDao(mContext);
+		//this.poetryDao = new PoetryDao(mContext);
 		this.dynastyDao = new DynastyDao(mContext);
 		this.myDao = new MyDao(context);
 		this.isCancel = isCancel;
@@ -75,10 +71,10 @@ public class UserOneAdapter extends BaseAdapter {
 		}
 		
 		final int myId = list.get(position);
-		Poem poem = poetryDao.findPoemById(myId);
-		Log.v("poem", poem.getContent());
+		//Poem poem = poetryDao.findPoemById(myId);
+		//Log.v("poem", poem.getContent());
 		
-		holder.poemName.setText(poem.getTitle());
+		/*holder.poemName.setText(poem.getTitle());
 		holder.poemRhesis.setText("关关雎鸠，在河之洲");
 		if (!isCancel) {
 			//holder.writerName.setVisibility(View.VISIBLE);
@@ -96,7 +92,7 @@ public class UserOneAdapter extends BaseAdapter {
 					myDao.deleteMy(myId);
 				}
 			});
-		}
+		}*/
 		
 		return view;
 	}

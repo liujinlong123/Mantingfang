@@ -13,8 +13,9 @@ public final class R {
         public static final int slide_up=0x7f040001;
     }
     public static final class array {
+        public static final int item_fonts_dialog=0x7f080001;
         public static final int item_irdc_dialog=0x7f080000;
-        public static final int item_sex=0x7f080001;
+        public static final int item_sex=0x7f080002;
     }
     public static final class attr {
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
@@ -580,22 +581,23 @@ containing a value of this type.
         public static final int sound_one=0x7f020043;
         public static final int sound_three=0x7f020044;
         public static final int sound_two=0x7f020045;
-        public static final int tick=0x7f020046;
-        public static final int topbar_first_btn=0x7f020047;
-        public static final int topbar_second_leftbtn=0x7f020048;
-        public static final int topbar_second_leftbtn_true=0x7f020049;
-        public static final int topbar_second_leftselector=0x7f02004a;
-        public static final int topbar_second_rightbtn=0x7f02004b;
-        public static final int topbar_second_rightbtn_true=0x7f02004c;
-        public static final int topbar_second_rightselector=0x7f02004d;
-        public static final int topbar_second_text=0x7f02004e;
-        public static final int user_care=0x7f02004f;
-        public static final int userhead=0x7f020050;
-        public static final int welcome=0x7f020051;
-        public static final int xcz_round=0x7f020052;
-        public static final int zan=0x7f020053;
-        public static final int zan_rs=0x7f020054;
-        public static final int zan_s=0x7f020055;
+        public static final int textview_bg_gray=0x7f020046;
+        public static final int tick=0x7f020047;
+        public static final int topbar_first_btn=0x7f020048;
+        public static final int topbar_second_leftbtn=0x7f020049;
+        public static final int topbar_second_leftbtn_true=0x7f02004a;
+        public static final int topbar_second_leftselector=0x7f02004b;
+        public static final int topbar_second_rightbtn=0x7f02004c;
+        public static final int topbar_second_rightbtn_true=0x7f02004d;
+        public static final int topbar_second_rightselector=0x7f02004e;
+        public static final int topbar_second_text=0x7f02004f;
+        public static final int user_care=0x7f020050;
+        public static final int userhead=0x7f020051;
+        public static final int welcome=0x7f020052;
+        public static final int xcz_round=0x7f020053;
+        public static final int zan=0x7f020054;
+        public static final int zan_rs=0x7f020055;
+        public static final int zan_s=0x7f020056;
     }
     public static final class id {
         public static final int action_settings=0x7f0b0104;

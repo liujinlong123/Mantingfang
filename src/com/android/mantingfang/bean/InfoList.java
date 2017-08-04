@@ -1,4 +1,4 @@
-package com.android.mantingfang.bean;
+/*package com.android.mantingfang.bean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,3 +43,4 @@ public class InfoList extends Base {
 		return infos;
 	}
 }
+*/

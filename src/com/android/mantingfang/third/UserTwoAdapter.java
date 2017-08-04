@@ -7,6 +7,7 @@ import org.json.JSONException;
 
 import com.android.mantingfang.bean.PoetryList;
 import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.model.PoemM;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.CircleImageView;
@@ -131,12 +132,28 @@ public class UserTwoAdapter extends BaseAdapter {
 		holder.time.setText(content.getTime());
 
 		// 点赞点击事件
+		if (content.getZan() != null) {
+			if (content.getZan().equals("0")) {
+				holder.zan.setImageResource(R.drawable.a7r);
+			} else if (content.getZan().equals("1")){
+				holder.zan.setImageResource(R.drawable.a7u);
+			}
+		}
 		holder.zan.setOnClickListener(new OnClickListener() {
-
+			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
+				if (content.getZan() != null) {
+					if (content.getZan().equals("0")) {
+						holder.zan.setImageResource(R.drawable.a7u);
+						content.setZan("1");
+						sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "1", content.getPost_com_num() + "");
+					} else if (content.getZan().equals("1")){
+						holder.zan.setImageResource(R.drawable.a7r);
+						content.setZan("0");
+						sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "0", content.getPost_com_num() + "");
+					}
+				}
 			}
 		});
 
@@ -281,6 +298,25 @@ public class UserTwoAdapter extends BaseAdapter {
 
 		};
 
+		task.execute();
+	}
+	
+	private void sendZan(final String userId, final String topicId, final String zan, final String type) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_postDianZan(userId, type, topicId, zan);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				
+			}
+			
+		};
+		
 		task.execute();
 	}
 }

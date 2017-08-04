@@ -7,6 +7,7 @@ import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfanggsc.CustomListView;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
@@ -50,7 +51,7 @@ public class ThirdFourPager extends Fragment {
 			@Override
 			protected String doInBackground(String... params) {
 				
-				return MyClient.getInstance().http_postOne("4", "0");
+				return MyClient.getInstance().http_postOne(UserId.getInstance(getActivity()).getUserId(), "4", "0");
 			}
 			
 			@Override
@@ -79,7 +80,11 @@ public class ThirdFourPager extends Fragment {
 	
 	@Override
 	public void onDestroy() {
-		adapterFour.clearPlayer();
+		if (adapterFour != null) {
+			if (adapterFour.isPlayer()) {
+				adapterFour.clearPlayer();
+			}
+		}
 		super.onDestroy();
 	}
 }

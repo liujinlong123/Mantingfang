@@ -1,21 +1,17 @@
 package com.android.mantingfanggsc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
 
-import com.android.mantingfang.bean.PoetryDao;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.bean.Writer;
-import com.android.mantingfang.bean.WriterDao;
 import com.android.mantingfang.model.Poem;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -43,7 +39,7 @@ public class WriterDetail extends Activity {
 	private Writer writer;
 	
 	private int writerId;
-	private WriterDao writerDao;
+	//private WriterDao writerDao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +80,10 @@ public class WriterDetail extends Activity {
 		});
 	}
 
-	private void getData() {
+	/*private void getData() {
 		plist = new ArrayList<Poem>();
 		plist = new PoetryDao(WriterDetail.this).getAllPoemM();
-	}
+	}*/
 
 	private void getDatas(final boolean isNetwork, final int writerId, final Writer writer) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
@@ -109,12 +105,12 @@ public class WriterDetail extends Activity {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				} else {
+				} /*else {
 					writerDao = new WriterDao(WriterDetail.this);
 					Writer writers = writerDao.getWriterMById(writerId);
 					getData();
 					adapter = new WriterDetailListAdapter(WriterDetail.this, plist, writers);
-				}
+				}*/
 				writer.setWorksNum(plist.size() + " ");
 				listview.setAdapter(adapter);
 				listview.setOnItemClickListener(new OnItemClickListener() {
@@ -124,7 +120,7 @@ public class WriterDetail extends Activity {
 						if (position == 0) {
 							
 						} else if (!isNetwork){
-							UIHelper.showPoemDetail(WriterDetail.this, writerId, 0);
+							//UIHelper.showPoemDetail(WriterDetail.this, writerId, 0);
 						} else if (isNetwork) {
 							UIHelper.showPoemMDetailTwoById(WriterDetail.this, plist.get(position - 1).getPoemId(), 0);
 						}

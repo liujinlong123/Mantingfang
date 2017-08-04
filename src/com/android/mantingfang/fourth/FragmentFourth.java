@@ -34,6 +34,7 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 	
 	private static final int USERID = 7;
 	private static final int LOGON = 8;
+	private static final int MYUSER = 9;
 
 	private View view;
 	private LinearLayout linearMy;
@@ -135,7 +136,7 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 				startActivityForResult(intent, LOGON);
 			} else if (Integer.parseInt(userId) > -1) {
 				Intent intent0 = new Intent(getActivity(), FourthMy.class);
-				startActivity(intent0);
+				startActivityForResult(intent0, MYUSER);
 			}
 			break;
 			
@@ -241,8 +242,16 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 					if (list != null && list.size() > 0) {
 						User user = list.get(0);
 						nickName.setText(user.getUserNickname());
-						label.setText(user.getUserLabel());
-						PictureLoad.getInstance().loadImage(user.getUserPhoto(), imgHead);
+						if (user.getUserLabel() != null && !user.getUserLabel().equals("")) {
+							label.setText(user.getUserLabel());
+						} else {
+							label.setText("描述一下你自己呗");
+						}
+						if (user.getUserPhoto() != null && !user.getUserPhoto().equals("")) {
+							PictureLoad.getInstance().loadImage(user.getUserPhoto(), imgHead);
+						} else {
+							imgHead.setImageResource(R.drawable.welcome);
+						}
 					}
 				}
 			} catch (JSONException e) {
@@ -291,6 +300,12 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 					nickName.setText("点击登录");
 					label.setText("......");
 				}
+			}
+			break;
+			
+		case MYUSER:
+			if (resultCode == getActivity().RESULT_OK) {
+				getImage(userId);
 			}
 			break;
 		}

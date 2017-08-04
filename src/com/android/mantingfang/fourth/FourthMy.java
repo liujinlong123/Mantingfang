@@ -132,6 +132,7 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 				param.put("user_area", user.getUserArea());
 				param.put("user_introduce", user.getUserIntro());
 				saveData(param);
+				setResult(RESULT_OK);
 				finish();
 			}
 		});
@@ -274,24 +275,26 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 			
 			@Override
 			protected void onPostExecute(String result) {
-				try {
-					List<User> list = TopicList.parseUserInfo(StringUtils.toJSONArray(result), userId).getUserInfoList();
-					if (list != null && list.size() > 0) {
-						user = list.get(0);
-						nickName.setText(user.getUserNickname());
-						label.setText(user.getUserLabel());
-						sex.setText(user.getUserSex());
-						birth.setText(user.getUserAge());
-						area.setText(user.getUserArea());
-						intro.setText(user.getUserIntro());
-						//user.setUserPhoto("1.png");
+				if (result != null && !result.equals("")) {
+					try {
+						List<User> list = TopicList.parseUserInfo(StringUtils.toJSONArray(result), userId).getUserInfoList();
+						if (list != null && list.size() > 0) {
+							user = list.get(0);
+							nickName.setText(user.getUserNickname());
+							label.setText(user.getUserLabel());
+							sex.setText(user.getUserSex());
+							birth.setText(user.getUserAge());
+							area.setText(user.getUserArea());
+							intro.setText(user.getUserIntro());
+							//user.setUserPhoto("1.png");
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
+					getImage(user.getUserPhoto());
 				}
-				
-				getImage(user.getUserPhoto());
 			}
 			
 		};
@@ -317,7 +320,11 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 			
 			@Override
 			protected void onPostExecute(String result) {
-				userPhoto.setImageBitmap(bitmap);
+				if (bitmap != null) {
+					userPhoto.setImageBitmap(bitmap);
+				} else {
+					userPhoto.setImageResource(R.drawable.welcome);
+				}
 			}
 			
 		};
