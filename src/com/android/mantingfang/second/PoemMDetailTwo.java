@@ -113,7 +113,7 @@ public class PoemMDetailTwo extends Activity {
 		poemname.setText(poem.getPoemName());
 		writername.setText("[" + poem.getDynasty() + "]" + poem.getWriter());
 		content.setText(poem.getPoemContent());
-		
+		kindDetail.setText(poem.getPoemBg());
 		poetrydetail_rgp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -134,7 +134,7 @@ public class PoemMDetailTwo extends Activity {
 					if (poem.getNotes() == null) {
 						Log.v("info--poetrydetail", "null");
 					} else {
-						kindDetail.setText(poem.getNotes());
+						kindDetail.setText(StringUtils.SelectNote(poem.getNotes()));
 					}
 					
 					break;

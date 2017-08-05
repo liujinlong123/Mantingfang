@@ -14,7 +14,6 @@ import com.android.mantingfang.second.SideBar.OnTouchingLetterChangedListener;
 import com.android.mantingfanggsc.CharacterParser;
 import com.android.mantingfanggsc.CustomListView;
 import com.android.mantingfanggsc.MyClient;
-import com.android.mantingfanggsc.NetWork;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
 
@@ -48,7 +47,7 @@ public class FragmentSecond extends Fragment {
 	private SecondWriterListViewAdapter writerAdapter;
 	private List<Writer> writers;
 	private FrameLayout frame;
-	//private WriterDao writerDao;
+	// private WriterDao writerDao;
 
 	private SideBar sideBar;
 	private TextView dialog;
@@ -96,7 +95,9 @@ public class FragmentSecond extends Fragment {
 	// 初始化文库
 	private void initWenku() {
 		wenkuListView = (CustomListView) view.findViewById(R.id.frag_second_wenku_list);
-		getWenkuDatas();
+		getWenkuDataFromSql();
+		wenkuAdapter = new SecondWenkuListViewAdapter(getActivity(), wenkuList);
+		wenkuListView.setAdapter(wenkuAdapter);
 	}
 
 	private void getWenkuDataFromSql() {
@@ -106,32 +107,6 @@ public class FragmentSecond extends Fragment {
 		if (kindDao.findAllLabelByKind() != null) {
 			wenkuList = kindDao.findAllLabelByKind();
 		}
-	}
-
-	private void getWenkuDatas() {
-		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
-
-			@Override
-			protected String doInBackground(String... params) {
-				boolean isNetwork = NetWork.isNetworkAvailable(getActivity());
-				getWenkuDataFromSql();
-				if (isNetwork) {
-					return "有网络";
-				} else {
-					return null;
-				}
-			}
-
-			@Override
-			protected void onPostExecute(String result) {
-				//Toast.makeText(getActivity(), result + " --", Toast.LENGTH_SHORT).show();
-				wenkuAdapter = new SecondWenkuListViewAdapter(getActivity(), wenkuList);
-				wenkuListView.setAdapter(wenkuAdapter);
-			}
-
-		};
-
-		task.execute();
 	}
 
 	// 初始化诗人页
@@ -146,67 +121,52 @@ public class FragmentSecond extends Fragment {
 		sideBar = (SideBar) view.findViewById(R.id.sidrbar);
 		dialog = (TextView) view.findViewById(R.id.dialog);
 		sideBar.setTextView(dialog);
-		
-		getWriterDatas(true);
-		
+
+		getWriterDatas();
+
 	}
-	
-	private void getWriterDatas(final boolean isNetwork) {
+
+	private void getWriterDatas() {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
 			protected String doInBackground(String... params) {
-				if (isNetwork) {
-					return MyClient.getInstance().Http_postWriters("1");
-				}/* else {
-					writerDao = new WriterDao(getActivity());
-					writers = writerDao.getAllWriter();
-					String[] writerss = new String[writers.size()];
-					for (int i = 0; i < writers.size(); i++) {
-						writerss[i] = writers.get(i).getWriterName();
-					}
-					SourceDateList = filledData(writerss, writers);
-					Collections.sort(SourceDateList, pinyinComparator);
-					return null;
-				}*/
-				return null;
+				return MyClient.getInstance().Http_postWriters("1");
 			}
 
 			@Override
 			protected void onPostExecute(String result) {
-				if (isNetwork) {
-					try {
-						if (result != null && !result.equals("")) {
-							writers = TopicList.parseAllWriters(StringUtils.toJSONArray(result)).getAllWritersList();
-							String[] writerss = new String[writers.size()];
-							for (int i = 0; i < writers.size(); i++) {
-								writerss[i] = writers.get(i).getWriterName();
-							}
-							SourceDateList = filledData(writerss, writers);
-							Collections.sort(SourceDateList, pinyinComparator);
+
+				try {
+					if (result != null && !result.equals("")) {
+						writers = TopicList.parseAllWriters(StringUtils.toJSONArray(result)).getAllWritersList();
+						String[] writerss = new String[writers.size()];
+						for (int i = 0; i < writers.size(); i++) {
+							writerss[i] = writers.get(i).getWriterName();
 						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						SourceDateList = filledData(writerss, writers);
+						Collections.sort(SourceDateList, pinyinComparator);
 					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
+
 				writerAdapter = new SecondWriterListViewAdapter(getActivity(), SourceDateList);
 				writerListView.setAdapter(writerAdapter);
 				writerListView.setOnItemClickListener(new OnItemClickListener() {
 
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-						if (isNetwork) {
-							SortModel model = SourceDateList.get(position - 1);
-							Writer w = new Writer(model.getwId(), model.getName(),
-									model.getDynastyName(), model.getWriter_career());
-							UIHelper.showWriterDetail(getActivity(), w, isNetwork);
-						} else {
-							UIHelper.showWriterDetail(getActivity(), SourceDateList.get(position - 1).getWriterId(), isNetwork);
-						}
+
+						SortModel model = SourceDateList.get(position - 1);
+						Writer w = new Writer(model.getwId(), model.getName(), model.getDynastyName(),
+								model.getWriter_career());
+						UIHelper.showWriterDetail(getActivity(), w, true);
+
 					}
 				});
-				
+
 				sideBar.setOnTouchingLetterChangedListener(new OnTouchingLetterChangedListener() {
 
 					@Override

@@ -59,6 +59,7 @@ public class FourthGuanzhu extends FragmentActivity {
 		initViewPager();
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void initViewPager() {
 		viewPager = (ViewPager)findViewById(R.id.fourth_guanzhu_view_pager);
 		left = (RadioButton)findViewById(R.id.topbar_rbtn_selectL);
@@ -84,6 +85,7 @@ public class FourthGuanzhu extends FragmentActivity {
 
 		// private FragmentManager fm;
 		private List<Fragment> fragments = null;
+		@SuppressWarnings("unused")
 		private FragmentManager fm;
 
 		public HomePageAdapter(FragmentManager fm, List<Fragment> fragments) {

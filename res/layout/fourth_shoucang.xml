@@ -12,12 +12,16 @@
         android:layout_height="0.5dp"
         android:background="@color/gray" />
     
-    <com.android.mantingfanggsc.CustomListView
-        android:id="@+id/fourth_shoucang_list"
+   <com.android.mantingfanggsc.CustomSwipeListView
+        android:id="@+id/shoucang_left_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" ></com.android.mantingfanggsc.CustomSwipeListView>
+   
+   <com.android.mantingfanggsc.CustomSwipeListView
+        android:id="@+id/shoucang_right_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:listSelector="@android:color/transparent" ></com.android.mantingfanggsc.CustomListView>
+        android:visibility="gone" ></com.android.mantingfanggsc.CustomSwipeListView>
     
     
 </LinearLayout>

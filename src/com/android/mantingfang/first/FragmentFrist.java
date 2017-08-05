@@ -8,6 +8,7 @@ import org.json.JSONException;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.fourth.LogOn;
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
@@ -23,6 +24,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,6 +50,8 @@ public class FragmentFrist extends Fragment {
 	private SharedPreferences pref;
 	private String userId;
 	
+	private String collect;
+	
 	@SuppressLint("InflateParams")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +70,7 @@ public class FragmentFrist extends Fragment {
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	private void initViews() {
 		btnAdd = (Button)view.findViewById(R.id.topbar_first_add);
 		imgCollect = (ImageView)view.findViewById(R.id.topbar_first_collect);
@@ -81,15 +87,6 @@ public class FragmentFrist extends Fragment {
 					Intent intent = new Intent(getActivity(), FirstPagerAdd.class);
 					startActivity(intent);
 				}
-				
-			}
-		});
-		
-		imgCollect.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -118,12 +115,33 @@ public class FragmentFrist extends Fragment {
 			}
 		});
 		
-		initViewPager();
-	}
-	
-	private void initViewPager() {
 		viewPager = (ViewPager) view.findViewById(R.id.frag_first_viewpager);
 		getData();
+		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
+			
+			@Override
+			public void onPageSelected(int arg0) {
+				// TODO Auto-generated method stub
+				//Log.v("onPageScrollStateChanged", arg0 + "滑动完毕");
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				if (arg0 == 2) {
+					//请求是否收藏
+					Log.v("onPageScrollStateChanged", arg0 + "滑动完毕");
+				} else if (arg0 == 1) {
+					Log.v("onPageScrollStateChanged", arg0 + "正在滑动");
+					//getCollection(adapter.get);
+				}
+			}
+		});
 	}
 	
 	class ViewAdapter extends FragmentPagerAdapter {
@@ -225,6 +243,62 @@ public class FragmentFrist extends Fragment {
 		editor.putInt("fonts_type", type);
 		editor.commit();
 		adapter.setFonts(type);
+	}
+	
+	private void sendCollection(final String poemId, final String collection) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_postCollection(UserId.getInstance(getActivity()).getUserId(), poemId, "0", collection);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				
+			}
+			
+		};
+		
+		task.execute();
+	}
+	
+	private void getCollection(final String poemId) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_postGetCollection(UserId.getInstance(getContext()).getUserId(), poemId, "0");
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				if (result != null && !result.equals("")) {
+					collect = result;
+				} else {
+					collect = "0";
+				}
+				
+				imgCollect.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						if (collect.equals("0")) {		//没收藏-->收藏
+							imgCollect.setImageResource(R.drawable.collection_on);
+							sendCollection(poemId, "1");
+						} else if (collect.equals("1")) { //收藏-->没收藏
+							imgCollect.setImageResource(R.drawable.collection_off);
+							sendCollection(poemId, "0");
+						}
+					}
+				});
+			}
+			
+		};
+		
+		task.execute();
 	}
 	
 	/*private void setViewPagerAdapter(final int type) {

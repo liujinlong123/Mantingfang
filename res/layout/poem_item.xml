@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="5dp" >
+
+    <LinearLayout
+        android:id="@+id/linear_item_poem"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        
+        <TextView
+            android:id="@+id/poem_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="国风·周南·关雎" />
+        
+        <TextView
+            android:id="@+id/poem_item_poemrhesis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关关雎鸠，在河之洲"
+            android:textColor="@color/gray" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/poem_item_writer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/linear_item_poem"
+        android:gravity="right"
+        android:hint="title"
+        android:textColor="@color/gray"
+        android:textSize="15sp" />
+
+</RelativeLayout>

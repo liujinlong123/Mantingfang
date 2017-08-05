@@ -46,10 +46,11 @@
             <TextView
                 android:id="@+id/comment_tv_new"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="50dp"
+                android:layout_height="30dp"
+                android:paddingLeft="25dp"
                 android:background="@color/beijingwhite"
                 android:text="最新评论"
+                android:gravity="center_vertical"
                 android:layout_marginTop="10dp" />
 
             <ListView

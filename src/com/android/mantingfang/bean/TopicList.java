@@ -28,6 +28,7 @@ public class TopicList extends Base {
 	private List<Poem> listKindPoem = new ArrayList<>();
 	private List<Writer> listAllWriters = new ArrayList<>();
 	private List<Poem> listWriterPoem = new ArrayList<>();
+	
 	//-------------------Search-----------------------------//
 	private List<PoemRhesis> listSearchPoem = new ArrayList<>();
 	private List<Writer> listSearchWriter = new ArrayList<>();
