@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.mantingfang.third.FileImgs;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -100,12 +102,12 @@ public class StringUtils {
 	 * @param pic
 	 * @return
 	 */
-	public static ArrayList<String> getPictures(String pic) {
+	public static ArrayList<FileImgs> getPictures(String pic) {
 		//Log.v("Stringutils--1", pic);
-		ArrayList<String> pictures = new ArrayList<>();
+		ArrayList<FileImgs> pictures = new ArrayList<>();
 		String[] tokens = pic.split("[,]");
 		for (int i = 0; i < tokens.length; i++) {
-			pictures.add(tokens[i]);
+			pictures.add(new FileImgs("0", tokens[i]));
 		}
 		//Log.v("Stringutils--2", pictures.toString());
 		return pictures;
@@ -329,15 +331,86 @@ public class StringUtils {
 			return s;
 		}
 		
-		//1.
-		else if(str.charAt(0) == '1' && str.charAt(1) == '.'){
+		//1
+		else if(str.charAt(0) == '1' && (str.charAt(1) != '.' && str.charAt(1) != '。')){
+			int[] length = new int [str.length()];
+			int q = 0;
+			int[] dot = new int [str.length()];
+			int l = 0;
+			//收集所有的.
+			for(int i = 0; i < str.length()-1; i++){
+				if((str.charAt(i) >= '0' && str.charAt(i) <= '9') && (str.charAt(i+1) < '0' || str.charAt(i+1) > '9')){
+					dot[l] = i+1;
+					l++;
+				}
+			}
+		
+			//第一个符合条件的数字
+			length[0] = 1; q++;
+			//得到.前三个数字前的坐标
+			for(int i = 1; i < l; i++){
+				int j = dot[i] - 4;
+				int flag1 = 0, flag2 = 0, flag3 = 0, flag4 = 0;
+				if(str.charAt(j) >= '0' && str.charAt(j) <= '9'){
+					flag1 = 1;
+				}
+				if(str.charAt(j+1) >= '0' && str.charAt(j+1) <= '9'){
+					flag2 = 1;
+				}
+				if(str.charAt(j+2) >= '0' && str.charAt(j+2) <= '9'){
+					flag3 = 1;
+				}
+				if(str.charAt(j+3) >= '0' && str.charAt(j+3) <= '9'){
+					flag4 = 1;
+				}
+				//三位数
+				int sum = 0;
+				if(flag1 == 0 && flag2 == 1 && flag3 == 1 && flag4 == 1){
+					 sum = (str.charAt(j+1)-'0')*100+(str.charAt(j+2)-'0')*10+(str.charAt(j+3)-'0')*1;
+					 if(sum >= 99 && sum <= 160){
+						 length[q] = j+1;
+						 q++;
+						 continue;
+					 }
+				}
+				//两位数
+				if(flag1 == 0 && flag2 == 0 && flag3 == 1 && flag4 == 1){
+					sum = (str.charAt(j+2)-'0')*10+(str.charAt(j+3)-'0')*1;
+					if(sum >= 9 && sum <= 99){
+						length[q] = j+2;
+						q++;
+						continue;
+					}
+				}
+				//一位数
+				if(flag1 == 0 && flag2 == 0 && flag3 == 0 && flag4 == 1){
+					sum = (str.charAt(j+3)-'0')*1;
+					if(sum >=1 && sum <= 9){
+						length[q] = j+3;
+						q++;
+						continue;
+					}
+				}
+			}
+			
+			String s = "";
+			s += str.substring(0, length[1]) + "\n";
+			int i;
+			for(i = 1; i < q-1; i++){
+				s += str.substring(length[i], length[i+1]) + "\n";
+			}
+			s += str.substring(length[i], str.length());
+			return s;
+		}
+		// 1. 或   1、
+		else if(str.charAt(0) == '1' && (str.charAt(1) == '.' || str.charAt(1) == '、')){
 			int[] length = new int [str.length()];
 			int q = 0;
 			int[] dot = new int [str.length()];
 			int l = 0;
 			//收集所有的.
 			for(int i = 0; i < str.length(); i++){
-				if(str.charAt(i) == '.'){
+				if(str.charAt(i) == '.' || str.charAt(i) == '、'){
 					dot[l] = i;
 					l++;
 				}
@@ -349,7 +422,8 @@ public class StringUtils {
 			for(int i = 1; i < l; i++){
 				int j = dot[i] - 3;
 				int flag1 = 0, flag2 = 0, flag3 = 0;
-				if(str.charAt(j) >= '0' && str.charAt(j) <= '9'){
+				//个十百千    千位上的不是数字
+				if(str.charAt(j) >= '0'   && str.charAt(j) <= '9'){
 					flag1 = 1;
 				}
 				if(str.charAt(j+1) >= '0' && str.charAt(j+1) <= '9'){
@@ -362,7 +436,7 @@ public class StringUtils {
 				int sum = 0;
 				if(flag1 == 1 && flag2 == 1 && flag3 == 1){
 					 sum = (str.charAt(j)-'0')*100+(str.charAt(j+1)-'0')*10+(str.charAt(j+2)-'0')*1;
-					 if(sum >= 100 && sum <= 200){
+					 if(sum >= 100 && sum <= 170){
 						 length[q] = j;
 						 q++;
 						 continue;
@@ -399,191 +473,366 @@ public class StringUtils {
 		}
 		//没有数字提示的注释
 		else {
-			int[] length = new int [str.length()];
-			int q = 0;
-			//所有 冒号的坐标：
-			int[] colon = new int [str.length()];
-			int c = 0;
-			//双引号外面  冒号的坐标：
-			int[] colonOutside = new int [str.length()];
-			int o = 0;
-			//双引号的 左右坐标：
-			int[] dotLeft = new int [str.length()];
-			int[] dotRight = new int [str.length()];
-			int l = 0, r = 0;
-			//所有  结尾符号的坐标
-			int[] dots = new int [str.length()];
-			int s = 0;
-			//双引号外 结尾符号的坐标
-			int[] dotsOutside = new int [str.length()];
-			int o1 = 0;
-			int[] dot1Left = new int [str.length()];
-			int[] dot1Right = new int [str.length()];
-			int l1 = 0, r1 = 0;
+			//判断双引号与句号的个数
+			double countDot = 0, countQuotation = 0;
 			for(int i = 0; i < str.length(); i++){
-				//记录下 所有冒号的坐标：
-				if(str.charAt(i) == '：'){
-					colon[c] = i;
-					c++;
+				if(str.charAt(i) == '。'){
+					countDot++;
 				}
-				//左双引号
-				if(str.charAt(i) == '“'){
-					dotLeft[l] = i;
-					l++;
-				}
-				//右双引号
-				if(str.charAt(i) == '”'){
-					dotRight[r] = i;
-					r++;
-				}
-				//所有结尾符号
-				if(str.charAt(i) == '。' || str.charAt(i) == '！' || str.charAt(i) == '？'|| 
-						str.charAt(i) == '”'|| str.charAt(i) == '’' || str.charAt(i) == '“' ||
-						str.charAt(i) == '‘' ||str.charAt(i) == '《' || str.charAt(i) == '》' || str.charAt(i) == '·') {
-					dots[s] = i;
-					s++;
+				if(str.charAt(i) == '“' || str.charAt(i) == '”'){
+					countQuotation++;
 				}
 			}
 			
-			int[] mark = new int [str.length()];
-			int m = 0;
-			int[] dotsMark = new int [str.length()];
-			int d = 0;
-			//先判断在引号中的冒号，将其删去！
-			for(int i = 0; i < c; i++){
-				for(int j = 0; j < l; j++){
-					//若引号在双引号内
-					if(colon[i] > dotLeft[j] && colon[i] < dotRight[j]){
-						mark[m] = colon[i];
-						m++;
+			//判断出双引号很多
+			if(countQuotation >= countDot*0.6){
+				int[] length = new int [str.length()];
+				int q = 0;
+				//所有 冒号的坐标：
+				int[] colon = new int [str.length()];
+				int c = 0;
+				//双引号外面  冒号的坐标：
+				int[] colonOutside = new int [str.length()];
+				int o = 0;
+				//双引号的 左右坐标：
+				int[] dotLeft = new int [str.length()];
+				int[] dotRight = new int [str.length()];
+				int l = 0, r = 0;
+				//所有  结尾符号的坐标
+				int[] dots = new int [str.length()];
+				int s = 0;
+				//双引号外 结尾符号的坐标
+				int[] dotsOutside = new int [str.length()];
+				int o1 = 0;
+				int[] dotsBesides = new int [str.length()];
+				int x = 0;
+				
+				for(int i = 0; i < str.length(); i++){
+					//记录下 所有冒号的坐标：
+					if(str.charAt(i) == '：'){
+						colon[c] = i;
+						c++;
+					}
+					//左双引号
+					if(str.charAt(i) == '“'){
+						dotLeft[l] = i;
+						l++;
+					}
+					//右双引号
+					if(str.charAt(i) == '”'){
+						dotRight[r] = i;
+						r++;
+					}
+					//所有结尾符号
+					if(str.charAt(i) == '。' || str.charAt(i) == '！' || str.charAt(i) == '？'|| 
+							str.charAt(i) == '”'|| str.charAt(i) == '’' || str.charAt(i) == '“' ||
+							str.charAt(i) == '‘' ||str.charAt(i) == '《' || str.charAt(i) == '》' || str.charAt(i) == '·') {
+						dots[s] = i;
+						s++;
+					}
+					if(str.charAt(i) == '。' || str.charAt(i) == '！' || str.charAt(i) == '？'|| 
+							str.charAt(i) == '”') {
+						dotsBesides[x] = i;
+						x++;
 					}
 				}
-			}
-			//将双引号内的各种符号的坐标也标记
-			for(int i = 0; i < s; i++){
-				for(int j = 0; j < l; j++){
-					if(dots[i] > dotLeft[j] && dots[i] < dotRight[j]){
-						dotsMark[d] = dots[i];
-						d++;
+				
+				int[] mark = new int [str.length()];
+				int m = 0;
+				int[] dotsMark = new int [str.length()];
+				int d = 0;
+				int[] dotsBesidesMark = new int [str.length()];
+				int b = 0;
+				//先判断在引号中的冒号，将其删去！
+				for(int i = 0; i < c; i++){
+					for(int j = 0; j < l; j++){
+						//若引号在双引号内
+						if(colon[i] > dotLeft[j] && colon[i] < dotRight[j]){
+							mark[m] = colon[i];
+							m++;
+						}
 					}
 				}
-			}
-			//将双引号之外的结尾符号存入新数组
-			for(int i = 0; i < s; i++){
-				int flag = 0;
-				//该符号在双引号内
-				for(int j = 0; j < d; j++){
-					if(dots[i] == dotsMark[j]){
-						flag = 1;
+				//将双引号内的dotsBesides去掉
+				for(int i = 0; i < x; i++){
+					int flag = 0;
+					for(int j = 0; j < l; j++){
+						if(dotsBesides[i] > dotLeft[j] && dotsBesides[i] < dotRight[j]){
+							flag = 1;
+						}
+					}
+					//dotsBesides 不在双引号内
+					if(flag == 0){
+						dotsBesidesMark[b] = dotsBesides[i];
+						b++;
 					}
 				}
-				//该符号不再双引号内
-				if(flag == 0){
-					dotsOutside[o1] = dots[i];
-					o1++;
-				}
-			}
-			//将不再双引号内的冒号存入新数组内
-			for(int i = 0; i < c; i++){
-				int flag = 0;
-				for(int j = 0; j < m; j++){
-					//说明该引号在双引号内
-					if(colon[i] == mark[j]){
-						flag = 1;
+				//将双引号内的各种符号的坐标也标记
+				for(int i = 0; i < s; i++){
+					for(int j = 0; j < l; j++){
+						if(dots[i] > dotLeft[j] && dots[i] < dotRight[j]){
+							dotsMark[d] = dots[i];
+							d++;
+						}
 					}
 				}
-				//该冒号不再双引号内
-				if(flag == 0){
-					colonOutside[o] = colon[i];
-					o++;
+				
+				//将双引号之外的结尾符号存入新数组
+				for(int i = 0; i < s; i++){
+					int flag = 0;
+					//该符号在双引号内
+					for(int j = 0; j < d; j++){
+						if(dots[i] == dotsMark[j]){
+							flag = 1;
+						}
+					}
+					//该符号不再双引号内
+					if(flag == 0){
+						dotsOutside[o1] = dots[i];
+						o1++;
+					}
 				}
-			}
-		
-			String s1 = "";
-			System.out.println("Test: ");
-			s1 += "(1)" + str.substring(0, dotsOutside[0]+1) + "\n";
-			//判断距离已经经过过滤的引号最近的一个 结尾符号，并记录该结尾符号的后一个坐标，作为换行依据
-			//从第二个冒号开始判断
-			for(int i = 1; i < o; i++){
-				//j是冒号的前一个坐标
-				for(int j = colonOutside[i]-1; j > 0 ; j--){
-					boolean b = false;
-					for(int k = 0; k < o1; k++){
-						//判断该坐标是否是一个结尾符号坐标
-						b = (j == dotsOutside[k]);
-						//是结尾符号，找到这个结尾符号的下一个坐标
-						if(b){
-							// ①  。|……      ② ！|……     ③ ？|……
-							if(str.charAt(dotsOutside[k]) == '。' || str.charAt(dotsOutside[k]) == '！' 
-									|| str.charAt(dotsOutside[k]) == '？'){
-								length[q] = dotsOutside[k]+1;
-								q++;
-								break;
-							}
-							if(str.charAt(dotsOutside[k]) == '”'){
-								
-								if(k > 3){
-									//    ：“……  。”|
-									if(str.charAt(dotsOutside[k]-1) == '。' && str.charAt(dotsOutside[k-1]) == '“'  
-											&& str.charAt(dotsOutside[k-1]-1) == '：'){
-										length[q] = dotsOutside[k]+1;
-										q++;
-										break;
+				//将不再双引号内的冒号存入新数组内
+				for(int i = 0; i < c; i++){
+					int flag = 0;
+					for(int j = 0; j < m; j++){
+						//说明该引号在双引号内
+						if(colon[i] == mark[j]){
+							flag = 1;
+						}
+					}
+					//该冒号不再双引号内
+					if(flag == 0){
+						colonOutside[o] = colon[i];
+						o++;
+					}
+				}
+				
+				String s1 = "";
+				s1 += "(1)" + str.substring(0, dotsBesidesMark[0]+1) + "\n";
+				//System.out.println(s1);
+				//判断距离已经经过过滤的引号最近的一个 结尾符号，并记录该结尾符号的后一个坐标，作为换行依据
+				//从第二个冒号开始判断
+				for(int i = 1; i < o; i++){
+					//j是冒号的前一个坐标
+					for(int j = colonOutside[i]-1; j > 0 ; j--){
+						boolean g = false;
+						for(int k = 0; k < o1; k++){
+							//判断该坐标是否是一个结尾符号坐标
+							g = (j == dotsOutside[k]);
+							//是结尾符号，找到这个结尾符号的下一个坐标
+							if(g){
+								// ①  。|……      ② ！|……     ③ ？|……
+								if(str.charAt(dotsOutside[k]) == '。' || str.charAt(dotsOutside[k]) == '！' 
+										|| str.charAt(dotsOutside[k]) == '？'){
+									length[q] = dotsOutside[k]+1;
+									q++;
+									break;
+								}
+								if(str.charAt(dotsOutside[k]) == '”'){
+									
+									if(k > 3){
+										//    ：“……  。”|
+										if(str.charAt(dotsOutside[k]-1) == '。' && str.charAt(dotsOutside[k-1]) == '“'  
+												&& str.charAt(dotsOutside[k-1]-1) == '：'){
+											length[q] = dotsOutside[k]+1;
+											q++;
+											break;
+										}
+										//⑤ “……” |“ ”：
+										//这种情况不换行
+										if(str.charAt(dotsOutside[k-1]) == '“' && str.charAt(dotsOutside[k-2]) == '”' 
+												&& str.charAt(dotsOutside[k-3]) == '“' && str.charAt(dotsOutside[k-2]-1) == '。'){
+											if(str.charAt(dotsOutside[k-1]) != ' '){
+												length[q] = dotsOutside[k-1];
+												break;
+											}
+										}
 									}
-									//⑤ “……” |“ ”：
-									if(str.charAt(dotsOutside[k-1]) == '“' && str.charAt(dotsOutside[k-2]) == '”' 
-											&& str.charAt(dotsOutside[k-3]) == '“' && str.charAt(dotsOutside[k-2]-1) == '。'){
-										if(str.charAt(dotsOutside[k-1]) != ' '){
-											System.out.println("key: " + str.charAt(dotsOutside[k-1]));
+									
+									if(k > 2){
+										// ①  …… 。|“ ”:    ②  …… ！|“ ”：        ③  …… ？|“ ”：
+										if(str.charAt(dotsOutside[k-1]) == '“' && 
+											(str.charAt(dotsOutside[k-2]) == '。' || str.charAt(dotsOutside[k-2]) == '！' 
+											|| str.charAt(dotsOutside[k-2]) == '？') ){
 											length[q] = dotsOutside[k-1];
+											q++;
+											break;
+										}
+										
+										//④ ：“ ” |……：
+										if(str.charAt(dotsOutside[k-1]) == '“' && str.charAt(dotsOutside[k-1]-1)== '：'){
+											length[q] = dotsOutside[k]+1;
+											q++;
 											break;
 										}
 									}
-								}
-								
-								if(k > 2){
-									// ①  …… 。|“ ”:    ②  …… ！|“ ”：        ③  …… ？|“ ”：
-									if(str.charAt(dotsOutside[k-1]) == '“' && 
-										(str.charAt(dotsOutside[k-2]) == '。' || str.charAt(dotsOutside[k-2]) == '！' 
-										|| str.charAt(dotsOutside[k-2]) == '？') ){
-										length[q] = dotsOutside[k-1];
-										q++;
-										break;
+									
+									// 。 |  ……：           
+									if(k>1){
+										if(str.charAt(dotsOutside[k]-1) == '。' || str.charAt(dotsOutside[k]-1) == '！' 
+												|| str.charAt(dotsOutside[k]-1) == '？'){
+											length[q] = dotsOutside[k]+1;
+											q++;
+											break;
+										}
 									}
 									
-									//④ ：“ ” |……：
-									if(str.charAt(dotsOutside[k-1]) == '“' && str.charAt(dotsOutside[k-1]-1)== '：'){
-										length[q] = dotsOutside[k]+1;
-										q++;
-										break;
-									}
-								}
-								
-								//
-								if(k>1){
-									if(str.charAt(dotsOutside[k]-1) == '。' || str.charAt(dotsOutside[k]-1) == '！' 
-											|| str.charAt(dotsOutside[k]-1) == '？'){
-										length[q] = dotsOutside[k]+1;
-										q++;
-										break;
-									}
-								}
-								
-							}							
+								}							
+							}
+						}
+						if(g){
+							break;
+						}	
+					}
+					
+				}
+				//已经得到所有结尾符号的坐标
+				int i;
+				for(i = 0; i < q-1; i++){
+					s1 += "("+ (i+2) + ")" + str.substring(length[i], length[i+1]) + "\n";
+				}
+				s1 += "(" + (i+2) + ")" + str.substring(length[i], str.length());
+				return s1;
+			}
+			//双引号比较少
+			else{
+				int[] length = new int [str.length()];
+				int q = 0;
+				//所有 冒号的坐标：
+				int[] colon = new int [str.length()];
+				int c = 0;
+				//双引号外面  冒号的坐标：
+				int[] colonOutside = new int [str.length()];
+				int o = 0;
+				//双引号的 左右坐标：
+				int[] dotLeft = new int [str.length()];
+				int[] dotRight = new int [str.length()];
+				int l = 0, r = 0;
+				//所有  结尾符号的坐标
+				int[] dots = new int [str.length()];
+				int s = 0;
+				//双引号外 结尾符号的坐标
+				int[] dotsOutside = new int [str.length()];
+				int o1 = 0;
+				
+				for(int i = 0; i < str.length(); i++){
+					//记录下 所有冒号的坐标：
+					if(str.charAt(i) == '：'){
+						colon[c] = i;
+						c++;
+					}
+					//左双引号
+					if(str.charAt(i) == '“'){
+						dotLeft[l] = i;
+						l++;
+					}
+					//右双引号
+					if(str.charAt(i) == '”'){
+					
+						dotRight[r] = i;
+						r++;
+					}
+					//所有结尾符号
+					if(str.charAt(i) == '。' || str.charAt(i) == '！' || str.charAt(i) == '？'|| 
+							str.charAt(i) == '”'|| str.charAt(i) == '’' || str.charAt(i) == '“' ||
+							str.charAt(i) == '‘' ||str.charAt(i) == '《' || str.charAt(i) == '》' || str.charAt(i) == '·') {
+						dots[s] = i;
+						s++;
+					}
+				}
+				
+				int[] mark = new int [str.length()];
+				int m = 0;
+				int[] dotsMark = new int [str.length()];
+				int d = 0;
+				//先判断在引号中的冒号，将其删去！
+				for(int i = 0; i < c; i++){
+					for(int j = 0; j < l; j++){
+						//若引号在双引号内
+						if(colon[i] > dotLeft[j] && colon[i] < dotRight[j]){
+							mark[m] = colon[i];
+							m++;
 						}
 					}
-					if(b){
-						break;
-					}	
 				}
-			}
-			//已经得到所有结尾符号的坐标
-			int i;
-			for(i = 0; i < q-1; i++){
-				s1 += "("+ (i+2) + ")" + str.substring(length[i], length[i+1]) + "\n";
-			}
-			s1 += "(" + (i+2) + ")" + str.substring(length[i], str.length());
-			return s1;
+				//将双引号内的各种符号的坐标也标记
+				for(int i = 0; i < s; i++){
+					for(int j = 0; j < l; j++){
+						if(dots[i] > dotLeft[j] && dots[i] < dotRight[j]){
+							dotsMark[d] = dots[i];
+							d++;
+						}
+					}
+				}
+				//将双引号之外的结尾符号存入新数组
+				for(int i = 0; i < s; i++){
+					int flag = 0;
+					//该符号在双引号内
+					for(int j = 0; j < d; j++){
+						if(dots[i] == dotsMark[j]){
+							flag = 1;
+						}
+					}
+					//该符号不再双引号内
+					if(flag == 0){
+						dotsOutside[o1] = dots[i];
+						o1++;
+					}
+				}
+				//将不再双引号内的冒号存入新数组内
+				for(int i = 0; i < c; i++){
+					int flag = 0;
+					for(int j = 0; j < m; j++){
+						//说明该引号在双引号内
+						if(colon[i] == mark[j]){
+							flag = 1;
+						}
+					}
+					//该冒号不再双引号内
+					if(flag == 0){
+						colonOutside[o] = colon[i];
+						o++;
+					}
+				}
+			
+				String s1 = "";
+				s1 += "(1)" + str.substring(0, dotsOutside[0]+1) + "\n";
+				//判断距离已经经过过滤的引号最近的一个 结尾符号，并记录该结尾符号的后一个坐标，作为换行依据
+				//从第二个冒号开始判断
+				for(int i = 1; i < o; i++){
+					//j是冒号的前一个坐标
+					for(int j = colonOutside[i]-1; j > 0 ; j--){
+						boolean b = false;
+						for(int k = 0; k < o1; k++){
+							//判断该坐标是否是一个结尾符号坐标
+							b = (j == dotsOutside[k]);
+							//是结尾符号，找到这个结尾符号的下一个坐标
+							if(b){
+									// 。 |  ……：           
+								
+								if(str.charAt(dotsOutside[k]) == '。' || str.charAt(dotsOutside[k]) == '！' 
+										|| str.charAt(dotsOutside[k]) == '？'){
+									
+									length[q] = dotsOutside[k]+1;
+									q++;
+									break;
+								}
+							}							
+						}
+						if(b){
+							break;
+						}	
+					}
+				}
+				//已经得到所有结尾符号的坐标
+				int i;
+				for(i = 0; i < q-1; i++){
+					s1 += "("+ (i+2) + ")" + str.substring(length[i], length[i+1]) + "\n";
+				}
+				s1 += "(" + (i+2) + ")" + str.substring(length[i], str.length());
+				return s1;
+			}		
 		}
 	}
 

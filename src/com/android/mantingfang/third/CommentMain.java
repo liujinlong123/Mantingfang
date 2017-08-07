@@ -1,6 +1,8 @@
 package com.android.mantingfang.third;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,19 +12,21 @@ import org.json.JSONException;
 import com.android.mantingfang.bean.PoetryList;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.fourth.LogOn;
 import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.model.PoemM;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.CircleImageView;
-import com.android.mantingfanggsc.ImageLoad;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +34,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -57,12 +65,14 @@ public class CommentMain extends Activity {
 	private ListView listTwo;
 	private CommentAdapter adapterTwo;
 	private List<CommentContent> dataListTwo;
-	private Bitmap bitmap;
 	private String headPath;
 	private UserTwoContent content;
+	
+	private TextView textView;
 
-	//private EditText editer;
-	//private Button btnSend;
+	private EditText editer;
+	private Button btnSend;
+	private String bePostId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,19 +82,22 @@ public class CommentMain extends Activity {
 		Bundle bundle = getIntent().getExtras();
 		content = (UserTwoContent) bundle.get("commentM");
 		headPath = bundle.getString("headPath");
-		getImage(headPath, bundle);
+		initViews(content, bundle.getString("topicId"), bundle.getString("typeNum"));
 	}
 	
-	private void initViews(UserTwoContent content, String topicId, String typeNum) {
+	private void initViews(UserTwoContent content, final String topicId, final String typeNum) {
 		listview = (ListView)findViewById(R.id.comment_main_content);
 		listOne = (ListView)findViewById(R.id.comment_better);
 		listTwo = (ListView)findViewById(R.id.comment_new);
 		linearBack = (LinearLayout)findViewById(R.id.topbar_all_back);
 		theme_bg = (TextView)findViewById(R.id.topbar_tv_theme);
+		textView = (TextView)findViewById(R.id.comment_tv_new);
+		editer = (EditText)findViewById(R.id.post_comment);
+		btnSend = (Button)findViewById(R.id.post_comment_btn);
 		
 		list = new ArrayList<>();
 		list.add(content);
-		adapter = new UserTwoAdapter(CommentMain.this, list, bitmap);
+		adapter = new UserTwoAdapter(CommentMain.this, list, headPath);
 		listview.setAdapter(adapter);
 		setListViewHeightBasedOnChildren(listview);
 		
@@ -95,7 +108,9 @@ public class CommentMain extends Activity {
 		listTv.setAdapter(adapterTv);
 		listTv.setEnabled(false);
 		
-		getData(topicId, typeNum, bitmap);
+		/*listTv.setVisibility(View.GONE);
+		textView.setVisibility(View.GONE);*/
+		getData(topicId, typeNum, headPath);
 		
 		linearBack.setOnClickListener(new OnClickListener() {
 			
@@ -105,65 +120,152 @@ public class CommentMain extends Activity {
 			}
 		});
 		theme_bg.setText("帖子");
+		
+		//消息发送
+		btnSend.setOnClickListener(new OnClickListener() {
+			
+			@SuppressLint("SimpleDateFormat")
+			@SuppressWarnings("deprecation")
+			@Override
+			public void onClick(View v) {
+				if (Integer.parseInt(UserId.getInstance(CommentMain.this).getUserId()) < 0) {
+					Intent intent = new Intent(CommentMain.this, LogOn.class);
+					startActivity(intent);
+				} else {
+					if (editer.getText().toString() != null && !editer.getText().toString().equals("")) {
+						Date d = new Date();
+						d.setHours(d.getHours());
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						String dateNowStr = sdf.format(d); // 当前时间
+						
+						Map<String, String> params = new HashMap<>();
+						params.put("userId", UserId.getInstance(CommentMain.this).getUserId());
+						params.put("post_id", topicId);
+						params.put("typeNum", typeNum);
+						params.put("content", editer.getText().toString());
+						params.put("time", dateNowStr);
+						if (bePostId != null &&! bePostId.equals("")) {
+							params.put("bePostId", bePostId);
+						} else {
+							params.put("bePostId", "-1");
+						}
+						sendData(params);
+					}
+				}
+				
+			}
+		});
 	}
 	
-	private void getData(final String topicId, final String typeNum, final Bitmap bitmap) {
+	private void sendData(final Map<String, String> param) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			// String Answer = null;
+			@Override
+			protected String doInBackground(String... params) {
+				
+				MyClient.getInstance().Http_SendComment(param);
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				Log.v("result-sendComment", result + "------");
+				editer.setText("");
+				CommentContent item = new CommentContent(param.get("post_id"), param.get("typeNum"), UserId.getInstance(CommentMain.this).getUserId(),
+						UserId.getInstance(CommentMain.this).getHeadPath(), UserId.getInstance(CommentMain.this).getNickName(), param.get("time"),
+						param.get("content"), "0", "0", null, null, null, param.get("bePostId"));
+				if (dataListTwo == null) {
+					textView.setVisibility(View.VISIBLE);
+					dataListTwo = new ArrayList<>();
+					dataListTwo.add(item);
+					adapterTwo = new CommentAdapter(CommentMain.this, dataListTwo);
+					listTwo.setAdapter(adapterTwo);
+				} else {
+					dataListTwo.add(0, item);
+					adapterTwo.notifyDataSetChanged();
+				}
+			}
+
+		};
+
+		task.execute();
+	}
+	
+	private void getData(final String topicId, final String typeNum, final String headPath) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
 			protected String doInBackground(String... params) {
 				
-				return MyClient.getInstance().Http_postComment(typeNum, topicId);
+				return MyClient.getInstance().Http_postComment(UserId.getInstance(CommentMain.this).getUserId(), typeNum, topicId);
+				//return null;
 			}
 			
 			@Override
 			protected void onPostExecute(String result) {
 				dataListOne = new ArrayList<>();
 				try {
-					dataListOne = TopicList.parseComment(StringUtils.toJSONArray(result), topicId, typeNum).getCommentList();
-					dataListTwo = TopicList.parseComment(StringUtils.toJSONArray(result), topicId, typeNum).getCommentList();
-					adapter = new UserTwoAdapter(CommentMain.this, list, bitmap);
-					listview.setAdapter(adapter);
-					setListViewHeightBasedOnChildren(listview);
-					
-					
-					adapterOne = new CommentAdapter(CommentMain.this, dataListOne);
-					listOne.setAdapter(adapterOne);
-					setListViewHeightBasedOnChildren(listOne);
-					
-					adapterTwo = new CommentAdapter(CommentMain.this, dataListTwo);
-					listTwo.setAdapter(adapterTwo);
-					setListViewHeightBasedOnChildren(listTwo);
+					if (result != null && !result.equals("") && !result.equals("[]")) {
+						listTv.setVisibility(View.VISIBLE);
+						dataListOne = TopicList.parseComment(StringUtils.toJSONArray(result), topicId, typeNum).getCommentList();
+						dataListTwo = TopicList.parseComment(StringUtils.toJSONArray(result), topicId, typeNum).getCommentList();
+						adapter = new UserTwoAdapter(CommentMain.this, list, headPath);
+						listview.setAdapter(adapter);
+						setListViewHeightBasedOnChildren(listview);
+						
+						
+						adapterOne = new CommentAdapter(CommentMain.this, dataListOne);
+						listOne.setAdapter(adapterOne);
+						setListViewHeightBasedOnChildren(listOne);
+						
+						textView.setVisibility(View.VISIBLE);
+						adapterTwo = new CommentAdapter(CommentMain.this, dataListTwo);
+						listTwo.setAdapter(adapterTwo);
+						setListViewHeightBasedOnChildren(listTwo);
+						
+						listOne.setOnItemClickListener(new OnItemClickListener() {
+
+							@Override
+							public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+								new AlertDialog.Builder(CommentMain.this)
+								.setItems(R.array.item_huifu, new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int whichcountry) {
+										switch (whichcountry) {
+										case 0:
+											bePostId = dataListOne.get(position).getPostId();
+											editer.setHint("@" + dataListOne.get(position).getBePostNickame());
+											break;
+										}
+										
+									}
+								}).show();
+							}
+						});
+						
+						listTwo.setOnItemClickListener(new OnItemClickListener() {
+
+							@Override
+							public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+								new AlertDialog.Builder(CommentMain.this)
+								.setItems(R.array.item_huifu, new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int whichcountry) {
+										switch (whichcountry) {
+										case 0:
+											bePostId = dataListTwo.get(position).getPostId();
+											editer.setHint("@" + dataListTwo.get(position).getBePostNickame());
+											break;
+										}
+										
+									}
+								}).show();
+							}
+						});
+					}
 					
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-			}
-			
-		};
-		
-		task.execute();
-	}
-	
-	/**
-	 * 获取图片
-	 * @param path
-	 */
-	private void getImage(final String path, final Bundle bundle) {
-		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
-
-			@Override
-			protected String doInBackground(String... params) {
-				
-				Map<String, String> param = new HashMap<>();
-				param.put("path", path);
-				bitmap = ImageLoad.upload("http://1696824u8f.51mypc.cn:12755//sendpicture.php", param);
-				return null;
-			}
-			
-			@Override
-			protected void onPostExecute(String result) {
-				initViews(content, bundle.getString("topicId"), bundle.getString("typeNum"));
 			}
 			
 		};
@@ -199,13 +301,11 @@ public class CommentMain extends Activity {
 		private Context mContext;
 		private LayoutInflater inflater;
 		private List<UserTwoContent> list;
-		private Bitmap bitmap;
 
-		public UserTwoAdapter(Context context, List<UserTwoContent> list, Bitmap bitmap) {
+		public UserTwoAdapter(Context context, List<UserTwoContent> list, String headPath) {
 			this.mContext = context;
 			this.list = list;
 			inflater = LayoutInflater.from(context);
-			this.bitmap = bitmap;
 		}
 
 		@Override
@@ -290,7 +390,8 @@ public class CommentMain extends Activity {
 
 		private void initViews(final UserTwoContent content, final ViewHolder holder, View view) {
 			// 头像路径
-			holder.headPhoto.setImageBitmap(bitmap);
+			//holder.headPhoto.setImageBitmap(bitmap);
+			PictureLoad.getInstance().loadImage(headPath, holder.headPhoto);
 			// 用户昵称
 			holder.userName.setText(content.getName());
 			// 时间
@@ -308,15 +409,20 @@ public class CommentMain extends Activity {
 				
 				@Override
 				public void onClick(View v) {
-					if (content.getZan() != null) {
-						if (content.getZan().equals("0")) {
-							holder.zan.setImageResource(R.drawable.a7u);
-							content.setZan("1");
-							sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "1", content.getPost_com_num() + "");
-						} else if (content.getZan().equals("1")){
-							holder.zan.setImageResource(R.drawable.a7r);
-							content.setZan("0");
-							sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "0", content.getPost_com_num() + "");
+					if (Integer.parseInt(UserId.getInstance(mContext).getUserId()) < 0) {
+						Intent intent = new Intent(mContext, LogOn.class);
+						startActivity(intent);
+					} else {
+						if (content.getZan() != null) {
+							if (content.getZan().equals("0")) {
+								holder.zan.setImageResource(R.drawable.a7u);
+								content.setZan("1");
+								sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "1", content.getPost_com_num() + "");
+							} else if (content.getZan().equals("1")){
+								holder.zan.setImageResource(R.drawable.a7r);
+								content.setZan("0");
+								sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "0", content.getPost_com_num() + "");
+							}
 						}
 					}
 				}
@@ -425,12 +531,16 @@ public class CommentMain extends Activity {
 			}
 		}
 		
-		private void initGridView(ArrayList<String> pictures, ViewHolder holder) {
+		private void initGridView(ArrayList<FileImgs> pictures, ViewHolder holder) {
 			holder.grdview.setNumColumns(3);
 			if (pictures.size() == 0 || pictures == null) {
 				holder.grdview.setVisibility(View.GONE);
 			} else {
-				Log.v("PIcture", pictures.toString());
+				/*//Log.v("PIcture", pictures.toString());
+				List<FileImgs> filePath = new ArrayList<>();
+				for (String e: pictures) {
+					filePath.add(new FileImgs("0", e));
+				}*/
 				TopicGridviewAdapter adapter = new TopicGridviewAdapter(mContext, pictures);
 				holder.grdview.setAdapter(adapter);
 			}

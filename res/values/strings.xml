@@ -32,6 +32,10 @@
         <item>女</item>
     </array>
     
+    <array name="item_huifu">
+        <item>回复评论</item>
+    </array>
+    
     <string name="start">开始录音</string>
     <string name="stop">停止录音</string>
     <string name="paly">播放录音</string>

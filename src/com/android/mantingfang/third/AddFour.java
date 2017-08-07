@@ -1,13 +1,9 @@
 package com.android.mantingfang.third;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
-import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.SearchTwo;
 
@@ -15,11 +11,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -38,8 +32,8 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 	private ImageView imgFinish;
 	private TextView tvAdd;
 	private LinearLayout linearAdd;
-	private String userId;
-	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
+	//private String userId;
+	//private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 
 	private static final String LOG_TAG = "AudioRecordTest";
 	
@@ -60,7 +54,8 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
     
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private String poemId;
-
+    private String poemNames;
+	private String poemContents;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,8 +79,8 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 		sing = (TextView) findViewById(R.id.add_four_sing);
 
 		
-		SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-		userId = pref.getString("userId", "-1");
+		/*SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+		userId = pref.getString("userId", "-1");*/
 
 		// 不保存
 		imgFinish.setOnClickListener(new OnClickListener() {
@@ -124,20 +119,28 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 				// 用户Id
 
 				// 帖子标号
-				String typeNum = "4";
+				//String typeNum = "4";
 
 				Date d = new Date();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String dateNowStr = sdf.format(d); // 当前时间
 
-				Map<String, String> param = new HashMap<>();
+				/*Map<String, String> param = new HashMap<>();
 				param.put("user_id", userId);
 				param.put("poetry_id", poemId);
 				param.put("datatime", dateNowStr);
-				param.put("type_num", typeNum);
+				param.put("type_num", typeNum);*/
 				if (FileName != null && !FileName.equals("")) {
-					saveData(param);
+					//saveData(param);
 					//Log.v("FileName", FileName + "---");
+					Intent intent = new Intent();
+					intent.putExtra("poetry_id", poemId);
+					intent.putExtra("poetry_name", poemNames);
+					intent.putExtra("poetry_content", poemContents);
+					intent.putExtra("datetime", dateNowStr);
+					intent.putExtra("audio", FileName);
+					setResult(RESULT_OK, intent);
+					finish();
 				} else {
 					Toast.makeText(AddFour.this, "没有音频文件", Toast.LENGTH_SHORT).show();
 				}
@@ -207,7 +210,7 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
         }     
     }  
 
-	private void saveData(final Map<String, String> param) {
+	/*private void saveData(final Map<String, String> param) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			// String Answer = null;
@@ -246,7 +249,7 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 		};
 
 		task.execute();
-	}
+	}*/
 	
 	@SuppressLint("InlinedApi")
 	public void Accessibility() {
@@ -290,13 +293,13 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 		case POETRY:
 			if (resultCode == RESULT_OK) {
 				poemId = data.getStringExtra("poemId");
-				String poetry_name = data.getStringExtra("poetry_name");
+				poemNames = data.getStringExtra("poetry_name");
 				String poetry_writer = data.getStringExtra("poetry_writer");
-				String poetry_content = data.getStringExtra("poetry_content");
-				poemName.setText(poetry_name);
+				poemContents = data.getStringExtra("poetry_content");
+				poemName.setText(poemNames);
 				poemWriter.setText(poetry_writer);
-				poemContent.setText(poetry_content);
-				Log.v("AddFour", poetry_name + " " + poetry_writer + " " + poetry_content);
+				poemContent.setText(poemContents);
+				//Log.v("AddFour", poetry_name + " " + poetry_writer + " " + poetry_content);
 			}
 			break;
 			

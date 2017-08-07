@@ -6,6 +6,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -152,19 +153,61 @@ public class MyClient {
 		return null;
 	}
 	
+	//----------------------------------------------------用户评论--------------------------------------------------
+	
 	/**
 	 * 评论请求
 	 * @param tpye_num
 	 * @param post_id
 	 * @return
 	 */
-	public String Http_postComment(String tpye_num, String post_id) {
+	public String Http_postComment(String userId, String tpye_num, String post_id) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchcomment.php");
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//search_comment.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
-			param.add(new BasicNameValuePair("type_num", "1"));
-			param.add(new BasicNameValuePair("post_id", "1"));
+			param.add(new BasicNameValuePair("user_id", userId));
+			param.add(new BasicNameValuePair("type_num", tpye_num));
+			param.add(new BasicNameValuePair("post_id", post_id));
+			param.add(new BasicNameValuePair("comment_id", "-1"));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("Comment--", response);
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * 发送评论
+	 * @param params
+	 * @return
+	 */
+	public String Http_SendComment(Map<String, String> params) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//receive_comment.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", params.get("userId")));
+			param.add(new BasicNameValuePair("type_num", params.get("typeNum")));
+			param.add(new BasicNameValuePair("post_id", params.get("post_id")));
+			param.add(new BasicNameValuePair("comment_content", params.get("content")));
+			param.add(new BasicNameValuePair("comment_time", params.get("time")));
+			param.add(new BasicNameValuePair("commented_id", params.get("bePostId")));
+			
+			//Log.v("Comment---1", params.get("userId") + "---" + params.get("typeNum") + "---" + params.get("post_id"));
+			//Log.v("Comment---2", params.get("content") + "---" + params.get("time") + "---" + params.get("bePostId"));
+			
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
 			httpPost.setEntity(entity);
 			HttpResponse httpResponse = httpClient.execute(httpPost);
@@ -181,6 +224,8 @@ public class MyClient {
 		}
 		return null;
 	}
+	
+	//----------------------------------------------------用户评论--------------------------------------------------
 	
 	
 	/**
@@ -638,7 +683,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("POST--Collection--Detail", response + "----");
+				//Log.v("POST--send---Collection--Detail", response + "----");
 				
 				return response;
 			} 
@@ -651,18 +696,20 @@ public class MyClient {
 	public String Http_postGetCollection (String userId, String poemId, String typeNum) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//collect_poem.php");
+			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//judge_collection.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", userId));
 			param.add(new BasicNameValuePair("type_num", typeNum));
-			param.add(new BasicNameValuePair("poem_id", poemId));
+			param.add(new BasicNameValuePair("poetry_id", poemId));
+			
+			//Log.v("POST--Send--L--Detail", userId + "----" + typeNum + "----" + poemId);
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
 			httpPost.setEntity(entity);
 			HttpResponse httpResponse = httpClient.execute(httpPost);
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				Log.v("POST--Collection--Detail", response + "----");
+				//Log.v("POST--Get--K--Detail", response + "----");
 				
 				return response;
 			} 

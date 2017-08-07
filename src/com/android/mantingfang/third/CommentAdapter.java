@@ -4,14 +4,22 @@ import java.util.List;
 
 import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.R;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CommentAdapter extends BaseAdapter {
 
@@ -55,6 +63,8 @@ public class CommentAdapter extends BaseAdapter {
 			holder.time = (TextView)view.findViewById(R.id.comment_item_time);
 			holder.zan = (ImageView)view.findViewById(R.id.comment_item_zan);
 			holder.content = (TextView)view.findViewById(R.id.comment_item_content);
+			holder.beContent = (TextView)view.findViewById(R.id.comment_item_huifu);
+			holder.zanNum = (TextView)view.findViewById(R.id.comment_zan_number);
 			
 			view.setTag(holder);
 		} else {
@@ -63,16 +73,49 @@ public class CommentAdapter extends BaseAdapter {
 		}
 		
 		
-		//控件设置
+		//控件设置--昵称--时间--头像--赞--赞的数量
 		CommentContent content = list.get(position);
 		
-		if (content.getName() != null && content.getHeadPath() != null && content.getTime() != null && content.getContent() != null) {
-			holder.tvName.setText(content.getName());
-			holder.time.setText(content.getTime());
-			holder.content.setText(content.getContent());
-			PictureLoad.getInstance().loadImage(content.getHeadPath(), holder.imgHead);
+		holder.tvName.setText(content.getName());
+		holder.time.setText(content.getTime());
+		PictureLoad.getInstance().loadImage(content.getHeadPath(), holder.imgHead);
+		if (content.getZan().equals("1")) {
+			holder.zan.setImageResource(R.drawable.a7u);
+		} else {
+			holder.zan.setImageResource(R.drawable.a7r);
 		}
 		
+		if (!content.getZanNumber().equals("") && content.getZanNumber() != null) {
+			holder.zanNum.setText(content.getZanNumber());
+		} else {
+			holder.zanNum.setText("0");
+		}
+		
+		//内容
+		if (content.getBePostUserId() == null || content.getBePostUserId().equals("-1") || content.getBePostUserId().equals("")) {
+			holder.content.setText(content.getContent());
+			
+		} else {
+			holder.beContent.setVisibility(View.VISIBLE);
+			//holder.content.setText("回复@" + content.getBePostNickame() + ":" + content.getContent());
+			//holder.beContent.setText("@" + content.getBePostNickame() + ":" + content.getBePostContent());
+			
+			//评论内容
+			holder.content.setHighlightColor(mContext.getResources().getColor(android.R.color.transparent));
+			
+			SpannableString spanableInfo = new SpannableString("回复@" + content.getBePostNickame() + ":" + content.getContent());
+			spanableInfo.setSpan(new Clickable(clickListener),3,3 + content.getBePostNickame().length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			holder.content.setText(spanableInfo);
+			holder.content.setMovementMethod(LinkMovementMethod.getInstance());
+			
+			//被评论内容
+			holder.beContent.setHighlightColor(mContext.getResources().getColor(android.R.color.transparent));
+			
+			SpannableString spanableInfoTwo = new SpannableString("@" + content.getBePostNickame() + ":" + content.getBePostContent());
+			spanableInfoTwo.setSpan(new Clickable(clickListener),1,content.getBePostNickame().length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			holder.beContent.setText(spanableInfoTwo);
+			holder.beContent.setMovementMethod(LinkMovementMethod.getInstance());
+		}
 		
 		return view;
 	}
@@ -87,6 +130,41 @@ public class CommentAdapter extends BaseAdapter {
 		ImageView zan;
 		
 		TextView content;
+		
+		TextView beContent;
+		
+		TextView zanNum;
 	}
 	
+	private OnClickListener clickListener=new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Toast.makeText(mContext, "点击成功....",Toast.LENGTH_SHORT).show();
+		}
+	};
+	
+	
+	class Clickable extends ClickableSpan{
+		private final View.OnClickListener mListener;
+
+		public Clickable(View.OnClickListener l) {
+			mListener = l;
+		}
+
+		/**
+		 * 重写父类点击事件
+		 */
+		@Override
+		public void onClick(View v) {
+			mListener.onClick(v);
+		}
+
+		/**
+		 * 重写父类updateDrawState方法  我们可以给TextView设置字体颜色,背景颜色等等...
+		 */
+		@Override
+		public void updateDrawState(TextPaint ds) {
+			ds.setColor(mContext.getResources().getColor(R.color.red));
+		}
+	}
 }

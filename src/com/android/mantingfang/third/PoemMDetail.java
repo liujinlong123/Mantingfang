@@ -1,10 +1,13 @@
 package com.android.mantingfang.third;
 
 import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.model.PoemM;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +37,7 @@ public class PoemMDetail extends Activity {
 	private ImageView img_more;
 	
 	private PoemM poem;
+	private String collect;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +79,6 @@ public class PoemMDetail extends Activity {
 			}
 		});
 		
-		img_collect.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(PoemMDetail.this, "Collect", Toast.LENGTH_SHORT).show();
-			}
-		});
-		
 		img_comment.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -98,6 +94,8 @@ public class PoemMDetail extends Activity {
 				Toast.makeText(PoemMDetail.this, "more", Toast.LENGTH_SHORT).show();
 			}
 		});
+		
+		getCollection(poem.getPoemId());
 	}
 	
 	private void initshow() {
@@ -176,5 +174,72 @@ public class PoemMDetail extends Activity {
 				}
 			}
 		});
+	}
+	
+	private void getCollection (final String poemId) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			// String Answer = null;
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_postGetCollection(UserId.getInstance(PoemMDetail.this).getUserId(), poemId, "1");
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				if (result != null && !result.equals("")) {
+					collect = result;
+				} else {
+					collect = "0";
+				}
+				
+				if (collect.equals("0")) {		//没收藏
+					img_collect.setImageResource(R.drawable.collection_off);
+				} else if (collect.equals("1")) { //收藏
+					img_collect.setImageResource(R.drawable.collection_on);
+				}
+				
+				img_collect.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						if (collect.equals("0")) {		//没收藏-->收藏
+							img_collect.setImageResource(R.drawable.collection_on);
+							sendCollection(poemId, "1");
+						} else if (collect.equals("1")) { //收藏-->没收藏
+							img_collect.setImageResource(R.drawable.collection_off);
+							sendCollection(poemId, "0");
+						}
+					}
+				});
+			}
+
+		};
+
+		task.execute();
+	}
+	
+	private void sendCollection(final String poemId, final String collection) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_postCollection(UserId.getInstance(PoemMDetail.this).getUserId(), poemId, "0", collection);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				if (collection.equals("0")) {
+					collect = "0";
+				} else if (collection.equals("1")) {
+					collect = "1";
+				}
+			}
+			
+		};
+		
+		task.execute();
 	}
 }

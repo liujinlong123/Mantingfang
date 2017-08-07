@@ -19,8 +19,8 @@ public class UserTwoContent extends Base {
 	private String name;		//用户昵称
 	private String time;		//发表时间
 	private String content;		//发表内容
-	private ArrayList<String> picture;	//图片组
-	private String soundPath;	//音频路径
+	private ArrayList<FileImgs> picture;	//图片组
+	private FileAudio soundPath;	//音频路径
 	private String poemId;		//诗词Id
 	private String poemContent;	//诗词内容
 	private String poemName;	//诗词名字
@@ -30,8 +30,8 @@ public class UserTwoContent extends Base {
 	
 	public UserTwoContent() {}
 	
-	public UserTwoContent(String userId, String headPath, String name, String time, String content, ArrayList<String> picture,
-			String soundPath, String poemId, String poemContent, String poemName, String zan, int post_com_num, int post_com_pId) {
+	public UserTwoContent(String userId, String headPath, String name, String time, String content, ArrayList<FileImgs> picture,
+			FileAudio soundPath, String poemId, String poemContent, String poemName, String zan, int post_com_num, int post_com_pId) {
 		this.userId = userId;
 		this.headPath = headPath;
 		this.name = name;
@@ -47,8 +47,8 @@ public class UserTwoContent extends Base {
 		this.post_com_pId = post_com_pId;
 	}
 	
-	public UserTwoContent(String userId, Bitmap headPhoto, String name, String time, String content, ArrayList<String> picture,
-			String soundPath, String poemId, String poemContent, String poemName, String zan, int post_com_num, int post_com_pId) {
+	public UserTwoContent(String userId, Bitmap headPhoto, String name, String time, String content, ArrayList<FileImgs> picture,
+			FileAudio soundPath, String poemId, String poemContent, String poemName, String zan, int post_com_num, int post_com_pId) {
 		this.userId = userId;
 		this.headPhoto = headPhoto;
 		this.name = name;
@@ -128,19 +128,19 @@ public class UserTwoContent extends Base {
 		return content;
 	}
 	
-	public void setPicture(ArrayList<String> picture) {
+	public void setPicture(ArrayList<FileImgs> picture) {
 		this.picture = picture;
 	}
 	
-	public ArrayList<String> getPicture() {
+	public ArrayList<FileImgs> getPicture() {
 		return picture;
 	}
 	
-	public void setSoundPath(String soundPath) {
+	public void setSoundPath(FileAudio soundPath) {
 		this.soundPath = soundPath;
 	}
 	
-	public String getSoundPath() {
+	public FileAudio getSoundPath() {
 		return soundPath;
 	}
 	

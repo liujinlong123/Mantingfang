@@ -1,5 +1,8 @@
 package com.android.mantingfang.fourth;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
@@ -94,16 +97,27 @@ public class LogOn extends Activity {
 				if (result != null && !result.equals("")) {
 					
 					Log.v("userId", result);
-					if (Integer.parseInt(result) < 0) {
-						Toast.makeText(LogOn.this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
-					} else {
-						SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-						editor.putString("userId", result);
-						editor.commit();
-						Intent intent = new Intent();
-						intent.putExtra("userId", result);
-						setResult(RESULT_OK, intent);
-						finish();
+					try {
+						JSONObject jo = new JSONObject(result);
+						String userId = jo.getString("user_id");
+						String headPath = jo.getString("user_photo");
+						String nickName = jo.getString("user_nickname");
+						if (Integer.parseInt(userId) < 0) {
+							Toast.makeText(LogOn.this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
+						} else {
+							SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+							editor.putString("userId", userId);
+							editor.putString("headPath", headPath);
+							editor.putString("nickName", nickName);
+							editor.commit();
+							Intent intent = new Intent();
+							intent.putExtra("userId", userId);
+							setResult(RESULT_OK, intent);
+							finish();
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 			}

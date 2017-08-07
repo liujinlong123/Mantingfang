@@ -40,6 +40,23 @@ public class ThirdFourPager extends Fragment {
 		return view;
 	}
 
+	public void addOne(UserTwoContent item) {
+		if (adapterFour == null) {
+			listFour = new ArrayList<UserTwoContent>();
+			listFour.add(item);
+			adapterFour = new ThirdFourAdapter(getContext(), listFour, thirdFourListView);
+			thirdFourListView.setAdapter(adapterFour);
+		} else {
+			listFour.add(0, item);
+			adapterFour.notifyDataSetChanged();
+		}
+	}
+	
+	public void refresh(int postId) {
+		listFour.get(0).setPost_com_pId(postId);
+		adapterFour.notifyDataSetChanged();
+	}
+	
 	// ��ʼ��ThirdFour
 	private void initViews() {
 		thirdFourListView = (CustomListView)view.findViewById(R.id.third_pager_four_listview);
@@ -58,7 +75,7 @@ public class ThirdFourPager extends Fragment {
 			protected void onPostExecute(String result) {
 				listFour = new ArrayList<UserTwoContent>();
 				try {
-					if (result != null && !result.equals("")) {
+					if (result != null && !result.equals("") && !result.equals("]")) {
 						listFour = TopicList.parseFour(StringUtils.toJSONArray(result)).getTopicFour();
 						adapterFour = new ThirdFourAdapter(getActivity(), listFour, thirdFourListView);
 						thirdFourListView.setAdapter(adapterFour);

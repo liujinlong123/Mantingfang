@@ -51,6 +51,8 @@ public class Setting extends Activity {
 						logout.setClickable(true);
 						SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 						editor.putString("userId", "-1");
+						editor.putString("headPath", "null");
+						editor.putString("nickName", "");
 						editor.commit();
 						Intent intent = new Intent("com.android.mantingfang.fourth.MyBroadcast.LOG_OFF");
 						sendBroadcast(intent);

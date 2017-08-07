@@ -6,23 +6,18 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.android.mantingfang.picture.Picture;
 import com.android.mantingfang.second.KindGridView;
-import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -37,7 +32,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class AddThree extends Activity {
 
@@ -54,8 +48,8 @@ public class AddThree extends Activity {
 	private LinearLayout linearAdd;
 	private KindGridView grdView;
 	private EditText editer;
-	private String userId;
-	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
+	//private String userId;
+	//private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 
 	private Uri imgUri;
 	private PictureAdapter picAdapter;
@@ -68,7 +62,7 @@ public class AddThree extends Activity {
 	
 	private int pos = 0;
 	
-	private String res;
+	//private String res;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +82,8 @@ public class AddThree extends Activity {
 		editer = (EditText) findViewById(R.id.add_one_editer);
 
 		
-		SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-		userId = pref.getString("userId", "-1");
+		/*SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+		userId = pref.getString("userId", "-1");*/
 
 		// 不保存
 		imgFinish.setOnClickListener(new OnClickListener() {
@@ -137,19 +131,25 @@ public class AddThree extends Activity {
 				// 内容content
 				String content = editer.getText().toString();
 				// 帖子标号
-				String typeNum = "3";
+				//String typeNum = "3";
 
 				Date d = new Date();
 				d.setHours(d.getHours());
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String dateNowStr = sdf.format(d); // 当前时间
 
-				Map<String, String> param = new HashMap<>();
+				/*Map<String, String> param = new HashMap<>();
 				param.put("user_id", userId);
 				param.put("datatime", dateNowStr);
 				param.put("content", content);
 				param.put("type_num", typeNum);
-				saveData(param);
+				saveData(param);*/
+				Intent intent = new Intent();
+				intent.putExtra("datetime", dateNowStr);
+				intent.putExtra("content", content);
+				intent.putStringArrayListExtra("setPath", setPath);
+				setResult(RESULT_OK, intent);
+				finish();
 			}
 		});
 	}
@@ -223,7 +223,7 @@ public class AddThree extends Activity {
 		return true;
 	}
 
-	private void saveData(final Map<String, String> param) {
+	/*private void saveData(final Map<String, String> param) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			// String Answer = null;
@@ -258,7 +258,7 @@ public class AddThree extends Activity {
 		};
 
 		task.execute();
-	}
+	}*/
 
 	/**
 	 * 从上一界面返回结果

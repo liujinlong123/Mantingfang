@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import com.android.mantingfang.first.PoemRhesis;
 import com.android.mantingfang.model.Poem;
 import com.android.mantingfang.third.CommentContent;
+import com.android.mantingfang.third.FileAudio;
 import com.android.mantingfang.third.User;
 import com.android.mantingfang.third.UserTwoContent;
 
@@ -303,7 +304,7 @@ public class TopicList extends Base {
 						jo.optString("audio_time"),
 						null,
 						null,
-						jo.optString("audio_content"),
+						new FileAudio("0", jo.optString("audio_content")),
 						jo.optString("audio_poem_id"),
 						jo.optString("poetry_content"),
 						jo.optString("poetry_name"),
@@ -392,7 +393,7 @@ public class TopicList extends Base {
 							jo.getString("audio_time"),
 							null,
 							null,
-							jo.getString("audio_content"),
+							new FileAudio("0", jo.optString("audio_content")),
 							jo.getString("audio_poem_id"),
 							jo.getString("poetry_content"),
 							jo.getString("poetry_name"),
@@ -425,11 +426,17 @@ public class TopicList extends Base {
 				CommentContent content = new CommentContent(
 						topicId,
 						topicNum,
-						jo.optString("user_photo"),
+						jo.getString("comment_user_id"),
+						jo.getString("user_photo"),
 						jo.optString("user_nickname"),
 						jo.optString("comment_time"),
 						jo.optString("comment_content"),
-						jo.optString("comment_user_id"));
+						jo.optString("judge_zan"),
+						jo.optString("judge_count"),
+						jo.optString("commented_content"),
+						jo.optString("commented_user_id"),
+						jo.optString("commented_user_nickname"),
+						jo.optString("comment_id"));
 				
 				tList.listComment.add(content);
 			}

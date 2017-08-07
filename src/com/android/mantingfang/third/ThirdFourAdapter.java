@@ -1,5 +1,6 @@
 package com.android.mantingfang.third;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.json.JSONException;
 import com.android.mantingfang.bean.PoetryList;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.fourth.LogOn;
 import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.model.PoemM;
 import com.android.mantingfanggsc.CircleImageView;
@@ -19,6 +21,8 @@ import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
@@ -30,6 +34,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ThirdFourAdapter extends BaseAdapter {
 	private Context mContext;
@@ -39,6 +44,8 @@ public class ThirdFourAdapter extends BaseAdapter {
 	private CustomListView listview;
 	private static final int LOAD_DATA_FINISH = 10;// 上拉刷新
 	private static final int REFRESH_DATA_FINISH = 11;// 下拉刷新
+	
+	private MediaPlayer mPlayer = null;
 	
 	
 	public ThirdFourAdapter(Context context, List<UserTwoContent> list, CustomListView listview) {
@@ -157,13 +164,17 @@ public class ThirdFourAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				Log.v("Audio--", "http://1696824u8f.51mypc.cn:12755/receive%20audio/---" + content.getSoundPath());
-				new Thread(new Runnable() {
+				if (content.getSoundPath().getType().equals("0")) {
+					new Thread(new Runnable() {
 
-					@Override
-					public void run() {
-						player.playUrl("http://1696824u8f.51mypc.cn:12755/receive%20audio/" + content.getSoundPath());
-					}
-				}).start();
+						@Override
+						public void run() {
+							player.playUrl("http://1696824u8f.51mypc.cn:12755/receive%20audio/" + content.getSoundPath().getPath());
+						}
+					}).start();
+				} else if (content.getSoundPath().getType().equals("1")) {
+					startPlayFromFile(content.getSoundPath().getPath());
+				}
 			}
 		});
 		
@@ -211,15 +222,20 @@ public class ThirdFourAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				if (content.getZan() != null) {
-					if (content.getZan().equals("0")) {
-						holder.zan.setImageResource(R.drawable.a7u);
-						content.setZan("1");
-						sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "1");
-					} else if (content.getZan().equals("1")){
-						holder.zan.setImageResource(R.drawable.a7r);
-						content.setZan("0");
-						sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "0");
+				if (Integer.parseInt(UserId.getInstance(mContext).getUserId()) < 0) {
+					Intent intent = new Intent(mContext, LogOn.class);
+					mContext.startActivity(intent);
+				} else {
+					if (content.getZan() != null) {
+						if (content.getZan().equals("0")) {
+							holder.zan.setImageResource(R.drawable.a7u);
+							content.setZan("1");
+							sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "1");
+						} else if (content.getZan().equals("1")){
+							holder.zan.setImageResource(R.drawable.a7r);
+							content.setZan("0");
+							sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "0");
+						}
 					}
 				}
 			}
@@ -402,4 +418,23 @@ public class ThirdFourAdapter extends BaseAdapter {
 		
 		task.execute();
 	}
+	
+    
+    private void startPlayFromFile(String fileName) {
+    	 mPlayer = new MediaPlayer();  
+         Toast.makeText(mContext, "播放录音", Toast.LENGTH_SHORT).show();
+         try{  
+             mPlayer.setDataSource(fileName);  
+             mPlayer.prepare();  
+             mPlayer.start();  
+         }catch(IOException e){  
+             Log.e("----","播放失败");  
+         }
+    }
+    
+    /*private void stopPlayFromFile() {
+    	mPlayer.release();  
+        mPlayer = null; 
+        Toast.makeText(mContext, "停止播放", Toast.LENGTH_SHORT).show();
+    }*/
 }

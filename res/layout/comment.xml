@@ -35,7 +35,8 @@
                 android:id="@+id/comment_tv_better"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none" />
+                android:scrollbars="none"
+                android:visibility="gone" />
 
             <ListView
                 android:id="@+id/comment_better"
@@ -51,7 +52,8 @@
                 android:background="@color/beijingwhite"
                 android:text="最新评论"
                 android:gravity="center_vertical"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
 
             <ListView
                 android:id="@+id/comment_new"

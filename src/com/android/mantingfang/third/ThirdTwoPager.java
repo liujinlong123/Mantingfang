@@ -41,6 +41,24 @@ public class ThirdTwoPager extends Fragment{
 		return view;
 	}
 	
+	public void addOne(UserTwoContent item) {
+		if (adapterTwo == null) {
+			listTwo = new ArrayList<UserTwoContent>();
+			listTwo.add(item);
+			adapterTwo = new ThirdTwoAdapter(getContext(), listTwo, thirdTwoListView);
+			thirdTwoListView.setAdapter(adapterTwo);
+		} else {
+			listTwo.add(0, item);
+			adapterTwo.notifyDataSetChanged();
+		}
+		
+	}
+	
+	public void refresh(int postId) {
+		listTwo.get(0).setPost_com_pId(postId);
+		adapterTwo.notifyDataSetChanged();
+	}
+	
 	private void initViews() {
 		thirdTwoListView = (CustomListView)view.findViewById(R.id.third_pager_two_listview);
 	}
@@ -58,7 +76,7 @@ public class ThirdTwoPager extends Fragment{
 			protected void onPostExecute(String result) {
 				listTwo = new ArrayList<UserTwoContent>();
 				try {
-					if (result != null && !result.equals("")) {
+					if (result != null && !result.equals("") && !result.equals("]")) {
 						listTwo = TopicList.parseTwo(StringUtils.toJSONArray(result)).getTopicTwo();
 						adapterTwo = new ThirdTwoAdapter(getActivity(), listTwo, thirdTwoListView);
 						thirdTwoListView.setAdapter(adapterTwo);

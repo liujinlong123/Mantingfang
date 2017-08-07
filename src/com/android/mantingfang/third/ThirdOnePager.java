@@ -49,6 +49,23 @@ public class ThirdOnePager extends Fragment {
 
 		return view;
 	}
+	
+	public void addOne(UserTwoContent item) {
+		if (adapterOne == null) {
+			listOne = new ArrayList<UserTwoContent>();
+			listOne.add(item);
+			adapterOne = new ThirdOneAdapter(getContext(), listOne, thirdOneListView);
+			thirdOneListView.setAdapter(adapterOne);
+		} else {
+			listOne.add(0, item);
+			adapterOne.notifyDataSetChanged();
+		}
+	}
+	
+	public void refresh(int postId) {
+		listOne.get(0).setPost_com_pId(postId);
+		adapterOne.notifyDataSetChanged();
+	}
 
 	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {

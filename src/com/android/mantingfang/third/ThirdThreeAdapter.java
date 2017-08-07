@@ -7,6 +7,7 @@ import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.fourth.LogOn;
 import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.CircleImageView;
@@ -17,9 +18,9 @@ import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -169,15 +170,20 @@ public class ThirdThreeAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				if (content.getZan() != null) {
-					if (content.getZan().equals("0")) {
-						holder.zan.setImageResource(R.drawable.a7u);
-						content.setZan("1");
-						sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "1");
-					} else if (content.getZan().equals("1")){
-						holder.zan.setImageResource(R.drawable.a7r);
-						content.setZan("0");
-						sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "0");
+				if (Integer.parseInt(UserId.getInstance(mContext).getUserId()) < 0) {
+					Intent intent = new Intent(mContext, LogOn.class);
+					mContext.startActivity(intent);
+				} else {
+					if (content.getZan() != null) {
+						if (content.getZan().equals("0")) {
+							holder.zan.setImageResource(R.drawable.a7u);
+							content.setZan("1");
+							sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "1");
+						} else if (content.getZan().equals("1")){
+							holder.zan.setImageResource(R.drawable.a7r);
+							content.setZan("0");
+							sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "0");
+						}
 					}
 				}
 			}
@@ -204,12 +210,16 @@ public class ThirdThreeAdapter extends BaseAdapter {
 		});
 	}
 
-	private void initGridView(ArrayList<String> pictures, ViewHolder holder) {
+	private void initGridView(ArrayList<FileImgs> pictures, ViewHolder holder) {
 		holder.grdview.setNumColumns(3);
 		if (pictures == null) {
 			holder.grdview.setVisibility(View.GONE);
 		} else {
-			Log.v("PIcture", pictures.toString());
+			//Log.v("PIcture", pictures.toString());
+			/*List<FileImgs> filePath = new ArrayList<>();
+			for (String e: pictures) {
+				filePath.add(new FileImgs("0", e));
+			}*/
 			TopicGridviewAdapter adapter = new TopicGridviewAdapter(mContext, pictures);
 			holder.grdview.setAdapter(adapter);
 		}

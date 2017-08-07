@@ -25,7 +25,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -80,10 +79,10 @@ public class FragmentFrist extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				if (Integer.parseInt(userId) < 0) {
+				if (Integer.parseInt(UserId.getInstance(getContext()).getUserId()) < 0) {
 					Intent intentL = new Intent(getActivity(), LogOn.class);
 					startActivity(intentL);
-				} else if (Integer.parseInt(userId) > -1) {
+				} else {
 					Intent intent = new Intent(getActivity(), FirstPagerAdd.class);
 					startActivity(intent);
 				}
@@ -121,8 +120,9 @@ public class FragmentFrist extends Fragment {
 			
 			@Override
 			public void onPageSelected(int arg0) {
-				// TODO Auto-generated method stub
-				//Log.v("onPageScrollStateChanged", arg0 + "滑动完毕");
+				//Log.v("Position", arg0 + "----");
+				getCollection(dataList.get(arg0).getPoemId());
+				
 			}
 			
 			@Override
@@ -133,13 +133,7 @@ public class FragmentFrist extends Fragment {
 			
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
-				if (arg0 == 2) {
-					//请求是否收藏
-					Log.v("onPageScrollStateChanged", arg0 + "滑动完毕");
-				} else if (arg0 == 1) {
-					Log.v("onPageScrollStateChanged", arg0 + "正在滑动");
-					//getCollection(adapter.get);
-				}
+				
 			}
 		});
 	}
@@ -256,7 +250,11 @@ public class FragmentFrist extends Fragment {
 			
 			@Override
 			protected void onPostExecute(String result) {
-				
+				if (collection.equals("0")) {
+					collect = "0";
+				} else if (collection.equals("1")) {
+					collect = "1";
+				}
 			}
 			
 		};
@@ -281,16 +279,27 @@ public class FragmentFrist extends Fragment {
 					collect = "0";
 				}
 				
+				if (collect.equals("0")) {		//没收藏
+					imgCollect.setImageResource(R.drawable.collection_off);
+				} else if (collect.equals("1")) { //收藏
+					imgCollect.setImageResource(R.drawable.collection_on);
+				}
+				
 				imgCollect.setOnClickListener(new OnClickListener() {
 					
 					@Override
 					public void onClick(View v) {
-						if (collect.equals("0")) {		//没收藏-->收藏
-							imgCollect.setImageResource(R.drawable.collection_on);
-							sendCollection(poemId, "1");
-						} else if (collect.equals("1")) { //收藏-->没收藏
-							imgCollect.setImageResource(R.drawable.collection_off);
-							sendCollection(poemId, "0");
+						if (Integer.parseInt(UserId.getInstance(getContext()).getUserId()) >= 0) {
+							if (collect.equals("0")) {		//没收藏-->收藏
+								imgCollect.setImageResource(R.drawable.collection_on);
+								sendCollection(poemId, "1");
+							} else if (collect.equals("1")) { //收藏-->没收藏
+								imgCollect.setImageResource(R.drawable.collection_off);
+								sendCollection(poemId, "0");
+							}
+						} else {
+							Intent intent = new Intent(getContext(), LogOn.class);
+							startActivity(intent);
 						}
 					}
 				});

@@ -41,6 +41,23 @@ public class ThirdThreePager extends Fragment {
 
 		return view;
 	}
+	
+	public void addOne(UserTwoContent item) {
+		if (adapterThree == null) {
+			listThree = new ArrayList<UserTwoContent>();
+			listThree.add(item);
+			adapterThree = new ThirdThreeAdapter(getContext(), listThree, thirdThreeListView);
+			thirdThreeListView.setAdapter(adapterThree);
+		} else {
+			listThree.add(0, item);
+			adapterThree.notifyDataSetChanged();
+		}
+	}
+	
+	public void refresh(int postId) {
+		listThree.get(0).setPost_com_pId(postId);
+		adapterThree.notifyDataSetChanged();
+	}
 
 	// ��ʼ��ThirdThree
 	private void initViews() {
@@ -60,7 +77,7 @@ public class ThirdThreePager extends Fragment {
 			protected void onPostExecute(String result) {
 				listThree = new ArrayList<UserTwoContent>();
 				try {
-					if (result != null && !result.equals("")) {
+					if (result != null && !result.equals("") && !result.equals("]")) {
 						listThree = TopicList.parseThree(StringUtils.toJSONArray(result)).getTopicThree();
 						adapterThree = new ThirdThreeAdapter(getActivity(), listThree, thirdThreeListView);
 						thirdThreeListView.setAdapter(adapterThree);

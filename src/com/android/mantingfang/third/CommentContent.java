@@ -6,13 +6,19 @@ public class CommentContent {
 	private String headPath;
 	private String name;
 	private String time;
-	private boolean zan;
+	private String zan;
 	private String content;
 	private String userId;
 	
+	private String zanNumber;
+	private String bePostContent;
+	private String bePostUserId;
+	private String bePostNickame;
+	private String postId;
+
 	public CommentContent() {};
 	
-	public CommentContent(String headPath, String name, String time, boolean zan, String content) {
+	public CommentContent(String headPath, String name, String time, String zan, String content) {
 		this.headPath = headPath;
 		this.name = name;
 		this.time = time;
@@ -20,15 +26,61 @@ public class CommentContent {
 		this.content = content;
 	}
 	
-	public CommentContent(String topicId, String topicNum, String headPath,
-			String name, String time, String content, String userId) {
+	public CommentContent(String topicId, String topicNum, String userId, String headPath, String nickName,
+			String time, String content, String zan, String zanNumber, String bePostContent, String bePostUserId, String bePostNickname, String postId) {
 		this.topicId = topicId;
 		this.topicNum = topicNum;
+		this.userId = userId;
 		this.headPath = headPath;
-		this.name = name;
+		this.name = nickName;
 		this.time = time;
 		this.content = content;
-		this.userId = userId;
+		this.zan = zan;
+		this.zanNumber = zanNumber;
+		this.bePostContent = bePostContent;
+		this.bePostUserId = bePostUserId;
+		this.bePostNickame = bePostNickname;
+		this.postId = postId;
+	}
+	
+	public String getPostId() {
+		return postId;
+	}
+
+	public void setPostId(String postId) {
+		this.postId = postId;
+	}
+	
+	public String getZanNumber() {
+		return zanNumber;
+	}
+
+	public void setZanNumber(String zanNumber) {
+		this.zanNumber = zanNumber;
+	}
+
+	public String getBePostContent() {
+		return bePostContent;
+	}
+
+	public void setBePostContent(String bePostContent) {
+		this.bePostContent = bePostContent;
+	}
+
+	public String getBePostUserId() {
+		return bePostUserId;
+	}
+
+	public void setBePostUserId(String bePostUserId) {
+		this.bePostUserId = bePostUserId;
+	}
+
+	public String getBePostNickame() {
+		return bePostNickame;
+	}
+
+	public void setBePostNickame(String bePostNickame) {
+		this.bePostNickame = bePostNickame;
 	}
 	
 	public void setTopicId(String topicId) {
@@ -71,11 +123,11 @@ public class CommentContent {
 		return time;
 	}
 	
-	public void setZan(boolean zan) {
+	public void setZan(String zan) {
 		this.zan = zan;
 	}
 	
-	public boolean getZan() {
+	public String getZan() {
 		return zan;
 	}
 	

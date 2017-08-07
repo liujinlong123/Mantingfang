@@ -1,21 +1,15 @@
 package com.android.mantingfang.third;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.android.mantingfang.second.KindGridView;
-import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.SearchTwo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class AddTwo extends Activity {
 	
@@ -36,11 +29,14 @@ public class AddTwo extends Activity {
 	private KindGridView grdView;
 	private EditText editer;
 	private TextView tvPoemName;
-	private String userId;
-	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 	
-	private String res;
+	//private String userId;
+	//private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
+	
+	//private String res;
 	private String poemId;
+	private String poemName;
+	private String poemContent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +56,8 @@ public class AddTwo extends Activity {
 		editer = (EditText) findViewById(R.id.add_one_editer);
 		tvPoemName = (TextView)findViewById(R.id.add_one_tv_poemName);
 
-		SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-		userId = pref.getString("userId", "-1");
+		/*SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+		userId = pref.getString("userId", "-1");*/
 
 		// 不保存
 		imgFinish.setOnClickListener(new OnClickListener() {
@@ -99,25 +95,35 @@ public class AddTwo extends Activity {
 				// 内容content
 				String content = editer.getText().toString();
 				// 帖子标号
-				String typeNum = "2";
+				//String typeNum = "2";
 
 				Date d = new Date();
 				d.setHours(d.getHours());
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String dateNowStr = sdf.format(d); // 当前时间
 
-				Map<String, String> param = new HashMap<>();
+				/*Map<String, String> param = new HashMap<>();
 				param.put("user_id", userId);
 				param.put("poetry_id", poemId);
 				param.put("datatime", dateNowStr);
 				param.put("content", content);
 				param.put("type_num", typeNum);
-				saveData(param);
+				saveData(param);*/
+				
+				Intent intent = new Intent();
+				intent.putExtra("poetry_id", poemId);
+				intent.putExtra("poetry_name", poemName);
+				intent.putExtra("poetry_content", poemContent);
+				intent.putExtra("datatime", dateNowStr);
+				intent.putExtra("content", content);
+				//intent.putExtra("type_num", "2");
+				setResult(RESULT_OK, intent);
+				finish();
 			}
 		});
 	}
 
-	private void saveData(final Map<String, String> param) {
+	/*private void saveData(final Map<String, String> param) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			// String Answer = null;
@@ -147,7 +153,7 @@ public class AddTwo extends Activity {
 		};
 
 		task.execute();
-	}
+	}*/
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -156,6 +162,8 @@ public class AddTwo extends Activity {
 		case POEM_ID:
 			if (resultCode == RESULT_OK) {
 				poemId = data.getStringExtra("poemId");
+				poemName = data.getStringExtra("poetry_name");
+				poemContent = data.getStringExtra("poetry_content");
 				tvPoemName.setText(data.getStringExtra("poetry_name"));
 				Log.v("PoemId and poemName", data.getStringExtra("poemId") + " " + data.getStringExtra("poetry_writer"));
 			}

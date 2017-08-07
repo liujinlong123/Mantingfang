@@ -251,7 +251,10 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 			
 			@Override
 			protected void onPostExecute(String result) {
-				
+				SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+				editor.putString("headPath", user.getUserPhoto());
+				editor.putString("nickName", user.getUserNickname());
+				editor.commit();
 			}
 			
 		};
@@ -481,7 +484,7 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 	private void displayImage(String imagePath) {
 		if (imagePath != null) {
 			Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-			Log.v("Path", imagePath);
+			//Log.v("Path", imagePath);
 			userPhoto.setImageBitmap(bitmap);
 			user.setUserPhoto(imagePath);
 		} else {

@@ -7,6 +7,7 @@ import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
@@ -83,7 +84,7 @@ public class Comment extends Activity {
 			@Override
 			protected String doInBackground(String... params) {
 				
-				return MyClient.getInstance().Http_postComment(typeNum, topicId);
+				return MyClient.getInstance().Http_postComment(UserId.getInstance(Comment.this).getUserId(), typeNum, topicId);
 			}
 			
 			@Override

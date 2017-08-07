@@ -8,6 +8,7 @@ import org.json.JSONException;
 import com.android.mantingfang.bean.PoetryList;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.fourth.LogOn;
 import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.model.PoemM;
 import com.android.mantingfanggsc.CircleImageView;
@@ -18,6 +19,7 @@ import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -173,15 +175,20 @@ public class ThirdTwoAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				if (content.getZan() != null) {
-					if (content.getZan().equals("0")) {
-						holder.zan.setImageResource(R.drawable.a7u);
-						content.setZan("1");
-						sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "1");
-					} else if (content.getZan().equals("1")){
-						holder.zan.setImageResource(R.drawable.a7r);
-						content.setZan("0");
-						sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "0");
+				if (Integer.parseInt(UserId.getInstance(mContext).getUserId()) < 0) {
+					Intent intent = new Intent(mContext, LogOn.class);
+					mContext.startActivity(intent);
+				} else {
+					if (content.getZan() != null) {
+						if (content.getZan().equals("0")) {
+							holder.zan.setImageResource(R.drawable.a7u);
+							content.setZan("1");
+							sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "1");
+						} else if (content.getZan().equals("1")){
+							holder.zan.setImageResource(R.drawable.a7r);
+							content.setZan("0");
+							sendZan(UserId.getInstance(mContext).getUserId(), content.getPost_com_pId() + "", "0");
+						}
 					}
 				}
 			}

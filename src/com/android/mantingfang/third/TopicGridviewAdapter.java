@@ -6,7 +6,7 @@ import com.android.mantingfang.picture.ImageLoader.Type;
 import com.android.mantingfanggsc.R;
 
 import android.content.Context;
-import android.util.Log;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,7 @@ import android.widget.ImageView;
 public class TopicGridviewAdapter extends BaseAdapter {
 	//private static Set<String> selectedImg = new HashSet<String>();
 
-	private List<String> datas;
+	private List<FileImgs> datas;
 	// private Context context;
 	private LayoutInflater inflater;
 
@@ -27,7 +27,7 @@ public class TopicGridviewAdapter extends BaseAdapter {
 	 * @param datas	     图片的名称
 	 * @param dirPath 图片所在文件夹的路径
 	 */
-	public TopicGridviewAdapter(Context context, List<String> datas) {
+	public TopicGridviewAdapter(Context context, List<FileImgs> datas) {
 		// this.context = context;
 		this.datas = datas;
 
@@ -79,10 +79,16 @@ public class TopicGridviewAdapter extends BaseAdapter {
 		viewHolder.vhButton.setVisibility(View.GONE);
 		viewHolder.vhImage.setColorFilter(null);
 
-		final String imgPath = datas.get(position);
+		FileImgs imgs = datas.get(position);
+		
+		if (imgs.getType().equals("0")) {
+			final String imgPath = imgs.getPath();
 
-		PictureLoad.getInstances(8, Type.FIFO).loadImage(imgPath, viewHolder.vhImage);
-		Log.v("imgPath", imgPath);
+			PictureLoad.getInstances(8, Type.FIFO).loadImage(imgPath, viewHolder.vhImage);
+		} else if (imgs.getType().equals("1")) {
+			viewHolder.vhImage.setImageBitmap(BitmapFactory.decodeFile(imgs.getPath()));
+		}
+		//Log.v("imgPath", imgPath);
 
 		viewHolder.vhImage.setOnClickListener(new View.OnClickListener() {
 

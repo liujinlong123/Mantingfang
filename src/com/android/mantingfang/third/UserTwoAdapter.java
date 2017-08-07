@@ -260,12 +260,16 @@ public class UserTwoAdapter extends BaseAdapter {
 		}
 	}
 	
-	private void initGridView(ArrayList<String> pictures, ViewHolder holder) {
+	private void initGridView(ArrayList<FileImgs> pictures, ViewHolder holder) {
 		holder.grdview.setNumColumns(3);
 		if (pictures.size() == 0 || pictures == null) {
 			holder.grdview.setVisibility(View.GONE);
 		} else {
-			Log.v("PIcture", pictures.toString());
+			//Log.v("PIcture", pictures.toString());
+			/*List<FileImgs> filePath = new ArrayList<>();
+			for (String e: pictures) {
+				filePath.add(new FileImgs("0", e));
+			}*/
 			TopicGridviewAdapter adapter = new TopicGridviewAdapter(mContext, pictures);
 			holder.grdview.setAdapter(adapter);
 		}

@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity {
 
-	//²¼¾Ö¹ÜÀíÆ÷
+	//ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½
 	private FragmentManager fManager;
 	
 	private FragmentFrist fragment_zhailu;
@@ -23,19 +23,19 @@ public class MainActivity extends FragmentActivity {
 	private FragmentThird fragment_shiyou;
 	private FragmentFourth fragment_wode;
 	
-	//Ê×Ò³
+	//ï¿½ï¿½Ò³
 	private ImageView img_menu_zhailu;
 	private TextView tv_menu_zhailu;
 	
-	//ÎÄ¿â
+	//ï¿½Ä¿ï¿½
 	private ImageView img_menu_wenku;
 	private TextView tv_menu_wenku;
 	
-	//Ê«ÓÑ
+	//Ê«ï¿½ï¿½
 	private ImageView img_menu_shiyou;
 	private TextView tv_menu_shiyou;
 	
-	//ÎÒµÄ
+	//ï¿½Òµï¿½
 	private ImageView img_menu_wode;
 	private TextView tv_menu_wode;
 	
@@ -44,7 +44,7 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		//³õÊ¼»¯×é¼þ
+		//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½
 		initViews();
 		
 		clickMenu(findViewById(R.id.bottom_linear_zhailu));
@@ -57,7 +57,7 @@ public class MainActivity extends FragmentActivity {
 		tv_menu_zhailu = (TextView)findViewById(R.id.bottom_menu_tv_zhailu);
 		
 		img_menu_wenku = (ImageView)findViewById(R.id.bottom_menu_img_wenku);
-		tv_menu_zhailu = (TextView)findViewById(R.id.bottom_menu_tv_wenku);
+		tv_menu_wenku = (TextView)findViewById(R.id.bottom_menu_tv_wenku);
 		
 		img_menu_shiyou = (ImageView)findViewById(R.id.bottom_menu_img_shiyou);
 		tv_menu_shiyou = (TextView)findViewById(R.id.bottom_menu_tv_shiyou);
@@ -70,7 +70,7 @@ public class MainActivity extends FragmentActivity {
 		FragmentTransaction trans = fManager.beginTransaction();
 		int vId = v.getId();
 		
-		//setMenuStyle(vId);
+		setMenuStyle(vId);
 		
 		hideFragment(trans);
 		
@@ -102,34 +102,34 @@ public class MainActivity extends FragmentActivity {
 		//ÕªÂ¼
 		if (vId == R.id.bottom_linear_zhailu) {
 			img_menu_zhailu.setImageDrawable(getResources().getDrawable(R.drawable.mtab1_on));
-			tv_menu_zhailu.setTextColor(getResources().getColor(R.color.gray));
+			tv_menu_zhailu.setTextColor(getResources().getColor(R.color.blue));
 		} else {
 			img_menu_zhailu.setImageDrawable(getResources().getDrawable(R.drawable.mtab1_off));
 			tv_menu_zhailu.setTextColor(getResources().getColor(R.color.gray));
 		}
 		
-		//ÎÄ¿â
+		//ï¿½Ä¿ï¿½
 		if (vId == R.id.bottom_linear_wenku) {
 			img_menu_wenku.setImageDrawable(getResources().getDrawable(R.drawable.mtab3_on));
-			tv_menu_wenku.setTextColor(getResources().getColor(R.color.gray));
+			tv_menu_wenku.setTextColor(getResources().getColor(R.color.blue));
 		} else {
 			img_menu_wenku.setImageDrawable(getResources().getDrawable(R.drawable.mtab3_off));
 			tv_menu_wenku.setTextColor(getResources().getColor(R.color.gray));
 		}
 		
-		//Ê«ÓÑ
+		//Ê«ï¿½ï¿½
 		if (vId == R.id.bottom_linear_shiyou) {
 			img_menu_shiyou.setImageDrawable(getResources().getDrawable(R.drawable.mtab2_on));
-			tv_menu_shiyou.setTextColor(getResources().getColor(R.color.gray));
+			tv_menu_shiyou.setTextColor(getResources().getColor(R.color.blue));
 		} else {
 			img_menu_shiyou.setImageDrawable(getResources().getDrawable(R.drawable.mtab2_off));
 			tv_menu_shiyou.setTextColor(getResources().getColor(R.color.gray));
 		}
 		
-		//ÎÒµÄ
+		//ï¿½Òµï¿½
 		if (vId == R.id.bottom_linear_wode) {
 			img_menu_wode.setImageDrawable(getResources().getDrawable(R.drawable.mtab4_on));
-			tv_menu_wode.setTextColor(getResources().getColor(R.color.gray));
+			tv_menu_wode.setTextColor(getResources().getColor(R.color.blue));
 		} else {
 			img_menu_wode.setImageDrawable(getResources().getDrawable(R.drawable.mtab4_off));
 			tv_menu_wode.setTextColor(getResources().getColor(R.color.gray));

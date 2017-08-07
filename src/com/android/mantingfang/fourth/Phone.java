@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,8 @@ public class Phone extends Activity {
 	private EditText editorVer;
 	private TextView getVerCode;
 	private TextView next;
+	
+	private final MyCountDownTimer myCountDownTimer = new MyCountDownTimer(60000,1000);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,7 @@ public class Phone extends Activity {
 		editorVer = (EditText) findViewById(R.id.verCode);
 		getVerCode = (TextView) findViewById(R.id.btn_getNum);
 		next = (TextView) findViewById(R.id.register_next);
-
+		
 		getVerCode.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -91,6 +94,33 @@ public class Phone extends Activity {
 			}
 		});
 	}
+	
+	//复写倒计时
+    private class MyCountDownTimer extends CountDownTimer {
+
+        public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        //计时过程
+        @Override
+        public void onTick(long l) {
+            //防止计时过程中重复点击
+        	getVerCode.setClickable(false);
+        	getVerCode.setText(l/1000+"s");
+
+        }
+
+        //计时完毕的方法
+        @Override
+        public void onFinish() {
+            //重新给Button设置文字
+        	getVerCode.setTextColor(getResources().getColor(R.color.red));
+        	getVerCode.setText("重新获取");
+            //设置可点击
+        	getVerCode.setClickable(true);
+        }
+    }
 
 	private void getVerCode(final String phoneNum) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
@@ -104,6 +134,8 @@ public class Phone extends Activity {
 			@Override
 			protected void onPostExecute(String result) {
 				// Log.v("TESTREG", result + "---");
+				myCountDownTimer.start();
+				getVerCode.setTextColor(getResources().getColor(R.color.gray));
 			}
 
 		};
@@ -136,5 +168,11 @@ public class Phone extends Activity {
 		};
 
 		task.execute();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		myCountDownTimer.onFinish();
+		super.onDestroy();
 	}
 }
