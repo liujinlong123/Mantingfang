@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AddTwo extends Activity {
 	
@@ -29,6 +30,7 @@ public class AddTwo extends Activity {
 	private KindGridView grdView;
 	private EditText editer;
 	private TextView tvPoemName;
+	private TextView tvTitle;
 	
 	//private String userId;
 	//private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
@@ -55,6 +57,9 @@ public class AddTwo extends Activity {
 		grdView = (KindGridView) findViewById(R.id.add_one_grd_photo);
 		editer = (EditText) findViewById(R.id.add_one_editer);
 		tvPoemName = (TextView)findViewById(R.id.add_one_tv_poemName);
+		tvTitle = (TextView)findViewById(R.id.add_one_tv_topic);
+		
+		tvTitle.setText("笔记");
 
 		/*SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
 		userId = pref.getString("userId", "-1");*/
@@ -97,28 +102,24 @@ public class AddTwo extends Activity {
 				// 帖子标号
 				//String typeNum = "2";
 
-				Date d = new Date();
-				d.setHours(d.getHours());
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				String dateNowStr = sdf.format(d); // 当前时间
-
-				/*Map<String, String> param = new HashMap<>();
-				param.put("user_id", userId);
-				param.put("poetry_id", poemId);
-				param.put("datatime", dateNowStr);
-				param.put("content", content);
-				param.put("type_num", typeNum);
-				saveData(param);*/
-				
-				Intent intent = new Intent();
-				intent.putExtra("poetry_id", poemId);
-				intent.putExtra("poetry_name", poemName);
-				intent.putExtra("poetry_content", poemContent);
-				intent.putExtra("datatime", dateNowStr);
-				intent.putExtra("content", content);
-				//intent.putExtra("type_num", "2");
-				setResult(RESULT_OK, intent);
-				finish();
+				if (content != null && !content.equals("")) {
+					Date d = new Date();
+					d.setHours(d.getHours());
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String dateNowStr = sdf.format(d); // 当前时间
+					
+					Intent intent = new Intent();
+					intent.putExtra("isSave", true);
+					intent.putExtra("poetry_id", poemId);
+					intent.putExtra("poetry_name", poemName);
+					intent.putExtra("poetry_content", poemContent);
+					intent.putExtra("datatime", dateNowStr);
+					intent.putExtra("content", content);
+					setResult(RESULT_OK, intent);
+					finish();
+				} else {
+					Toast.makeText(AddTwo.this, "内容不能为空", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}

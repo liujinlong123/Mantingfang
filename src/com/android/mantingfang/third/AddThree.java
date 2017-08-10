@@ -12,15 +12,20 @@ import com.android.mantingfang.picture.Picture;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.R;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,10 +35,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class AddThree extends Activity {
+public class AddThree extends Activity implements OnRequestPermissionsResultCallback {
 
 	public static final int TAKE_PHOTO = 1;
 
@@ -42,12 +47,15 @@ public class AddThree extends Activity {
 	public static final int CHOOSE_PHOTO = 3;
 
 	public static final int LIST_PHOTO = 4;
+	
+	private static final int MY_PERMISSIONS_REQUEST_CAMERA = 6;
 
 	private ImageView imgFinish;
 	private TextView tvAdd;
-	private LinearLayout linearAdd;
+	//private LinearLayout linearAdd;
 	private KindGridView grdView;
-	private EditText editer;
+	private EditText editerTitle;
+	private EditText editerContent;
 	//private String userId;
 	//private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 
@@ -67,20 +75,20 @@ public class AddThree extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.add_one);
+		setContentView(R.layout.add_three);
 
-		initViews();
+		//initViews();
+		Accessibility();
 	}
 
 	// 需要数据Map<String,String> param
 	// 用户ID 时间 内容 帖子标号 图片上传(图片名字， 图片路径) 接口
 	private void initViews() {
-		imgFinish = (ImageView) findViewById(R.id.add_one_img_finish);
-		tvAdd = (TextView) findViewById(R.id.add_one_tv_add);
-		linearAdd = (LinearLayout) findViewById(R.id.add_one_linear_add);
-		grdView = (KindGridView) findViewById(R.id.add_one_grd_photo);
-		editer = (EditText) findViewById(R.id.add_one_editer);
-
+		imgFinish = (ImageView) findViewById(R.id.add_three_img_finish);
+		tvAdd = (TextView) findViewById(R.id.add_three_tv_add);
+		grdView = (KindGridView) findViewById(R.id.add_three_grd_photo);
+		editerTitle = (EditText) findViewById(R.id.add_three_editer_title);
+		editerContent = (EditText)findViewById(R.id.add_three_editer_content);
 		
 		/*SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
 		userId = pref.getString("userId", "-1");*/
@@ -98,7 +106,7 @@ public class AddThree extends Activity {
 		initGridViews(CHOOSE_PHOTO, null);
 		
 		// 添加诗词
-		linearAdd.setVisibility(View.GONE);
+		//linearAdd.setVisibility(View.GONE);
 		/*linearAdd.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -129,27 +137,28 @@ public class AddThree extends Activity {
 			public void onClick(View v) {
 				// 用户Id
 				// 内容content
-				String content = editer.getText().toString();
+				String title = editerTitle.getText().toString();
+				String content = editerContent.getText().toString();
 				// 帖子标号
 				//String typeNum = "3";
 
-				Date d = new Date();
-				d.setHours(d.getHours());
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				String dateNowStr = sdf.format(d); // 当前时间
-
-				/*Map<String, String> param = new HashMap<>();
-				param.put("user_id", userId);
-				param.put("datatime", dateNowStr);
-				param.put("content", content);
-				param.put("type_num", typeNum);
-				saveData(param);*/
-				Intent intent = new Intent();
-				intent.putExtra("datetime", dateNowStr);
-				intent.putExtra("content", content);
-				intent.putStringArrayListExtra("setPath", setPath);
-				setResult(RESULT_OK, intent);
-				finish();
+				
+				if (content != null && !content.equals("")) {
+					Date d = new Date();
+					d.setHours(d.getHours());
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String dateNowStr = sdf.format(d); // 当前时间
+					Intent intent = new Intent();
+					intent.putExtra("isSave", true);
+					intent.putExtra("datatime", dateNowStr);
+					intent.putExtra("title", title);
+					intent.putExtra("content", content);
+					intent.putStringArrayListExtra("setPath", setPath);
+					setResult(RESULT_OK, intent);
+					finish();
+				} else {
+					Toast.makeText(AddThree.this, "内容不能为空", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}
@@ -298,5 +307,44 @@ public class AddThree extends Activity {
 		default:
 			break;
 		}
+	}
+	
+	@SuppressLint("InlinedApi")
+	public void Accessibility() {
+		if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED)
+        {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    		Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_CAMERA);
+        } else
+        {
+        	initViews();
+        }
+
+	}
+
+	@SuppressLint("Override")
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] arg1, int[] grantResults) {
+		if (requestCode == MY_PERMISSIONS_REQUEST_CAMERA)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                initViews();
+                
+            } else
+            {
+                // Permission Denied
+                Toast.makeText(AddThree.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                //userPhoto.setClickable(false);
+                //finish();
+            }
+            return;
+        }
+
 	}
 }

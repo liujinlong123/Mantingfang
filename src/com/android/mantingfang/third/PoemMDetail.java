@@ -1,12 +1,14 @@
 package com.android.mantingfang.third;
 
 import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.fourth.LogOn;
 import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.model.PoemM;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -95,7 +97,12 @@ public class PoemMDetail extends Activity {
 			}
 		});
 		
-		getCollection(poem.getPoemId());
+		if (Integer.parseInt(UserId.getInstance(PoemMDetail.this).getUserId()) < 0) {
+			Intent intent = new Intent(PoemMDetail.this, LogOn.class);
+			startActivity(intent);
+		} else {
+			getCollection(poem.getPoemId());
+		}
 	}
 	
 	private void initshow() {
@@ -183,11 +190,13 @@ public class PoemMDetail extends Activity {
 			@Override
 			protected String doInBackground(String... params) {
 				
+				//Log.v("collection", UserId.getInstance(PoemMDetail.this).getUserId() + "---" + poemId);
 				return MyClient.getInstance().Http_postGetCollection(UserId.getInstance(PoemMDetail.this).getUserId(), poemId, "1");
 			}
 
 			@Override
 			protected void onPostExecute(String result) {
+				//Log.v("collection", result + "---");
 				if (result != null && !result.equals("")) {
 					collect = result;
 				} else {
@@ -226,7 +235,7 @@ public class PoemMDetail extends Activity {
 			@Override
 			protected String doInBackground(String... params) {
 				
-				return MyClient.getInstance().Http_postCollection(UserId.getInstance(PoemMDetail.this).getUserId(), poemId, "0", collection);
+				return MyClient.getInstance().Http_postCollection(UserId.getInstance(PoemMDetail.this).getUserId(), poemId, "1", collection);
 			}
 			
 			@Override

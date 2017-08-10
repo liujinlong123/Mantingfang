@@ -15,6 +15,15 @@ public class CommentContent {
 	private String bePostUserId;
 	private String bePostNickame;
 	private String postId;
+	private String bePostId;
+
+	public String getBePostId() {
+		return bePostId;
+	}
+
+	public void setBePostId(String bePostId) {
+		this.bePostId = bePostId;
+	}
 
 	public CommentContent() {};
 	
@@ -27,7 +36,8 @@ public class CommentContent {
 	}
 	
 	public CommentContent(String topicId, String topicNum, String userId, String headPath, String nickName,
-			String time, String content, String zan, String zanNumber, String bePostContent, String bePostUserId, String bePostNickname, String postId) {
+			String time, String content, String zan, String zanNumber, String bePostContent, String bePostUserId, 
+			String bePostNickname, String postId, String bePostId) {
 		this.topicId = topicId;
 		this.topicNum = topicNum;
 		this.userId = userId;
@@ -41,6 +51,7 @@ public class CommentContent {
 		this.bePostUserId = bePostUserId;
 		this.bePostNickame = bePostNickname;
 		this.postId = postId;
+		this.bePostId = bePostId;
 	}
 	
 	public String getPostId() {

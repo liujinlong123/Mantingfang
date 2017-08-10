@@ -78,6 +78,7 @@ public class ThirdOneAdapter extends BaseAdapter {
 			holder.time = (TextView)view.findViewById(R.id.third_pager_user_time);
 			holder.content = (TextView)view.findViewById(R.id.third_pager_user_content);
 			holder.grdview = (KindGridView)view.findViewById(R.id.third_pager_user_grdphoto);
+			holder.singleImage = (ImageView) view.findViewById(R.id.third_pager_single_img);
 			holder.linearPoem = (LinearLayout)view.findViewById(R.id.third_pager_linearPoem);
 			holder.poemName = (TextView)view.findViewById(R.id.third_pager_tv_poemName);
 			holder.poemQuote = (TextView)view.findViewById(R.id.third_pager_tv_poem);
@@ -111,6 +112,8 @@ public class ThirdOneAdapter extends BaseAdapter {
 		
 		KindGridView grdview;
 		
+		ImageView singleImage;
+		
 		LinearLayout linearPoem;
 		
 		TextView poemName;
@@ -137,7 +140,15 @@ public class ThirdOneAdapter extends BaseAdapter {
 		//发表内容
 		holder.content.setText(content.getContent());
 		//初始化图片
-		initGridView(content.getPicture(), holder);
+		if (content.getPicture() == null || content.getPicture().size() == 0) {
+			holder.grdview.setVisibility(View.GONE);
+		} else if (content.getPicture().size() == 1) {
+			holder.singleImage.setVisibility(View.VISIBLE);
+			PictureLoad.getInstance().loadImage(content.getPicture().get(0).getPath(), holder.singleImage);
+		} else if (content.getPicture().size() > 1) {
+			adapter = new TopicGridviewAdapter(mContext, content.getPicture());
+			holder.grdview.setAdapter(adapter);
+		}
 		//相关诗词
 		holder.linearPoem.setVisibility(View.GONE);
 		
@@ -213,20 +224,20 @@ public class ThirdOneAdapter extends BaseAdapter {
 		});
 	}
 	
-	private void initGridView(ArrayList<FileImgs> pictures, ViewHolder holder) {
+	/*private void initGridView(ArrayList<FileImgs> pictures, ViewHolder holder) {
 		holder.grdview.setNumColumns(3);
 		if (pictures.size() == 0 || pictures == null) {
 			holder.grdview.setVisibility(View.GONE);
 		} else {
 			//Log.v("PIcture", pictures.toString());
-			/*List<FileImgs> filePath = new ArrayList<>();
+			List<FileImgs> filePath = new ArrayList<>();
 			for (String e: pictures) {
 				filePath.add(new FileImgs("0", e));
-			}*/
+			}
 			adapter = new TopicGridviewAdapter(mContext, pictures);
 			holder.grdview.setAdapter(adapter);
 		}
-	}
+	}*/
 	
 	private void refresh() {
 		listview.setOnRefreshListener(new CustomListView.OnRefreshListener() {

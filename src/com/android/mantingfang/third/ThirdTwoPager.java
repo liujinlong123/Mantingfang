@@ -32,7 +32,7 @@ public class ThirdTwoPager extends Fragment{
 		if (view == null) {
 			view = inflater.inflate(R.layout.third_pager_two, null);
 			
-			initViews();
+			thirdTwoListView = (CustomListView)view.findViewById(R.id.third_pager_two_listview);
 			getData();
 			
 			return view;
@@ -59,13 +59,9 @@ public class ThirdTwoPager extends Fragment{
 		adapterTwo.notifyDataSetChanged();
 	}
 	
-	private void initViews() {
-		thirdTwoListView = (CustomListView)view.findViewById(R.id.third_pager_two_listview);
-	}
-	
 	private void getData() {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
-
+			
 			@Override
 			protected String doInBackground(String... params) {
 				

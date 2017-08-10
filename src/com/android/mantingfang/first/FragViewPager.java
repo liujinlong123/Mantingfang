@@ -86,30 +86,30 @@ public class FragViewPager extends Fragment{
 	public void setFronts(int type) {
 		switch (type) {
 		case 0:
-			fonts = new SetFronts(context, tv1);
-			fonts.setKT();
+			fonts = new SetFronts(tv1);
+			fonts.setKTFragmentFrist();
 			fonts.setTv(tv2);
-			fonts.setKT();
+			fonts.setKTFragmentFrist();
 			fonts.setTv(tv3);
-			fonts.setKT();
+			fonts.setKTFragmentFrist();
 			break;
 			
 		case 1:
-			fonts = new SetFronts(context, tv1);
-			fonts.setLS();
+			fonts = new SetFronts(tv1);
+			fonts.setLSFragmentFrist();
 			fonts.setTv(tv2);
-			fonts.setLS();
+			fonts.setLSFragmentFrist();
 			fonts.setTv(tv3);
-			fonts.setLS();
+			fonts.setLSFragmentFrist();
 			break;
 			
 		case 2:
-			fonts = new SetFronts(context, tv1);
-			fonts.setHWXK();
+			fonts = new SetFronts(tv1);
+			fonts.setHWXKFragmentFrist();
 			fonts.setTv(tv2);
-			fonts.setHWXK();
+			fonts.setHWXKFragmentFrist();
 			fonts.setTv(tv3);
-			fonts.setHWXK();
+			fonts.setHWXKFragmentFrist();
 			break;
 		}
 	}

@@ -31,8 +31,8 @@ public class ThirdFourPager extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (view == null) {
 			view = inflater.inflate(R.layout.third_pager_four, null);
-
-			initViews();
+			thirdFourListView = (CustomListView)view.findViewById(R.id.third_pager_four_listview);
+			
 			getData();
 			return view;
 		}
@@ -57,14 +57,9 @@ public class ThirdFourPager extends Fragment {
 		adapterFour.notifyDataSetChanged();
 	}
 	
-	// ��ʼ��ThirdFour
-	private void initViews() {
-		thirdFourListView = (CustomListView)view.findViewById(R.id.third_pager_four_listview);
-	}
-	
 	private void getData() {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
-
+			
 			@Override
 			protected String doInBackground(String... params) {
 				

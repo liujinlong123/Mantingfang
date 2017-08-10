@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <ImageView 
+        android:id="@+id/grd_choose_img"
+        android:layout_width="wrap_content"
+        android:layout_height="95dp"
+        android:src="@drawable/interest_ziran" />
+    
+    <TextView
+        android:id="@+id/grd_choose_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="自然"
+        android:textColor="@color/white"
+        android:layout_alignLeft="@id/grd_choose_img"
+        android:textSize="13sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp" />
+
+    <ImageView
+        android:id="@+id/grd_if_choose"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@id/grd_choose_img"
+        android:src="@drawable/user_guide_select_interest_selected_mask"
+        android:visibility="invisible" />
+
+</RelativeLayout>

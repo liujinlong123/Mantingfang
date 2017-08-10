@@ -7,7 +7,6 @@
     <com.android.mantingfanggsc.CustomListView
 	    android:id="@+id/third_pager_four_listview"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:scrollbars="none" ></com.android.mantingfanggsc.CustomListView>
+	    android:layout_height="wrap_content" ></com.android.mantingfanggsc.CustomListView>
 
 </LinearLayout>

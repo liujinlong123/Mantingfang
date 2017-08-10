@@ -32,6 +32,7 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 	private ImageView imgFinish;
 	private TextView tvAdd;
 	private LinearLayout linearAdd;
+	private TextView tvTitle;
 	//private String userId;
 	//private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 
@@ -70,6 +71,9 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 		imgFinish = (ImageView) findViewById(R.id.add_four_img_finish);
 		tvAdd = (TextView) findViewById(R.id.add_four_tv_add);
 		linearAdd = (LinearLayout) findViewById(R.id.add_four_linear_add);
+		tvTitle = (TextView)findViewById(R.id.add_four_tv_topic);
+		
+		tvTitle.setText("朗读");
 
 		poemName = (TextView) findViewById(R.id.add_four_poem_name);
 		poemWriter = (TextView) findViewById(R.id.add_four_poem_writer);
@@ -124,16 +128,11 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 				Date d = new Date();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String dateNowStr = sdf.format(d); // 当前时间
-
-				/*Map<String, String> param = new HashMap<>();
-				param.put("user_id", userId);
-				param.put("poetry_id", poemId);
-				param.put("datatime", dateNowStr);
-				param.put("type_num", typeNum);*/
 				if (FileName != null && !FileName.equals("")) {
 					//saveData(param);
 					//Log.v("FileName", FileName + "---");
 					Intent intent = new Intent();
+					intent.putExtra("isSave", true);
 					intent.putExtra("poetry_id", poemId);
 					intent.putExtra("poetry_name", poemNames);
 					intent.putExtra("poetry_content", poemContents);
@@ -177,6 +176,7 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
             // TODO Auto-generated method stub  
              mRecorder.stop();  
              mRecorder.release();  
+             Toast.makeText(AddFour.this, "停止录音", Toast.LENGTH_SHORT).show();
              mRecorder = null;  
         }  
           
@@ -254,7 +254,7 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 	@SuppressLint("InlinedApi")
 	public void Accessibility() {
 		if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA)
+                Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED)
         {
 

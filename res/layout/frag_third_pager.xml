@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:background="@color/white" >
     
-    <include layout="@layout/topbar_third"/>
+    <include layout="@layout/topbar_third" />
     
     <include layout="@layout/third_head" />
     
@@ -15,8 +15,6 @@
         android:background="@color/gray" />
     
    <android.support.v4.view.ViewPager
-        android:layout_above="@+id/foot_rl"
-        android:layout_below="@+id/head_rl"
         android:id="@+id/third_view_pager"
         android:layout_width="match_parent"
         android:layout_height="fill_parent">

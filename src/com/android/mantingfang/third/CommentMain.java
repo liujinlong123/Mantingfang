@@ -73,6 +73,9 @@ public class CommentMain extends Activity {
 	private EditText editer;
 	private Button btnSend;
 	private String bePostId;
+	private String bePostContent;
+	private String bePostUserId;
+	private String bePostUserName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +102,7 @@ public class CommentMain extends Activity {
 		list.add(content);
 		adapter = new UserTwoAdapter(CommentMain.this, list, headPath);
 		listview.setAdapter(adapter);
-		setListViewHeightBasedOnChildren(listview);
+		//setListViewHeightBasedOnChildren(listview);
 		
 		listTv = (ListView)findViewById(R.id.comment_tv_better);
 		dataListTv = new ArrayList<>();
@@ -146,6 +149,13 @@ public class CommentMain extends Activity {
 						params.put("time", dateNowStr);
 						if (bePostId != null &&! bePostId.equals("")) {
 							params.put("bePostId", bePostId);
+							params.put("bePostContent", bePostContent);
+							params.put("bePostUserId", bePostUserId);
+							params.put("bePostUserName", bePostUserName);
+							bePostId = null;
+							bePostContent = null;
+							bePostUserId = null;
+							bePostUserName = null;
 						} else {
 							params.put("bePostId", "-1");
 						}
@@ -170,11 +180,18 @@ public class CommentMain extends Activity {
 
 			@Override
 			protected void onPostExecute(String result) {
-				Log.v("result-sendComment", result + "------");
+				//Log.v("result-sendComment", result + "------");
+				/*if (result != null && !result.equals("")) {
+					
+				}*/
+				
 				editer.setText("");
+				editer.setHint("");
 				CommentContent item = new CommentContent(param.get("post_id"), param.get("typeNum"), UserId.getInstance(CommentMain.this).getUserId(),
 						UserId.getInstance(CommentMain.this).getHeadPath(), UserId.getInstance(CommentMain.this).getNickName(), param.get("time"),
-						param.get("content"), "0", "0", null, null, null, param.get("bePostId"));
+						param.get("content"), "0", "0", param.get("bePostContent"), param.get("bePostUserId"), param.get("bePostUserName"), result, param.get("bePostId"));
+				
+				//Log.v("bePostedId", param.get("bePostId") + "+++++");
 				if (dataListTwo == null) {
 					textView.setVisibility(View.VISIBLE);
 					dataListTwo = new ArrayList<>();
@@ -183,6 +200,7 @@ public class CommentMain extends Activity {
 					listTwo.setAdapter(adapterTwo);
 				} else {
 					dataListTwo.add(0, item);
+					Log.v("ITEM---item", item.getBePostId());
 					adapterTwo.notifyDataSetChanged();
 				}
 			}
@@ -234,7 +252,10 @@ public class CommentMain extends Activity {
 										switch (whichcountry) {
 										case 0:
 											bePostId = dataListOne.get(position).getPostId();
-											editer.setHint("@" + dataListOne.get(position).getBePostNickame());
+											bePostContent= dataListOne.get(position).getContent();
+											bePostUserId = dataListOne.get(position).getUserId();
+											bePostUserName = dataListOne.get(position).getName();
+											editer.setHint("@" + dataListOne.get(position).getName());
 											break;
 										}
 										
@@ -253,7 +274,10 @@ public class CommentMain extends Activity {
 										switch (whichcountry) {
 										case 0:
 											bePostId = dataListTwo.get(position).getPostId();
-											editer.setHint("@" + dataListTwo.get(position).getBePostNickame());
+											bePostContent= dataListTwo.get(position).getContent();
+											bePostUserId = dataListTwo.get(position).getUserId();
+											bePostUserName = dataListTwo.get(position).getName();
+											editer.setHint("@" + dataListTwo.get(position).getName());
 											break;
 										}
 										
@@ -288,7 +312,11 @@ public class CommentMain extends Activity {
 		for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
 			View listItem = listAdapter.getView(i, null, listView);
 			listItem.measure(0, 0);
+			
 			totalHeight += listItem.getMeasuredHeight();
+			/*int h = View.MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+			listItem.measure(0, h);
+			totalHeight += listItem.getMeasuredHeight();*/
 		}
 
 		ViewGroup.LayoutParams params = listView.getLayoutParams();

@@ -19,6 +19,7 @@ import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -45,12 +46,20 @@ public class FirstPagerInfoP extends Activity {
 	private SetFronts fonts;
 	private int type;
 	
+	public static Typeface typefaceKT;
+	public static Typeface typefaceLS;
+	public static Typeface typefaceHWXK;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		SpeechUtility.createUtility(getBaseContext(), SpeechConstant.APPID + "=595f86ad");
 		setContentView(R.layout.first_pager_info);
 		// 初始化合成对象
 		mTts = SpeechSynthesizer.createSynthesizer(this, null);
+		
+		typefaceKT = Typeface.createFromAsset(FirstPagerInfoP.this.getAssets(), "fonts/KT.ttf");
+		typefaceLS = Typeface.createFromAsset(FirstPagerInfoP.this.getAssets(), "fonts/LS.ttf");
+		typefaceHWXK = Typeface.createFromAsset(FirstPagerInfoP.this.getAssets(), "fonts/HWXK.ttf");
 		
 		initViews();
 	}
@@ -285,30 +294,30 @@ public class FirstPagerInfoP extends Activity {
     private void setFronts(int type) {
 		switch (type) {
 		case 0:
-			fonts = new SetFronts(FirstPagerInfoP.this, tv1);
-			fonts.setKT();
+			fonts = new SetFronts(tv1);
+			fonts.setKTFirstPagerInfoP();
 			fonts.setTv(tv2);
-			fonts.setKT();
+			fonts.setKTFirstPagerInfoP();
 			fonts.setTv(tv3);
-			fonts.setKT();
+			fonts.setKTFirstPagerInfoP();
 			break;
 			
 		case 1:
-			fonts = new SetFronts(FirstPagerInfoP.this, tv1);
-			fonts.setLS();
+			fonts = new SetFronts(tv1);
+			fonts.setLSFirstPagerInfoP();
 			fonts.setTv(tv2);
-			fonts.setLS();
+			fonts.setLSFirstPagerInfoP();
 			fonts.setTv(tv3);
-			fonts.setLS();
+			fonts.setLSFirstPagerInfoP();
 			break;
 			
 		case 2:
-			fonts = new SetFronts(FirstPagerInfoP.this, tv1);
-			fonts.setHWXK();
+			fonts = new SetFronts(tv1);
+			fonts.setHWXKFirstPagerInfoP();
 			fonts.setTv(tv2);
-			fonts.setHWXK();
+			fonts.setHWXKFirstPagerInfoP();
 			fonts.setTv(tv3);
-			fonts.setHWXK();
+			fonts.setHWXKFirstPagerInfoP();
 			break;
 		}
 	}

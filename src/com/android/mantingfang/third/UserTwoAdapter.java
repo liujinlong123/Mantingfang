@@ -17,7 +17,6 @@ import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,13 +33,13 @@ public class UserTwoAdapter extends BaseAdapter {
 	private Context mContext;
 	private LayoutInflater inflater;
 	private List<UserTwoContent> list;
-	private Bitmap bitmap;
+	private String headPath;
 
-	public UserTwoAdapter(Context context, List<UserTwoContent> list, Bitmap bitmap) {
+	public UserTwoAdapter(Context context, List<UserTwoContent> list, String headPath) {
 		this.mContext = context;
 		this.list = list;
 		inflater = LayoutInflater.from(context);
-		this.bitmap = bitmap;
+		this.headPath = headPath;
 	}
 
 	@Override
@@ -125,7 +124,8 @@ public class UserTwoAdapter extends BaseAdapter {
 
 	private void initViews(final UserTwoContent content, final ViewHolder holder, View view) {
 		// 头像路径
-		holder.headPhoto.setImageBitmap(bitmap);
+		//holder.headPhoto.setImageBitmap(bitmap);
+		PictureLoad.getInstance().loadImage(headPath, holder.headPhoto);
 		// 用户昵称
 		holder.userName.setText(content.getName());
 		// 时间
@@ -139,6 +139,7 @@ public class UserTwoAdapter extends BaseAdapter {
 				holder.zan.setImageResource(R.drawable.a7u);
 			}
 		}
+		
 		holder.zan.setOnClickListener(new OnClickListener() {
 			
 			@Override

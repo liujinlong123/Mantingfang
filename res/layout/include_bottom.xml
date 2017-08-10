@@ -65,6 +65,30 @@
                 android:textSize="12sp" />
         </LinearLayout>
         
+        <!-- 话题 -->
+        <LinearLayout
+            android:id="@+id/bottom_linear_topic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="5dp"
+            android:onClick="clickMenu" >
+            <ImageView
+                android:id="@+id/bottom_menu_img_topic"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/mtab_findoff" />
+            
+            <TextView
+                android:id="@+id/bottom_menu_tv_topic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发现"
+                android:textSize="12sp" />
+        </LinearLayout>
+        
         <!-- 诗友 -->
         <LinearLayout
             android:id="@+id/bottom_linear_shiyou"

@@ -13,6 +13,14 @@ public class Player implements OnCompletionListener,
 
 	public MediaPlayer mediaPlayer;
 
+	public MediaPlayer getMediaPlayer() {
+		return mediaPlayer;
+	}
+
+	public void setMediaPlayer(MediaPlayer mediaPlayer) {
+		this.mediaPlayer = mediaPlayer;
+	}
+
 	public Player() {
 		super();
 		try {
@@ -33,11 +41,13 @@ public class Player implements OnCompletionListener,
 	 * @param url
 	 *            url???
 	 */
-	public void playUrl(String url) {
+	public void playUrl(String url, StartPlayer startP) {
 		try {
 			mediaPlayer.reset();
 			mediaPlayer.setDataSource(url); 
 			mediaPlayer.prepare();
+			//Log.v("Player---", "----start");
+			startP.startAudio();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (SecurityException e) {
@@ -49,10 +59,16 @@ public class Player implements OnCompletionListener,
 		}
 	}
 
+	/**
+	 * 暂停
+	 */
 	public void pause() {
 		mediaPlayer.pause();
 	}
 
+	/**
+	 * 停止
+	 */
 	public void stop() {
 		if (mediaPlayer != null) {
 			mediaPlayer.stop();
@@ -61,6 +77,9 @@ public class Player implements OnCompletionListener,
 		}
 	}
 
+	/**
+	 * 开始播放
+	 */
 	@Override
 	public void onPrepared(MediaPlayer mp) {
 		mp.start();
@@ -72,4 +91,7 @@ public class Player implements OnCompletionListener,
 		Log.e("mediaPlayer", "onCompletion");
 	}
 
+	public interface StartPlayer {
+		public void startAudio();
+	}
 }

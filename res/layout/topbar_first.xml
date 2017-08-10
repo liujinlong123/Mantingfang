@@ -15,7 +15,6 @@
             android:layout_width="40dp"
             android:layout_height="25dp"
             android:background="@drawable/topbar_first_btn"
-            android:text="添加"
             android:textSize="12sp"
             android:textColor="@color/gray"
             android:layout_marginLeft="7dp"

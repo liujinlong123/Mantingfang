@@ -3,10 +3,6 @@ package com.android.mantingfang.first;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
-
-import com.android.mantingfang.bean.StringUtils;
-import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.fourth.LogOn;
 import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfanggsc.MyClient;
@@ -14,10 +10,10 @@ import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,25 +27,32 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class FragmentFrist extends Fragment {
 	private View view;
 	
 	//ViewPager
 	private ViewPager viewPager;
-	private List<PoemRhesis> dataList;
+	private List<PoemRhesis> dataList = RhesisList.getInstance().getList();
 	private ViewAdapter adapter;
 	
-	private List<FragViewPager> fragmentList = new ArrayList<>();
+	private List<FragViewPager> fragmentList = FragmentList.getInstance().getFragmentList();
+	private static final int CHOOSETYPE = 1;
 	
 	private Button btnAdd;
 	private ImageView imgCollect;
 	private ImageView imgMore;
-	private SharedPreferences pref;
-	private String userId;
+	//private SharedPreferences pref;
+	//private String userId;
 	
 	private String collect;
+	
+	public static Typeface typefaceKT;
+	public static Typeface typefaceLS;
+	public static Typeface typefaceHWXK;
+	
+
+	private ArrayList<String> listTitles;
 	
 	@SuppressLint("InflateParams")
 	@Override
@@ -57,8 +60,9 @@ public class FragmentFrist extends Fragment {
 		if (view == null) {
 			view = inflater.inflate(R.layout.frag_first_pager, null);
 			
-			pref = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
-			userId = pref.getString("userId", "-1");
+			typefaceKT = Typeface.createFromAsset(getActivity().getAssets(), "fonts/KT.ttf");
+			typefaceLS = Typeface.createFromAsset(getActivity().getAssets(), "fonts/LS.ttf");
+			typefaceHWXK = Typeface.createFromAsset(getActivity().getAssets(), "fonts/HWXK.ttf");
 			
 			initViews();
 			
@@ -75,6 +79,17 @@ public class FragmentFrist extends Fragment {
 		imgCollect = (ImageView)view.findViewById(R.id.topbar_first_collect);
 		imgMore = (ImageView)view.findViewById(R.id.topbar_first_more);
 		
+		/**
+		 * 用户自己选择的标签
+		 */
+		listTitles = ChoosePicture.getInstance(getContext()).getChooseTitle();
+		if (listTitles == null || listTitles.size() == 0) {
+			btnAdd.setText("全部");
+		} else if (listTitles.size() == 1){
+			btnAdd.setText(listTitles.get(0));
+		} else if (listTitles.size() > 1){
+			btnAdd.setText(listTitles.get(0).substring(0, 2) + "等");
+		}
 		btnAdd.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -84,7 +99,7 @@ public class FragmentFrist extends Fragment {
 					startActivity(intentL);
 				} else {
 					Intent intent = new Intent(getActivity(), FirstPagerAdd.class);
-					startActivity(intent);
+					startActivityForResult(intent, CHOOSETYPE);
 				}
 				
 			}
@@ -115,12 +130,18 @@ public class FragmentFrist extends Fragment {
 		});
 		
 		viewPager = (ViewPager) view.findViewById(R.id.frag_first_viewpager);
-		getData();
+		//getData();
+		if (fragmentList != null && fragmentList.size() > 0) {
+			viewPager.setOffscreenPageLimit(fragmentList.size());
+			adapter = new ViewAdapter(getChildFragmentManager());
+			viewPager.setAdapter(adapter);
+			viewPager.setCurrentItem(0);
+		}
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			
 			@Override
 			public void onPageSelected(int arg0) {
-				//Log.v("Position", arg0 + "----");
+				System.out.println("Position----" +  arg0 + "----");
 				getCollection(dataList.get(arg0).getPoemId());
 				
 			}
@@ -172,7 +193,7 @@ public class FragmentFrist extends Fragment {
 		}
 	}
 	
-	private void getData() {
+	/*private void getData() {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
@@ -207,7 +228,7 @@ public class FragmentFrist extends Fragment {
 		};
 		
 		task.execute();
-	}
+	}*/
 	
 	private void setFonts(int type) {
 		switch(type) {
@@ -308,6 +329,21 @@ public class FragmentFrist extends Fragment {
 		};
 		
 		task.execute();
+	}
+	
+	@SuppressWarnings("static-access")
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch(requestCode) {
+		case CHOOSETYPE:
+			if (resultCode == getActivity().RESULT_OK) {
+				btnAdd.setText(data.getStringExtra("choose"));
+			}
+			break;
+			
+		default:
+			break;
+		}
 	}
 	
 	/*private void setViewPagerAdapter(final int type) {

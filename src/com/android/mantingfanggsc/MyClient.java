@@ -117,7 +117,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				//Log.v("user_id: " + user_id, response);
+				Log.v("user_id: " + user_id, response);
 				return response;
 			} 
 		} catch(Exception e) {
@@ -206,7 +206,7 @@ public class MyClient {
 			param.add(new BasicNameValuePair("commented_id", params.get("bePostId")));
 			
 			//Log.v("Comment---1", params.get("userId") + "---" + params.get("typeNum") + "---" + params.get("post_id"));
-			//Log.v("Comment---2", params.get("content") + "---" + params.get("time") + "---" + params.get("bePostId"));
+			//Log.v("Comment---2", params.get("content") + "---" + params.get("time") + "++++" + params.get("bePostId"));
 			
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
 			httpPost.setEntity(entity);

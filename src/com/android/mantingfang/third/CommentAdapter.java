@@ -12,18 +12,19 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class CommentAdapter extends BaseAdapter {
 
-	@SuppressWarnings("unused")
 	private Context mContext;
 	private List<CommentContent> list;
 	private LayoutInflater inflater;
@@ -65,6 +66,7 @@ public class CommentAdapter extends BaseAdapter {
 			holder.content = (TextView)view.findViewById(R.id.comment_item_content);
 			holder.beContent = (TextView)view.findViewById(R.id.comment_item_huifu);
 			holder.zanNum = (TextView)view.findViewById(R.id.comment_zan_number);
+			holder.linear = (LinearLayout)view.findViewById(R.id.comment_linear_huifu);
 			
 			view.setTag(holder);
 		} else {
@@ -92,11 +94,12 @@ public class CommentAdapter extends BaseAdapter {
 		}
 		
 		//内容
-		if (content.getBePostUserId() == null || content.getBePostUserId().equals("-1") || content.getBePostUserId().equals("")) {
+		if (content.getBePostId() == null || content.getBePostId().equals("-1") || content.getBePostId().equals("")) {
 			holder.content.setText(content.getContent());
+			Log.v("TEST", content.getBePostUserId() + "-----");
 			
 		} else {
-			holder.beContent.setVisibility(View.VISIBLE);
+			holder.linear.setVisibility(View.VISIBLE);
 			//holder.content.setText("回复@" + content.getBePostNickame() + ":" + content.getContent());
 			//holder.beContent.setText("@" + content.getBePostNickame() + ":" + content.getBePostContent());
 			
@@ -104,7 +107,7 @@ public class CommentAdapter extends BaseAdapter {
 			holder.content.setHighlightColor(mContext.getResources().getColor(android.R.color.transparent));
 			
 			SpannableString spanableInfo = new SpannableString("回复@" + content.getBePostNickame() + ":" + content.getContent());
-			spanableInfo.setSpan(new Clickable(clickListener),3,3 + content.getBePostNickame().length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			spanableInfo.setSpan(new Clickable(clickListener),2,3 + content.getBePostNickame().length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 			holder.content.setText(spanableInfo);
 			holder.content.setMovementMethod(LinkMovementMethod.getInstance());
 			
@@ -112,7 +115,7 @@ public class CommentAdapter extends BaseAdapter {
 			holder.beContent.setHighlightColor(mContext.getResources().getColor(android.R.color.transparent));
 			
 			SpannableString spanableInfoTwo = new SpannableString("@" + content.getBePostNickame() + ":" + content.getBePostContent());
-			spanableInfoTwo.setSpan(new Clickable(clickListener),1,content.getBePostNickame().length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			spanableInfoTwo.setSpan(new Clickable(clickListener),0,content.getBePostNickame().length() + 1,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 			holder.beContent.setText(spanableInfoTwo);
 			holder.beContent.setMovementMethod(LinkMovementMethod.getInstance());
 		}
@@ -134,6 +137,8 @@ public class CommentAdapter extends BaseAdapter {
 		TextView beContent;
 		
 		TextView zanNum;
+		
+		LinearLayout linear;
 	}
 	
 	private OnClickListener clickListener=new OnClickListener() {
@@ -164,7 +169,7 @@ public class CommentAdapter extends BaseAdapter {
 		 */
 		@Override
 		public void updateDrawState(TextPaint ds) {
-			ds.setColor(mContext.getResources().getColor(R.color.red));
+			ds.setColor(mContext.getResources().getColor(R.color.blue));
 		}
 	}
 }

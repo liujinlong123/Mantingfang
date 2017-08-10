@@ -15,6 +15,13 @@ import com.android.mantingfang.bean.Label;
 import com.android.mantingfang.bean.LabelDao;
 import com.android.mantingfang.bean.Language;
 import com.android.mantingfang.bean.LanguageDao;
+import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.first.Fonts;
+import com.android.mantingfang.first.FragViewPager;
+import com.android.mantingfang.first.FragmentList;
+import com.android.mantingfang.first.PoemRhesis;
+import com.android.mantingfang.first.RhesisList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -43,6 +50,8 @@ public class AppStart extends Activity {
 	List<Language> lans = new ArrayList<Language>();
 	List<Kind> kinds = new ArrayList<Kind>();
 	List<Label> labs = new ArrayList<Label>();
+	
+	private List<PoemRhesis> dataList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +61,7 @@ public class AppStart extends Activity {
 		context = getApplication();
 
 		// final String isInsert = this.getProperty("isInsert");
-		int waitTime = 500;
+		int waitTime = 2000;
 		/*
 		 * if(StringUtils.isEmpty(isInsert)){ waitTime = 4000; }
 		 */
@@ -119,7 +128,23 @@ public class AppStart extends Activity {
 					lla.insertLabel(labelList);
 					Log.v("Label", "------successful");
 				}
-
+				String result = (String) msg.obj;
+				if (result != null && !result.equals("")) {
+					try {
+						dataList = TopicList.parseRhesis(StringUtils.toJSONArray(result)).getRhesisList();
+						FragmentList.getInstance().getFragmentList().clear();
+						for (PoemRhesis e: dataList) {
+							FragmentList.getInstance().getFragmentList().add(new FragViewPager(e, AppStart.this, Fonts.getInstance(AppStart.this).getType()));
+						}
+						RhesisList.getInstance().setRhesisList(dataList);
+					} catch (JSONException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else {
+					Toast.makeText(AppStart.this, "没有数据返回", Toast.LENGTH_SHORT).show();
+				}
+				
 				long endTime = System.currentTimeMillis();
 				Log.v("时间", "------" + (endTime - startTime));
 				Toast.makeText(context, endTime - startTime + "", Toast.LENGTH_LONG).show();
@@ -136,6 +161,7 @@ public class AppStart extends Activity {
 			public void run() {
 				Message msg = new Message();
 				try {
+					String result = MyClient.getInstance().Http_postViewPager();
 					dys = ApiClient.getDynastyListByAs("dynasty.json", context);
 					cos = ApiClient.getCountryListByAs("country.json", context);
 					lans = ApiClient.getLanguageListByAs("language.json", context);
@@ -154,6 +180,7 @@ public class AppStart extends Activity {
 					list.add(labs);
 					data.putParcelableArrayList("list", list);
 					msg.setData(data);
+					msg.obj = result;
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}

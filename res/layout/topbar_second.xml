@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/topbar_second_leftselector"
             android:button="@null"
-            android:text="分类"
+            android:text="诗词"
             android:textColor="@drawable/topbar_second_text"
             android:paddingLeft="12dp"
             android:paddingRight="5dp"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/topbar_second_rightselector"
             android:button="@null"
-            android:text="诗人"
+            android:text="作者"
             android:textColor="@drawable/topbar_second_text"
             android:paddingRight="12dp"
             android:paddingLeft="5dp" />

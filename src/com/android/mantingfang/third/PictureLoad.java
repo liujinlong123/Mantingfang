@@ -11,6 +11,7 @@ import java.util.concurrent.Semaphore;
 import com.android.mantingfang.picture.ImageLoader.Type;
 import com.android.mantingfanggsc.ImageByteLoad;
 import com.android.mantingfanggsc.ImageLoad;
+import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
@@ -208,7 +209,11 @@ public class PictureLoad {
 					String path = holder.path;
 
 					if (imageView.getTag().toString().equals(path)) {
-						imageView.setImageBitmap(bm);
+						if (bm == null) {
+							imageView.setImageResource(R.drawable.picture_no);
+						} else {
+							imageView.setImageBitmap(bm);
+						}
 					}
 				};
 			};

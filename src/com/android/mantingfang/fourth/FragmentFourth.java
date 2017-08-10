@@ -21,7 +21,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -75,7 +74,7 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 	private void initViews() {
 		pref = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
 		userId = pref.getString("userId", "-1");
-		Log.v("userIdFour", userId);
+		//Log.v("userIdFour", userId);
 		
 		linearMy = (LinearLayout)view.findViewById(R.id.fourth_linear_my);
 		linearZhuye = (LinearLayout)view.findViewById(R.id.fourth_linear_zhuye);
@@ -321,4 +320,14 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 		}
 		
 	}
+	
+	/*@Override
+	public void onResume() {
+		
+		if (UserId.getInstance(getContext()).isChanged()) {
+			getImage(UserId.getInstance(getContext()).getUserId());
+		}
+		
+		super.onResume();
+	}*/
 }

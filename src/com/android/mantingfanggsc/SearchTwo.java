@@ -80,11 +80,11 @@ public class SearchTwo extends Activity {
 			protected void onPostExecute(String result) {
 				try {
 					if (result != null && !result.equals("")) {
-						listview.setVisibility(View.VISIBLE);
 						dataList = TopicList.parseSearchPoem(StringUtils.toJSONArray(result)).getSearchList();
 
 						adapter = new ItemPoemAdapter(SearchTwo.this, dataList);
 						listview.setAdapter(adapter);
+						listview.setVisibility(View.VISIBLE);
 						listview.setOnItemClickListener(new OnItemClickListener() {
 
 							@Override

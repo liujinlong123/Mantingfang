@@ -27,21 +27,36 @@
             <TextView
                 android:id="@+id/third_pager_user_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray" />
 
             <TextView
                 android:id="@+id/third_pager_user_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textColor="@color/gray" />
         </LinearLayout>
     </LinearLayout>
+    
+    <TextView
+        android:id="@+id/third_pager_user_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp"
+        android:text="标题"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/third_pager_user_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"
+        android:textSize="16sp" />
 
     <LinearLayout
         android:id="@+id/third_pager_sound"
@@ -72,6 +87,13 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp" >
     </com.android.mantingfang.second.KindGridView>
+    
+    <ImageView
+        android:id="@+id/third_pager_single_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/third_pager_linearPoem"
@@ -116,7 +138,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"

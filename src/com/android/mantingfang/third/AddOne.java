@@ -12,15 +12,20 @@ import com.android.mantingfang.picture.Picture;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.R;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,8 +37,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class AddOne extends Activity {
+public class AddOne extends Activity implements OnRequestPermissionsResultCallback {
 
 	public static final int TAKE_PHOTO = 1;
 
@@ -44,6 +50,8 @@ public class AddOne extends Activity {
 	public static final int LIST_PHOTO = 4;
 	
 	public static final int POEM_ID =  5;
+	
+	private static final int MY_PERMISSIONS_REQUEST_CAMERA = 6;
 
 	private ImageView imgFinish;
 	private TextView tvAdd;
@@ -68,7 +76,8 @@ public class AddOne extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_one);
 
-		initViews();
+		//initViews();
+		Accessibility();
 	}
 
 	// 需要数据Map<String,String> param
@@ -126,25 +135,22 @@ public class AddOne extends Activity {
 				String content = editer.getText().toString();
 				// 帖子标号
 				//String typeNum = "1";
-
-				Date d = new Date();
-				d.setHours(d.getHours());
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				String dateNowStr = sdf.format(d); // 当前时间
-
-				/*Map<String, String> param = new HashMap<>();
-				//param.put("user_id", userId);
-				param.put("datatime", dateNowStr);
-				param.put("content", content);
-				param.put("type_num", typeNum);*/
-				//saveData(param);
-				Intent intent = new Intent();
-				intent.putExtra("datatime", dateNowStr);
-				intent.putExtra("content", content);
-				//intent.putExtra("type_num", typeNum);
-				intent.putStringArrayListExtra("setPath", setPath);
-				setResult(RESULT_OK, intent);
-				finish();
+				
+				if (!content.equals("") && content != null) {
+					Date d = new Date();
+					d.setHours(d.getHours());
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String dateNowStr = sdf.format(d); // 当前时间
+					Intent intent = new Intent();
+					intent.putExtra("isSave", true);
+					intent.putExtra("datatime", dateNowStr);
+					intent.putExtra("content", content);
+					intent.putStringArrayListExtra("setPath", setPath);
+					setResult(RESULT_OK, intent);
+					finish();
+				} else {
+					Toast.makeText(AddOne.this, "内容不能为空", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}
@@ -293,5 +299,44 @@ public class AddOne extends Activity {
 		default:
 			break;
 		}
+	}
+	
+	@SuppressLint("InlinedApi")
+	public void Accessibility() {
+		if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED)
+        {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    		Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_CAMERA);
+        } else
+        {
+        	initViews();
+        }
+
+	}
+
+	@SuppressLint("Override")
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] arg1, int[] grantResults) {
+		if (requestCode == MY_PERMISSIONS_REQUEST_CAMERA)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                initViews();
+                
+            } else
+            {
+                // Permission Denied
+                Toast.makeText(AddOne.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                //userPhoto.setClickable(false);
+                finish();
+            }
+            return;
+        }
+
 	}
 }

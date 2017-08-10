@@ -30,7 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class ThirdThreeAdapter extends BaseAdapter {
+public class ThirdPagerThreeAdapter extends BaseAdapter {
 
 	private Context mContext;
 	private LayoutInflater inflater;
@@ -39,7 +39,7 @@ public class ThirdThreeAdapter extends BaseAdapter {
 	private static final int LOAD_DATA_FINISH = 10;// 上拉刷新
 	private static final int REFRESH_DATA_FINISH = 11;// 下拉刷新
 
-	public ThirdThreeAdapter(Context context, List<UserTwoContent> list, CustomListView listview) {
+	public ThirdPagerThreeAdapter(Context context, List<UserTwoContent> list, CustomListView listview) {
 		this.list = list;
 		mContext = context;
 		inflater = LayoutInflater.from(context);
@@ -75,6 +75,7 @@ public class ThirdThreeAdapter extends BaseAdapter {
 			holder.headPhoto = (CircleImageView) view.findViewById(R.id.third_pager_user_photo);
 			holder.userName = (TextView) view.findViewById(R.id.third_pager_user_name);
 			holder.time = (TextView) view.findViewById(R.id.third_pager_user_time);
+			holder.title = (TextView)view.findViewById(R.id.third_pager_user_title);
 			holder.content = (TextView) view.findViewById(R.id.third_pager_user_content);
 			holder.grdview = (KindGridView) view.findViewById(R.id.third_pager_user_grdphoto);
 			holder.linearPoem = (LinearLayout) view.findViewById(R.id.third_pager_linearPoem);
@@ -105,6 +106,8 @@ public class ThirdThreeAdapter extends BaseAdapter {
 		TextView userName;
 
 		TextView time;
+		
+		TextView title;
 
 		TextView content;
 
@@ -132,6 +135,12 @@ public class ThirdThreeAdapter extends BaseAdapter {
 		holder.userName.setText(content.getName());
 		// 发表时间
 		holder.time.setText(content.getTime());
+		//原创标题
+		if (content.getTitle() != null && !content.getTitle().equals("")) {
+			holder.title.setVisibility(View.VISIBLE);
+			holder.title.setText(content.getTitle());
+		}
+		
 		// 发表内容
 		holder.content.setText(content.getContent());
 		// 初始化图片
@@ -283,14 +292,14 @@ public class ThirdThreeAdapter extends BaseAdapter {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case REFRESH_DATA_FINISH:
-				if (ThirdThreeAdapter.this != null) {
-					ThirdThreeAdapter.this.notifyDataSetChanged();
+				if (ThirdPagerThreeAdapter.this != null) {
+					ThirdPagerThreeAdapter.this.notifyDataSetChanged();
 				}
 				listview.onRefreshComplete(); // 下拉刷新完成
 				break;
 			case LOAD_DATA_FINISH:
-				if (ThirdThreeAdapter.this != null) {
-					ThirdThreeAdapter.this.notifyDataSetChanged();
+				if (ThirdPagerThreeAdapter.this != null) {
+					ThirdPagerThreeAdapter.this.notifyDataSetChanged();
 				}
 				listview.onLoadMoreComplete(); // 加载更多完成
 				break;

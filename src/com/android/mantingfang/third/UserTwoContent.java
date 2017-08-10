@@ -18,6 +18,7 @@ public class UserTwoContent extends Base {
 	
 	private String name;		//用户昵称
 	private String time;		//发表时间
+	private String title;		//原创标题
 	private String content;		//发表内容
 	private ArrayList<FileImgs> picture;	//图片组
 	private FileAudio soundPath;	//音频路径
@@ -30,12 +31,13 @@ public class UserTwoContent extends Base {
 	
 	public UserTwoContent() {}
 	
-	public UserTwoContent(String userId, String headPath, String name, String time, String content, ArrayList<FileImgs> picture,
+	public UserTwoContent(String userId, String headPath, String name, String time, String title, String content, ArrayList<FileImgs> picture,
 			FileAudio soundPath, String poemId, String poemContent, String poemName, String zan, int post_com_num, int post_com_pId) {
 		this.userId = userId;
 		this.headPath = headPath;
 		this.name = name;
 		this.time = time;
+		this.title = title;
 		this.content = content;
 		this.picture = picture;
 		this.poemId = poemId;
@@ -64,6 +66,14 @@ public class UserTwoContent extends Base {
 		this.post_com_pId = post_com_pId;
 	}
 	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public Bitmap getHeadPhoto() {
 		return headPhoto;
 	}

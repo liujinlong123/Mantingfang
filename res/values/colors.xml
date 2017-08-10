@@ -3,7 +3,7 @@
 
     <!-- 线条颜色 -->
     <color name="line_view">#dddddd</color>
-    <color name="white">#ffffff</color>
+    <color name="white">#fffffc</color>
     <color name="gray">#a0a0a0</color>
     <color name="beijingwhite">#eeeeee</color>
     <color name="blue">#00479d</color>

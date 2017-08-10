@@ -1,21 +1,18 @@
 package com.android.mantingfang.third;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfanggsc.CustomListView;
-import com.android.mantingfanggsc.ImageLoad;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -42,7 +39,7 @@ public class UserTwo extends Fragment {
 	private String userId;
 	private String nickName;
 	private String headPath;
-	private Bitmap bitmap;
+	private ProgressDialog myDialog = null;
 	
 	@SuppressLint("InflateParams")
 	@Override
@@ -74,16 +71,27 @@ public class UserTwo extends Fragment {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
+			protected void onPreExecute() {
+				final CharSequence strDialogBody = "正在加载";
+
+				myDialog = ProgressDialog.show(getActivity(), null, strDialogBody, true);
+			}
+			
+			@Override
 			protected String doInBackground(String... params) {
 				return MyClient.getInstance().http_postUserTwo(user_id);
 			}
 			
 			@Override
 			protected void onPostExecute(String result) {
+				myDialog.dismiss();
 				list = new ArrayList<>();
 				try {
 					list = TopicList.parseUser(StringUtils.toJSONArray(result),user_id, headPath, nickName).getUserList();
-					getImage(headPath);
+					//PictureLoad.getInstance().loadImage(headPath, imageView);
+					adapter = new UserTwoAdapter(getActivity(), list, headPath);
+					listview.setAdapter(adapter);
+					setListViewHeightBasedOnChildren(listview);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -99,7 +107,7 @@ public class UserTwo extends Fragment {
 	 * 获取头像
 	 * @param path
 	 */
-	private void getImage(final String path) {
+	/*private void getImage(final String path) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
@@ -113,7 +121,7 @@ public class UserTwo extends Fragment {
 			
 			@Override
 			protected void onPostExecute(String result) {
-				adapter = new UserTwoAdapter(getActivity(), list, bitmap);
+				adapter = new UserTwoAdapter(getActivity(), list, headPath);
 				listview.setAdapter(adapter);
 				setListViewHeightBasedOnChildren(listview);
 			}
@@ -121,7 +129,7 @@ public class UserTwo extends Fragment {
 		};
 		
 		task.execute();
-	}
+	}*/
 	
 	/**
 	 * ScrollViewǶ��listview

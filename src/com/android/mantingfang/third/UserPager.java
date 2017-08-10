@@ -1,24 +1,17 @@
 package com.android.mantingfang.third;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.android.mantingfanggsc.CircleImageView;
-import com.android.mantingfanggsc.ImageLoad;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -47,7 +40,7 @@ public class UserPager extends FragmentActivity {
 	private String nickName;
 	
 	private CircleImageView headPhoto;
-	private Bitmap bitmap;
+	//private Bitmap bitmap;
 	
 
 	@Override
@@ -60,7 +53,8 @@ public class UserPager extends FragmentActivity {
 		headPath = bundle.getString("headPath");
 		nickName = bundle.getString("nickName");
 		
-		getImage(headPath);
+		headPhoto = (CircleImageView)findViewById(R.id.user_pager_headphoto);
+		PictureLoad.getInstance().loadImage(headPath, headPhoto);
 		initViews();
 	}
 	
@@ -71,7 +65,7 @@ public class UserPager extends FragmentActivity {
 		mViewPager = (MyViewPager)findViewById(R.id.user_pager_view_pager);
 		scrollview = (VerticalScrollView)findViewById(R.id.user_pager_scrollView);
 		linearHeight = (LinearLayout)findViewById(R.id.user_linear_height);
-		headPhoto = (CircleImageView)findViewById(R.id.user_pager_headphoto);
+		
 		
 		linearHead = (LinearLayout)findViewById(R.id.user_head_linear);
 		userRgp1 = (RadioGroup)findViewById(R.id.user_pager_rgp1);
@@ -86,25 +80,6 @@ public class UserPager extends FragmentActivity {
 		
 		mViewPager.setOffscreenPageLimit(3);
 		mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), fragmentList));
-		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
-			
-			@Override
-			public void onPageSelected(int position) {
-			}
-			
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
 		
 		//mViewPager.resetHeight(1);
 		mViewPager.setCurrentItem(1);
@@ -215,7 +190,7 @@ public class UserPager extends FragmentActivity {
 	 * 获取头像
 	 * @param path
 	 */
-	private void getImage(final String path) {
+	/*private void getImage(final String path) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
@@ -235,5 +210,5 @@ public class UserPager extends FragmentActivity {
 		};
 		
 		task.execute();
-	}
+	}*/
 }

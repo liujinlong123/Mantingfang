@@ -42,6 +42,8 @@ public class ThirdOnePager extends Fragment {
 		if (view == null) {
 			view = inflater.inflate(R.layout.third_pager_one, null);
 
+			thirdOneListView = (CustomListView) view.findViewById(R.id.third_pager_one_listview);
+			
 			sendRequestWithHttpClient();
 
 			return view;
@@ -83,7 +85,7 @@ public class ThirdOnePager extends Fragment {
 						listOne = (List<UserTwoContent>) (TopicList.parseOne(StringUtils.toJSONArray(str), 1)
 								.getTopicList());
 
-						thirdOneListView = (CustomListView) view.findViewById(R.id.third_pager_one_listview);
+						
 						
 						adapterOne = new ThirdOneAdapter(getActivity(), listOne, thirdOneListView);
 						thirdOneListView.setAdapter(adapterOne);

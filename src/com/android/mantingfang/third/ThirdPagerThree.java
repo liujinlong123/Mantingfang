@@ -20,11 +20,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ThirdThreePager extends Fragment {
+public class ThirdPagerThree extends Fragment {
 
 	private View view;
 	private CustomListView thirdThreeListView;
-	private ThirdThreeAdapter adapterThree;
+	private ThirdPagerThreeAdapter adapterThree;
 	private List<UserTwoContent> listThree;
 
 	@SuppressLint("InflateParams")
@@ -33,7 +33,7 @@ public class ThirdThreePager extends Fragment {
 		if (view == null) {
 			view = inflater.inflate(R.layout.third_pager_three, null);
 
-			initViews();
+			thirdThreeListView = (CustomListView)view.findViewById(R.id.third_pager_three_listview);
 			getData();
 
 			return view;
@@ -46,7 +46,7 @@ public class ThirdThreePager extends Fragment {
 		if (adapterThree == null) {
 			listThree = new ArrayList<UserTwoContent>();
 			listThree.add(item);
-			adapterThree = new ThirdThreeAdapter(getContext(), listThree, thirdThreeListView);
+			adapterThree = new ThirdPagerThreeAdapter(getContext(), listThree, thirdThreeListView);
 			thirdThreeListView.setAdapter(adapterThree);
 		} else {
 			listThree.add(0, item);
@@ -58,15 +58,10 @@ public class ThirdThreePager extends Fragment {
 		listThree.get(0).setPost_com_pId(postId);
 		adapterThree.notifyDataSetChanged();
 	}
-
-	// ��ʼ��ThirdThree
-	private void initViews() {
-		thirdThreeListView = (CustomListView)view.findViewById(R.id.third_pager_three_listview);
-	}
 	
 	private void getData() {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
-
+			
 			@Override
 			protected String doInBackground(String... params) {
 				
@@ -79,7 +74,7 @@ public class ThirdThreePager extends Fragment {
 				try {
 					if (result != null && !result.equals("") && !result.equals("]")) {
 						listThree = TopicList.parseThree(StringUtils.toJSONArray(result)).getTopicThree();
-						adapterThree = new ThirdThreeAdapter(getActivity(), listThree, thirdThreeListView);
+						adapterThree = new ThirdPagerThreeAdapter(getActivity(), listThree, thirdThreeListView);
 						thirdThreeListView.setAdapter(adapterThree);
 					}
 				} catch (JSONException e) {

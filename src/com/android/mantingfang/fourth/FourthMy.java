@@ -12,11 +12,11 @@ import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.third.PictureLoad;
 import com.android.mantingfang.third.User;
 import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.FileUploader;
 import com.android.mantingfanggsc.FileUploader.FileUploadListener;
-import com.android.mantingfanggsc.ImageLoad;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
@@ -45,12 +45,15 @@ import android.provider.MediaStore.Images.Media;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,8 +77,6 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 	private TextView save;
 	
 	//昵称 	签名 	性别 	生日 	所在地 	个人介绍
-	private TextView nickName;
-	private TextView label;
 	private TextView sex;
 	private TextView birth;
 	private int mYear;
@@ -90,10 +91,13 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 	
 	private User user = new User();
 	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receiveusermessage.php";
-	private Bitmap bitmap;
 	
 	
 	private static final int MY_PERMISSIONS_REQUEST_CAMERA = 4;
+	
+	private EditText editorNickName;
+	private EditText editorLabel;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -136,18 +140,66 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 				finish();
 			}
 		});
-		
-		nickName = (TextView)findViewById(R.id.fourth_my_nicheng);
-		label = (TextView)findViewById(R.id.fourth_my_qianming);
 		sex = (TextView)findViewById(R.id.fourth_my_xingbie);
 		birth = (TextView)findViewById(R.id.fourth_my_birth);
 		area = (TextView)findViewById(R.id.fourth_my_area);
 		intro = (TextView)findViewById(R.id.fourth_my_intro);
 		userPhoto = (CircleImageView)findViewById(R.id.fourth_my_userPhoto);
+		editorNickName = (EditText)findViewById(R.id.fourth_my_nicheng);
+		editorLabel = (EditText)findViewById(R.id.fourth_my_qianming);
+		
+		
 		SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
 		user.setUserId(pref.getString("userId", "-1"));
 		getData(user.getUserId());
-		//getImage(null);
+		
+		//昵称
+		editorNickName.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				if (s.toString() != null && !s.toString().equals("")) {
+					user.setUserNickname(s.toString());
+				}
+				
+			}
+		});
+		
+		//签名
+		editorLabel.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				if (s.toString() != null && !s.toString().equals("")) {
+					user.setUserLabel(s.toString());
+				}
+			}
+		});
+		
 		
 		// 性别选择
 		sex.setOnClickListener(new OnClickListener() {
@@ -283,20 +335,21 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 						List<User> list = TopicList.parseUserInfo(StringUtils.toJSONArray(result), userId).getUserInfoList();
 						if (list != null && list.size() > 0) {
 							user = list.get(0);
-							nickName.setText(user.getUserNickname());
-							label.setText(user.getUserLabel());
+							editorNickName.setText(user.getUserNickname());
+							editorLabel.setText(user.getUserLabel());
 							sex.setText(user.getUserSex());
 							birth.setText(user.getUserAge());
 							area.setText(user.getUserArea());
 							intro.setText(user.getUserIntro());
 							//user.setUserPhoto("1.png");
+							editorNickName.setSelection(user.getUserNickname().length());
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
-					getImage(user.getUserPhoto());
+					PictureLoad.getInstance().loadImage(user.getUserPhoto(), userPhoto);
 				}
 			}
 			
@@ -308,7 +361,7 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 	/**
 	 * 获取头像
 	 * @param path
-	 */
+	 *//*
 	private void getImage(final String path) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
@@ -333,7 +386,7 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 		};
 		
 		task.execute();
-	}
+	}*/
 	
 	
 	@Override
@@ -522,7 +575,7 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
             {
                 // Permission Denied
                 Toast.makeText(FourthMy.this, "Permission Denied", Toast.LENGTH_SHORT).show();
-                userPhoto.setClickable(false);
+                finish();
             }
             return;
         }

@@ -197,6 +197,7 @@ public class TopicList extends Base {
 						jo.getString("topic_user_id"),
 						jo.getString("user_photo"),
 						jo.getString("user_nickname"),
+						null,
 						jo.getString("topic_time"),
 						jo.getString("topic_content"),
 						StringUtils.getPictures(jo.getString("topic_picture")),
@@ -233,6 +234,7 @@ public class TopicList extends Base {
 						jo.optString("user_photo"),
 						jo.optString("user_nickname"),
 						jo.optString("note_time"),
+						null,
 						jo.optString("note_content"),
 						null,
 						null,
@@ -267,6 +269,7 @@ public class TopicList extends Base {
 						jo.optString("user_photo"),
 						jo.optString("user_nickname"),
 						jo.optString("original_time"),
+						jo.optString("original_title"),
 						jo.optString("original_content"),
 						StringUtils.getPictures(jo.getString("original_picture")),
 						null,
@@ -302,6 +305,7 @@ public class TopicList extends Base {
 						jo.optString("user_photo"),
 						jo.optString("user_nickname"),
 						jo.optString("audio_time"),
+						null,
 						null,
 						null,
 						new FileAudio("0", jo.optString("audio_content")),
@@ -346,6 +350,7 @@ public class TopicList extends Base {
 							headPath,
 							nickName,
 							jo.getString("topic_time"),
+							null,
 							jo.getString("topic_content"),
 							StringUtils.getPictures(jo.getString("topic_picture")),
 							null,
@@ -361,6 +366,7 @@ public class TopicList extends Base {
 							headPath,
 							nickName,
 							jo.getString("note_time"),
+							null,
 							jo.getString("note_content"),
 							null,
 							null,
@@ -377,6 +383,7 @@ public class TopicList extends Base {
 							nickName,
 							jo.getString("original_time"),
 							jo.getString("original_content"),
+							jo.optString("original_title"),
 							StringUtils.getPictures(jo.getString("original_picture")),
 							null,
 							null,
@@ -391,6 +398,7 @@ public class TopicList extends Base {
 							headPath,
 							nickName,
 							jo.getString("audio_time"),
+							null,
 							null,
 							null,
 							new FileAudio("0", jo.optString("audio_content")),
@@ -436,7 +444,8 @@ public class TopicList extends Base {
 						jo.optString("commented_content"),
 						jo.optString("commented_user_id"),
 						jo.optString("commented_user_nickname"),
-						jo.optString("comment_id"));
+						jo.optString("comment_id"),
+						jo.optString("commented_id"));
 				
 				tList.listComment.add(content);
 			}
@@ -665,13 +674,15 @@ public class TopicList extends Base {
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
 				PoemRhesis rhesis = new PoemRhesis(
-						jo.getString("poetry_id"),
-						jo.getString("poetry_name"),
+						jo.optString("poetry_id"),
+						jo.optString("poetry_name"),
 						null,
 						null,
 						jo.getString("poetry_content"));
 				
-				tList.listSearchContent.add(rhesis);
+				if (rhesis.getPoemId() != null && !rhesis.equals("")) {
+					tList.listSearchContent.add(rhesis);
+				}
 				//Log.v("POMEEEE", poem.getPoemId() + "---" + poem.getPoemName());
 			}
 		}

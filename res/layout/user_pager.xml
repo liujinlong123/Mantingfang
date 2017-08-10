@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/white" >
 
     <LinearLayout
         android:id="@+id/user_head_linear"
@@ -66,7 +67,7 @@
                     android:id="@+id/user_pager_headphoto"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@drawable/ic_launcher" ></com.android.mantingfanggsc.CircleImageView>
+                    android:src="@drawable/picture_no" ></com.android.mantingfanggsc.CircleImageView>
 
                 <TextView
                     android:id="@+id/user_pager_care"

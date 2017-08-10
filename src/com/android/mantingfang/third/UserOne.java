@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.android.mantingfanggsc.CustomListView;
 import com.android.mantingfanggsc.R;
-import com.android.mantingfanggsc.UIHelper;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -15,8 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 public class UserOne extends Fragment {

@@ -25,11 +25,11 @@
 
             <!-- <include layout="@layout/third_pager_one_itemlist" /> -->
             
-            <ListView
+            <com.android.mantingfang.third.ScrollViewWithListView
                 android:id="@+id/comment_main_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none" />
+                android:scrollbars="none" ></com.android.mantingfang.third.ScrollViewWithListView>
 
             <ListView
                 android:id="@+id/comment_tv_better"

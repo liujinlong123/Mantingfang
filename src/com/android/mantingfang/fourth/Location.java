@@ -137,7 +137,7 @@ public class Location extends Activity implements OnClickListener, OnRequestPerm
 				String str =location.getProvince() +  location.getCity()
 						+ location.getDistrict();
 				editor.setText(str);
-				Toast.makeText(Location.this, str, Toast.LENGTH_LONG).show();
+				//Toast.makeText(Location.this, str, Toast.LENGTH_LONG).show();
 			}
 		}
 
@@ -182,6 +182,12 @@ public class Location extends Activity implements OnClickListener, OnRequestPerm
             return;
         }
 
+	}
+	
+	@Override
+	protected void onDestroy() {
+		stopAmap();
+		super.onDestroy();
 	}
 
 }

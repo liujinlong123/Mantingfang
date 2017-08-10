@@ -77,9 +77,6 @@ public class Search extends Activity {
 					listviewWriter.setVisibility(View.GONE);
 					listviewContent.setVisibility(View.GONE);
 				} else if (s.toString() != null && !s.toString().equals("")){
-					listviewPome.setVisibility(View.VISIBLE);
-					listviewWriter.setVisibility(View.VISIBLE);
-					listviewContent.setVisibility(View.VISIBLE);
 					getdataPoem(s.toString());
 					getdataWriter(s.toString());
 					getdataContent(s.toString());
@@ -106,6 +103,7 @@ public class Search extends Activity {
 						poemAdapter = new PoemAdapter();
 						listviewPome.setAdapter(poemAdapter);
 						setListViewHeightBasedOnChildren(listviewPome);
+						listviewPome.setVisibility(View.VISIBLE);
 						listviewPome.setOnItemClickListener(new OnItemClickListener() {
 
 							@Override
@@ -143,6 +141,7 @@ public class Search extends Activity {
 						writerAdapter = new WriterAdapter();
 						listviewWriter.setAdapter(writerAdapter);
 						setListViewHeightBasedOnChildren(listviewWriter);
+						listviewWriter.setVisibility(View.VISIBLE);
 						listviewWriter.setOnItemClickListener(new OnItemClickListener() {
 
 							@Override
@@ -180,6 +179,7 @@ public class Search extends Activity {
 						contentAdapter = new ContentAdapter();
 						listviewContent.setAdapter(contentAdapter);
 						setListViewHeightBasedOnChildren(listviewContent);
+						listviewContent.setVisibility(View.VISIBLE);
 						listviewContent.setOnItemClickListener(new OnItemClickListener() {
 
 							@Override

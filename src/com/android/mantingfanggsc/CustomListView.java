@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.MeasureSpec;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -747,5 +748,11 @@ public class CustomListView extends ListView implements OnScrollListener {
 				new SimpleDateFormat(DATE_FORMAT_STR, Locale.CHINA).format(new Date()));
 		super.setAdapter(adapter);
 	}
+	
+	/*public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+		super.onMeasure(widthMeasureSpec, expandSpec);
+
+	}*/
 
 }

@@ -2,7 +2,6 @@ package com.android.mantingfang.second;
 
 import java.util.List;
 
-import com.android.mantingfang.bean.URLs;
 import com.android.mantingfang.model.Poem;
 import com.android.mantingfanggsc.R;
 
@@ -68,12 +67,12 @@ public class SecondWenkuPoemListAdapter extends BaseAdapter {
 			holder.poemName.setText(poem.getPoemName());
 			holder.poemRhesis.setText(poem.getRhesis());
 			holder.wirterName.setText("[" + poem.getDynasty() + "]" + poem.getWritername());
-		} else {
+		} /*else {
 			holder.poemName.setText(poem.getTitle());
 			holder.poemRhesis.setText("关关雎鸠，在河之洲");
 			//holder.poemRhesis.setText(poem.getRhesis());
 			holder.wirterName.setText("[" + URLs.DYNASTYS[poem.getDynastyid()] + "]" + poem.getWritername());
-		}
+		}*/
 		return view;
 	}
 	

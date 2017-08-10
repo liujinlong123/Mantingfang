@@ -8,14 +8,16 @@
         android:id="@+id/third_head_radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
+        android:orientation="horizontal"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp" >
+        
         <RadioButton
             android:id="@+id/third_head_one"
             style="@style/third_footbar"
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"
-            android:text="话题" />
+            android:text="日赏" />
 
         <RadioButton
             android:id="@+id/third_head_two"
@@ -23,7 +25,7 @@
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"
             android:text="笔记" />
-
+        
         <RadioButton
             android:id="@+id/third_head_three"
             style="@style/third_footbar"
