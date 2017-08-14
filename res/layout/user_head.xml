@@ -4,32 +4,87 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RadioGroup
-        android:id="@+id/user_pager_rgp"
+    <RelativeLayout
+        android:id="@+id/user_linear_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_height="200dp" >
 
-        <RadioButton
-            android:id="@+id/user_pager_rbtn_one"
-            style="@style/third_footbar"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
-            android:text="诗词" />
-        
-        <RadioButton
-            android:id="@+id/user_pager_rbtn_two"
-            style="@style/third_footbar"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
-            android:text="动态" />
-        
-        <RadioButton
-            android:id="@+id/user_pager_rbtn_three"
-            style="@style/third_footbar"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
-            android:text="关于TA" />
-    </RadioGroup>
+        <ImageView
+            android:id="@+id/user_pager_img_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/user_pager_back" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical" >
+
+            <com.android.mantingfanggsc.CircleImageView
+                android:id="@+id/user_pager_headphoto"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/picture_no" >
+            </com.android.mantingfanggsc.CircleImageView>
+
+            <TextView
+                android:id="@+id/user_pager_care"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/user_care"
+                android:paddingBottom="5dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="5dp"
+                android:text="关注TA"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/user_pager_collect"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="TA的收藏"
+                    android:textSize="17sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/listDivider"
+                    android:layout_margin="5dp" />
+
+                <TextView
+                    android:id="@+id/user_pager_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="TA的资料"
+                    android:textSize="17sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

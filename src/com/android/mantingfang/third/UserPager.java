@@ -3,212 +3,134 @@ package com.android.mantingfang.third;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
+import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfanggsc.CircleImageView;
+import com.android.mantingfanggsc.CustomListView;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
+import com.android.mantingfanggsc.SuccinctProgress;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UserPager extends FragmentActivity {
+public class UserPager extends Activity {
 	
-	private TextView userCare;
-	private RadioGroup userRgp;
-	private MyViewPager mViewPager;
-	private LinearLayout linearHeight;
-	private List<Fragment> fragmentList = new ArrayList<Fragment>();
-	private Fragment userOne;
-	private Fragment userTwo;
-	private Fragment userThree;
-	private VerticalScrollView scrollview;
+	private View viewHead;
 	
-	private LinearLayout linearHead;
-	private RadioGroup userRgp1;
+	
+	private CustomListView listview;
+	private UserTwoAdapter adapter;
+	private List<UserTwoContent> list;
+	
+	private CircleImageView headImg;
+	private ImageView imgBack;
+	private TextView tvCollect;
+	private TextView tvInfo;
 	
 	private String userId;
 	private String headPath;
 	private String nickName;
 	
-	private CircleImageView headPhoto;
-	//private Bitmap bitmap;
-	
-
+	@SuppressLint("InflateParams")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_pager);
+		
+		viewHead = LayoutInflater.from(UserPager.this).inflate(R.layout.user_head, null);
+		initViews();
+	}
+	
+	private void initViews() {
+		listview = (CustomListView)findViewById(R.id.user_pager_listview);
+		headImg = (CircleImageView)viewHead.findViewById(R.id.user_pager_headphoto);
+		imgBack = (ImageView)viewHead.findViewById(R.id.user_pager_img_back);
+		tvCollect = (TextView)viewHead.findViewById(R.id.user_pager_collect);
+		tvInfo = (TextView)viewHead.findViewById(R.id.user_pager_info);
 		
 		Bundle bundle = getIntent().getExtras();
 		userId = bundle.getString("userId");
 		headPath = bundle.getString("headPath");
 		nickName = bundle.getString("nickName");
 		
-		headPhoto = (CircleImageView)findViewById(R.id.user_pager_headphoto);
-		PictureLoad.getInstance().loadImage(headPath, headPhoto);
-		initViews();
-	}
-	
-	@SuppressLint("ClickableViewAccessibility")
-	private void initViews() {
-		userCare = (TextView)findViewById(R.id.user_pager_care);
-		userRgp = (RadioGroup)findViewById(R.id.user_pager_rgp);
-		mViewPager = (MyViewPager)findViewById(R.id.user_pager_view_pager);
-		scrollview = (VerticalScrollView)findViewById(R.id.user_pager_scrollView);
-		linearHeight = (LinearLayout)findViewById(R.id.user_linear_height);
-		
-		
-		linearHead = (LinearLayout)findViewById(R.id.user_head_linear);
-		userRgp1 = (RadioGroup)findViewById(R.id.user_pager_rgp1);
-		
-		userOne = new UserOne();
-		userTwo = new UserTwo();
-		userThree = new UserThree();
-		
-		fragmentList.add(userOne);
-		fragmentList.add(userTwo);
-		fragmentList.add(userThree);
-		
-		mViewPager.setOffscreenPageLimit(3);
-		mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), fragmentList));
-		
-		//mViewPager.resetHeight(1);
-		mViewPager.setCurrentItem(1);
-		
-		userCare.setOnClickListener(new OnClickListener() {
+		PictureLoad.getInstance().loadImage(headPath, headImg);
+		imgBack.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
+				finish();
 			}
 		});
 		
-		userRgp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		tvCollect.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				switch(checkedId) {
-				case R.id.user_pager_rbtn_one:
-					mViewPager.setCurrentItem(0);
-					Toast.makeText(getBaseContext(), "1", Toast.LENGTH_SHORT).show();
-					mViewPager.setCurrentItem(0);
-					//mViewPager.resetHeight(0);
-					break;
-					
-				case R.id.user_pager_rbtn_two:
-					mViewPager.setCurrentItem(1);
-					//mViewPager.resetHeight(1);
-					break;
-					
-				case R.id.user_pager_rbtn_three:
-					mViewPager.setCurrentItem(2);
-					//mViewPager.resetHeight(2);
-					break;
-				}
+			public void onClick(View v) {
+				Intent intent = new Intent(UserPager.this, UserCollect.class);
+				startActivity(intent);
 			}
 		});
 		
-		userRgp1.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		tvInfo.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				switch(checkedId) {
-				case R.id.user_pager_rbtn_one1:
-					mViewPager.setCurrentItem(0);
-					Toast.makeText(getBaseContext(), "1", Toast.LENGTH_SHORT).show();
-					mViewPager.setCurrentItem(0);
-					//mViewPager.resetHeight(0);
-					break;
-					
-				case R.id.user_pager_rbtn_two1:
-					mViewPager.setCurrentItem(1);
-					//mViewPager.resetHeight(1);
-					break;
-					
-				case R.id.user_pager_rbtn_three1:
-					mViewPager.setCurrentItem(2);
-					//mViewPager.resetHeight(2);
-					break;
-				}
+			public void onClick(View v) {
+				Intent intent = new Intent(UserPager.this, UserInfo.class);
+				startActivity(intent);
 			}
 		});
-		
-		
-		scrollview.setScrollViewListener(new ScrollViewListener() {
-			
-			@SuppressLint("ClickableViewAccessibility")
-			@Override
-			public void onScrollChanged(VerticalScrollView myscrollView, int x, int y, int oldx, int oldy) {
-				//Log.v("height", (linearHeight.getMeasuredHeight()) + "-------x: " + x + "----------y: " + y);
-				//Log.v("height", linearHeight.getMeasuredHeightAndState() + "-------");
-				if (y >= linearHeight.getMeasuredHeight()) {
-					linearHead.setVisibility(View.VISIBLE);
-					userRgp.setVisibility(View.GONE);
-				} else if (y < linearHeight.getMeasuredHeight()) {
-					linearHead.setVisibility(View.GONE);
-					userRgp.setVisibility(View.VISIBLE);
-				}
-			}
-		});
+		getData(userId, nickName);
 	}
 	
-	class MainPagerAdapter extends FragmentPagerAdapter {
-		private List<Fragment> fragmentList;
-
-		public MainPagerAdapter(FragmentManager fragmentManager, List<Fragment> fragmentList) {
-			super(fragmentManager);
-			this.fragmentList = fragmentList;
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			Bundle bundle = new Bundle();
-			bundle.putString("userId", userId);
-			bundle.putString("nickName", nickName);
-			bundle.putString("headPath", headPath);
-			fragmentList.get(position).setArguments(bundle);
-			return fragmentList.get(position);
-		}
-
-		@Override
-		public int getCount() {
-			return fragmentList.size();
-		}
-	}
-	
-	/**
-	 * 获取头像
-	 * @param path
-	 */
-	/*private void getImage(final String path) {
+	private void getData(final String user_id, final String nickName) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
+			protected void onPreExecute() {
+				SuccinctProgress.showSuccinctProgress(UserPager.this,
+						"加载中", SuccinctProgress.THEME_LINE, false, true);
+			}
+			
+			@Override
 			protected String doInBackground(String... params) {
-				
-				Map<String, String> param = new HashMap<>();
-				param.put("path", path);
-				bitmap = ImageLoad.upload("http://1696824u8f.51mypc.cn:12755//sendpicture.php", param);
-				return null;
+				return MyClient.getInstance().http_postUserTwo(user_id);
 			}
 			
 			@Override
 			protected void onPostExecute(String result) {
-				headPhoto.setImageBitmap(bitmap);
+				SuccinctProgress.dismiss();
+				if (result != null && !result.equals("")) {
+					list = new ArrayList<>();
+					try {
+						list = TopicList.parseUser(StringUtils.toJSONArray(result),user_id, headPath, nickName).getUserList();
+						//PictureLoad.getInstance().loadImage(headPath, imageView);
+						adapter = new UserTwoAdapter(UserPager.this, list, headPath);
+						listview.setAdapter(adapter);
+						listview.addHeaderView(viewHead);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					Toast.makeText(UserPager.this, "返回数据失败", Toast.LENGTH_SHORT).show();
+					finish();
+				}
 			}
 			
 		};
 		
 		task.execute();
-	}*/
+	}
 }

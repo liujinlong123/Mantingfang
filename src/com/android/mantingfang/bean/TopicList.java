@@ -197,8 +197,8 @@ public class TopicList extends Base {
 						jo.getString("topic_user_id"),
 						jo.getString("user_photo"),
 						jo.getString("user_nickname"),
-						null,
 						jo.getString("topic_time"),
+						null,
 						jo.getString("topic_content"),
 						StringUtils.getPictures(jo.getString("topic_picture")),
 						null,
@@ -207,10 +207,15 @@ public class TopicList extends Base {
 						null,
 						jo.optString("zan_post"),
 						1,
-						Integer.parseInt(jo.getString("topic_id")));
+						Integer.parseInt(jo.getString("topic_id")),
+						0);
+				
+				if (content.getPicture().size() == 1) {
+					content.setType(1);
+				}
 				
 				tList.topicList.add(content);
-				//Log.v("ThirdOnePicture", content.getPicture().toString());
+				//Log.v("ThirdOnePicture", content.getTime() + "----");
 			}
 		}
 		
@@ -218,7 +223,7 @@ public class TopicList extends Base {
 	}
 	
 	/**
-	 * 界面二
+	 * note
 	 * @param obj
 	 * @return
 	 * @throws JSONException
@@ -243,7 +248,8 @@ public class TopicList extends Base {
 						jo.optString("poetry_name"),
 						jo.optString("zan_post"),
 						2,
-						Integer.parseInt(jo.getString("note_id")));
+						Integer.parseInt(jo.getString("note_id")),
+						1);
 				
 				tList.listTwo.add(content);
 				//Log.v("Test", content.getContent());
@@ -253,7 +259,7 @@ public class TopicList extends Base {
 	}
 	
 	/**
-	 * 界面三
+	 * original
 	 * @param obj
 	 * @return
 	 * @throws JSONException
@@ -278,7 +284,12 @@ public class TopicList extends Base {
 						null,
 						jo.optString("zan_post"),
 						3,
-						Integer.parseInt(jo.getString("original_id")));
+						Integer.parseInt(jo.getString("original_id")),
+						0);
+				
+				if (content.getPicture().size() == 1) {
+					content.setType(1);
+				}
 				
 				tList.listThree.add(content);
 				//Log.v("Test", content.getContent());
@@ -289,7 +300,7 @@ public class TopicList extends Base {
 	}
 	
 	/**
-	 * 界面四
+	 * audio
 	 * @param obj
 	 * @return
 	 * @throws JSONException
@@ -314,7 +325,8 @@ public class TopicList extends Base {
 						jo.optString("poetry_name"),
 						jo.optString("zan_post"),
 						4,
-						Integer.parseInt(jo.getString("audio_id")));
+						Integer.parseInt(jo.getString("audio_id")),
+						1);
 				
 				tList.listFour.add(content);
 				//Log.v("Test", content.getSoundPath());
@@ -359,7 +371,11 @@ public class TopicList extends Base {
 							null,
 							jo.optString("zan_post"),
 							1,
-							Integer.parseInt(jo.getString("topic_id")));
+							Integer.parseInt(jo.getString("topic_id")),
+							0);
+					if (content.getPicture().size() == 1) {
+						content.setType(1);
+					}
 				} else if (noteTime != null && !noteTime.equals("")) {
 					content = new UserTwoContent(
 							userId,
@@ -375,15 +391,16 @@ public class TopicList extends Base {
 							jo.getString("poetry_name"),
 							jo.optString("zan_post"),
 							2,
-							Integer.parseInt(jo.getString("note_id")));
+							Integer.parseInt(jo.getString("note_id")),
+							2);
 				} else if (originalTime != null && !originalTime.equals("")) {
 					content = new UserTwoContent(
 							userId,
 							headPath,
 							nickName,
 							jo.getString("original_time"),
-							jo.getString("original_content"),
 							jo.optString("original_title"),
+							jo.getString("original_content"),
 							StringUtils.getPictures(jo.getString("original_picture")),
 							null,
 							null,
@@ -391,7 +408,11 @@ public class TopicList extends Base {
 							null,
 							jo.optString("zan_post"),
 							3,
-							Integer.parseInt(jo.getString("original_id")));
+							Integer.parseInt(jo.getString("original_id")),
+							3);
+					if (content.getPicture().size() == 1) {
+						content.setType(4);
+					}
 				} else if (audioTime != null && !audioTime.equals("")) {
 					content = new UserTwoContent(
 							userId,
@@ -407,7 +428,8 @@ public class TopicList extends Base {
 							jo.getString("poetry_name"),
 							jo.optString("zan_post"),
 							4,
-							Integer.parseInt(jo.getString("audio_id")));
+							Integer.parseInt(jo.getString("audio_id")),
+							5);
 				}
 				
 				tList.listUser.add(content);

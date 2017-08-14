@@ -5,56 +5,12 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
-    <ScrollView
+    <com.android.mantingfanggsc.CustomListView
+        android:id="@+id/topic_tuijian"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:id="@+id/topic_linear_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/topic_search_bg"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp" >
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/search" />
-
-                <TextView
-                    android:id="@+id/topic_linear_tv_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="大家都在搜XXXX"
-                    android:textColor="@color/gray" />
-            </LinearLayout>
-
-            <fragment
-                android:id="@+id/fragment_cycle_viewpager_content"
-                android:name="com.android.mantingfang.topic.CycleViewPager"
-                android:layout_width="match_parent"
-                android:layout_height="180dip"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
-
-            <com.android.mantingfanggsc.CustomListViewTwo
-                    android:id="@+id/topic_tuijian"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:scrollbars="none" >
-                </com.android.mantingfanggsc.CustomListViewTwo>
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" >
+    </com.android.mantingfanggsc.CustomListView>
 
 </LinearLayout>

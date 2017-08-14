@@ -3,6 +3,111 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <RadioGroup
+            android:id="@+id/rishang_rgp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <!-- <RadioButton
+                android:id="@+id/rishang_rbtn1"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:background="@drawable/icon_point"
+                android:button="@null"
+                android:layout_margin="2dp" /> -->
+
+            <RadioButton
+                android:id="@+id/rishang_rbtn2"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:background="@drawable/icon_point_pre"
+                android:button="@null"
+                android:layout_margin="2dp" />
+
+            <RadioButton
+                android:id="@+id/rishang_rbtn3"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:background="@drawable/icon_point"
+                android:button="@null"
+                android:layout_margin="2dp" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/rishang_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#f0ffff" 
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+    </android.support.v4.view.ViewPager>
     
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal" >
+        
+        <SeekBar
+        android:id="@+id/music_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100" />
+    </LinearLayout>
+
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp" >
+
+        <ImageView
+            android:id="@+id/rishang_collect"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:src="@drawable/a8e" />
+
+        <ImageView
+            android:id="@+id/rishang_pre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/rishang_pre" />
+
+        <ImageView
+            android:id="@+id/rishang_play"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/notify_btn_play_normal" />
+
+        <ImageView
+            android:id="@+id/rishang_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/rishang_next" />
+
+        <ImageView
+            android:id="@+id/rishang_more"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/rishang_more" />
+    </LinearLayout>
 
 </LinearLayout>

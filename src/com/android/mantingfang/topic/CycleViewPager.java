@@ -45,6 +45,7 @@ public class CycleViewPager extends Fragment implements OnPageChangeListener {
 	private ImageCycleViewListener mImageCycleViewListener;
 	private List<ADInfo> infos;
 
+	@SuppressLint("InflateParams")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

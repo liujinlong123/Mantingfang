@@ -12,12 +12,19 @@ import com.android.mantingfang.model.PoemM;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.MyClient;
+import com.android.mantingfanggsc.Player;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
+import com.android.mantingfanggsc.Player.StartPlayer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,17 +36,31 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class UserTwoAdapter extends BaseAdapter {
+	
+	public static final int VAULE_THEME_M = 0;
+	public static final int VALUE_THEME_S = 1;
+	public static final int VALUE_NOTE = 2;
+	public static final int VALUE_ORIGINAL_M = 3;
+	public static final int VALUE_ORIGINAL_S = 4;
+	public static final int VALUE_AUDIO = 5;
 
 	private Context mContext;
 	private LayoutInflater inflater;
 	private List<UserTwoContent> list;
 	private String headPath;
+	private Player player;
+	
+	@SuppressWarnings("unused")
+	private MediaPlayer mPlayer = null;
+	private AnimationDrawable animationDrawable;
+	private Handler handler;
 
 	public UserTwoAdapter(Context context, List<UserTwoContent> list, String headPath) {
 		this.mContext = context;
 		this.list = list;
 		inflater = LayoutInflater.from(context);
 		this.headPath = headPath;
+		player = new Player();
 	}
 
 	@Override
@@ -62,6 +83,7 @@ public class UserTwoAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		View view;
+		int type = getItemViewType(position);
 		if (convertView == null) {
 			view = inflater.inflate(R.layout.third_pager_one_itemlist, null);
 			holder = new ViewHolder();
@@ -69,9 +91,11 @@ public class UserTwoAdapter extends BaseAdapter {
 			holder.headPhoto = (CircleImageView) view.findViewById(R.id.third_pager_user_photo);
 			holder.userName = (TextView) view.findViewById(R.id.third_pager_user_name);
 			holder.time = (TextView) view.findViewById(R.id.third_pager_user_time);
+			holder.title = (TextView)view.findViewById(R.id.third_pager_user_title);
 			holder.content = (TextView) view.findViewById(R.id.third_pager_user_content);
 			holder.linearSound = (LinearLayout) view.findViewById(R.id.third_pager_sound);
 			holder.imgSound = (ImageView) view.findViewById(R.id.third_pager_img_sound);
+			holder.singleImage = (ImageView)view.findViewById(R.id.third_pager_single_img);
 			holder.grdview = (KindGridView) view.findViewById(R.id.third_pager_user_grdphoto);
 			holder.linearPoem = (LinearLayout) view.findViewById(R.id.third_pager_linearPoem);
 			holder.poemName = (TextView) view.findViewById(R.id.third_pager_tv_poemName);
@@ -87,7 +111,7 @@ public class UserTwoAdapter extends BaseAdapter {
 		}
 
 		UserTwoContent content = list.get(position);
-		initViews(content, holder, view);
+		initViews(content, holder, view, type);
 
 		return view;
 	}
@@ -100,12 +124,16 @@ public class UserTwoAdapter extends BaseAdapter {
 		TextView userName;
 
 		TextView time;
+		
+		TextView title;
 
 		TextView content;
 
 		LinearLayout linearSound;
 
 		ImageView imgSound;
+		
+		ImageView singleImage;
 
 		KindGridView grdview;
 
@@ -122,9 +150,9 @@ public class UserTwoAdapter extends BaseAdapter {
 		ImageView share;
 	}
 
-	private void initViews(final UserTwoContent content, final ViewHolder holder, View view) {
+	@SuppressLint("HandlerLeak")
+	private void initViews(final UserTwoContent content, final ViewHolder holder, View view, int type) {
 		// 头像路径
-		//holder.headPhoto.setImageBitmap(bitmap);
 		PictureLoad.getInstance().loadImage(headPath, holder.headPhoto);
 		// 用户昵称
 		holder.userName.setText(content.getName());
@@ -177,15 +205,13 @@ public class UserTwoAdapter extends BaseAdapter {
 
 			}
 		});
-		
-		if (content.getPostComNum() == 1) {
+		switch (type) {
+		case VAULE_THEME_M:
 			//内容
 			holder.content.setText(content.getContent());
 			//初始化图片
 			initGridView(content.getPicture(), holder);
 			//诗词
-			//holder.poemName.setText(content.getPoemName());
-			//holder.poemQuote.setText(content.getPoemContent());
 			holder.linearPoem.setVisibility(View.GONE);
 			holder.content.setOnClickListener(new OnClickListener() {
 
@@ -195,8 +221,27 @@ public class UserTwoAdapter extends BaseAdapter {
 							content.getHeadPath());
 				}
 			});
-		} 
-		else if (content.getPostComNum() == 2) {
+			break;
+			
+		case VALUE_THEME_S:
+			//内容
+			holder.content.setText(content.getContent());
+			//初始化图片
+			holder.singleImage.setVisibility(View.VISIBLE);
+			PictureLoad.getInstance().loadImage(content.getPicture().get(0).getPath(), holder.singleImage);
+			//诗词
+			holder.linearPoem.setVisibility(View.GONE);
+			holder.content.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "",
+							content.getHeadPath());
+				}
+			});
+			break;
+			
+		case VALUE_NOTE:
 			//内容
 			holder.content.setText(content.getContent());
 			//初始化图片
@@ -219,9 +264,11 @@ public class UserTwoAdapter extends BaseAdapter {
 							content.getHeadPath());
 				}
 			});
-		} 
-		else if (content.getPostComNum() == 3) {
+			break;
+			
+		case VALUE_ORIGINAL_M:
 			//内容
+			holder.title.setText(content.getTitle());
 			holder.content.setText(content.getContent());
 			//初始化图片
 			initGridView(content.getPicture(), holder);
@@ -234,8 +281,27 @@ public class UserTwoAdapter extends BaseAdapter {
 							content.getHeadPath());
 				}
 			});
-		} 
-		else if (content.getPostComNum() == 4) {
+			break;
+			
+		case VALUE_ORIGINAL_S:
+			//内容
+			holder.title.setText(content.getTitle());
+			holder.content.setText(content.getContent());
+			//初始化图片
+			holder.singleImage.setVisibility(View.VISIBLE);
+			PictureLoad.getInstance().loadImage(content.getPicture().get(0).getPath(), holder.singleImage);
+			holder.linearPoem.setVisibility(View.GONE);
+			holder.content.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					UIHelper.showCommentMain(mContext, 0, content, content.getPostComPId() + "", content.getPostComNum() + "",
+							content.getHeadPath());
+				}
+			});
+			break;
+			
+		case VALUE_AUDIO:
 			holder.content.setVisibility(View.GONE);
 			
 			holder.linearSound.setVisibility(View.VISIBLE);
@@ -258,6 +324,78 @@ public class UserTwoAdapter extends BaseAdapter {
 					getData(content.getPoemId(), holder);
 				}
 			});
+			
+			content.getSoundPath().setPlay("1");
+			holder.linearSound.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Log.v("Audio--", "http://1696824u8f.51mypc.cn:12755/receive%20audio/---" + content.getSoundPath());
+					//-----此次播放结束---第一次播放
+					if (content.getSoundPath().getPlay().equals("1")) {
+						content.getSoundPath().setPlay("2");
+						holder.imgSound.setImageResource(R.drawable.animation_audio);
+						animationDrawable = (AnimationDrawable) holder.imgSound.getDrawable();
+						new Thread(new Runnable() {
+
+							@Override
+							public void run() {
+								player.playUrl("http://1696824u8f.51mypc.cn:12755/receive%20audio/"
+										+ content.getSoundPath().getPath(), new StartPlayer() {
+
+											@Override
+											public void startAudio() {
+												handler.sendEmptyMessage(0);
+
+											}
+										});
+
+								player.getMediaPlayer().setOnCompletionListener(new OnCompletionListener() {
+
+									@Override
+									public void onCompletion(MediaPlayer mp) {
+
+										handler.sendEmptyMessage(1);
+									}
+								});
+							}
+						}).start();
+					} 
+					//------播放过程中
+					else if (content.getSoundPath().getPlay().equals("2")) {
+						animationDrawable.stop();
+						content.getSoundPath().setPlay("3");
+						player.pause();
+					} 
+					//------停止播放
+					else if (content.getSoundPath().getPlay().equals("3")) {
+						animationDrawable.start();
+						content.getSoundPath().setPlay("2");
+						player.play();
+					}
+				}
+			});
+
+			handler = new Handler() {
+				@Override
+				public void handleMessage(Message msg) {
+					switch (msg.what) {
+					case 0:
+						animationDrawable.start();
+						content.getSoundPath().setPlay("2");
+						Log.v("StartPlay", "-----start");
+						break;
+
+					case 1:
+						animationDrawable.stop();
+						holder.imgSound.setImageResource(R.drawable.sound_three);
+						content.getSoundPath().setPlay("1");
+						Log.v("edn", "-----end");
+						break;
+					}
+				}
+			};
+			break;
 		}
 	}
 	
@@ -266,11 +404,6 @@ public class UserTwoAdapter extends BaseAdapter {
 		if (pictures.size() == 0 || pictures == null) {
 			holder.grdview.setVisibility(View.GONE);
 		} else {
-			//Log.v("PIcture", pictures.toString());
-			/*List<FileImgs> filePath = new ArrayList<>();
-			for (String e: pictures) {
-				filePath.add(new FileImgs("0", e));
-			}*/
 			TopicGridviewAdapter adapter = new TopicGridviewAdapter(mContext, pictures);
 			holder.grdview.setAdapter(adapter);
 		}
@@ -323,5 +456,28 @@ public class UserTwoAdapter extends BaseAdapter {
 		};
 		
 		task.execute();
+	}
+	
+	
+	/**
+	 * 根据数据源的position返回需要显示的的layout的type
+	 * 
+	 * type的值必须从0开始
+	 * 
+	 * */
+	@Override
+	public int getItemViewType(int position) {
+		UserTwoContent content = list.get(position);
+		int type = content.getType();
+		return type;
+	}
+	
+	/**
+	 * 返回所有的layout的数量
+	 * 
+	 * */
+	@Override
+	public int getViewTypeCount() {
+		return 6;
 	}
 }

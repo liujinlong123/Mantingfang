@@ -1,11 +1,17 @@
 package com.android.mantingfang.third;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.android.mantingfang.fourth.UserId;
+import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.SearchTwo;
+import com.android.mantingfanggsc.SuccinctProgress;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -14,6 +20,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -33,8 +40,7 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 	private TextView tvAdd;
 	private LinearLayout linearAdd;
 	private TextView tvTitle;
-	//private String userId;
-	//private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
+	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 
 	private static final String LOG_TAG = "AudioRecordTest";
 	
@@ -129,17 +135,13 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String dateNowStr = sdf.format(d); // 当前时间
 				if (FileName != null && !FileName.equals("")) {
-					//saveData(param);
-					//Log.v("FileName", FileName + "---");
-					Intent intent = new Intent();
-					intent.putExtra("isSave", true);
-					intent.putExtra("poetry_id", poemId);
-					intent.putExtra("poetry_name", poemNames);
-					intent.putExtra("poetry_content", poemContents);
-					intent.putExtra("datetime", dateNowStr);
-					intent.putExtra("audio", FileName);
-					setResult(RESULT_OK, intent);
-					finish();
+					Map<String, String> param = new HashMap<>();
+					param.put("user_id", UserId.getInstance(AddFour.this).getUserId());
+					param.put("poetry_id",poemId);
+					param.put("datatime", dateNowStr);
+					param.put("type_num", "4");
+					
+					saveData(param);
 				} else {
 					Toast.makeText(AddFour.this, "没有音频文件", Toast.LENGTH_SHORT).show();
 				}
@@ -210,10 +212,16 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
         }     
     }  
 
-	/*private void saveData(final Map<String, String> param) {
+	private void saveData(final Map<String, String> param) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
-			// String Answer = null;
+			
+			@Override
+			protected void onPreExecute() {
+				SuccinctProgress.showSuccinctProgress(AddFour.this,
+						"正在上传", SuccinctProgress.THEME_LINE, false, true);
+			}
+			
 			@Override
 			protected String doInBackground(String... params) {
 				if (FileName != null && !FileName.equals("")) {
@@ -234,10 +242,22 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 
 			@Override
 			protected void onPostExecute(String result) {
-				Log.v("result", result + "------");
+				//Log.v("result", result + "------");
+				SuccinctProgress.dismiss();
 				if (result != null && !result.equals("")) {
-					Toast.makeText(AddFour.this, "上传成功", Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent();
+					intent.putExtra("isSave", true);
+					intent.putExtra("user_id", param.get("user_id"));
+					intent.putExtra("poetry_id", poemId);
+					intent.putExtra("poetry_name", poemNames);
+					intent.putExtra("poetry_content", poemContents);
+					intent.putExtra("datetime", param.get("datatime"));
+					intent.putExtra("postId", result.substring(result.lastIndexOf("}") + 1));
+					intent.putExtra("audio", FileName);
+					setResult(RESULT_OK, intent);
 					finish();
+				} else {
+					Toast.makeText(AddFour.this, "上传失败,请重新发送", Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -249,7 +269,7 @@ public class AddFour extends Activity implements OnRequestPermissionsResultCallb
 		};
 
 		task.execute();
-	}*/
+	}
 	
 	@SuppressLint("InlinedApi")
 	public void Accessibility() {

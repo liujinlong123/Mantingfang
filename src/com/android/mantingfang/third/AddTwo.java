@@ -1,15 +1,22 @@
 package com.android.mantingfang.third;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.second.KindGridView;
+import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.SearchTwo;
+import com.android.mantingfanggsc.SuccinctProgress;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,10 +39,8 @@ public class AddTwo extends Activity {
 	private TextView tvPoemName;
 	private TextView tvTitle;
 	
-	//private String userId;
-	//private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
+	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 	
-	//private String res;
 	private String poemId;
 	private String poemName;
 	private String poemContent;
@@ -108,15 +113,14 @@ public class AddTwo extends Activity {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					String dateNowStr = sdf.format(d); // 当前时间
 					
-					Intent intent = new Intent();
-					intent.putExtra("isSave", true);
-					intent.putExtra("poetry_id", poemId);
-					intent.putExtra("poetry_name", poemName);
-					intent.putExtra("poetry_content", poemContent);
-					intent.putExtra("datatime", dateNowStr);
-					intent.putExtra("content", content);
-					setResult(RESULT_OK, intent);
-					finish();
+					Map<String, String> param = new HashMap<>();
+					param.put("user_id", UserId.getInstance(AddTwo.this).getUserId());
+					param.put("poetry_id", poemId);
+					param.put("datatime", dateNowStr);
+					param.put("content", content);
+					param.put("type_num", "2");
+					
+					saveData(param);
 				} else {
 					Toast.makeText(AddTwo.this, "内容不能为空", Toast.LENGTH_SHORT).show();
 				}
@@ -124,10 +128,16 @@ public class AddTwo extends Activity {
 		});
 	}
 
-	/*private void saveData(final Map<String, String> param) {
+	private void saveData(final Map<String, String> param) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
-			// String Answer = null;
+			@Override
+			protected void onPreExecute() {
+				SuccinctProgress.showSuccinctProgress(AddTwo.this,
+						"正在上传", SuccinctProgress.THEME_LINE, false, true);
+			}
+			
+			
 			@Override
 			protected String doInBackground(String... params) {
 				try {
@@ -143,18 +153,29 @@ public class AddTwo extends Activity {
 
 			@Override
 			protected void onPostExecute(String result) {
-				Log.v("result", result + "------");
-				res = result;
-				if (res != null && !res.equals("")) {
-					Toast.makeText(AddTwo.this, "上传成功", Toast.LENGTH_SHORT).show();
+				//Log.v("result", result + "------");
+				SuccinctProgress.dismiss();
+				if (result != null && !result.equals("")) {
+					Intent intent = new Intent();
+					intent.putExtra("isSave", true);
+					intent.putExtra("user_id", param.get("user_id"));
+					intent.putExtra("poetry_id", poemId);
+					intent.putExtra("poetry_name", poemName);
+					intent.putExtra("poetry_content", poemContent);
+					intent.putExtra("datatime", param.get("datatime"));
+					intent.putExtra("content", param.get("content"));
+					intent.putExtra("postId", result.substring(result.lastIndexOf("}") + 1));
+					setResult(RESULT_OK, intent);
 					finish();
+				} else {
+					Toast.makeText(AddTwo.this, "上传失败,请重新发送", Toast.LENGTH_SHORT).show();
 				}
 			}
 
 		};
 
 		task.execute();
-	}*/
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

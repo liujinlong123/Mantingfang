@@ -1,106 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/user_pager_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white" >
+    android:background="@color/white"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/user_head_linear"
+    <com.android.mantingfanggsc.CustomListView
+        android:id="@+id/user_pager_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone" >
-
-        <RadioGroup
-            android:id="@+id/user_pager_rgp1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/user_pager_rbtn_one1"
-                style="@style/third_footbar"
-                android:layout_marginBottom="2dp"
-                android:layout_marginTop="2dp"
-                android:text="诗词" />
-
-            <RadioButton
-                android:id="@+id/user_pager_rbtn_two1"
-                style="@style/third_footbar"
-                android:layout_marginBottom="2dp"
-                android:layout_marginTop="2dp"
-                android:text="动态" />
-
-            <RadioButton
-                android:id="@+id/user_pager_rbtn_three1"
-                style="@style/third_footbar"
-                android:layout_marginBottom="2dp"
-                android:layout_marginTop="2dp"
-                android:text="关于TA" />
-        </RadioGroup>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/beijingwhite" />
-    </LinearLayout>
-
-    <com.android.mantingfang.third.VerticalScrollView
-        android:id="@+id/user_pager_scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:id="@+id/user_linear_height"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:gravity="center"
-                android:orientation="vertical" >
-
-                <com.android.mantingfanggsc.CircleImageView
-                    android:id="@+id/user_pager_headphoto"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/picture_no" ></com.android.mantingfanggsc.CircleImageView>
-
-                <TextView
-                    android:id="@+id/user_pager_care"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/user_care"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="5dp"
-                    android:text="关注TA"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/gray" />
-
-            <include layout="@layout/user_head" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/beijingwhite" />
-
-            <com.android.mantingfang.third.MyViewPager
-                android:id="@+id/user_pager_view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent" >
-            </com.android.mantingfang.third.MyViewPager>
-        </LinearLayout>
-    </com.android.mantingfang.third.VerticalScrollView>
+        android:layout_height="wrap_content" ></com.android.mantingfanggsc.CustomListView>
 
 </LinearLayout>

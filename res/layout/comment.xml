@@ -2,66 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white" >
+    android:background="@color/white"
+    android:orientation="vertical" >
 
-    <include layout="@layout/topbar_all"/>
-    
+    <include layout="@layout/topbar_all" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/gray" />
+
+    <com.android.mantingfang.third.ScrollViewWithListView
+        android:id="@+id/comment_main_content_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:visibility="gone" >
+    </com.android.mantingfang.third.ScrollViewWithListView>
     
-    <ScrollView
+    <ListView
+        android:id="@+id/comment_new"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scrollbars="none" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical" >
-
-            <!-- <include layout="@layout/third_pager_one_itemlist" /> -->
-            
-            <com.android.mantingfang.third.ScrollViewWithListView
-                android:id="@+id/comment_main_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none" ></com.android.mantingfang.third.ScrollViewWithListView>
-
-            <ListView
-                android:id="@+id/comment_tv_better"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:visibility="gone" />
-
-            <ListView
-                android:id="@+id/comment_better"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none" />
-
-            <TextView
-                android:id="@+id/comment_tv_new"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:paddingLeft="25dp"
-                android:background="@color/beijingwhite"
-                android:text="最新评论"
-                android:gravity="center_vertical"
-                android:layout_marginTop="10dp"
-                android:visibility="gone" />
-
-            <ListView
-                android:id="@+id/comment_new"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none" />
-        </LinearLayout>
-    </ScrollView>
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"

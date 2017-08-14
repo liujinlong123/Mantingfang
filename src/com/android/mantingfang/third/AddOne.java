@@ -6,20 +6,28 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.picture.Picture;
 import com.android.mantingfang.second.KindGridView;
+import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.R;
+import com.android.mantingfanggsc.SuccinctProgress;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -58,7 +66,6 @@ public class AddOne extends Activity implements OnRequestPermissionsResultCallba
 	private LinearLayout linearAdd;
 	private KindGridView grdView;
 	private EditText editer;
-	//private String userId;
 
 	private Uri imgUri;
 	private PictureAdapter picAdapter;
@@ -68,6 +75,7 @@ public class AddOne extends Activity implements OnRequestPermissionsResultCallba
 	 * 选中图片的路径集合
 	 */
 	private ArrayList<String> setPath = new ArrayList<>();
+	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 	
 	private int pos = 0;
 
@@ -141,13 +149,13 @@ public class AddOne extends Activity implements OnRequestPermissionsResultCallba
 					d.setHours(d.getHours());
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					String dateNowStr = sdf.format(d); // 当前时间
-					Intent intent = new Intent();
-					intent.putExtra("isSave", true);
-					intent.putExtra("datatime", dateNowStr);
-					intent.putExtra("content", content);
-					intent.putStringArrayListExtra("setPath", setPath);
-					setResult(RESULT_OK, intent);
-					finish();
+					
+					Map<String, String> param = new HashMap<>();
+					param.put("user_id", UserId.getInstance(AddOne.this).getUserId());
+					param.put("datatime", dateNowStr);
+					param.put("content", content);
+					param.put("type_num", "1");
+					saveData(param);
 				} else {
 					Toast.makeText(AddOne.this, "内容不能为空", Toast.LENGTH_SHORT).show();
 				}
@@ -224,10 +232,16 @@ public class AddOne extends Activity implements OnRequestPermissionsResultCallba
 		return true;
 	}
 
-	/*private void saveData(final Map<String, String> param) {
+	private void saveData(final Map<String, String> param) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
-			// String Answer = null;
+			@Override
+			protected void onPreExecute() {
+				SuccinctProgress.showSuccinctProgress(AddOne.this,
+						"正在上传", SuccinctProgress.THEME_LINE, false, true);
+			}
+			
+			
 			@Override
 			protected String doInBackground(String... params) {
 				Map<String, File> files = new HashMap<>();
@@ -248,18 +262,39 @@ public class AddOne extends Activity implements OnRequestPermissionsResultCallba
 
 			@Override
 			protected void onPostExecute(String result) {
-				Log.v("result", result + "------");
-				res = result;
-				if (res != null && !res.equals("")) {
-					Toast.makeText(AddOne.this, "上传成功", Toast.LENGTH_SHORT).show();
+				//Log.v("result", result + "------");
+				SuccinctProgress.dismiss();
+				if (result != null && !result.equals("")) {
+					/*Intent intent = new Intent();
+					intent.putExtra("isSave", true);
+					intent.putExtra("user_id", param.get("user_id"));
+					intent.putExtra("datatime", param.get("datatime"));
+					intent.putExtra("content", param.get("content"));
+					intent.putExtra("postId", result.substring(result.lastIndexOf("}") + 1));
+					intent.putStringArrayListExtra("setPath", setPath);*/
+					
+					Log.v("图片", setPath.toString());
+					SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+					editor.putBoolean("theme_isSave", true);
+					editor.putString("theme_user_id", param.get("user_id"));
+					editor.putString("theme_datatime", param.get("datatime"));
+					editor.putString("theme_content", param.get("content"));
+					editor.putString("theme_post_id", result.substring(result.lastIndexOf("}") + 1));
+					editor.putStringSet("theme_setPath", new LinkedHashSet<>(setPath));
+					editor.commit();
+					//setResult(RESULT_OK, intent);
+					Intent intent = new Intent("com.android.mantingfang.fourth.ThemeBroadcast.THEMEADD");
+					sendBroadcast(intent);
 					finish();
+				} else {
+					Toast.makeText(AddOne.this, "上传失败,请重新发送", Toast.LENGTH_SHORT).show();
 				}
 			}
 
 		};
 
 		task.execute();
-	}*/
+	}
 
 	/**
 	 * 从上一界面返回结果

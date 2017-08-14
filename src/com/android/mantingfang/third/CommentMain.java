@@ -34,6 +34,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -47,29 +48,36 @@ import android.widget.TextView;
 
 public class CommentMain extends Activity {
 	
+	private View viewOne;
+	private View viewTwo;
+	private View viewThree;
+	private View viewFour;
+	
 	private LinearLayout linearBack;
 	private TextView theme_bg;
 	
+	
+	private ListView listviewCopy;
 	private ListView listview;
 	private UserTwoAdapter adapter;
 	private List<UserTwoContent> list;
 
+	private TextView tvBetter;
+	
 	private ListView listOne;
 	private CommentAdapter adapterOne;
 	private List<CommentContent> dataListOne;
 	
-	private ListView listTv;
-	private CommentTextAdapter adapterTv;
-	private List<String> dataListTv;
+	private TextView tvNew;
 
 	private ListView listTwo;
 	private CommentAdapter adapterTwo;
 	private List<CommentContent> dataListTwo;
+	
+	
+	
 	private String headPath;
 	private UserTwoContent content;
-	
-	private TextView textView;
-
 	private EditText editer;
 	private Button btnSend;
 	private String bePostId;
@@ -77,6 +85,7 @@ public class CommentMain extends Activity {
 	private String bePostUserId;
 	private String bePostUserName;
 
+	@SuppressLint("InflateParams")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,16 +94,25 @@ public class CommentMain extends Activity {
 		Bundle bundle = getIntent().getExtras();
 		content = (UserTwoContent) bundle.get("commentM");
 		headPath = bundle.getString("headPath");
+		viewOne = LayoutInflater.from(CommentMain.this).inflate(R.layout.comment_one, null);
+		viewTwo = LayoutInflater.from(CommentMain.this).inflate(R.layout.comment_two, null);
+		viewThree = LayoutInflater.from(CommentMain.this).inflate(R.layout.comment_three, null);
+		viewFour = LayoutInflater.from(CommentMain.this).inflate(R.layout.comment_four, null);
+		
 		initViews(content, bundle.getString("topicId"), bundle.getString("typeNum"));
 	}
 	
 	private void initViews(UserTwoContent content, final String topicId, final String typeNum) {
-		listview = (ListView)findViewById(R.id.comment_main_content);
-		listOne = (ListView)findViewById(R.id.comment_better);
+		listview = (ListView)viewOne.findViewById(R.id.comment_main_content);
+		tvBetter = (TextView)viewTwo.findViewById(R.id.comment_tv_better);
+		listOne = (ListView)viewThree.findViewById(R.id.comment_better);
+		tvNew = (TextView)viewFour.findViewById(R.id.comment_tv_new);
+		
+		
+		listviewCopy = (ListView)findViewById(R.id.comment_main_content_one);
 		listTwo = (ListView)findViewById(R.id.comment_new);
 		linearBack = (LinearLayout)findViewById(R.id.topbar_all_back);
 		theme_bg = (TextView)findViewById(R.id.topbar_tv_theme);
-		textView = (TextView)findViewById(R.id.comment_tv_new);
 		editer = (EditText)findViewById(R.id.post_comment);
 		btnSend = (Button)findViewById(R.id.post_comment_btn);
 		
@@ -102,17 +120,7 @@ public class CommentMain extends Activity {
 		list.add(content);
 		adapter = new UserTwoAdapter(CommentMain.this, list, headPath);
 		listview.setAdapter(adapter);
-		//setListViewHeightBasedOnChildren(listview);
 		
-		listTv = (ListView)findViewById(R.id.comment_tv_better);
-		dataListTv = new ArrayList<>();
-		dataListTv.add("精彩评论");
-		adapterTv = new CommentTextAdapter(CommentMain.this, dataListTv);
-		listTv.setAdapter(adapterTv);
-		listTv.setEnabled(false);
-		
-		/*listTv.setVisibility(View.GONE);
-		textView.setVisibility(View.GONE);*/
 		getData(topicId, typeNum, headPath);
 		
 		linearBack.setOnClickListener(new OnClickListener() {
@@ -180,24 +188,48 @@ public class CommentMain extends Activity {
 
 			@Override
 			protected void onPostExecute(String result) {
-				//Log.v("result-sendComment", result + "------");
-				/*if (result != null && !result.equals("")) {
-					
-				}*/
-				
 				editer.setText("");
 				editer.setHint("");
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
 				CommentContent item = new CommentContent(param.get("post_id"), param.get("typeNum"), UserId.getInstance(CommentMain.this).getUserId(),
 						UserId.getInstance(CommentMain.this).getHeadPath(), UserId.getInstance(CommentMain.this).getNickName(), param.get("time"),
 						param.get("content"), "0", "0", param.get("bePostContent"), param.get("bePostUserId"), param.get("bePostUserName"), result, param.get("bePostId"));
 				
 				//Log.v("bePostedId", param.get("bePostId") + "+++++");
 				if (dataListTwo == null) {
-					textView.setVisibility(View.VISIBLE);
+					listviewCopy.setVisibility(View.GONE);
+					adapter = new UserTwoAdapter(CommentMain.this, list, headPath);
+					listview.setAdapter(adapter);
+					listTwo.addHeaderView(viewOne);
+					listTwo.addHeaderView(viewFour);
+					
+					tvNew.setVisibility(View.VISIBLE);
 					dataListTwo = new ArrayList<>();
 					dataListTwo.add(item);
 					adapterTwo = new CommentAdapter(CommentMain.this, dataListTwo);
 					listTwo.setAdapter(adapterTwo);
+					listTwo.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+							new AlertDialog.Builder(CommentMain.this)
+							.setItems(R.array.item_huifu, new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int whichcountry) {
+									switch (whichcountry) {
+									case 0:
+										bePostId = dataListTwo.get(position - 2).getPostId();
+										bePostContent= dataListTwo.get(position - 2).getContent();
+										bePostUserId = dataListTwo.get(position - 2).getUserId();
+										bePostUserName = dataListTwo.get(position - 2).getName();
+										editer.setHint("@" + dataListTwo.get(position - 2).getName());
+										break;
+									}
+									
+								}
+							}).show();
+						}
+					});
 				} else {
 					dataListTwo.add(0, item);
 					Log.v("ITEM---item", item.getBePostId());
@@ -216,31 +248,97 @@ public class CommentMain extends Activity {
 			@Override
 			protected String doInBackground(String... params) {
 				
+				//最新评论
 				return MyClient.getInstance().Http_postComment(UserId.getInstance(CommentMain.this).getUserId(), typeNum, topicId);
-				//return null;
 			}
 			
 			@Override
 			protected void onPostExecute(String result) {
-				dataListOne = new ArrayList<>();
 				try {
 					if (result != null && !result.equals("") && !result.equals("[]")) {
-						listTv.setVisibility(View.VISIBLE);
-						dataListOne = TopicList.parseComment(StringUtils.toJSONArray(result), topicId, typeNum).getCommentList();
 						dataListTwo = TopicList.parseComment(StringUtils.toJSONArray(result), topicId, typeNum).getCommentList();
+						
+						getDataTwo(topicId, typeNum, headPath);
+					} else {
+						adapter = new UserTwoAdapter(CommentMain.this, list, headPath);
+						listviewCopy.setVisibility(View.VISIBLE);
+						listviewCopy.setAdapter(adapter);
+					}
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		};
+		
+		task.execute();
+	}
+	
+	
+	private void getDataTwo(final String topicId, final String typeNum, final String headPath) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				//精彩评论
+				return MyClient.getInstance().Http_postCommentBetter(UserId.getInstance(CommentMain.this).getUserId(), typeNum, topicId);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				if (result == null || result.equals("") || result.equals("[]")) {
+					adapter = new UserTwoAdapter(CommentMain.this, list, headPath);
+					listview.setAdapter(adapter);
+					listTwo.addHeaderView(viewOne);
+					listTwo.addHeaderView(viewFour);
+					
+					tvNew.setVisibility(View.VISIBLE);
+					adapterTwo = new CommentAdapter(CommentMain.this, dataListTwo);
+					listTwo.setAdapter(adapterTwo);
+					
+					listTwo.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+							new AlertDialog.Builder(CommentMain.this)
+							.setItems(R.array.item_huifu, new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int whichcountry) {
+									switch (whichcountry) {
+									case 0:
+										bePostId = dataListTwo.get(position - 2).getPostId();
+										bePostContent= dataListTwo.get(position - 2).getContent();
+										bePostUserId = dataListTwo.get(position - 2).getUserId();
+										bePostUserName = dataListTwo.get(position - 2).getName();
+										editer.setHint("@" + dataListTwo.get(position - 2).getName());
+										break;
+									}
+									
+								}
+							}).show();
+						}
+					});
+				} else {
+					try {
+						tvBetter.setVisibility(View.VISIBLE);
+						dataListOne = TopicList.parseComment(StringUtils.toJSONArray(result), topicId, typeNum).getCommentList();
+						
 						adapter = new UserTwoAdapter(CommentMain.this, list, headPath);
 						listview.setAdapter(adapter);
-						setListViewHeightBasedOnChildren(listview);
+						
+						listTwo.addHeaderView(viewOne);
+						listTwo.addHeaderView(viewTwo);
+						listTwo.addHeaderView(viewThree);
+						listTwo.addHeaderView(viewFour);
 						
 						
 						adapterOne = new CommentAdapter(CommentMain.this, dataListOne);
 						listOne.setAdapter(adapterOne);
-						setListViewHeightBasedOnChildren(listOne);
 						
-						textView.setVisibility(View.VISIBLE);
+						tvNew.setVisibility(View.VISIBLE);
 						adapterTwo = new CommentAdapter(CommentMain.this, dataListTwo);
 						listTwo.setAdapter(adapterTwo);
-						setListViewHeightBasedOnChildren(listTwo);
 						
 						listOne.setOnItemClickListener(new OnItemClickListener() {
 
@@ -273,11 +371,11 @@ public class CommentMain extends Activity {
 									public void onClick(DialogInterface dialog, int whichcountry) {
 										switch (whichcountry) {
 										case 0:
-											bePostId = dataListTwo.get(position).getPostId();
-											bePostContent= dataListTwo.get(position).getContent();
-											bePostUserId = dataListTwo.get(position).getUserId();
-											bePostUserName = dataListTwo.get(position).getName();
-											editer.setHint("@" + dataListTwo.get(position).getName());
+											bePostId = dataListTwo.get(position - 4).getPostId();
+											bePostContent= dataListTwo.get(position - 4).getContent();
+											bePostUserId = dataListTwo.get(position - 4).getUserId();
+											bePostUserName = dataListTwo.get(position - 4).getName();
+											editer.setHint("@" + dataListTwo.get(position - 4).getName());
 											break;
 										}
 										
@@ -285,43 +383,15 @@ public class CommentMain extends Activity {
 								}).show();
 							}
 						});
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					
-				} catch (JSONException e) {
-					e.printStackTrace();
 				}
 			}
-			
 		};
 		
 		task.execute();
-	}
-
-	/**
-	 * ScrollView -- ListView
-	 * 
-	 * @param listView
-	 */
-	public void setListViewHeightBasedOnChildren(ListView listView) {
-		ListAdapter listAdapter = listView.getAdapter();
-		if (listAdapter == null) {
-			return;
-		}
-
-		int totalHeight = 0;
-		for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-			View listItem = listAdapter.getView(i, null, listView);
-			listItem.measure(0, 0);
-			
-			totalHeight += listItem.getMeasuredHeight();
-			/*int h = View.MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-			listItem.measure(0, h);
-			totalHeight += listItem.getMeasuredHeight();*/
-		}
-
-		ViewGroup.LayoutParams params = listView.getLayoutParams();
-		params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-		listView.setLayoutParams(params);
 	}
 	
 	class UserTwoAdapter extends BaseAdapter {
@@ -564,11 +634,6 @@ public class CommentMain extends Activity {
 			if (pictures.size() == 0 || pictures == null) {
 				holder.grdview.setVisibility(View.GONE);
 			} else {
-				/*//Log.v("PIcture", pictures.toString());
-				List<FileImgs> filePath = new ArrayList<>();
-				for (String e: pictures) {
-					filePath.add(new FileImgs("0", e));
-				}*/
 				TopicGridviewAdapter adapter = new TopicGridviewAdapter(mContext, pictures);
 				holder.grdview.setAdapter(adapter);
 			}

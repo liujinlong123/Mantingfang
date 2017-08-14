@@ -2,11 +2,14 @@ package com.android.mantingfang.third;
 
 import java.util.List;
 
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfanggsc.CircleImageView;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -24,6 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CommentAdapter extends BaseAdapter {
+	
+	private static final int VALUE_COMMENT_ONE = 0;
+	private static final int VALUE_COMMENT_TWO = 1;
 
 	private Context mContext;
 	private List<CommentContent> list;
@@ -55,6 +61,7 @@ public class CommentAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		View view;
+		int type = getItemViewType(position);
 		if (convertView == null) {
 			view = inflater.inflate(R.layout.comment_itemlist, null);
 			holder = new ViewHolder();
@@ -86,7 +93,7 @@ public class CommentAdapter extends BaseAdapter {
 		} else {
 			holder.zan.setImageResource(R.drawable.a7r);
 		}
-		
+		initZan(holder.zan, content);
 		if (!content.getZanNumber().equals("") && content.getZanNumber() != null) {
 			holder.zanNum.setText(content.getZanNumber());
 		} else {
@@ -94,11 +101,13 @@ public class CommentAdapter extends BaseAdapter {
 		}
 		
 		//内容
-		if (content.getBePostId() == null || content.getBePostId().equals("-1") || content.getBePostId().equals("")) {
+		switch (type) {
+		case VALUE_COMMENT_ONE:
 			holder.content.setText(content.getContent());
 			Log.v("TEST", content.getBePostUserId() + "-----");
+			break;
 			
-		} else {
+		case VALUE_COMMENT_TWO:
 			holder.linear.setVisibility(View.VISIBLE);
 			//holder.content.setText("回复@" + content.getBePostNickame() + ":" + content.getContent());
 			//holder.beContent.setText("@" + content.getBePostNickame() + ":" + content.getBePostContent());
@@ -118,9 +127,30 @@ public class CommentAdapter extends BaseAdapter {
 			spanableInfoTwo.setSpan(new Clickable(clickListener),0,content.getBePostNickame().length() + 1,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 			holder.beContent.setText(spanableInfoTwo);
 			holder.beContent.setMovementMethod(LinkMovementMethod.getInstance());
+			break;
 		}
 		
 		return view;
+	}
+	
+	private void initZan(final ImageView zan, final CommentContent content) {
+		zan.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (content.getZan() != null) {
+					if (content.getZan().equals("0")) {
+						zan.setImageResource(R.drawable.a7u);
+						content.setZan("1");
+						sendZan(UserId.getInstance(mContext).getUserId(), content.getPostId() + "", "1");
+					} else if (content.getZan().equals("1")){
+						zan.setImageResource(R.drawable.a7r);
+						content.setZan("0");
+						sendZan(UserId.getInstance(mContext).getUserId(), content.getPostId() + "", "0");
+					}
+				}
+			}
+		});
 	}
 	
 	final static class ViewHolder {
@@ -171,5 +201,50 @@ public class CommentAdapter extends BaseAdapter {
 		public void updateDrawState(TextPaint ds) {
 			ds.setColor(mContext.getResources().getColor(R.color.blue));
 		}
+	}
+	
+	/**
+	 * 根据数据源的position返回需要显示的的layout的type
+	 * 
+	 * type的值必须从0开始
+	 * 
+	 * */
+	@Override
+	public int getItemViewType(int position) {
+		CommentContent content = list.get(position);
+		if (content.getBePostId() == null || content.getBePostId().equals("-1") || content.getBePostId().equals("")) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
+	}
+	
+	/**
+	 * 返回所有的layout的数量
+	 * 
+	 * */
+	@Override
+	public int getViewTypeCount() {
+		return 2;
+	}
+	
+	private void sendZan(final String userId, final String commentId, final String zan) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_postCommentZan(userId, commentId, zan);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				
+			}
+			
+		};
+		
+		task.execute();
 	}
 }

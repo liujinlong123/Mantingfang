@@ -28,11 +28,12 @@ public class UserTwoContent extends Base {
 	private String zan;		//是否被赞
 	private int post_com_num;	//帖子标号
 	private int post_com_pId;	//帖子Id
+	private int type;			//类型
 	
 	public UserTwoContent() {}
 	
 	public UserTwoContent(String userId, String headPath, String name, String time, String title, String content, ArrayList<FileImgs> picture,
-			FileAudio soundPath, String poemId, String poemContent, String poemName, String zan, int post_com_num, int post_com_pId) {
+			FileAudio soundPath, String poemId, String poemContent, String poemName, String zan, int post_com_num, int post_com_pId, int type) {
 		this.userId = userId;
 		this.headPath = headPath;
 		this.name = name;
@@ -47,8 +48,17 @@ public class UserTwoContent extends Base {
 		this.zan = zan;
 		this.post_com_num = post_com_num;
 		this.post_com_pId = post_com_pId;
+		this.type = type;
 	}
 	
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
 	public UserTwoContent(String userId, Bitmap headPhoto, String name, String time, String content, ArrayList<FileImgs> picture,
 			FileAudio soundPath, String poemId, String poemContent, String poemName, String zan, int post_com_num, int post_com_pId) {
 		this.userId = userId;

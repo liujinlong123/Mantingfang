@@ -4,7 +4,8 @@
     <!-- 线条颜色 -->
     <color name="line_view">#dddddd</color>
     <color name="white">#fffffc</color>
-    <color name="gray">#a0a0a0</color>
+    <color name="gray">#a8a8a8</color>
+    <color name="grayText">#989898</color>
     <color name="beijingwhite">#eeeeee</color>
     <color name="blue">#00479d</color>
     <color name="red">#a40000</color>
@@ -71,7 +72,6 @@
     <color name="orchid">#da70d6</color> <!-- 淡紫色 -->
     <color name="thistle">#d8bfd8</color> <!-- 蓟色 -->
     <color name="lightgray">#d3d3d3</color> <!-- 亮灰色 -->
-    <color name="lightgrey">#d3d3d3</color> <!-- 亮灰色 -->
     <color name="tan">#d2b48c</color> <!-- 茶色 -->
     <color name="chocolate">#d2691e</color> <!-- 巧可力色 -->
     <color name="peru">#cd853f</color> <!-- 秘鲁色 -->
@@ -88,7 +88,6 @@
     <color name="paleturquoise">#afeeee</color> <!-- 苍宝石绿 -->
     <color name="greenyellow">#adff2f</color> <!-- 黄绿色 -->
     <color name="lightblue">#add8e6</color> <!-- 亮蓝色 -->
-    <color name="darkgray">#a9a9a9</color> <!-- 暗灰色 -->
     <color name="darkgrey">#a9a9a9</color> <!-- 暗灰色 -->
     <color name="brown">#a52a2a</color> <!-- 褐色 -->
     <color name="sienna">#a0522d</color> <!-- 赭色 -->
@@ -119,7 +118,6 @@
     <color name="olivedrab">#6b8e23</color> <!-- 深绿褐色 -->
     <color name="slateblue">#6a5acd</color> <!-- 石蓝色 -->
     <color name="dimgray">#696969</color> <!-- 暗灰色 -->
-    <color name="dimgrey">#696969</color> <!-- 暗灰色 -->
     <color name="mediumaquamarine">#66cdaa</color> <!-- 中绿色 -->
     <color name="cornflowerblue">#6495ed</color> <!-- 菊兰色 -->
     <color name="cadetblue">#5f9ea0</color> <!-- 军兰色 -->

@@ -4,13 +4,37 @@
     android:layout_height="45dp"
     android:background="@color/white" >
     
-    <TextView
+    <RadioGroup
+        android:id="@+id/topbar_third_radgp"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:text="诗友"
-        android:textSize="20sp" />
+        android:layout_centerVertical="true" >
+        
+        <RadioButton
+            android:id="@+id/topbar_third_rbtnL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/topbar_second_leftselector"
+            android:button="@null"
+            android:text="日赏"
+            android:textColor="@drawable/topbar_second_text"
+            android:paddingLeft="12dp"
+            android:paddingRight="5dp"
+            android:checked="true" />
+        
+        <RadioButton
+            android:id="@+id/topbar_third_rbtnR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/topbar_second_rightselector"
+            android:button="@null"
+            android:text="频道"
+            android:textColor="@drawable/topbar_second_text"
+            android:paddingRight="12dp"
+            android:paddingLeft="5dp"/>
+    </RadioGroup>
     
     
     <ImageView

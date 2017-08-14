@@ -11,34 +11,30 @@
         android:orientation="horizontal"
         android:paddingTop="2dp"
         android:paddingBottom="2dp" >
-        
-        <RadioButton
-            android:id="@+id/third_head_one"
-            style="@style/third_footbar"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
-            android:text="日赏" />
 
         <RadioButton
             android:id="@+id/third_head_two"
             style="@style/third_footbar"
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"
-            android:text="笔记" />
+            android:text="笔记"
+            android:textColor="@color/grayText" />
         
         <RadioButton
             android:id="@+id/third_head_three"
             style="@style/third_footbar"
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"
-            android:text="原创" />
+            android:text="原创"
+            android:textColor="@color/grayText" />
 
         <RadioButton
             android:id="@+id/third_head_four"
             style="@style/third_footbar"
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"
-            android:text="朗读" />
+            android:text="朗读"
+            android:textColor="@color/grayText" />
     </RadioGroup>
 
 </LinearLayout>

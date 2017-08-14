@@ -6,11 +6,16 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.picture.Picture;
 import com.android.mantingfang.second.KindGridView;
+import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.R;
+import com.android.mantingfanggsc.SuccinctProgress;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -20,6 +25,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -55,9 +61,7 @@ public class AddThree extends Activity implements OnRequestPermissionsResultCall
 	//private LinearLayout linearAdd;
 	private KindGridView grdView;
 	private EditText editerTitle;
-	private EditText editerContent;
-	//private String userId;
-	//private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
+	private EditText editerContent;private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
 
 	private Uri imgUri;
 	private PictureAdapter picAdapter;
@@ -148,14 +152,15 @@ public class AddThree extends Activity implements OnRequestPermissionsResultCall
 					d.setHours(d.getHours());
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					String dateNowStr = sdf.format(d); // 当前时间
-					Intent intent = new Intent();
-					intent.putExtra("isSave", true);
-					intent.putExtra("datatime", dateNowStr);
-					intent.putExtra("title", title);
-					intent.putExtra("content", content);
-					intent.putStringArrayListExtra("setPath", setPath);
-					setResult(RESULT_OK, intent);
-					finish();
+					
+					Map<String, String> param = new HashMap<>();
+					param.put("user_id", UserId.getInstance(AddThree.this).getUserId());
+					param.put("datatime", dateNowStr);
+					param.put("content", content);
+					param.put("type_num", "3");
+					param.put("original_title", title);
+					
+					saveData(param);
 				} else {
 					Toast.makeText(AddThree.this, "内容不能为空", Toast.LENGTH_SHORT).show();
 				}
@@ -232,10 +237,16 @@ public class AddThree extends Activity implements OnRequestPermissionsResultCall
 		return true;
 	}
 
-	/*private void saveData(final Map<String, String> param) {
+	private void saveData(final Map<String, String> param) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
-			// String Answer = null;
+			@Override
+			protected void onPreExecute() {
+				SuccinctProgress.showSuccinctProgress(AddThree.this,
+						"正在上传", SuccinctProgress.THEME_LINE, false, true);
+			}
+			
+			
 			@Override
 			protected String doInBackground(String... params) {
 				Map<String, File> files = new HashMap<>();
@@ -256,18 +267,28 @@ public class AddThree extends Activity implements OnRequestPermissionsResultCall
 
 			@Override
 			protected void onPostExecute(String result) {
-				Log.v("result", result + "------");
-				res = result;
-				if (res != null && !res.equals("")) {
-					Toast.makeText(AddThree.this, "上传成功", Toast.LENGTH_SHORT).show();
+				//Log.v("result", result + "------");
+				SuccinctProgress.dismiss();
+				if (result != null && !result.equals("")) {
+					Intent intent = new Intent();
+					intent.putExtra("isSave", true);
+					intent.putExtra("user_id", param.get("user_id"));
+					intent.putExtra("datatime", param.get("datatime"));
+					intent.putExtra("title", param.get("title"));
+					intent.putExtra("content", param.get("content"));
+					intent.putExtra("postId", result.substring(result.lastIndexOf("}") + 1));
+					intent.putStringArrayListExtra("setPath", setPath);
+					setResult(RESULT_OK, intent);
 					finish();
+				} else {
+					Toast.makeText(AddThree.this, "上传失败,请重新发送", Toast.LENGTH_SHORT).show();
 				}
 			}
 
 		};
 
 		task.execute();
-	}*/
+	}
 
 	/**
 	 * 从上一界面返回结果
