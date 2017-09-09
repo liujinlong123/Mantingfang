@@ -181,7 +181,7 @@ public class AudioAdapter extends BaseAdapter {
 
 							@Override
 							public void run() {
-								player.playUrl("http://1696824u8f.51mypc.cn:12755/receive%20audio/"
+								player.playUrl(MyClient.actionUrlMT + "receive%20audio/"
 										+ content.getSoundPath().getPath(), new StartPlayer() {
 
 											@Override

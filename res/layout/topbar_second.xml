@@ -40,7 +40,7 @@
         android:id="@+id/topbar_second_search"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/search"
+        android:src="@drawable/search_all_s"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_centerHorizontal="true"
@@ -48,8 +48,8 @@
     
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray"
+        android:layout_height="1dp"
+        android:background="#22000000"
         android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

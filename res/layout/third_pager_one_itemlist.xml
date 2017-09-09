@@ -29,7 +29,7 @@
                 android:id="@+id/third_pager_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/grayText" />
+                android:textColor="#595454" />
 
             <TextView
                 android:id="@+id/third_pager_user_time"
@@ -173,5 +173,13 @@
                 android:src="@drawable/a7y" />
         </LinearLayout>
     </LinearLayout>
+    
+    <View
+        android:id="@+id/line_view_user_show"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#22000000"
+        android:layout_margin="5dp"
+        android:visibility="gone" />
 
 </LinearLayout>

@@ -14,7 +14,7 @@
             android:id="@+id/topbar_first_add"
             android:layout_width="40dp"
             android:layout_height="25dp"
-            android:background="@drawable/topbar_first_btn"
+            android:background="@drawable/first_pager_choose_bg"
             android:textSize="12sp"
             android:textColor="@color/gray"
             android:layout_marginLeft="7dp"
@@ -37,7 +37,7 @@
                 android:id="@+id/topbar_first_more"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/more_or_save"
+                android:src="@drawable/more_hor"
                 android:layout_marginRight="10dp" />
         </LinearLayout>
 
@@ -45,7 +45,7 @@
     
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray" />
+        android:layout_height="1dp"
+        android:background="#22000000" />
 
 </LinearLayout>

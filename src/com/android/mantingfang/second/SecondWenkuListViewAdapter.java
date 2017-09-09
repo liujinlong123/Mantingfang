@@ -1,9 +1,7 @@
 package com.android.mantingfang.second;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.android.mantingfanggsc.R;
 
@@ -19,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class SecondWenkuListViewAdapter extends BaseAdapter {
@@ -28,8 +25,8 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 	private List<KindContent> list;
 	private LayoutInflater inflater;
 	
-	private SimpleAdapter adapter;
-	List<Map<String, Object>> dataList;
+	private KindPictureAdapter adapter;
+	//List<KindPictureAll> dataList;
 	
 	public SecondWenkuListViewAdapter(Context context, List<KindContent> list) {
 		this.list = list;
@@ -69,6 +66,7 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 			view = convertView;
 			holder = (ViewHolder) view.getTag();
 		}
+		
 		KindContent content = list.get(position);
 		
 		initGridView(content, holder, position);
@@ -86,12 +84,13 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 		holder.tvKind.setText(content.getKindName());
 		holder.grdKind.setNumColumns(4);
 		if (content.getSingleName() != null) {
-			adapter = new SimpleAdapter(mContext, getData(content), R.layout.item_gridview_wenku, new String[]{"image", "text"}, new int[]{R.id.secondgrd_img_kind, R.id.secondgrd_tv_kindname});
+			adapter = new KindPictureAdapter(mContext, getData(content));
 			holder.grdKind.setAdapter(adapter);
 		}
 		
 		final String kindName = content.getKindName();
 		final List<SingleNames> label = content.getSingleName();
+		final int[] pictures = content.getImages();
 		
 		holder.grdKind.setOnItemClickListener(new OnItemClickListener() {
 
@@ -104,23 +103,19 @@ public class SecondWenkuListViewAdapter extends BaseAdapter {
 				Log.v("singlename: ", label.get(position).getLableName());
 				
 				bundle.putInt("label_id", label.get(position).getLabelId());
-				//bundle.putInt("imgId", content.getImages()[position]);
-				bundle.putInt("imgId", R.drawable.welcome);
+				bundle.putInt("imgId", pictures[position]);
 				intent.putExtras(bundle);
 				mContext.startActivity(intent);
 			}
 		});
 	}
 	
-	private List<Map<String, Object>> getData(KindContent content) {
-		//int[] images = content.getImages();
+	private List<KindPictureAll> getData(KindContent content) {
 		List<SingleNames> text = content.getSingleName();
-		dataList = new ArrayList<Map<String, Object>>();
+		int[] pictures = content.getImages();
+		List<KindPictureAll> dataList = new ArrayList<>();
 		for (int i = 0; i < text.size(); i++) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("image", R.drawable.welcome);
-			map.put("text", text.get(i).getLableName());
-			dataList.add(map);
+			dataList.add(new KindPictureAll(text.get(i).getLableName(), pictures[i]));
 		}
 		
 		return dataList;

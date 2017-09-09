@@ -19,6 +19,7 @@ public class SecondWenkuPoemListAdapter extends BaseAdapter {
 	private Context mContext;
 	private List<Poem> list;
 	private LayoutInflater inflater;
+	@SuppressWarnings("unused")
 	private boolean isNetwork;
 	
 	public SecondWenkuPoemListAdapter(Context context, List<Poem> list, boolean isNetwork) {
@@ -63,16 +64,14 @@ public class SecondWenkuPoemListAdapter extends BaseAdapter {
 		}
 		
 		Poem poem = list.get(position);
-		if (isNetwork) {
-			holder.poemName.setText(poem.getPoemName());
-			holder.poemRhesis.setText(poem.getRhesis());
+		holder.poemName.setText(poem.getPoemName());
+		holder.poemRhesis.setText(poem.getRhesis());
+		if (poem.getDynasty() != null && !poem.getDynasty().equals("")) {
 			holder.wirterName.setText("[" + poem.getDynasty() + "]" + poem.getWritername());
-		} /*else {
-			holder.poemName.setText(poem.getTitle());
-			holder.poemRhesis.setText("关关雎鸠，在河之洲");
-			//holder.poemRhesis.setText(poem.getRhesis());
-			holder.wirterName.setText("[" + URLs.DYNASTYS[poem.getDynastyid()] + "]" + poem.getWritername());
-		}*/
+		} else {
+			holder.wirterName.setText(poem.getWritername());
+		}
+		
 		return view;
 	}
 	

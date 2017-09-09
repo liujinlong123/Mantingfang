@@ -29,10 +29,10 @@ public class UserPager extends Activity {
 	
 	private View viewHead;
 	
-	
 	private CustomListView listview;
 	private UserTwoAdapter adapter;
 	private List<UserTwoContent> list;
+	private TextView tvName;
 	
 	private CircleImageView headImg;
 	private ImageView imgBack;
@@ -59,11 +59,13 @@ public class UserPager extends Activity {
 		imgBack = (ImageView)viewHead.findViewById(R.id.user_pager_img_back);
 		tvCollect = (TextView)viewHead.findViewById(R.id.user_pager_collect);
 		tvInfo = (TextView)viewHead.findViewById(R.id.user_pager_info);
+		tvName = (TextView)viewHead.findViewById(R.id.user_pager_user_name);
 		
 		Bundle bundle = getIntent().getExtras();
 		userId = bundle.getString("userId");
 		headPath = bundle.getString("headPath");
 		nickName = bundle.getString("nickName");
+		tvName.setText(nickName);
 		
 		PictureLoad.getInstance().loadImage(headPath, headImg);
 		imgBack.setOnClickListener(new OnClickListener() {
@@ -79,6 +81,7 @@ public class UserPager extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(UserPager.this, UserCollect.class);
+				intent.putExtra("userId", userId);
 				startActivity(intent);
 			}
 		});
@@ -88,6 +91,7 @@ public class UserPager extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(UserPager.this, UserInfo.class);
+				intent.putExtra("userId", userId);
 				startActivity(intent);
 			}
 		});
@@ -116,7 +120,7 @@ public class UserPager extends Activity {
 					try {
 						list = TopicList.parseUser(StringUtils.toJSONArray(result),user_id, headPath, nickName).getUserList();
 						//PictureLoad.getInstance().loadImage(headPath, imageView);
-						adapter = new UserTwoAdapter(UserPager.this, list, headPath);
+						adapter = new UserTwoAdapter(UserPager.this, list, headPath, true);
 						listview.setAdapter(adapter);
 						listview.addHeaderView(viewHead);
 					} catch (JSONException e) {

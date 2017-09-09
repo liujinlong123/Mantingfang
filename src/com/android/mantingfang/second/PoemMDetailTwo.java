@@ -86,14 +86,6 @@ public class PoemMDetailTwo extends Activity {
 			}
 		});
 		
-		img_collect.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(PoemMDetailTwo.this, "Collect", Toast.LENGTH_SHORT).show();
-			}
-		});
-		
 		img_comment.setOnClickListener(new OnClickListener() {
 			
 			@Override

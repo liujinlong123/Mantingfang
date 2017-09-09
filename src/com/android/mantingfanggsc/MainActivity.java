@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
 
@@ -44,6 +46,11 @@ public class MainActivity extends FragmentActivity {
 	//我的
 	private ImageView img_menu_wode;
 	private TextView tv_menu_wode;
+	
+	/**
+	 * 连续点击  出时间间
+	 */
+	private long mExitTime;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -200,5 +207,33 @@ public class MainActivity extends FragmentActivity {
 				trans.show(fragment_wode);
 			}
 		}
+	}
+	
+	/*
+	 * 按两次返回退出程序
+	 * 
+	 * @see android.app.Activity#onKeyDown(int, android.view.KeyEvent)
+	 */
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+			// System.out.println(System.currentTimeMillis()+"--"+mExitTime);
+
+			if ((System.currentTimeMillis() - mExitTime) > 2000) {
+
+				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+				mExitTime = System.currentTimeMillis();
+				// System.out.println(mExitTime+"---");
+			} else {
+				// System.out.println("退出");
+				MainActivity.this.finish();
+				/*
+				 * ActivityCollector.finishAll();
+				 * MyApplication.getInstance().exit();
+				 */
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

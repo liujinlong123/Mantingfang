@@ -3,11 +3,16 @@ package com.android.mantingfang.third;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.first.PoemRhesis;
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
+import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
@@ -34,6 +39,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 public class RiShangPager extends BaseFragment{
 
@@ -52,27 +58,22 @@ public class RiShangPager extends BaseFragment{
 	private RiShangPoem poemPager;
 	private RiShangTrans poemTrans;
 	
-	private boolean isPlay = false;
+	private List<PoemRhesis> poemCollection;
+	private PoemRhesis rhesis;
+	private PoemRhesis r;
 	
 	//动画
 	private AnimationDrawable animationDrawable;
 	
 	// 语音合成对象
 	private SpeechSynthesizer mTts;
+	private int thePlay = 0;
 	
 	private List<Fragment> fragmentList = new ArrayList<Fragment>();
 	
 	public static Typeface typefaceKT;
 	public static Typeface typefaceLS;
 	public static Typeface typefaceHWXK;
-	
-	
-	private String poemContent = "为君既不易，为臣良独难。忠信事不显，乃有见疑患。周公佐成王，金縢功不刊。"
-			+ "推心辅王室，二叔反流言。待罪居东国，泣涕常流连。皇灵大动变，震雷风且寒。拔树偃秋稼，天威不可干。"
-			+ "素服开金縢，感悟求其端。公旦事既显，成王乃哀叹。吾欲竟此曲，此曲悲且长。今日乐相乐，别后莫相忘";
-	private String testTrans = "做国君既不容易，做臣下实在更难。当忠信不被理解时，就有被猜疑的祸患。周公辅佐文王、武王，“金縢”功绩不灭永传。一片忠心辅助周王室，管叔、蔡叔反大造谣言。"
-			+ "周公待罪避居洛阳地，常常是老泪纵横长流不干。天帝动怒降下大灾难，雷鸣电闪卷地狂风猛又寒。拔起了大树吹倒庄稼，上天的威严不可触犯。"
-			+ "成王感悟身穿礼服开金縢，寻求上天震怒降灾的根源。周公忠信大白天下，成王感动伤心悲叹。我真想奏完这支乐曲，可是这首乐曲又悲又长。今日大家一起共欢乐，希望别后不要把它遗忘。";
 	
 	@SuppressLint("InflateParams")
 	@Override
@@ -90,7 +91,6 @@ public class RiShangPager extends BaseFragment{
 		return view;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private void initViews() {
 		viewpager = (ViewPager)view.findViewById(R.id.rishang_viewPager);
 		imgCollect = (ImageView)view.findViewById(R.id.rishang_collect);
@@ -109,87 +109,101 @@ public class RiShangPager extends BaseFragment{
 		btnPoem.setOnClickListener(new MyOnClickListener(0));
 		btnTrans.setOnClickListener(new MyOnClickListener(1));
 		
-		poemPager = new RiShangPoem("静夜思", "曹植", poemContent);
-		poemTrans = new RiShangTrans(testTrans);
-		
-		fragmentList.add(poemPager);
-		fragmentList.add(poemTrans);
-		viewpager.setOffscreenPageLimit(2);
-		viewpager.setOnPageChangeListener(new MyOnPageChangeListener());
-		adapter = new HomePageAdapter(getChildFragmentManager(), fragmentList);
-		viewpager.setAdapter(adapter);
-		viewpager.setCurrentItem(0);
-		
-		imgCollect.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-			}
-		});
-		
-		imgPre.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-			}
-		});
-		
-		imgPlayer.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// 开始合成
-	            // 收到onCompleted 回调时，合成结束、生成合成音频
-	            // 合成的音频格式：只支持pcm格式
-				//String text = rhesis.getRhesis();
-				//设置参数
-				/*setParam();
-				int code = mTts.startSpeaking("Fuck you", mTtsListener);
-				
-				if (code != ErrorCode.SUCCESS) {
-					Toast.makeText(getContext(), "语音合成失败,错误码:" + code, Toast.LENGTH_SHORT).show();
-				}*/
-				
-				if (!isPlay) {	//开始播放
-					imgPlayer.setImageResource(R.drawable.rishang_play);
-					isPlay = true;
-				} else {		//停止播放
-					imgPlayer.setImageResource(R.drawable.rishang_pause);
-					isPlay = false;
-				}
-				animationDrawable = (AnimationDrawable) imgPlayer
-						.getDrawable();
-				animationDrawable.start();
-			}
-		});
-		
-		imgNext.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-			}
-		});
+		getTuiJianOne();
 		
 		imgMore.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				new AlertDialog.Builder(getContext())
-				.setItems(R.array.item_fonts, new DialogInterface.OnClickListener() {
+				.setItems(R.array.item_kind_choose, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichcountry) {
 						switch (whichcountry) {
 						case 0:
-							setViewPagerAdapter(0);
+							imgNext.setOnClickListener(new OnClickListener() {
+								
+								@Override
+								public void onClick(View v) {
+									getTuiJianTwo();
+								}
+							});
+							
+							imgPre.setOnClickListener(new OnClickListener() {
+								
+								@Override
+								public void onClick(View v) {
+									getTuiJianTwo();
+								}
+							});
+							if (rhesis != null) {
+								poemPager.setContent(rhesis.getPoemName(), rhesis.getWriter(), rhesis.getContent());
+								poemTrans.setTrans(rhesis.getTrans());
+								if (!rhesis.isCollect()) {
+									imgCollect.setImageResource(R.drawable.a8e);
+								} else {
+									imgCollect.setImageResource(R.drawable.a8g);
+								}
+							}
+							
+							imgCollect.setOnClickListener(new OnClickListener() {
+								
+								@Override
+								public void onClick(View v) {
+									if (rhesis.isCollect()) {	//收藏-->没收藏
+										imgCollect.setImageResource(R.drawable.a8e);
+										sendCollection(rhesis.getPoemId(), "0");
+									} else if (!rhesis.isCollect()) { 	//没收藏-->收藏
+										imgCollect.setImageResource(R.drawable.a8g);
+										sendCollection(rhesis.getPoemId(), "1");
+									}
+								}
+							});
+							
+							imgPlayer.setOnClickListener(new OnClickListener() {
+								
+								@Override
+								public void onClick(View v) {
+									switch (thePlay) {
+									case 0:
+										// 开始合成
+							            // 收到onCompleted 回调时，合成结束、生成合成音频
+							            // 合成的音频格式：只支持pcm格式
+										String text = rhesis.getPoemName() + "， " + rhesis.getWriter() + "， " + rhesis.getContent();
+										//设置参数
+										setParam();
+										int code = mTts.startSpeaking(text, mTtsListener);
+										
+										if (code != ErrorCode.SUCCESS) {
+											Toast.makeText(getContext(), "语音合成失败,错误码:" + code, Toast.LENGTH_SHORT).show();
+										}
+										break;
+										
+									case 1:
+										mTts.pauseSpeaking();
+										imgPlayer.setImageResource(R.drawable.rishang_pause);
+										animationDrawable = (AnimationDrawable) imgPlayer
+												.getDrawable();
+										animationDrawable.start();
+										thePlay = 2;
+										break;
+										
+									case 2:
+										mTts.resumeSpeaking();
+										animationDrawable.stop();
+										imgPlayer.setImageResource(R.drawable.rishang_play);
+										animationDrawable = (AnimationDrawable) imgPlayer
+												.getDrawable();
+										animationDrawable.start();
+										thePlay = 1;
+										break;
+									}
+								}
+							});
+							thePlay = 0;
 							break;
 						case 1:
-							setViewPagerAdapter(1);
-							break;
-							
-						case 2:
-							setViewPagerAdapter(2);
+							thePlay = 0;
+							getCollection();
 							break;
 						}
 						
@@ -304,22 +318,119 @@ public class RiShangPager extends BaseFragment{
 	
 	
 	//-----------------------------------------------------数据获取---解析----------------------------------------------------
-	private void getPoemUserId() {
+	
+	private void getTuiJianOne() {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			// String Answer = null;
 			@Override
 			protected String doInBackground(String... params) {
 				
-				return null;
+				return MyClient.getInstance().Http_RiShangTuiJian(UserId.getInstance(getContext()).getUserId());
 			}
 
+			@SuppressWarnings("deprecation")
 			@Override
 			protected void onPostExecute(String result) {
 				if (result != null && !result.equals("")) {
+					JSONObject jo;
 					try {
-						JSONObject jo = new JSONObject(result);
+						jo = new JSONObject(result);
+						rhesis = new PoemRhesis(
+								jo.getString("poetry_id"),
+								jo.getString("poetry_name"),
+								jo.optString("poetry_rhesis"),
+								jo.getString("writer_name"),
+								jo.getString("poetry_content"),
+								jo.getString("info_tonow"),
+								false);
 						
+						poemPager = new RiShangPoem(rhesis.getPoemName(), rhesis.getWriter(), rhesis.getContent());
+						poemTrans = new RiShangTrans(rhesis.getTrans());
+						if (!rhesis.isCollect()) {
+							imgCollect.setImageResource(R.drawable.a8e);
+						} else {
+							imgCollect.setImageResource(R.drawable.a8g);
+						}
+						
+						fragmentList.add(poemPager);
+						fragmentList.add(poemTrans);
+						viewpager.setOffscreenPageLimit(2);
+						viewpager.setOnPageChangeListener(new MyOnPageChangeListener());
+						adapter = new HomePageAdapter(getChildFragmentManager(), fragmentList);
+						viewpager.setAdapter(adapter);
+						viewpager.setCurrentItem(0);
+						
+						imgNext.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								getTuiJianTwo();
+							}
+						});
+						
+						imgPre.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								getTuiJianTwo();
+							}
+						});
+						
+						imgCollect.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								if (rhesis.isCollect()) {	//收藏-->没收藏
+									imgCollect.setImageResource(R.drawable.a8e);
+									sendCollection(rhesis.getPoemId(), "0");
+								} else if (!rhesis.isCollect()) { 	//没收藏-->收藏
+									imgCollect.setImageResource(R.drawable.a8g);
+									sendCollection(rhesis.getPoemId(), "1");
+								}
+							}
+						});
+						
+						imgPlayer.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								switch (thePlay) {
+								case 0:
+									// 开始合成
+						            // 收到onCompleted 回调时，合成结束、生成合成音频
+						            // 合成的音频格式：只支持pcm格式
+									String text = rhesis.getPoemName() + "， " + rhesis.getWriter() + "， " + rhesis.getContent();
+									//设置参数
+									setParam();
+									int code = mTts.startSpeaking(text, mTtsListener);
+									
+									if (code != ErrorCode.SUCCESS) {
+										Toast.makeText(getContext(), "语音合成失败,错误码:" + code, Toast.LENGTH_SHORT).show();
+									}
+									break;
+									
+								case 1:
+									mTts.pauseSpeaking();
+									imgPlayer.setImageResource(R.drawable.rishang_pause);
+									animationDrawable = (AnimationDrawable) imgPlayer
+											.getDrawable();
+									animationDrawable.start();
+									thePlay = 2;
+									break;
+									
+								case 2:
+									mTts.resumeSpeaking();
+									animationDrawable.stop();
+									imgPlayer.setImageResource(R.drawable.rishang_play);
+									animationDrawable = (AnimationDrawable) imgPlayer
+											.getDrawable();
+									animationDrawable.start();
+									thePlay = 1;
+									break;
+								}
+							}
+						});
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -332,22 +443,39 @@ public class RiShangPager extends BaseFragment{
 		task.execute();
 	}
 	
-	private void getPoemById(final String poemId) {
+	private void getTuiJianTwo() {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			// String Answer = null;
 			@Override
 			protected String doInBackground(String... params) {
 				
-				return MyClient.getInstance().Http_RiShang(poemId);
+				return MyClient.getInstance().Http_RiShangTuiJian(UserId.getInstance(getContext()).getUserId());
 			}
 
 			@Override
 			protected void onPostExecute(String result) {
 				if (result != null && !result.equals("")) {
+					JSONObject jo;
 					try {
-						JSONObject jo = new JSONObject(result);
+						jo = new JSONObject(result);
+						rhesis = new PoemRhesis(
+								jo.getString("poetry_id"),
+								jo.getString("poetry_name"),
+								jo.optString("poetry_rhesis"),
+								jo.getString("writer_name"),
+								jo.getString("poetry_content"),
+								jo.getString("info_tonow"),
+								false);
 						
+						poemPager.setContent(rhesis.getPoemName(), rhesis.getWriter(), rhesis.getContent());
+						poemTrans.setTrans(rhesis.getTrans());
+						if (!rhesis.isCollect()) {
+							imgCollect.setImageResource(R.drawable.a8e);
+						} else {
+							imgCollect.setImageResource(R.drawable.a8g);
+						}
+						thePlay = 0;
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -360,6 +488,192 @@ public class RiShangPager extends BaseFragment{
 		task.execute();
 	}
 	
+	private void getCollection() {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			// String Answer = null;
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_RiShangCollection(UserId.getInstance(getContext()).getUserId());
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				if (result != null && !result.equals("") && !result.equals("[]")) {
+					try {
+						poemCollection = new ArrayList<>();
+						JSONArray obj = StringUtils.toJSONArray(result);
+						for (int i = 0; i < obj.length(); i++) {
+							JSONObject jo = obj.getJSONObject(i);
+							PoemRhesis rhesis = new PoemRhesis(
+									jo.getString("poetry_id"),
+									jo.getString("poetry_name"),
+									jo.optString("poetry_rhesis"),
+									jo.getString("writer_name"),
+									jo.getString("poetry_content"),
+									jo.getString("info_tonow"),
+									true);
+							poemCollection.add(rhesis);
+						}
+						
+						if (r != null) {
+							poemPager.setContent(r.getPoemName(), r.getWriter(), r.getContent());
+							poemTrans.setTrans(r.getTrans());
+						} else {
+							r = poemCollection.get((int)(poemCollection.size() * Math.random()));
+							poemPager.setContent(r.getPoemName(), r.getWriter(), r.getContent());
+							poemTrans.setTrans(r.getTrans());
+						}
+						if (!r.isCollect()) {
+							imgCollect.setImageResource(R.drawable.a8e);
+						} else {
+							imgCollect.setImageResource(R.drawable.a8g);
+						}
+						
+						imgNext.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								r = poemCollection.get((int)(poemCollection.size() * Math.random()));
+								poemPager.setContent(r.getPoemName(), r.getWriter(), r.getContent());
+								poemTrans.setTrans(r.getTrans());
+								if (!r.isCollect()) {
+									imgCollect.setImageResource(R.drawable.a8e);
+								} else {
+									imgCollect.setImageResource(R.drawable.a8g);
+								}
+								thePlay = 0;
+							}
+						});
+						
+						imgPre.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								r = poemCollection.get((int)(poemCollection.size() * Math.random()));
+								poemPager.setContent(r.getPoemName(), r.getWriter(), r.getContent());
+								poemTrans.setTrans(r.getTrans());
+								if (!r.isCollect()) {
+									imgCollect.setImageResource(R.drawable.a8e);
+								} else {
+									imgCollect.setImageResource(R.drawable.a8g);
+								}
+								thePlay = 0;
+							}
+						});
+						
+						imgCollect.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								if (r.isCollect()) {	//收藏-->没收藏
+									imgCollect.setImageResource(R.drawable.a8e);
+									sendCollectionR(r.getPoemId(), "0");
+								} else if (!r.isCollect()) { 	//没收藏-->收藏
+									imgCollect.setImageResource(R.drawable.a8g);
+									sendCollectionR(r.getPoemId(), "1");
+								}
+							}
+						});
+						
+						imgPlayer.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								switch (thePlay) {
+								case 0:
+									// 开始合成
+						            // 收到onCompleted 回调时，合成结束、生成合成音频
+						            // 合成的音频格式：只支持pcm格式
+									String text = r.getPoemName() + "， " + r.getWriter() + "， " + r.getContent();
+									//设置参数
+									setParam();
+									int code = mTts.startSpeaking(text, mTtsListener);
+									
+									if (code != ErrorCode.SUCCESS) {
+										Toast.makeText(getContext(), "语音合成失败,错误码:" + code, Toast.LENGTH_SHORT).show();
+									}
+									break;
+									
+								case 1:
+									mTts.pauseSpeaking();
+									imgPlayer.setImageResource(R.drawable.rishang_pause);
+									animationDrawable = (AnimationDrawable) imgPlayer
+											.getDrawable();
+									animationDrawable.start();
+									thePlay = 2;
+									break;
+									
+								case 2:
+									mTts.resumeSpeaking();
+									animationDrawable.stop();
+									imgPlayer.setImageResource(R.drawable.rishang_play);
+									animationDrawable = (AnimationDrawable) imgPlayer
+											.getDrawable();
+									animationDrawable.start();
+									thePlay = 1;
+									break;
+								}
+							}
+						});
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		};
+
+		task.execute();
+	}
+	
+	private void sendCollection(final String poemId, final String collection) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_postCollection(UserId.getInstance(getContext()).getUserId(), poemId, "1", collection);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				if (collection.equals("0")) {
+					rhesis.setCollect(false);
+				} else if (collection.equals("1")) {
+					rhesis.setCollect(true);
+				}
+			}
+			
+		};
+		
+		task.execute();
+	}
+	
+	private void sendCollectionR(final String poemId, final String collection) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_postCollection(UserId.getInstance(getContext()).getUserId(), poemId, "1", collection);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				if (collection.equals("0")) {
+					r.setCollect(false);
+				} else if (collection.equals("1")) {
+					r.setCollect(true);
+				}
+			}
+			
+		};
+		
+		task.execute();
+	}
 	
 	//-----------------------------------------------------数据获取---解析----------------------------------------------------
 	
@@ -374,8 +688,12 @@ public class RiShangPager extends BaseFragment{
 
 		@Override
 		public void onSpeakBegin() {
-			//imgOn.setImageResource(R.drawable.a8n);
+			imgPlayer.setImageResource(R.drawable.rishang_play);
+			animationDrawable = (AnimationDrawable) imgPlayer
+					.getDrawable();
+			animationDrawable.start();
 			//开始播放
+			thePlay = 1;
 		}
 		
 		@Override
@@ -386,7 +704,6 @@ public class RiShangPager extends BaseFragment{
 		@Override
 		public void onSpeakResumed() {
 			//继续播放
-			
 		}
 		
 		@Override
@@ -397,9 +714,13 @@ public class RiShangPager extends BaseFragment{
 
 		@Override
 		public void onCompleted(SpeechError error) {
-			// �������
+			// 播放完成
 			if (error == null) {
-               // imgOn.setImageResource(R.drawable.a8p);
+				imgPlayer.setImageResource(R.drawable.rishang_pause);
+				animationDrawable = (AnimationDrawable) imgPlayer
+						.getDrawable();
+				animationDrawable.start();
+				thePlay = 0;
             } else if (error != null) {
                // Toast.makeText(FirstPagerInfoP.this, "False", Toast.LENGTH_SHORT).show();
             }

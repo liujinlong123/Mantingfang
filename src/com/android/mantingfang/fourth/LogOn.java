@@ -119,6 +119,8 @@ public class LogOn extends Activity {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				} else {
+					Toast.makeText(LogOn.this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
 				}
 			}
 			

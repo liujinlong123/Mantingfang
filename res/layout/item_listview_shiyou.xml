@@ -51,7 +51,7 @@
         android:id="@+id/thirdlist_linear_poem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/poetry_bg"
+        android:background="@drawable/poetry_bg_u"
         android:orientation="vertical"
         android:layout_marginLeft="10dp" >
 

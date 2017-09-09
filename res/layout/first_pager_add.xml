@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#66000000"
+        android:background="#ee000000"
         android:orientation="vertical" >
 
         <TextView
@@ -18,7 +18,8 @@
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
             android:text="选择兴趣"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <TextView

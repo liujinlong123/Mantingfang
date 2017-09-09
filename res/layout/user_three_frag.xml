@@ -2,80 +2,272 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white" >
-    
-	<ScrollView
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:scrollbars="none" >
-	    
-	    <LinearLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical" >
-	        <TextView
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:text="个人信息"
-	            android:textColor="@color/red"
-	            android:layout_margin="5dp" />
-	        
-	        <TextView
-	            android:id="@+id/user_tv_age"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:text="年龄: 17岁"
-	            android:layout_marginLeft="20dp"
-	            android:layout_marginRight="20dp" />
-	        
-	        <TextView
-	            android:id="@+id/user_tv_sex"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:text="性别: 男"
-	            android:layout_marginLeft="20dp"
-	            android:layout_marginRight="20dp" />
-	        
-	        <TextView
-	            android:id="@+id/user_tv_area"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:text="地区: 山西太原"
-	            android:layout_marginLeft="20dp"
-	            android:layout_marginRight="20dp" />
-	        
-	        <TextView
-	            android:id="@+id/user_tv_label"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:text="个性签名: 我要做普京"
-	            android:layout_marginLeft="20dp"
-	            android:layout_marginRight="20dp" />
-	        
-	        <LinearLayout
-	            android:id="@+id/user_linear_intro"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:orientation="vertical" >
-	            
-	            <TextView
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:text="个人介绍"
-	                android:textColor="@color/red"
-	                android:layout_margin="5dp" />
-	            
-	            <TextView
-	                android:id="@+id/user_tv_intro"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:text="我出生在火星"
-	                android:layout_marginLeft="20dp"
-	           		android:layout_marginRight="20dp" />
-	        </LinearLayout>
-	        
-	    </LinearLayout>
-	</ScrollView>
-    
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#cc000000" >
+
+        <LinearLayout
+            android:id="@+id/user_info_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/come_back_gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="返回"
+                android:textColor="@color/grayText"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="详细资料"
+            android:textColor="@color/grayText"
+            android:textSize="19sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#11000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="50dp"
+                    android:text="昵称"
+                    android:textColor="@color/grayText"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/user_info_nickname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#11000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="50dp"
+                    android:text="性别"
+                    android:textColor="@color/grayText"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/user_info_sex"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#11000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="50dp"
+                    android:text="年龄"
+                    android:textColor="@color/grayText"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/user_info_age"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#11000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="50dp"
+                    android:text="生日"
+                    android:textColor="@color/grayText"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/user_info_birth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#11000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="35dp"
+                    android:text="所在地"
+                    android:textColor="@color/grayText"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/user_info_area"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#11000000" />
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#11000000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="20dp"
+                    android:text="个性签名"
+                    android:textColor="@color/grayText"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/user_info_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#11000000" />
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="20dp"
+                    android:text="个人介绍"
+                    android:textColor="@color/grayText"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/user_info_intro"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#11000000" />
+            
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

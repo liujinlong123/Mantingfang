@@ -11,6 +11,7 @@ import java.util.concurrent.Semaphore;
 import com.android.mantingfang.picture.ImageLoader.Type;
 import com.android.mantingfanggsc.ImageByteLoad;
 import com.android.mantingfanggsc.ImageLoad;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
@@ -236,7 +237,7 @@ public class PictureLoad {
 					// 2。压缩图片
 					Map<String, String> param = new HashMap<>();
 					param.put("path", path);
-					Bitmap bm = ImageLoad.upload("http://1696824u8f.51mypc.cn:12755//condensepicture.php", param);
+					Bitmap bm = ImageLoad.upload(MyClient.actionUrl + "condensepicture.php", param);
 					//Bitmap bm = decodeSampleBitmapFromPath(imageSize.width, imageSize.height, path);
 					// 3.把图片加入到缓存
 					addBitmapToLruCache(path, bm);

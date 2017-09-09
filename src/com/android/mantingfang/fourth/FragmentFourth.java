@@ -144,8 +144,13 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 			if (Integer.parseInt(userId) < 0) {
 				startActivityForResult(intent, LOGON);
 			} else if (Integer.parseInt(userId) > -1) {
-				/*Intent intent0 = new Intent(getActivity(), FourthMy.class);
-				startActivity(intent0);*/
+				Intent intent1 = new Intent(getActivity(), MyUserPager.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("userId", userId);
+				bundle.putString("headPath", UserId.getInstance(getContext()).getHeadPath());
+				bundle.putString("nickName", UserId.getInstance(getContext()).getNickName());
+				intent1.putExtras(bundle);
+				startActivity(intent1);
 			}
 			break;
 		

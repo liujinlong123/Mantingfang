@@ -15,6 +15,7 @@ import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.picture.Picture;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.FilesUpload;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.SuccinctProgress;
 
@@ -75,7 +76,7 @@ public class AddOne extends Activity implements OnRequestPermissionsResultCallba
 	 * 选中图片的路径集合
 	 */
 	private ArrayList<String> setPath = new ArrayList<>();
-	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
+	private String actionUrl = MyClient.actionUrl + "receivecard.php";
 	
 	private int pos = 0;
 
@@ -265,13 +266,6 @@ public class AddOne extends Activity implements OnRequestPermissionsResultCallba
 				//Log.v("result", result + "------");
 				SuccinctProgress.dismiss();
 				if (result != null && !result.equals("")) {
-					/*Intent intent = new Intent();
-					intent.putExtra("isSave", true);
-					intent.putExtra("user_id", param.get("user_id"));
-					intent.putExtra("datatime", param.get("datatime"));
-					intent.putExtra("content", param.get("content"));
-					intent.putExtra("postId", result.substring(result.lastIndexOf("}") + 1));
-					intent.putStringArrayListExtra("setPath", setPath);*/
 					
 					Log.v("图片", setPath.toString());
 					SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();

@@ -29,6 +29,13 @@ public class MyClient {
 	private static MyClient client;
 	private HttpClient httpClient;
 	
+	public static String actionUrlC = "http://1696824u8f.51mypc.cn:12755//";
+	public static String actionUrlM = "http://1692ab4340.51mypc.cn:41189//";
+	public static String actionUrlCT = "http://1696824u8f.51mypc.cn:12755/";
+	public static String actionUrlMT = "http://1692ab4340.51mypc.cn:41189/";
+	public static String actionUrl = actionUrlM;
+	public static String actionUrlT = actionUrlMT;
+	
 	public MyClient() {
 		httpClient = new DefaultHttpClient();
 		httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 3000);
@@ -51,7 +58,7 @@ public class MyClient {
 	public String http_postOne(String userId, String TypeNum, String number) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//returndata.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "returndata.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", userId));
 			param.add(new BasicNameValuePair("TypeNum", TypeNum));
@@ -80,7 +87,7 @@ public class MyClient {
 	public String http_postPoem(String poetry_id) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchpoem.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "searchpoem.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("poetry_id", poetry_id));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -107,7 +114,7 @@ public class MyClient {
 	public String http_postUserTwo(String user_id) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchuser2.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "searchuser2.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", user_id));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -134,7 +141,7 @@ public class MyClient {
 	public String http_postUserThree(String user_id) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchuser3.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "searchuser3.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", user_id));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -164,7 +171,7 @@ public class MyClient {
 	public String Http_postComment(String userId, String tpye_num, String post_id) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//search_comment.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "search_comment.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", userId));
 			param.add(new BasicNameValuePair("type_num", tpye_num));
@@ -196,7 +203,7 @@ public class MyClient {
 	public String Http_postCommentBetter(String userId, String tpye_num, String post_id) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//search_greatcomment.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "search_greatcomment.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", userId));
 			param.add(new BasicNameValuePair("type_num", tpye_num));
@@ -222,7 +229,7 @@ public class MyClient {
 	public String Http_postCommentZan (String userId, String commentId, String zan) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//judge_zan_comment.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "judge_zan_comment.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", userId));
 			param.add(new BasicNameValuePair("comment_id", commentId));
@@ -252,7 +259,7 @@ public class MyClient {
 	public String Http_SendComment(Map<String, String> params) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//receive_comment.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "receive_comment.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", params.get("userId")));
 			param.add(new BasicNameValuePair("type_num", params.get("typeNum")));
@@ -293,7 +300,7 @@ public class MyClient {
 	public String Http_postViewPager () {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchrhesis.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "searchrhesis.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("type_num", "1"));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -322,7 +329,7 @@ public class MyClient {
 	public String Http_postUser (String username, String password) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//landuser.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "landuser.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("username", username));
 			param.add(new BasicNameValuePair("password", password));
@@ -352,7 +359,7 @@ public class MyClient {
 	public String Http_postSaveCard (String userId, String rhesis, String writer) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//receiverhesiscard.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "receiverhesiscard.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", userId));
 			param.add(new BasicNameValuePair("rhesis", rhesis));
@@ -383,7 +390,7 @@ public class MyClient {
 	public String Http_postUserInfo (String userId) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchusermessage.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "searchusermessage.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", userId));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -446,7 +453,7 @@ public class MyClient {
 	public String Http_postPoemKey (String key) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchpoemmessage.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "searchpoemmessage.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("keyword", key));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -473,7 +480,7 @@ public class MyClient {
 	public String Http_postPoemKind (String keyword) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//matchpoemkeyword.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "matchpoemkeyword.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("keyword", keyword));
 			//Log.v("KEYWORD", keyword + "-----");
@@ -501,7 +508,7 @@ public class MyClient {
 	public String Http_postWriters (String code) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchwritermessage.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "searchwritermessage.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("writer", code));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -528,7 +535,7 @@ public class MyClient {
 	public String Http_postWriterById (String writerId) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//searchwriterallpoem.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "searchwriterallpoem.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("writer_id", writerId));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -551,7 +558,7 @@ public class MyClient {
 	public String Http_postSearchPoem (String keyword) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//returnpoem.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "returnpoem.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("keyword", keyword));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -573,7 +580,7 @@ public class MyClient {
 	public String Http_postSearchWriter (String keyword) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//returnwriter.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "returnwriter.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("keyword", keyword));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -595,7 +602,7 @@ public class MyClient {
 	public String Http_postSearchContent (String keyword) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//returnpoemcontent.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "returnpoemcontent.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("keyword", keyword));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -621,7 +628,7 @@ public class MyClient {
 	public String Http_postPhone (String phoneNum) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//user_reg1.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "user_reg1.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("phone_number", phoneNum));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -643,7 +650,7 @@ public class MyClient {
 	public String Http_postPhoneVerCode (String phoneNum, String verCode) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//user_reg2.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "user_reg2.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_phonenumber", phoneNum));
 			param.add(new BasicNameValuePair("ver_code", verCode));
@@ -666,7 +673,7 @@ public class MyClient {
 	public String Http_postSendUserName (String phoneNum, String nickName, String password) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//user_reg3.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "user_reg3.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_phonenumber", phoneNum));
 			param.add(new BasicNameValuePair("user_nickname", nickName));
@@ -694,7 +701,7 @@ public class MyClient {
 	public String Http_postDianZan (String userId, String topicId, String typeNum, String zan) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//receive_zanpost.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "receive_zanpost.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", userId));
 			param.add(new BasicNameValuePair("type_num", typeNum));
@@ -727,7 +734,7 @@ public class MyClient {
 	public String Http_postCollection (String userId, String poemId, String typeNum, String collection) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//collect_poem.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "collect_poem.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", userId));
 			param.add(new BasicNameValuePair("type_num", typeNum));
@@ -752,7 +759,7 @@ public class MyClient {
 	public String Http_postGetCollection (String userId, String poemId, String typeNum) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//judge_collection.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "judge_collection.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", userId));
 			param.add(new BasicNameValuePair("type_num", typeNum));
@@ -775,10 +782,16 @@ public class MyClient {
 		return null;
 	}
 	
+	/**
+	 * fourth--collection
+	 * @param userId
+	 * @param typeNum
+	 * @return
+	 */
 	public String Http_Collection (String userId, String typeNum) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//collect_poem.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "search_collectionpoem.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", userId));
 			param.add(new BasicNameValuePair("type_num", typeNum));
@@ -806,7 +819,7 @@ public class MyClient {
 	public String Http_RiShang (String poemId) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//collect_poem.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "collect_poem.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("poem_id", poemId));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -826,6 +839,62 @@ public class MyClient {
 	}
 	
 	/**
+	 * 日赏--收藏
+	 * @param userId
+	 * @return
+	 */
+	public String Http_RiShangCollection (String userId) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "search_shouchang.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", userId));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				//Log.v("POST--Collection--RiShang", response + "----");
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 日赏--推荐
+	 * @param userId
+	 * @return
+	 */
+	public String Http_RiShangTuiJian (String userId) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "search_tuijian.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", userId));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				//Log.v("POST--TuiJian--RiShang", response + "----");
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	//---------------------------------日赏--------------------------------------------------------------------
+	
+	/**
 	 * 返回热搜十条
 	 * @param key
 	 * @return
@@ -833,7 +902,7 @@ public class MyClient {
 	public String Http_HotKeys (String key) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//collect_poem.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "collect_poem.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("hotkey", key));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
@@ -855,7 +924,7 @@ public class MyClient {
 	public String Http_relatedKeys (String key) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//collect_poem.php");
+			HttpPost httpPost = new HttpPost(actionUrl + "collect_poem.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("hotkey", key));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");

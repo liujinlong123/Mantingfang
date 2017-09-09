@@ -41,7 +41,7 @@
          
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="24" />
+        android:targetSdkVersion="26" />
 
     <application
         android:allowBackup="true"
@@ -121,6 +121,7 @@
         <activity android:name="com.android.mantingfang.fourth.Intro" ></activity>
         <activity android:name="com.android.mantingfang.fourth.Location" ></activity>
         <activity android:name="com.android.mantingfang.fourth.Setting" ></activity>
+        <activity android:name="com.android.mantingfang.fourth.MyUserPager" ></activity>
     </application>
 
 </manifest>

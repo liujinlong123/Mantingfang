@@ -11,6 +11,8 @@ public class PoemRhesis extends Base {
 	private String dynasty;
 	private String poemName;
 	private String content;
+	private String trans;
+	private boolean isCollect;
 	
 	public PoemRhesis() {};
 	
@@ -35,6 +37,32 @@ public class PoemRhesis extends Base {
 		this.writer = writer;
 		this.rhesis = rhesis;
 		this.content = content;
+	}
+	
+	public PoemRhesis(String poemId, String poemName, String poemRhesis, String writer, String content, String trans, boolean isCollect) {
+		this.poemId = poemId;
+		this.poemName = poemName;
+		this.rhesis = poemRhesis;
+		this.writer = writer;
+		this.content = content;
+		this.trans = trans;
+		this.isCollect = isCollect;
+	}
+
+	public String getTrans() {
+		return trans;
+	}
+
+	public void setTrans(String trans) {
+		this.trans = trans;
+	}
+
+	public boolean isCollect() {
+		return isCollect;
+	}
+
+	public void setCollect(boolean isCollect) {
+		this.isCollect = isCollect;
 	}
 
 	public String getContent() {

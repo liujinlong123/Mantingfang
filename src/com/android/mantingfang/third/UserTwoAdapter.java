@@ -54,6 +54,7 @@ public class UserTwoAdapter extends BaseAdapter {
 	private MediaPlayer mPlayer = null;
 	private AnimationDrawable animationDrawable;
 	private Handler handler;
+	private boolean showLine = false;
 
 	public UserTwoAdapter(Context context, List<UserTwoContent> list, String headPath) {
 		this.mContext = context;
@@ -61,6 +62,15 @@ public class UserTwoAdapter extends BaseAdapter {
 		inflater = LayoutInflater.from(context);
 		this.headPath = headPath;
 		player = new Player();
+	}
+	
+	public UserTwoAdapter(Context context, List<UserTwoContent> list, String headPath, boolean showLine) {
+		this.mContext = context;
+		this.list = list;
+		inflater = LayoutInflater.from(context);
+		this.headPath = headPath;
+		player = new Player();
+		this.showLine = showLine;
 	}
 
 	@Override
@@ -103,6 +113,7 @@ public class UserTwoAdapter extends BaseAdapter {
 			holder.zan = (ImageView) view.findViewById(R.id.third_pager_one_zan);
 			holder.comment = (ImageView) view.findViewById(R.id.third_pager_one_comment);
 			holder.share = (ImageView) view.findViewById(R.id.third_pager_one_share);
+			holder.line = (View)view.findViewById(R.id.line_view_user_show);
 			
 			view.setTag(holder);
 		} else {
@@ -112,7 +123,10 @@ public class UserTwoAdapter extends BaseAdapter {
 
 		UserTwoContent content = list.get(position);
 		initViews(content, holder, view, type);
-
+		if (showLine) {
+			holder.line.setVisibility(View.VISIBLE);
+		}
+		
 		return view;
 	}
 
@@ -148,6 +162,8 @@ public class UserTwoAdapter extends BaseAdapter {
 		ImageView comment;
 
 		ImageView share;
+		
+		View line;
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -340,7 +356,7 @@ public class UserTwoAdapter extends BaseAdapter {
 
 							@Override
 							public void run() {
-								player.playUrl("http://1696824u8f.51mypc.cn:12755/receive%20audio/"
+								player.playUrl(MyClient.actionUrlMT + "receive%20audio/"
 										+ content.getSoundPath().getPath(), new StartPlayer() {
 
 											@Override

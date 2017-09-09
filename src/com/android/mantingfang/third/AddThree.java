@@ -14,6 +14,7 @@ import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.picture.Picture;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.FilesUpload;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.SuccinctProgress;
 
@@ -61,7 +62,8 @@ public class AddThree extends Activity implements OnRequestPermissionsResultCall
 	//private LinearLayout linearAdd;
 	private KindGridView grdView;
 	private EditText editerTitle;
-	private EditText editerContent;private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
+	private EditText editerContent;
+	private String actionUrl = MyClient.actionUrl + "receivecard.php";
 
 	private Uri imgUri;
 	private PictureAdapter picAdapter;

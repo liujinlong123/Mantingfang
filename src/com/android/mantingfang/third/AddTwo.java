@@ -9,6 +9,7 @@ import java.util.Map;
 import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.FilesUpload;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.SearchTwo;
 import com.android.mantingfanggsc.SuccinctProgress;
@@ -39,7 +40,7 @@ public class AddTwo extends Activity {
 	private TextView tvPoemName;
 	private TextView tvTitle;
 	
-	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receivecard.php";
+	private String actionUrl = MyClient.actionUrl + "receivecard.php";
 	
 	private String poemId;
 	private String poemName;

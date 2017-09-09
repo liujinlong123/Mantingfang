@@ -10,7 +10,7 @@
     <com.android.mantingfanggsc.CustomListView
         android:id="@+id/frag_second_wenku_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" ></com.android.mantingfanggsc.CustomListView>
+        android:layout_height="wrap_content"></com.android.mantingfanggsc.CustomListView>
 
     <!--
          <ListView
@@ -28,8 +28,7 @@
             android:id="@+id/frag_second_writer_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:divider="@null" ></com.android.mantingfanggsc.CustomListView>
+            android:layout_gravity="center"></com.android.mantingfanggsc.CustomListView>
 
         <TextView
             android:id="@+id/dialog"

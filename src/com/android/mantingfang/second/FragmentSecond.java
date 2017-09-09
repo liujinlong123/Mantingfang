@@ -47,7 +47,6 @@ public class FragmentSecond extends Fragment {
 	private SecondWriterListViewAdapter writerAdapter;
 	private List<Writer> writers;
 	private FrameLayout frame;
-	// private WriterDao writerDao;
 
 	private SideBar sideBar;
 	private TextView dialog;
@@ -106,6 +105,10 @@ public class FragmentSecond extends Fragment {
 		KindDao kindDao = new KindDao(getActivity());
 		if (kindDao.findAllLabelByKind() != null) {
 			wenkuList = kindDao.findAllLabelByKind();
+		}
+		ArrayList<int[]> picturelist = KindPicture.getInstance().getPictures();
+		for (int i = 0; i < wenkuList.size(); i++) {
+			wenkuList.get(i).setImages(picturelist.get(i));
 		}
 	}
 

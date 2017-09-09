@@ -3,6 +3,10 @@ package com.android.mantingfang.first;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
+import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.fourth.LogOn;
 import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfanggsc.MyClient;
@@ -27,6 +31,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class FragmentFrist extends Fragment {
 	private View view;
@@ -136,6 +141,8 @@ public class FragmentFrist extends Fragment {
 			adapter = new ViewAdapter(getChildFragmentManager());
 			viewPager.setAdapter(adapter);
 			viewPager.setCurrentItem(0);
+		} else {
+			getData();
 		}
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			
@@ -193,7 +200,7 @@ public class FragmentFrist extends Fragment {
 		}
 	}
 	
-	/*private void getData() {
+	private void getData() {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
@@ -228,7 +235,7 @@ public class FragmentFrist extends Fragment {
 		};
 		
 		task.execute();
-	}*/
+	}
 	
 	private void setFonts(int type) {
 		switch(type) {
