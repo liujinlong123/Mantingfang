@@ -672,7 +672,7 @@ containing a value of this type.
         public static final int interest_beitan=0x7f0200a2;
         public static final int interest_chouku=0x7f0200a3;
         public static final int interest_gudushiren=0x7f0200a4;
-        public static final int interest_haofangshiren=0x7f0200a5;
+        public static final int interest_haofang=0x7f0200a5;
         public static final int interest_lishi=0x7f0200a6;
         public static final int interest_lizhishiren=0x7f0200a7;
         public static final int interest_lvyou=0x7f0200a8;

@@ -16,6 +16,7 @@ import com.android.mantingfang.picture.Picture;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.MyClient;
+import com.android.mantingfanggsc.PictureUtil;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.SuccinctProgress;
 
@@ -141,7 +142,18 @@ public class AddOne extends Activity implements OnRequestPermissionsResultCallba
 			public void onClick(View v) {
 				// 用户Id
 				// 内容content
-				String content = editer.getText().toString();
+				String contentT = editer.getText().toString();
+				String content = "";
+				if (contentT.contains("\n")) {
+					String[] tokens = contentT.split("\n");
+					for (String e: tokens) {
+						content += (e + "#");
+					}
+					
+				} else {
+					content = contentT;
+				}
+				
 				// 帖子标号
 				//String typeNum = "1";
 				
@@ -246,7 +258,12 @@ public class AddOne extends Activity implements OnRequestPermissionsResultCallba
 			@Override
 			protected String doInBackground(String... params) {
 				Map<String, File> files = new HashMap<>();
+				ArrayList<String> setPathss = new ArrayList<>();
 				for (String e: setPath) {
+					setPathss.add(PictureUtil.compressImage(e, PictureUtil.desPath, 30));
+				}
+				
+				for (String e: setPathss) {
 					File f = new File(e);
 					files.put(f.getName(), f);
 				}
@@ -263,7 +280,7 @@ public class AddOne extends Activity implements OnRequestPermissionsResultCallba
 
 			@Override
 			protected void onPostExecute(String result) {
-				//Log.v("result", result + "------");
+				Log.v("result__One", result + "------");
 				SuccinctProgress.dismiss();
 				if (result != null && !result.equals("")) {
 					

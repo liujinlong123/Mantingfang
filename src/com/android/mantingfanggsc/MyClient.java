@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
@@ -297,12 +299,22 @@ public class MyClient {
 	 * @param post_id
 	 * @return
 	 */
-	public String Http_postViewPager () {
+	public String Http_postViewPager (String titles) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(actionUrl + "searchrhesis.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			
+			Calendar c = new GregorianCalendar();
+			
+			param.add(new BasicNameValuePair("kinds", titles));
+			param.add(new BasicNameValuePair("year", c.get(Calendar.YEAR) + ""));
+			param.add(new BasicNameValuePair("month", (c.get(Calendar.MONTH) + 1) + ""));
+			param.add(new BasicNameValuePair("day", c.get(Calendar.DAY_OF_MONTH) + ""));
 			param.add(new BasicNameValuePair("type_num", "1"));
+			
+			Log.v("TESTViewP--1", titles);
+			
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
 			httpPost.setEntity(entity);
 			HttpResponse httpResponse = httpClient.execute(httpPost);
@@ -310,7 +322,7 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				//Log.v("TESTViewP", response);
+				//Log.v("TESTViewP--", response);
 				return response;
 			} 
 		} catch(Exception e) {

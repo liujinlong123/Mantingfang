@@ -456,7 +456,7 @@ public class TopicList extends Base {
 				CommentContent content = new CommentContent(
 						topicId,
 						topicNum,
-						jo.getString("comment_user_id"),
+						jo.optString("comment_user_id"),
 						jo.getString("user_photo"),
 						jo.optString("user_nickname"),
 						jo.optString("comment_time"),

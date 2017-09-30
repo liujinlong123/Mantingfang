@@ -142,7 +142,14 @@ public class ThemeAdapter extends BaseAdapter {
 		//发表时间
 		holder.time.setText(content.getTime());
 		//发表内容
-		holder.content.setText(content.getContent());
+		String[] tokens = content.getContent().split("#");
+		String contentT = "";
+		for (String e: tokens) {
+			if (!e.equals("")) {
+				contentT += e + "\n";
+			}
+		}
+		holder.content.setText(contentT);
 		//初始化图片
 		switch (type) {
 		case VAULE_THEME_M:

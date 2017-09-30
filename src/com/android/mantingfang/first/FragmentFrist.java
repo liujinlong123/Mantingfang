@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -91,7 +92,12 @@ public class FragmentFrist extends Fragment {
 		if (listTitles == null || listTitles.size() == 0) {
 			btnAdd.setText("全部");
 		} else if (listTitles.size() == 1){
-			btnAdd.setText(listTitles.get(0));
+			
+			if (listTitles.get(0).length() > 2) {
+				btnAdd.setText(listTitles.get(0).subSequence(0, 2));
+			} else {
+				btnAdd.setText(listTitles.get(0));
+			}
 		} else if (listTitles.size() > 1){
 			btnAdd.setText(listTitles.get(0).substring(0, 2) + "等");
 		}
@@ -155,7 +161,6 @@ public class FragmentFrist extends Fragment {
 			
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -198,6 +203,12 @@ public class FragmentFrist extends Fragment {
 				e.setFronts(type);
 			}
 		}
+		
+		public void setContent() {
+			for (int i = 0; i < 50; i++) {
+				fragmentList.get(i).setContent(dataList.get(i));
+			}
+		}
 	}
 	
 	private void getData() {
@@ -206,8 +217,14 @@ public class FragmentFrist extends Fragment {
 			@Override
 			protected String doInBackground(String... params) {
 				
-				return MyClient.getInstance().Http_postViewPager();
-				//return null;
+				listTitles = ChoosePicture.getInstance(getContext()).getChooseTitle();
+				String titles = listTitles.toString();
+				
+				if (titles.equals("[]")) {
+					return MyClient.getInstance().Http_postViewPager("全部");
+				} else {
+					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1));
+				}
 			}
 			
 			@Override
@@ -215,14 +232,70 @@ public class FragmentFrist extends Fragment {
 				try {
 					if (result != null && !result.equals("")) {
 						dataList = TopicList.parseRhesis(StringUtils.toJSONArray(result)).getRhesisList();
+						Log.v("Size---", dataList.size() + "----");
+						/*for (PoemRhesis e: dataList) {
+							fragmentList.add(new FragViewPager(e, getActivity(), Fonts.getInstance(getActivity()).getType()));
+						}*/
 						for (PoemRhesis e: dataList) {
 							fragmentList.add(new FragViewPager(e, getActivity(), Fonts.getInstance(getActivity()).getType()));
 						}
+						
 						RhesisList.getInstance().setRhesisList(dataList);
-						viewPager.setOffscreenPageLimit(fragmentList.size());
+						viewPager.setOffscreenPageLimit(50);
 						adapter = new ViewAdapter(getChildFragmentManager());
 						viewPager.setAdapter(adapter);
 						viewPager.setCurrentItem(0);
+					} else {
+						Toast.makeText(getActivity(), "没有数据返回", Toast.LENGTH_SHORT).show();
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		};
+		
+		task.execute();
+	}
+	
+	private void getDataAgain() {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				listTitles = ChoosePicture.getInstance(getContext()).getChooseTitle();
+				String titles = listTitles.toString();
+				
+				if (titles.equals("[]")) {
+					return MyClient.getInstance().Http_postViewPager("全部");
+				} else {
+					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1));
+				}
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				try {
+					if (result != null && !result.equals("")) {
+						if (dataList.size() > 0) {
+							dataList.clear();
+						}
+						
+						/*if (fragmentList.size() > 0) {
+							FragmentList.getInstance().clear();
+							fragmentList.clear();
+						}*/
+						
+						dataList = TopicList.parseRhesis(StringUtils.toJSONArray(result)).getRhesisList();
+						Log.v("Size---", dataList.size() + "----");
+						/*for (PoemRhesis e: dataList) {
+							fragmentList.add(new FragViewPager(e, getActivity(), Fonts.getInstance(getActivity()).getType()));
+						}*/
+						//Log.v("TEST---", dataList.get(100).getRhesis() + "---" + dataList.size() + "\n" + result);
+						RhesisList.getInstance().setRhesisList(dataList);
+						adapter.setContent();
+						
 					} else {
 						Toast.makeText(getActivity(), "没有数据返回", Toast.LENGTH_SHORT).show();
 					}
@@ -345,6 +418,7 @@ public class FragmentFrist extends Fragment {
 		case CHOOSETYPE:
 			if (resultCode == getActivity().RESULT_OK) {
 				btnAdd.setText(data.getStringExtra("choose"));
+				getDataAgain();
 			}
 			break;
 			

@@ -224,7 +224,14 @@ public class UserTwoAdapter extends BaseAdapter {
 		switch (type) {
 		case VAULE_THEME_M:
 			//内容
-			holder.content.setText(content.getContent());
+			String[] tokens = content.getContent().split("#");
+			String contentT = "";
+			for (String e: tokens) {
+				if (!e.equals("")) {
+					contentT += e + "\n";
+				}
+			}
+			holder.content.setText(contentT);
 			//初始化图片
 			initGridView(content.getPicture(), holder);
 			//诗词
@@ -241,7 +248,14 @@ public class UserTwoAdapter extends BaseAdapter {
 			
 		case VALUE_THEME_S:
 			//内容
-			holder.content.setText(content.getContent());
+			String[] tokens_ts = content.getContent().split("#");
+			String contentT_ts = "";
+			for (String e: tokens_ts) {
+				if (!e.equals("")) {
+					contentT_ts += e + "\n";
+				}
+			}
+			holder.content.setText(contentT_ts);
 			//初始化图片
 			holder.singleImage.setVisibility(View.VISIBLE);
 			PictureLoad.getInstance().loadImage(content.getPicture().get(0).getPath(), holder.singleImage);
@@ -259,7 +273,14 @@ public class UserTwoAdapter extends BaseAdapter {
 			
 		case VALUE_NOTE:
 			//内容
-			holder.content.setText(content.getContent());
+			String[] tokens_note = content.getContent().split("#");
+			String contentT_note = "";
+			for (String e: tokens_note) {
+				if (!e.equals("")) {
+					contentT_note += e + "\n";
+				}
+			}
+			holder.content.setText(contentT_note);
 			//初始化图片
 			//initGridView(content.getPicture(), holder);
 			//相关诗词
@@ -285,7 +306,14 @@ public class UserTwoAdapter extends BaseAdapter {
 		case VALUE_ORIGINAL_M:
 			//内容
 			holder.title.setText(content.getTitle());
-			holder.content.setText(content.getContent());
+			String[] tokens_om = content.getContent().split("。");
+			String contentT_om = "";
+			for (String e: tokens_om) {
+				if (!e.equals("")) {
+					contentT_om += e + "\n";
+				}
+			}
+			holder.content.setText(contentT_om);
 			//初始化图片
 			initGridView(content.getPicture(), holder);
 			holder.linearPoem.setVisibility(View.GONE);
@@ -302,7 +330,14 @@ public class UserTwoAdapter extends BaseAdapter {
 		case VALUE_ORIGINAL_S:
 			//内容
 			holder.title.setText(content.getTitle());
-			holder.content.setText(content.getContent());
+			String[] tokens_os = content.getContent().split("。");
+			String contentT_os = "";
+			for (String e: tokens_os) {
+				if (!e.equals("")) {
+					contentT_os += e + "\n";
+				}
+			}
+			holder.content.setText(contentT_os);
 			//初始化图片
 			holder.singleImage.setVisibility(View.VISIBLE);
 			PictureLoad.getInstance().loadImage(content.getPicture().get(0).getPath(), holder.singleImage);

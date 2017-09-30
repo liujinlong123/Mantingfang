@@ -113,4 +113,22 @@ public class FragViewPager extends Fragment{
 			break;
 		}
 	}
+	
+	public void setContent(PoemRhesis rhesis) {
+		if (rhesis.getPoemId() != null && rhesis.getRhesis() != null
+				&& !rhesis.getPoemId().equals("") && !rhesis.getRhesis().equals("")) {
+			String[] tokens = rhesis.getRhesis().split("[，,.。!?！？]");
+			if (tokens.length >= 2) {
+				tv1.setText(tokens[0]);
+				tv2.setText(tokens[1]);
+				if (rhesis.getWriter() != null && !rhesis.getWriter().equals("")) {
+					
+					tv3.setText(rhesis.getWriter());
+				} else {
+					tv3.setText("无名");
+				}
+				setFronts(type);
+			}
+		}
+	}
 }

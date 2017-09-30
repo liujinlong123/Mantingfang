@@ -15,6 +15,7 @@ import com.android.mantingfang.picture.Picture;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.FilesUpload;
 import com.android.mantingfanggsc.MyClient;
+import com.android.mantingfanggsc.PictureUtil;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.SuccinctProgress;
 
@@ -144,7 +145,18 @@ public class AddThree extends Activity implements OnRequestPermissionsResultCall
 				// 用户Id
 				// 内容content
 				String title = editerTitle.getText().toString();
-				String content = editerContent.getText().toString();
+				String contentT = editerContent.getText().toString();
+				String content = "";
+				if (contentT.contains("\n")) {
+					String[] tokens = contentT.split("\n");
+					for (String e: tokens) {
+						content += (e + "。");
+					}
+					
+				} else {
+					content = contentT;
+				}
+				
 				// 帖子标号
 				//String typeNum = "3";
 
@@ -252,10 +264,16 @@ public class AddThree extends Activity implements OnRequestPermissionsResultCall
 			@Override
 			protected String doInBackground(String... params) {
 				Map<String, File> files = new HashMap<>();
+				ArrayList<String> setPathss = new ArrayList<>();
 				for (String e: setPath) {
+					setPathss.add(PictureUtil.compressImage(e, PictureUtil.desPath, 30));
+				}
+				
+				for (String e: setPathss) {
 					File f = new File(e);
 					files.put(f.getName(), f);
 				}
+				
 				try {
 					Log.v("TOPIC", param.toString());
 					return FilesUpload.post(actionUrl, param, files);
@@ -269,7 +287,7 @@ public class AddThree extends Activity implements OnRequestPermissionsResultCall
 
 			@Override
 			protected void onPostExecute(String result) {
-				//Log.v("result", result + "------");
+				Log.v("result", result + "------");
 				SuccinctProgress.dismiss();
 				if (result != null && !result.equals("")) {
 					Intent intent = new Intent();

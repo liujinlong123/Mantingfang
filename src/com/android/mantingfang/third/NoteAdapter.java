@@ -130,7 +130,14 @@ public class NoteAdapter extends BaseAdapter {
 		//发表时间
 		holder.time.setText(content.getTime());
 		//发表内容
-		holder.content.setText(content.getContent());
+		String[] tokens = content.getContent().split("#");
+		String contentT = "";
+		for (String e: tokens) {
+			if (!e.equals("")) {
+				contentT += e + "\n";
+			}
+		}
+		holder.content.setText(contentT);
 		// 诗词名字
 		holder.poemName.setText(content.getPoemName());
 		holder.poemQuote.setText(content.getPoemContent());

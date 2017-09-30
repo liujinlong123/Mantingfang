@@ -154,6 +154,7 @@ public class AudioAdapter extends BaseAdapter {
 
 	@SuppressLint("HandlerLeak")
 	private void initViews(final UserTwoContent content, final ViewHolder holder) {
+		player = new Player();
 		// 头像路径
 		PictureLoad.getInstance().loadImage(content.getHeadPath(), holder.headPhoto);
 		// 用户昵称

@@ -13,6 +13,11 @@ import java.util.Map;
 
 import android.util.Log;
 
+/**
+ * 多图片上传
+ * @author MrKID
+ *
+ */
 public class FilesUpload {
 	
 	public static String post(String actionUrl, Map<String, String> params,  

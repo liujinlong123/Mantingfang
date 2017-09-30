@@ -32,7 +32,7 @@ public class FirstPagerAdd extends Activity {
 	private int[] imgInt = {R.drawable.interest_ziran, R.drawable.interest_aiqing, R.drawable.interest_nvxing,
 			R.drawable.interest_zheli, R.drawable.interest_lishi, R.drawable.interest_lvyou,
 			R.drawable.interest_renjijiaowang, R.drawable.interest_sijixinqing, R.drawable.interest_riyueshanchuan,
-			R.drawable.interest_haofangshiren, R.drawable.interest_wanyueshiren, R.drawable.interest_lizhishiren,
+			R.drawable.interest_haofang, R.drawable.interest_wanyueshiren, R.drawable.interest_lizhishiren,
 			R.drawable.interest_gudushiren, R.drawable.interest_beitan, R.drawable.interest_chouku};
 	
 	public static String[] titles = {"自然", "爱情", "女性",

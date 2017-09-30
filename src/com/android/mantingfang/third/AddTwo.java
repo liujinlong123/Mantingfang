@@ -104,7 +104,18 @@ public class AddTwo extends Activity {
 			public void onClick(View v) {
 				// 用户Id
 				// 内容content
-				String content = editer.getText().toString();
+				String contentT = editer.getText().toString();
+				String content = "";
+				if (contentT.contains("\n")) {
+					String[] tokens = contentT.split("\n");
+					for (String e: tokens) {
+						content += (e + "#");
+					}
+					
+				} else {
+					content = contentT;
+				}
+				
 				// 帖子标号
 				//String typeNum = "2";
 

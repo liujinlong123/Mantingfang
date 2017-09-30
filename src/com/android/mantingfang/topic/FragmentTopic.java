@@ -3,6 +3,8 @@ package com.android.mantingfang.topic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.json.JSONException;
 
@@ -11,7 +13,6 @@ import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.third.BaseFragment;
 import com.android.mantingfang.third.FileImgs;
-import com.android.mantingfang.third.ScrollViewWithListView;
 import com.android.mantingfang.third.ThemeAdapter;
 import com.android.mantingfang.third.UserTwoContent;
 import com.android.mantingfang.topic.CycleViewPager.ImageCycleViewListener;
@@ -32,6 +33,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,10 +55,7 @@ public class FragmentTopic extends BaseFragment {
 	private CustomListView list;
 	private List<UserTwoContent> dataList;
 	
-	
-	private ScrollViewWithListView linearSearch;
 	private List<String> SearchList;
-	private LinearAdapter linearAdapter;
 	private ThemeAdapter themeAdapter;
 
 	private IntentFilter intentFilter;
@@ -69,6 +69,11 @@ public class FragmentTopic extends BaseFragment {
 	private CycleViewPager cycleViewPager;
 	private View viewLinear;
 	private View viewCycle;
+	
+	//ViewLinear
+	private LinearLayout viewLinearLayout;
+	private TextView viewLinearTv;
+	private Timer t;
 
 	private String[] imageUrls = {
 			"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=338960318,3040799804&fm=26&gp=0.jpg",
@@ -102,13 +107,35 @@ public class FragmentTopic extends BaseFragment {
 	@SuppressLint("InflateParams")
 	private void initViews() {
 		list = (CustomListView) view.findViewById(R.id.topic_tuijian);
-		viewLinear = LayoutInflater.from(getContext()).inflate(R.layout.topic_linear_search, null);
+		
+		
+		/*viewLinear = LayoutInflater.from(getContext()).inflate(R.layout.topic_linear_search, null);
 		linearSearch = (ScrollViewWithListView)viewLinear.findViewById(R.id.topic_search_linear_list);
 		SearchList = new ArrayList<>();
 		SearchList.add("大家都在搜XXX");
 		linearAdapter = new LinearAdapter();
-		linearSearch.setAdapter(linearAdapter);
+		linearSearch.setAdapter(linearAdapter);*/
+		viewLinear = LayoutInflater.from(getContext()).inflate(R.layout.topic_viewpager, null);
+		viewLinearLayout = (LinearLayout) viewLinear.findViewById(R.id.topic_linear_search);
+		viewLinearTv = (TextView) viewLinear.findViewById(R.id.topic_linear_tv_search);
+		viewLinearTv.setText("大家都在搜XXX");
+		//创建定时器对象
+	    t=new Timer();
+	        
+	    //在3秒后执行MyTask类中的run方法
+	    t.schedule(new MyTask(), 0, 6000);
+	    
+	    
+		viewLinearLayout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getContext(), TopicSearch.class);
+				startActivity(intent);
+			}
+		});
 		
+		//轮播图
 		viewCycle = LayoutInflater.from(getContext()).inflate(R.layout.cycle_viewpager, null);
 		configImageLoader();
 		initialize();
@@ -136,7 +163,6 @@ public class FragmentTopic extends BaseFragment {
 						list.addHeaderView(viewLinear);
 						list.addHeaderView(viewCycle);
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -146,7 +172,44 @@ public class FragmentTopic extends BaseFragment {
 
 		task.execute();
 	}
+	
+	private void getCycleData() {
+		AsyncTask<String , Long, String> task = new AsyncTask<String, Long, String>() {
+			
+			@Override
+			protected String doInBackground(String... params) {
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				
+				super.onPostExecute(result);
+			}
+			
+		};
+	}
+	
+	@SuppressLint("HandlerLeak")
+	Handler handler = new Handler() {
+		
+		public void handleMessage(Message msg) {
+			switch(msg.what) {
+			case 1:
+				viewLinearTv.setText("大家都在搜XXX");
+				break;
+			}
+		}
+	};
 
+	class MyTask extends TimerTask{
+
+	    @Override
+	    public void run() {
+	        //每隔五分钟获取一个热搜词
+	    	
+	    }
+	}
 	
 
 	class LinearAdapter extends BaseAdapter {
@@ -314,6 +377,7 @@ public class FragmentTopic extends BaseFragment {
 	@Override
 	public void onDestroy() {
 		getActivity().unregisterReceiver(themeReceiver);
+		t.cancel();
 		super.onDestroy();
 	}
 }

@@ -3,4 +3,7 @@
     <issue id="Override">
         <ignore path="src/com/android/mantingfang/third/AddFour.java" />
     </issue>
+    <issue id="SdCardPath">
+        <ignore path="src/com/android/mantingfanggsc/PictureUtil.java" />
+    </issue>
 </lint>

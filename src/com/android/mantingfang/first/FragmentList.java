@@ -28,4 +28,8 @@ public class FragmentList {
 	}
 	
 	
+	public void clear() {
+		fragmentList.clear();
+	}
+	
 }

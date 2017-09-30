@@ -266,7 +266,6 @@ public class RiShangPager extends BaseFragment{
 
 		@Override
 		public int getItemPosition(Object object) {
-			// TODO Auto-generated method stub
 			return PagerAdapter.POSITION_NONE;
 		}
 
@@ -432,7 +431,6 @@ public class RiShangPager extends BaseFragment{
 							}
 						});
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -477,7 +475,6 @@ public class RiShangPager extends BaseFragment{
 						}
 						thePlay = 0;
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -618,7 +615,6 @@ public class RiShangPager extends BaseFragment{
 							}
 						});
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -728,7 +724,6 @@ public class RiShangPager extends BaseFragment{
 
 		@Override
 		public void onEvent(int arg0, int arg1, int arg2, Bundle arg3) {
-			// TODO Auto-generated method stub
 			
 		}
 

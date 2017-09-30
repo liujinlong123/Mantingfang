@@ -1,5 +1,6 @@
 package com.android.mantingfang.first;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
@@ -178,7 +179,6 @@ public class FirstPagerInfoP extends Activity {
 
 		@Override
 		public void onEvent(int arg0, int arg1, int arg2, Bundle arg3) {
-			// TODO Auto-generated method stub
 			
 		}
 
@@ -238,7 +238,14 @@ public class FirstPagerInfoP extends Activity {
 			@Override
 			protected String doInBackground(String... params) {
 				
-				return MyClient.getInstance().Http_postViewPager();
+				ArrayList<String> listTitles = ChoosePicture.getInstance(FirstPagerInfoP.this).getChooseTitle();
+				String titles = listTitles.toString();
+				
+				if (titles.equals("[]")) {
+					return MyClient.getInstance().Http_postViewPager("全部");
+				} else {
+					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1));
+				}
 			}
 			
 			@Override
@@ -247,7 +254,6 @@ public class FirstPagerInfoP extends Activity {
 					try {
 						rhesisList = TopicList.parseRhesis(StringUtils.toJSONArray(result)).getRhesisList();
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -278,7 +284,6 @@ public class FirstPagerInfoP extends Activity {
 							UIHelper.showPoemMDetail(FirstPagerInfoP.this, poemList.get(0), 0);
 						}
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				} else {

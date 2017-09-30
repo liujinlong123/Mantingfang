@@ -17,6 +17,7 @@ import com.android.mantingfang.bean.Language;
 import com.android.mantingfang.bean.LanguageDao;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.first.ChoosePicture;
 import com.android.mantingfang.first.Fonts;
 import com.android.mantingfang.first.FragViewPager;
 import com.android.mantingfang.first.FragmentList;
@@ -35,7 +36,6 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.widget.Toast;
 
 public class AppStart extends Activity {
 
@@ -53,6 +53,7 @@ public class AppStart extends Activity {
 	
 	private List<PoemRhesis> dataList;
 
+	private ArrayList<String> listTitles;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -128,28 +129,32 @@ public class AppStart extends Activity {
 					lla.insertLabel(labelList);
 					Log.v("Label", "------successful");
 				}
+				
+				
 				String result = (String) msg.obj;
 				if (result != null && !result.equals("")) {
 					try {
 						dataList = TopicList.parseRhesis(StringUtils.toJSONArray(result)).getRhesisList();
+						Log.v("Size---", dataList.size() + "----");
 						FragmentList.getInstance().getFragmentList().clear();
 						for (PoemRhesis e: dataList) {
 							FragmentList.getInstance().getFragmentList().add(new FragViewPager(e, AppStart.this, Fonts.getInstance(AppStart.this).getType()));
 						}
 						RhesisList.getInstance().setRhesisList(dataList);
 					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				} else {
-					Toast.makeText(AppStart.this, "没有数据返回", Toast.LENGTH_SHORT).show();
+					//Toast.makeText(AppStart.this, "没有数据返回", Toast.LENGTH_SHORT).show();
 				}
+				
+				
 				
 				long endTime = System.currentTimeMillis();
 				Log.v("时间", "------" + (endTime - startTime));
-				Toast.makeText(context, endTime - startTime + "", Toast.LENGTH_LONG).show();
+				//Toast.makeText(context, endTime - startTime + "", Toast.LENGTH_LONG).show();
 			} else if (msg.what == -1) {
-				Toast.makeText(context, "������", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(context, "������", Toast.LENGTH_SHORT).show();
 			}
 		}
 	};
@@ -161,7 +166,17 @@ public class AppStart extends Activity {
 			public void run() {
 				Message msg = new Message();
 				try {
-					String result = MyClient.getInstance().Http_postViewPager();
+					listTitles = ChoosePicture.getInstance(AppStart.this).getChooseTitle();
+					String titles = listTitles.toString();
+					
+					String result = "";
+					
+					if (titles.equals("[]")) {
+						result = MyClient.getInstance().Http_postViewPager("全部");
+					} else {
+						result = MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1));
+					}
+					
 					dys = ApiClient.getDynastyListByAs("dynasty.json", context);
 					cos = ApiClient.getCountryListByAs("country.json", context);
 					lans = ApiClient.getLanguageListByAs("language.json", context);

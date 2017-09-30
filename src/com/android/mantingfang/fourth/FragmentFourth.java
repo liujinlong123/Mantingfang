@@ -1,5 +1,6 @@
 package com.android.mantingfang.fourth;
 
+import java.io.File;
 import java.util.List;
 
 import org.json.JSONException;
@@ -18,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -252,7 +254,12 @@ public class FragmentFourth extends Fragment implements OnClickListener{
 							label.setText("描述一下你自己呗");
 						}
 						if (user.getUserPhoto() != null && !user.getUserPhoto().equals("")) {
-							PictureLoad.getInstance().loadImage(user.getUserPhoto(), imgHead);
+							File file = new File(user.getUserPhoto());
+							if (file.exists()) {
+								imgHead.setImageBitmap(BitmapFactory.decodeFile(user.getUserPhoto()));
+							} else {
+								PictureLoad.getInstance().loadImage(user.getUserPhoto(), imgHead);
+							}
 						} else {
 							imgHead.setImageResource(R.drawable.welcome);
 						}

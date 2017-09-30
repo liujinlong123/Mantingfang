@@ -18,6 +18,7 @@ import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.FileUploader;
 import com.android.mantingfanggsc.FileUploader.FileUploadListener;
 import com.android.mantingfanggsc.MyClient;
+import com.android.mantingfanggsc.PictureUtil;
 import com.android.mantingfanggsc.R;
 
 import android.Manifest;
@@ -90,7 +91,7 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 	private Uri imgUri;
 	
 	private User user = new User();
-	private String actionUrl = "http://1696824u8f.51mypc.cn:12755//receiveusermessage.php";
+	private String actionUrl = MyClient.actionUrl + "receiveusermessage.php";
 	
 	
 	private static final int MY_PERMISSIONS_REQUEST_CAMERA = 4;
@@ -285,20 +286,39 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 			@SuppressLint("SdCardPath")
 			@Override
 			protected String doInBackground(String... params) {
+				String path = PictureUtil.compressImage(user.getUserPhoto(), PictureUtil.desPath, 30);
+				//Log.v("Path", path + "----");
 				
-				return FileUploader.upload(actionUrl, new File(user.getUserPhoto()), param, new FileUploadListener() {
+				File file = new File(path);
+				if (file.exists()) {
+					return FileUploader.upload(actionUrl, new File(path), param, new FileUploadListener() {
 
-					@Override
-					public void onProgress(long pro, double precent) {
-						// TODO Auto-generated method stub
+						@Override
+						public void onProgress(long pro, double precent) {
+							// TODO Auto-generated method stub
 
-					}
+						}
 
-					@Override
-					public void onFinish(int code, String res, Map<String, List<String>> headers) {
-						Log.v("result", res);
-					}
-				});
+						@Override
+						public void onFinish(int code, String res, Map<String, List<String>> headers) {
+							Log.v("result--des", res);
+						}
+					});
+				} else {
+					return FileUploader.upload(actionUrl, new File(user.getUserPhoto()), param, new FileUploadListener() {
+
+						@Override
+						public void onProgress(long pro, double precent) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void onFinish(int code, String res, Map<String, List<String>> headers) {
+							Log.v("result--ori", res);
+						}
+					});
+				}
 			}
 			
 			@Override

@@ -18,6 +18,7 @@ import java.util.UUID;
 import android.util.Log;
 
 /**
+ * 单图片上传
  * Created by kaiyi.cky on 2015/8/16.
  */
 public class FileUploader {
