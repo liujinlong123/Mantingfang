@@ -16,47 +16,69 @@ import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfanggsc.CustomListView;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class ThemePager extends Fragment {
-	private View view;
+public class ThemePager extends Activity {
 	private CustomListView thirdOneListView;
 	private ThemeAdapter adapterOne;
 	private List<UserTwoContent> listOne;
+	private LinearLayout linearBack;
+	private TextView title;
+	private TextView backTitle;
 
-	@SuppressLint("InflateParams")
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		if (view == null) {
-			view = inflater.inflate(R.layout.third_pager_one, null);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.third_pager_one);
 
-			thirdOneListView = (CustomListView) view.findViewById(R.id.third_pager_one_listview);
+		thirdOneListView = (CustomListView)findViewById(R.id.third_pager_one_listview);
+		linearBack = (LinearLayout)findViewById(R.id.topbar_all_back);
+		linearBack.setOnClickListener(new OnClickListener() {
 			
-			sendRequestWithHttpClient();
-
-			return view;
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+		
+		title = (TextView)findViewById(R.id.topbar_tv_theme);
+		title.setText("话题");
+		backTitle = (TextView)findViewById(R.id.topbar_tv_back);
+		backTitle.setText("");
+		
+		int type = getIntent().getIntExtra("type", -1);
+		if (type == 1) {
+			String searchKey = getIntent().getStringExtra("searchKey");
+			sendRequestWithHttpClient(searchKey, "search_topic_accordingkeyword.php");
+		} else if (type == -1) {
+			String searchKey = getIntent().getStringExtra("searchKey");
+			sendRequestWithHttpClient(searchKey, "search_topic.php");
 		}
-
-		return view;
+		
 	}
 	
 	public void addOne(UserTwoContent item) {
 		if (adapterOne == null) {
 			listOne = new ArrayList<UserTwoContent>();
 			listOne.add(item);
-			adapterOne = new ThemeAdapter(getContext(), listOne, thirdOneListView);
+			adapterOne = new ThemeAdapter(ThemePager.this, listOne, thirdOneListView);
 			thirdOneListView.setAdapter(adapterOne);
 		} else {
 			listOne.add(0, item);
@@ -76,18 +98,16 @@ public class ThemePager extends Fragment {
 			if (msg.what == 1) {
 				Bundle bundle = msg.getData();
 				String str = bundle.getString("tables");
-				// Log.v("reponse--str-----", str);
+				 Log.v("reponse--str-----", str);
 				if (str != null && !str.equals("")) {
 					//Log.v("reponse--str-----", str);
 				}
 				try {
-					if (str != null && !str.equals("")) {
-						listOne = (List<UserTwoContent>) (TopicList.parseOne(StringUtils.toJSONArray(str), 1)
+					if (str != null && !str.equals("") && !str.equals("[") && !str.equals("]") && !str.equals("无返回值")) {
+						listOne = (List<UserTwoContent>) (TopicList.parseOne(StringUtils.toJSONArray(str.substring(str.indexOf("["))), 1)
 								.getTopicList());
 
-						
-						
-						adapterOne = new ThemeAdapter(getActivity(), listOne, thirdOneListView);
+						adapterOne = new ThemeAdapter(ThemePager.this, listOne, thirdOneListView);
 						thirdOneListView.setAdapter(adapterOne);
 						thirdOneListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -96,6 +116,8 @@ public class ThemePager extends Fragment {
 
 							}
 						});
+					} else {
+						Toast.makeText(ThemePager.this, "换个词搜搜吧", Toast.LENGTH_SHORT).show();
 					}
 
 					//Log.v("ListOne", listOne.size() + "----");
@@ -107,18 +129,21 @@ public class ThemePager extends Fragment {
 		}
 	};
 
-	private void sendRequestWithHttpClient() {
+	private void sendRequestWithHttpClient(final String searchKey, final String address) {
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				Message msg = new Message();
 				try {
+					Log.v("Address", address);
 					HttpClient httpClient = new DefaultHttpClient();
-					HttpPost httpPost = new HttpPost("http://1696824u8f.51mypc.cn:12755//returndata.php");
+					HttpPost httpPost = new HttpPost(MyClient.actionUrl + address);
 					List<NameValuePair> param = new ArrayList<NameValuePair>();
 					param.add(new BasicNameValuePair("TypeNum", "1"));
 					param.add(new BasicNameValuePair("number", "0"));
+					param.add(new BasicNameValuePair("user_id", UserId.getInstance(ThemePager.this).getUserId()));
+					param.add(new BasicNameValuePair("keyword", searchKey));
 					UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
 					httpPost.setEntity(entity);
 					HttpResponse httpResponse = httpClient.execute(httpPost);

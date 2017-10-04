@@ -29,7 +29,7 @@ public class FilesUpload {
 	    String CHARSET = "UTF-8";  
 	    URL uri = new URL(actionUrl);  
 	    HttpURLConnection conn = (HttpURLConnection) uri.openConnection();  
-	    conn.setReadTimeout(5 * 1000);  
+	    conn.setReadTimeout(10 * 1000);  
 	    conn.setDoInput(true);  
 	    conn.setDoOutput(true);
 	    conn.setUseCaches(false);  
@@ -104,6 +104,11 @@ public class FilesUpload {
 	    outStream.close();  
 	    conn.disconnect();  
 	    Log.v("多图片", sb.toString());
+	    
+	    for (Map.Entry<String, File> file : files.entrySet()) {
+	    	PictureUtil.deleteFiles(file.getValue());
+	    }
+	    
 	    return sb.toString();  
 	}
 

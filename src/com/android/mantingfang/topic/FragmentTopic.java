@@ -6,6 +6,15 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
@@ -35,6 +44,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -80,6 +90,8 @@ public class FragmentTopic extends BaseFragment {
 			"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2650519084,56168659&fm=26&gp=0.jpg",
 			"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1203797674,2083454031&fm=26&gp=0.jpg",
 			"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3272581681,1253176532&fm=26&gp=0.jpg" };
+	
+	private String searchKey;
 
 	@SuppressLint("InflateParams")
 	@Override
@@ -118,12 +130,12 @@ public class FragmentTopic extends BaseFragment {
 		viewLinear = LayoutInflater.from(getContext()).inflate(R.layout.topic_viewpager, null);
 		viewLinearLayout = (LinearLayout) viewLinear.findViewById(R.id.topic_linear_search);
 		viewLinearTv = (TextView) viewLinear.findViewById(R.id.topic_linear_tv_search);
-		viewLinearTv.setText("大家都在搜XXX");
+		viewLinearTv.setText("大家都在搜");
 		//创建定时器对象
 	    t=new Timer();
 	        
 	    //在3秒后执行MyTask类中的run方法
-	    t.schedule(new MyTask(), 0, 6000);
+	    t.schedule(new MyTask(), 0, 60000);
 	    
 	    
 		viewLinearLayout.setOnClickListener(new OnClickListener() {
@@ -131,6 +143,7 @@ public class FragmentTopic extends BaseFragment {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getContext(), TopicSearch.class);
+				intent.putExtra("searchKey", searchKey);
 				startActivity(intent);
 			}
 		});
@@ -196,7 +209,11 @@ public class FragmentTopic extends BaseFragment {
 		public void handleMessage(Message msg) {
 			switch(msg.what) {
 			case 1:
-				viewLinearTv.setText("大家都在搜XXX");
+				Bundle bundle = msg.getData();
+				searchKey = bundle.getString("tables");
+				if (!searchKey.equals("") && searchKey != null) {
+					viewLinearTv.setText("大家都在搜:" + searchKey);
+				}
 				break;
 			}
 		}
@@ -207,7 +224,30 @@ public class FragmentTopic extends BaseFragment {
 	    @Override
 	    public void run() {
 	        //每隔五分钟获取一个热搜词
-	    	
+	    	Message msg = new Message();
+			try {
+				HttpClient httpClient = new DefaultHttpClient();
+				HttpPost httpPost = new HttpPost(MyClient.actionUrl + "return_keyword.php");
+				List<NameValuePair> param = new ArrayList<NameValuePair>();
+				param.add(new BasicNameValuePair("TypeNum", "1"));
+				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+				httpPost.setEntity(entity);
+				HttpResponse httpResponse = httpClient.execute(httpPost);
+
+				if (httpResponse.getStatusLine().getStatusCode() == 200) {
+					HttpEntity httpEntity = httpResponse.getEntity();
+					
+					String response = EntityUtils.toString(httpEntity, "utf-8");
+					Log.v("TESTONE", response);
+					msg.what = 1;
+					Bundle bundle = new Bundle();
+					bundle.putString("tables", response);
+					msg.setData(bundle);
+					handler.sendMessage(msg);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	    }
 	}
 	

@@ -382,70 +382,26 @@ public class UserTwoAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					Log.v("Audio--", "http://1696824u8f.51mypc.cn:12755/receive%20audio/---" + content.getSoundPath());
-					//-----此次播放结束---第一次播放
-					if (content.getSoundPath().getPlay().equals("1")) {
-						content.getSoundPath().setPlay("2");
-						holder.imgSound.setImageResource(R.drawable.animation_audio);
-						animationDrawable = (AnimationDrawable) holder.imgSound.getDrawable();
-						new Thread(new Runnable() {
+					holder.linearSound.setOnClickListener(new OnClickListener() {
 
-							@Override
-							public void run() {
-								player.playUrl(MyClient.actionUrlMT + "receive%20audio/"
-										+ content.getSoundPath().getPath(), new StartPlayer() {
-
-											@Override
-											public void startAudio() {
-												handler.sendEmptyMessage(0);
-
-											}
-										});
-
-								player.getMediaPlayer().setOnCompletionListener(new OnCompletionListener() {
-
-									@Override
-									public void onCompletion(MediaPlayer mp) {
-
-										handler.sendEmptyMessage(1);
-									}
-								});
+						@Override
+						public void onClick(View v) {
+							holder.imgSound.setImageResource(R.drawable.animation_audio);
+							animationDrawable = (AnimationDrawable) holder.imgSound.getDrawable();
+							Log.v("Audio--", "http://1696824u8f.51mypc.cn:12755/receive%20audio/---" + content.getSoundPath());
+							if (content.getSoundPath().getPlay().equals("1")) {
+								Audio.getInstance(animationDrawable).Player(MyClient.actionUrlMT + "receive%20audio/"
+										+ content.getSoundPath().getPath());
+								content.getSoundPath().setPlay("0");
+							} else if (content.getSoundPath().getPlay().equals("0")) {
+								Audio.getInstance(animationDrawable).stop();
+								holder.imgSound.setImageResource(R.drawable.sound_three);
+								content.getSoundPath().setPlay("1");
 							}
-						}).start();
-					} 
-					//------播放过程中
-					else if (content.getSoundPath().getPlay().equals("2")) {
-						animationDrawable.stop();
-						content.getSoundPath().setPlay("3");
-						player.pause();
-					} 
-					//------停止播放
-					else if (content.getSoundPath().getPlay().equals("3")) {
-						animationDrawable.start();
-						content.getSoundPath().setPlay("2");
-						player.play();
-					}
+						}
+					});
 				}
 			});
-
-			handler = new Handler() {
-				@Override
-				public void handleMessage(Message msg) {
-					switch (msg.what) {
-					case 0:
-						animationDrawable.start();
-						content.getSoundPath().setPlay("2");
-						Log.v("StartPlay", "-----start");
-						break;
-
-					case 1:
-						animationDrawable.stop();
-						holder.imgSound.setImageResource(R.drawable.sound_three);
-						content.getSoundPath().setPlay("1");
-						Log.v("edn", "-----end");
-						break;
-					}
-				}
-			};
 			break;
 		}
 	}

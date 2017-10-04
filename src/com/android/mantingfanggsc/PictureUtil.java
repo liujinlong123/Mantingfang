@@ -109,4 +109,25 @@ public class PictureUtil {
 		}
 		return inSampleSize;
 	}
+	
+	/**
+	 * 删除图片
+	 * @param filePath
+	 * @return
+	 */
+	 public static boolean deleteFile(String filePath) {
+		 File file = new File(filePath);
+		 	if (file.isFile() && file.exists()) {
+		 			return file.delete();
+		 	}
+		 	return false;
+	}
+	 
+	 public static boolean deleteFiles(File file) {
+		 	if (file.isFile() && file.exists()) {
+		 			return file.delete();
+		 	}
+		 	return false;
+	}
+
 }

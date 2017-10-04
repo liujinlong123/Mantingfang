@@ -87,16 +87,12 @@ public class AudioPager extends Fragment {
 	}
 	
 	public void setPlayerPause() {
-		adapterFour.setPlayerPause();
+		//adapterFour.setPlayerPause();
 	}
 	
 	@Override
 	public void onDestroy() {
-		if (adapterFour != null) {
-			if (adapterFour.isPlayer()) {
-				adapterFour.clearPlayer();
-			}
-		}
+		Audio.getInstance(null).stop();
 		super.onDestroy();
 	}
 }

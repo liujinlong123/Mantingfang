@@ -104,6 +104,7 @@
         <activity android:name="com.android.mantingfang.third.AddTwo" ></activity>
         <activity android:name="com.android.mantingfang.third.AddThree" ></activity>
         <activity android:name="com.android.mantingfang.third.AddFour" ></activity>
+        <activity android:name="com.android.mantingfang.third.ThemePager" ></activity>
         
         <activity android:name="com.android.mantingfang.picture.Picture" ></activity>
         

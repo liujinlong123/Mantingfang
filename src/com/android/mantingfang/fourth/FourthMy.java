@@ -286,7 +286,7 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 			@SuppressLint("SdCardPath")
 			@Override
 			protected String doInBackground(String... params) {
-				String path = PictureUtil.compressImage(user.getUserPhoto(), PictureUtil.desPath, 30);
+				final String path = PictureUtil.compressImage(user.getUserPhoto(), PictureUtil.desPath, 30);
 				//Log.v("Path", path + "----");
 				
 				File file = new File(path);
@@ -301,6 +301,7 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 
 						@Override
 						public void onFinish(int code, String res, Map<String, List<String>> headers) {
+							PictureUtil.deleteFile(path);
 							Log.v("result--des", res);
 						}
 					});

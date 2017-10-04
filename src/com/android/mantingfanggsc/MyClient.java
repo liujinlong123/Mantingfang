@@ -311,6 +311,9 @@ public class MyClient {
 			param.add(new BasicNameValuePair("year", c.get(Calendar.YEAR) + ""));
 			param.add(new BasicNameValuePair("month", (c.get(Calendar.MONTH) + 1) + ""));
 			param.add(new BasicNameValuePair("day", c.get(Calendar.DAY_OF_MONTH) + ""));
+			/*param.add(new BasicNameValuePair("year", 2017 + ""));
+			param.add(new BasicNameValuePair("month", 10 + ""));
+			param.add(new BasicNameValuePair("day", 4 + ""));*/
 			param.add(new BasicNameValuePair("type_num", "1"));
 			
 			Log.v("TESTViewP--1", titles);
@@ -322,8 +325,8 @@ public class MyClient {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
-				//Log.v("TESTViewP--", response);
-				return response;
+				Log.v("TESTViewP--", response);
+				return response.substring(response.indexOf("["));
 			} 
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -15,8 +15,6 @@ import com.android.mantingfang.model.PoemM;
 import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.CustomListView;
 import com.android.mantingfanggsc.MyClient;
-import com.android.mantingfanggsc.Player;
-import com.android.mantingfanggsc.Player.StartPlayer;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
 
@@ -28,7 +26,6 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,20 +41,17 @@ public class AudioAdapter extends BaseAdapter {
 	private Context mContext;
 	private LayoutInflater inflater;
 	private List<UserTwoContent> list;
-	private Player player;
 	private CustomListView listview;
 	private static final int LOAD_DATA_FINISH = 10;// 上拉刷新
 	private static final int REFRESH_DATA_FINISH = 11;// 下拉刷新
 
 	private MediaPlayer mPlayer = null;
 	private AnimationDrawable animationDrawable;
-	private Handler handler;
 
 	public AudioAdapter(Context context, List<UserTwoContent> list, CustomListView listview) {
 		this.list = list;
 		mContext = context;
 		inflater = LayoutInflater.from(context);
-		player = new Player();
 		this.listview = listview;
 	}
 
@@ -74,19 +68,6 @@ public class AudioAdapter extends BaseAdapter {
 	@Override
 	public long getItemId(int position) {
 		return position;
-	}
-
-	public void setPlayerPause() {
-		this.player.stop();
-	}
-
-	public void clearPlayer() {
-		this.player.stop();
-		this.player = null;
-	}
-
-	public boolean isPlayer() {
-		return this.player == null ? true : false;
 	}
 
 	@SuppressLint("InflateParams")
@@ -154,7 +135,6 @@ public class AudioAdapter extends BaseAdapter {
 
 	@SuppressLint("HandlerLeak")
 	private void initViews(final UserTwoContent content, final ViewHolder holder) {
-		player = new Player();
 		// 头像路径
 		PictureLoad.getInstance().loadImage(content.getHeadPath(), holder.headPhoto);
 		// 用户昵称
@@ -171,85 +151,21 @@ public class AudioAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
+				holder.imgSound.setImageResource(R.drawable.animation_audio);
+				animationDrawable = (AnimationDrawable) holder.imgSound.getDrawable();
 				Log.v("Audio--", "http://1696824u8f.51mypc.cn:12755/receive%20audio/---" + content.getSoundPath());
-				//-----此次播放结束---第一次播放
 				if (content.getSoundPath().getPlay().equals("1")) {
-					content.getSoundPath().setPlay("2");
-					if (content.getSoundPath().getType().equals("0")) {
-						holder.imgSound.setImageResource(R.drawable.animation_audio);
-						animationDrawable = (AnimationDrawable) holder.imgSound.getDrawable();
-						new Thread(new Runnable() {
-
-							@Override
-							public void run() {
-								player.playUrl(MyClient.actionUrlMT + "receive%20audio/"
-										+ content.getSoundPath().getPath(), new StartPlayer() {
-
-											@Override
-											public void startAudio() {
-												handler.sendEmptyMessage(0);
-
-											}
-										});
-
-								player.getMediaPlayer().setOnCompletionListener(new OnCompletionListener() {
-
-									@Override
-									public void onCompletion(MediaPlayer mp) {
-
-										handler.sendEmptyMessage(1);
-									}
-								});
-							}
-						}).start();
-					} else if (content.getSoundPath().getType().equals("1")) {
-						content.getSoundPath().setPlay("2");
-						startPlayFromFile(content.getSoundPath().getPath(), holder.imgSound);
-					}
-				} 
-				//------播放过程中
-				else if (content.getSoundPath().getPlay().equals("2")) {
-					animationDrawable.stop();
-					content.getSoundPath().setPlay("3");
-					if (content.getSoundPath().getType().equals("0")) {
-						player.pause();
-					} else if (content.getSoundPath().getType().equals("1")) {
-						pausePlayFromFile();
-					}
-				} 
-				//------停止播放
-				else if (content.getSoundPath().getPlay().equals("3")) {
-					animationDrawable.start();
-					content.getSoundPath().setPlay("2");
-					if (content.getSoundPath().getType().equals("0")) {
-						player.play();
-					} else if (content.getSoundPath().getType().equals("1")) {
-						startPlay();
-					}
+					Audio.getInstance(animationDrawable).Player(MyClient.actionUrlMT + "receive%20audio/"
+							+ content.getSoundPath().getPath());
+					content.getSoundPath().setPlay("0");
+				} else if (content.getSoundPath().getPlay().equals("0")) {
+					Audio.getInstance(animationDrawable).stop();
+					holder.imgSound.setImageResource(R.drawable.sound_three);
+					content.getSoundPath().setPlay("1");
 				}
 			}
 		});
-
-		handler = new Handler() {
-			@Override
-			public void handleMessage(Message msg) {
-				switch (msg.what) {
-				case 0:
-					animationDrawable.start();
-					content.getSoundPath().setPlay("2");
-					Log.v("StartPlay", "-----start");
-					break;
-
-				case 1:
-					animationDrawable.stop();
-					holder.imgSound.setImageResource(R.drawable.sound_three);
-					content.getSoundPath().setPlay("1");
-					Log.v("edn", "-----end");
-					break;
-				}
-			}
-		};
-
+		
 		// 相关诗词
 		holder.poemName.setText(content.getPoemName());
 		holder.poemQuote.setText(content.getPoemContent());

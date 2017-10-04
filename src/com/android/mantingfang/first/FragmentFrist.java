@@ -233,9 +233,6 @@ public class FragmentFrist extends Fragment {
 					if (result != null && !result.equals("")) {
 						dataList = TopicList.parseRhesis(StringUtils.toJSONArray(result)).getRhesisList();
 						Log.v("Size---", dataList.size() + "----");
-						/*for (PoemRhesis e: dataList) {
-							fragmentList.add(new FragViewPager(e, getActivity(), Fonts.getInstance(getActivity()).getType()));
-						}*/
 						for (PoemRhesis e: dataList) {
 							fragmentList.add(new FragViewPager(e, getActivity(), Fonts.getInstance(getActivity()).getType()));
 						}
