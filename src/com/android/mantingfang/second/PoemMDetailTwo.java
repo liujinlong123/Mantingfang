@@ -104,8 +104,14 @@ public class PoemMDetailTwo extends Activity {
 		
 		getData(poemId);
 		if (Integer.parseInt(UserId.getInstance(PoemMDetailTwo.this).getUserId()) < 0) {
-			Intent intent = new Intent(PoemMDetailTwo.this, LogOn.class);
-			startActivity(intent);
+			img_collect.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(PoemMDetailTwo.this, LogOn.class);
+					startActivityForResult(intent, 1);
+				}
+			});
 		} else {
 			getCollection(poemId);
 		}
@@ -114,7 +120,13 @@ public class PoemMDetailTwo extends Activity {
 	private void initshow(final PoemM poem) {
 		poemname.setText(poem.getPoemName());
 		writername.setText("[" + poem.getDynasty() + "]" + poem.getWriter());
-		content.setText(poem.getPoemContent());
+		
+		String[] tokens = poem.getPoemContent().split("[。]");
+		String poemContent = "";
+		for (String e: tokens) {
+			poemContent += (e + "。\n");
+		}
+		content.setText(poemContent);
 		kindDetail.setText(poem.getPoemBg());
 		poetrydetail_rgp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
@@ -195,7 +207,7 @@ public class PoemMDetailTwo extends Activity {
 			@Override
 			protected String doInBackground(String... params) {
 				
-				return MyClient.getInstance().http_postPoem(poemId);
+				return MyClient.getInstance().http_postPoem(poemId, UserId.getInstance(PoemMDetailTwo.this).getUserId());
 			}
 
 			@Override
@@ -228,13 +240,11 @@ public class PoemMDetailTwo extends Activity {
 			@Override
 			protected String doInBackground(String... params) {
 				
-				Log.v("collection", UserId.getInstance(PoemMDetailTwo.this).getUserId() + "---" + poemId);
 				return MyClient.getInstance().Http_postGetCollection(UserId.getInstance(PoemMDetailTwo.this).getUserId(), poemId, "1");
 			}
 
 			@Override
 			protected void onPostExecute(String result) {
-				Log.v("collection", result + "---");
 				if (result != null && !result.equals("")) {
 					collect = result;
 				} else {
@@ -251,12 +261,17 @@ public class PoemMDetailTwo extends Activity {
 					
 					@Override
 					public void onClick(View v) {
-						if (collect.equals("0")) {		//没收藏-->收藏
-							img_collect.setImageResource(R.drawable.collection_on);
-							sendCollection(poemId, "1");
-						} else if (collect.equals("1")) { //收藏-->没收藏
-							img_collect.setImageResource(R.drawable.collection_off);
-							sendCollection(poemId, "0");
+						if (Integer.parseInt(UserId.getInstance(PoemMDetailTwo.this).getUserId()) < 0) {
+							Intent intent = new Intent(PoemMDetailTwo.this, LogOn.class);
+							startActivity(intent);
+						} else {
+							if (collect.equals("0")) {		//没收藏-->收藏
+								img_collect.setImageResource(R.drawable.collection_on);
+								sendCollection(poemId, "1");
+							} else if (collect.equals("1")) { //收藏-->没收藏
+								img_collect.setImageResource(R.drawable.collection_off);
+								sendCollection(poemId, "0");
+							}
 						}
 					}
 				});
@@ -288,5 +303,19 @@ public class PoemMDetailTwo extends Activity {
 		};
 		
 		task.execute();
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch(requestCode) {
+		case 1:
+			if (resultCode == RESULT_OK) {
+				if (Integer.parseInt(UserId.getInstance(PoemMDetailTwo.this).getUserId()) >= 0) {
+					getCollection(poemId);
+				}
+			}
+			
+			break;
+		}
 	}
 }

@@ -37,7 +37,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 
-public class AppStart extends Activity {
+public class AppStart extends Activity{
 
 	private Context context;
 	private List<Dynasty> dynastyList;
@@ -54,6 +54,7 @@ public class AppStart extends Activity {
 	private List<PoemRhesis> dataList;
 
 	private ArrayList<String> listTitles;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -172,9 +173,9 @@ public class AppStart extends Activity {
 					String result = "";
 					
 					if (titles.equals("[]")) {
-						result = MyClient.getInstance().Http_postViewPager("全部");
+						result = MyClient.getInstance().Http_postViewPager("全部", AppStart.this);
 					} else {
-						result = MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1));
+						result = MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1), AppStart.this);
 					}
 					
 					dys = ApiClient.getDynastyListByAs("dynasty.json", context);

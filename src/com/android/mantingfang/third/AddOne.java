@@ -281,6 +281,7 @@ public class AddOne extends Activity implements OnRequestPermissionsResultCallba
 			@Override
 			protected void onPostExecute(String result) {
 				Log.v("result__One", result + "------");
+				System.out.println(result + "------");
 				SuccinctProgress.dismiss();
 				if (result != null && !result.equals("")) {
 					

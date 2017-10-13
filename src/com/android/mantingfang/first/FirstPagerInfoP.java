@@ -8,6 +8,7 @@ import org.json.JSONException;
 import com.android.mantingfang.bean.PoetryList;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.model.PoemM;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
@@ -242,9 +243,9 @@ public class FirstPagerInfoP extends Activity {
 				String titles = listTitles.toString();
 				
 				if (titles.equals("[]")) {
-					return MyClient.getInstance().Http_postViewPager("全部");
+					return MyClient.getInstance().Http_postViewPager("全部", FirstPagerInfoP.this);
 				} else {
-					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1));
+					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1), FirstPagerInfoP.this);
 				}
 			}
 			
@@ -270,7 +271,7 @@ public class FirstPagerInfoP extends Activity {
 			@Override
 			protected String doInBackground(String... params) {
 
-				return MyClient.getInstance().http_postPoem(poem_id);
+				return MyClient.getInstance().http_postPoem(poem_id, UserId.getInstance(FirstPagerInfoP.this).getUserId());
 			}
 
 			@Override

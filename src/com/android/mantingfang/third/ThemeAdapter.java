@@ -8,6 +8,7 @@ import org.json.JSONException;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.fourth.LogOn;
+import com.android.mantingfang.fourth.MyUserPager;
 import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.CircleImageView;
@@ -20,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -170,8 +172,12 @@ public class ThemeAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				UIHelper.showUserDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
-				Log.v("useroneadapter", content.getHeadPath());
+				//Log.v("useroneadapter", content.getHeadPath());
+				if (UserId.getInstance(mContext).getUserId().equals(content.getUserId())) {
+					UIHelper.showMyDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
+				} else {
+					UIHelper.showUserDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
+				}
 			}
 		});
 		

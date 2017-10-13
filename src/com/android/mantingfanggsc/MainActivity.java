@@ -1,22 +1,34 @@
 package com.android.mantingfanggsc;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.location.LocationManagerProxy;
+import com.amap.api.location.LocationProviderProxy;
 import com.android.mantingfang.first.FragmentFrist;
 import com.android.mantingfang.fourth.FragmentFourth;
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.second.FragmentSecond;
 import com.android.mantingfang.third.FragmentThird;
 import com.android.mantingfang.topic.FragmentTopic;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements OnRequestPermissionsResultCallback{
 
 	//���ֹ�����
 	private FragmentManager fManager;
@@ -46,6 +58,9 @@ public class MainActivity extends FragmentActivity {
 	//我的
 	private ImageView img_menu_wode;
 	private TextView tv_menu_wode;
+	
+	private static int MY_PERMISSIONS_REQUEST_LOCATION = 5;
+	private LocationManagerProxy aMapManager;
 	
 	/**
 	 * 连续点击  出时间间
@@ -80,6 +95,8 @@ public class MainActivity extends FragmentActivity {
 		
 		img_menu_wode = (ImageView)findViewById(R.id.bottom_menu_img_wode);
 		tv_menu_wode = (TextView)findViewById(R.id.bottom_menu_tv_wode);
+		
+		Accessibility();
 	}
 	
 	public void clickMenu(View v) {
@@ -236,4 +253,113 @@ public class MainActivity extends FragmentActivity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	public void Accessibility() {
+		if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED)
+        {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_LOCATION);
+        } else
+        {
+        	//MyLocation.getInstance(MainActivity.this).startAmap();
+        	startAmap();
+        }
+
+	}
+
+	@SuppressLint("Override")
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] arg1, int[] grantResults) {
+		if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+            	//MyLocation.getInstance(MainActivity.this).startAmap();
+            	startAmap();
+                
+            } else
+            {
+                // Permission Denied
+                Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+
+	}
+	
+	public void startAmap() {
+		aMapManager = LocationManagerProxy.getInstance(MainActivity.this);
+		/*
+		 * mAMapLocManager.setGpsEnable(false);
+		 * 1.0.2版本新增方法，设置true表示混合定位中包含gps定位，false表示纯网络定位，默认是true Location
+		 * API定位采用GPS和网络混合定位方式
+		 * ，第一个参数是定位provider，第二个参数时间最短是2000毫秒，第三个参数距离间隔单位是米，第四个参数是定位监听者
+		 */
+		aMapManager.requestLocationUpdates(LocationProviderProxy.AMapNetwork, 2000, 10, mAMapLocationListener);
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void stopAmap() {
+		if (aMapManager != null) {
+			aMapManager.removeUpdates(mAMapLocationListener);
+			aMapManager.destory();
+		}
+		
+		System.out.println("TEST--Location" + "---stop");
+		aMapManager = null;
+	}
+	
+	private AMapLocationListener mAMapLocationListener = new AMapLocationListener() {
+		
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			
+		}
+		
+		@Override
+		public void onProviderEnabled(String provider) {
+			
+		}
+		
+		@Override
+		public void onProviderDisabled(String provider) {
+			
+		}
+		
+		@Override
+		public void onLocationChanged(AMapLocation location) {
+			if (location != null) {
+				String str =location.getProvince() + location.getCity() + location.getDistrict();
+				
+				//写入文件
+				//0--not change 1--change
+				SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+				String loc = UserId.getInstance(MainActivity.this).getLocation();
+				if (!loc.equals("")) {
+					if (loc.equals(str)) {
+						editor.putString("loclabel", "0");
+					} else {
+						editor.putString("loclabel", "1");
+					}
+				} else {
+					editor.putString("loclabel", "1");
+				}
+				editor.putString("mylocation", str);
+				editor.commit();
+				//写入完之后
+				System.out.println("TEST--Location" + str);
+				stopAmap();
+			}
+		}
+
+		@Override
+		public void onLocationChanged(android.location.Location location) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
 }

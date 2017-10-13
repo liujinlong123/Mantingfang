@@ -25,7 +25,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -221,9 +220,9 @@ public class FragmentFrist extends Fragment {
 				String titles = listTitles.toString();
 				
 				if (titles.equals("[]")) {
-					return MyClient.getInstance().Http_postViewPager("全部");
+					return MyClient.getInstance().Http_postViewPager("全部", getContext());
 				} else {
-					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1));
+					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1), getContext());
 				}
 			}
 			
@@ -232,7 +231,6 @@ public class FragmentFrist extends Fragment {
 				try {
 					if (result != null && !result.equals("")) {
 						dataList = TopicList.parseRhesis(StringUtils.toJSONArray(result)).getRhesisList();
-						Log.v("Size---", dataList.size() + "----");
 						for (PoemRhesis e: dataList) {
 							fragmentList.add(new FragViewPager(e, getActivity(), Fonts.getInstance(getActivity()).getType()));
 						}
@@ -265,9 +263,9 @@ public class FragmentFrist extends Fragment {
 				String titles = listTitles.toString();
 				
 				if (titles.equals("[]")) {
-					return MyClient.getInstance().Http_postViewPager("全部");
+					return MyClient.getInstance().Http_postViewPager("全部", getContext());
 				} else {
-					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1));
+					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1), getContext());
 				}
 			}
 			
@@ -278,18 +276,7 @@ public class FragmentFrist extends Fragment {
 						if (dataList.size() > 0) {
 							dataList.clear();
 						}
-						
-						/*if (fragmentList.size() > 0) {
-							FragmentList.getInstance().clear();
-							fragmentList.clear();
-						}*/
-						
 						dataList = TopicList.parseRhesis(StringUtils.toJSONArray(result)).getRhesisList();
-						Log.v("Size---", dataList.size() + "----");
-						/*for (PoemRhesis e: dataList) {
-							fragmentList.add(new FragViewPager(e, getActivity(), Fonts.getInstance(getActivity()).getType()));
-						}*/
-						//Log.v("TEST---", dataList.get(100).getRhesis() + "---" + dataList.size() + "\n" + result);
 						RhesisList.getInstance().setRhesisList(dataList);
 						adapter.setContent();
 						
@@ -297,7 +284,6 @@ public class FragmentFrist extends Fragment {
 						Toast.makeText(getActivity(), "没有数据返回", Toast.LENGTH_SHORT).show();
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

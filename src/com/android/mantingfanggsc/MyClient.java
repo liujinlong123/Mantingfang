@@ -21,7 +21,10 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 
+import com.android.mantingfang.fourth.UserId;
+
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -86,12 +89,13 @@ public class MyClient {
 	 * 通过诗词Id请求诗词
 	 * @return
 	 */
-	public String http_postPoem(String poetry_id) {
+	public String http_postPoem(String poetry_id, String userId) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(actionUrl + "searchpoem.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("poetry_id", poetry_id));
+			param.add(new BasicNameValuePair("user_id", userId));
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
 			httpPost.setEntity(entity);
 			HttpResponse httpResponse = httpClient.execute(httpPost);
@@ -299,7 +303,7 @@ public class MyClient {
 	 * @param post_id
 	 * @return
 	 */
-	public String Http_postViewPager (String titles) {
+	public String Http_postViewPager (String titles, Context context) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(actionUrl + "searchrhesis.php");
@@ -311,10 +315,9 @@ public class MyClient {
 			param.add(new BasicNameValuePair("year", c.get(Calendar.YEAR) + ""));
 			param.add(new BasicNameValuePair("month", (c.get(Calendar.MONTH) + 1) + ""));
 			param.add(new BasicNameValuePair("day", c.get(Calendar.DAY_OF_MONTH) + ""));
-			/*param.add(new BasicNameValuePair("year", 2017 + ""));
-			param.add(new BasicNameValuePair("month", 10 + ""));
-			param.add(new BasicNameValuePair("day", 4 + ""));*/
 			param.add(new BasicNameValuePair("type_num", "1"));
+			param.add(new BasicNameValuePair("loclabel", UserId.getInstance(context).getLoclabel()));
+			param.add(new BasicNameValuePair("location", UserId.getInstance(context).getLocation()));
 			
 			Log.v("TESTViewP--1", titles);
 			
@@ -713,7 +716,7 @@ public class MyClient {
 	
 	//---------------------------------用户点赞----------------------------------------------------------------
 	
-	public String Http_postDianZan (String userId, String topicId, String typeNum, String zan) {
+	public String Http_postDianZan (String userId, String typeNum, String topicId, String zan) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(actionUrl + "receive_zanpost.php");
@@ -950,6 +953,222 @@ public class MyClient {
 				String response = EntityUtils.toString(httpEntity, "utf-8");
 				Log.v("POST--Collection--Detail", response + "----");
 				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	//-------------------------------------------通知------------------------------------
+	public String Http_Inform () {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "send_inform.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("hotkey", "1"));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				//Log.v("POST--Collection--Detail", response + "----");
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 我的点赞
+	 * @param user_id
+	 * @return
+	 */
+	public String http_postDianL(String user_id) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "search_zan1.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", user_id));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("user_id: " + user_id, response);
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
+	 * 点赞我的
+	 * @param user_id
+	 * @return
+	 */
+	public String http_postDianR(String user_id) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "search_zan2.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", user_id));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 获取关注状态
+	 * @param userId
+	 * @param beUserId
+	 * @return
+	 */
+	public String Http_getCare (String userId, String beUserId) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "return_concern.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("landing_user_id", userId));
+			param.add(new BasicNameValuePair("concorn_user_id", beUserId));
+			param.add(new BasicNameValuePair("if_care", "-1"));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("POST--Care--Detail", response + "----");
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 修改关注状态
+	 * @param userId
+	 * @param beUserId
+	 * @param care
+	 * @return
+	 */
+	public String Http_sendCare (String userId, String beUserId, String care) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "return_concern.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("landing_user_id", userId));
+			param.add(new BasicNameValuePair("concorn_user_id", beUserId));
+			param.add(new BasicNameValuePair("if_care", care));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("POST--CareS--Detail", response + "----");
+				
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 我的关注
+	 * @param user_id
+	 * @return
+	 */
+	public String http_postGuanL (String user_id) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "search_concern1.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", user_id));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 关注我的
+	 * @param user_id
+	 * @return
+	 */
+	public String http_postGuanR (String user_id) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "search_concern2.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", user_id));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 意见反馈
+	 * @param user_id
+	 * @return
+	 */
+	public String http_postFanK (String user_id, String content) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "get_suggestion.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", user_id));
+			param.add(new BasicNameValuePair("suggestion_content", content));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
 				return response;
 			} 
 		} catch(Exception e) {

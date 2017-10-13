@@ -147,7 +147,11 @@ public class NoteAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				UIHelper.showUserDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
+				if (UserId.getInstance(mContext).getUserId().equals(content.getUserId())) {
+					UIHelper.showMyDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
+				} else {
+					UIHelper.showUserDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
+				}
 			}
 		});
 
@@ -228,7 +232,7 @@ public class NoteAdapter extends BaseAdapter {
 			@Override
 			protected String doInBackground(String... params) {
 
-				return MyClient.getInstance().http_postPoem(poem_id);
+				return MyClient.getInstance().http_postPoem(poem_id, UserId.getInstance(mContext).getUserId());
 			}
 
 			@Override

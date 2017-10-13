@@ -103,8 +103,8 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="8dp"
@@ -147,8 +147,8 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="8dp"
@@ -191,8 +191,8 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="8dp"
@@ -236,8 +236,8 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="8dp"
@@ -284,8 +284,8 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="8dp"
@@ -296,7 +296,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:layout_weight="1"
-                        android:text="推荐" />
+                        android:text="反馈" />
 
                     <ImageView
                         android:layout_width="30dp"
@@ -329,8 +329,8 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="8dp"
@@ -374,8 +374,8 @@
                     android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="8dp"

@@ -8,6 +8,8 @@ public class UserId {
 	private String userId;
 	private String headPath;
 	private String nickName;
+	private String location;
+	private String loclabel;
 
 	private static UserId user;
 	private static SharedPreferences pref;
@@ -25,6 +27,9 @@ public class UserId {
 		user.userId = pref.getString("userId", "-1");
 		user.headPath = pref.getString("headPath", "null");
 		user.nickName = pref.getString("nickName", "");
+		user.location = pref.getString("mylocation", "");
+		user.loclabel = pref.getString("locabel", "0");
+		
 		return user;
 	}
 
@@ -34,6 +39,14 @@ public class UserId {
 
 	public void setReUserId(String reUserId) {
 		this.reUserId = reUserId;
+	}
+
+	public String getLoclabel() {
+		return loclabel;
+	}
+
+	public void setLoclabel(String loclabel) {
+		this.loclabel = loclabel;
 	}
 
 	public String getNickName() {
@@ -72,5 +85,13 @@ public class UserId {
 		} else {
 			return true;
 		}
+	}
+	
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

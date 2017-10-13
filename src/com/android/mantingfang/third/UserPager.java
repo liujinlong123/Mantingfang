@@ -7,6 +7,8 @@ import org.json.JSONException;
 
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
+import com.android.mantingfang.fourth.LogOn;
+import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.CustomListView;
 import com.android.mantingfanggsc.MyClient;
@@ -38,10 +40,12 @@ public class UserPager extends Activity {
 	private ImageView imgBack;
 	private TextView tvCollect;
 	private TextView tvInfo;
+	private ImageView imgCare;
 	
 	private String userId;
 	private String headPath;
 	private String nickName;
+	private String care;
 	
 	@SuppressLint("InflateParams")
 	@Override
@@ -60,6 +64,7 @@ public class UserPager extends Activity {
 		tvCollect = (TextView)viewHead.findViewById(R.id.user_pager_collect);
 		tvInfo = (TextView)viewHead.findViewById(R.id.user_pager_info);
 		tvName = (TextView)viewHead.findViewById(R.id.user_pager_user_name);
+		imgCare = (ImageView)viewHead.findViewById(R.id.user_pager_care);
 		
 		Bundle bundle = getIntent().getExtras();
 		userId = bundle.getString("userId");
@@ -123,8 +128,8 @@ public class UserPager extends Activity {
 						adapter = new UserTwoAdapter(UserPager.this, list, headPath, true);
 						listview.setAdapter(adapter);
 						listview.addHeaderView(viewHead);
+						getCare(userId);
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				} else {
@@ -137,4 +142,75 @@ public class UserPager extends Activity {
 		
 		task.execute();
 	}
+	
+	private void getCare (final String user_id) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+			
+			@Override
+			protected String doInBackground(String... params) {
+				return MyClient.getInstance().Http_getCare(UserId.getInstance(UserPager.this).getUserId(), user_id);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				if (result != null && !result.equals("")) {
+					care = result;
+				} else {
+					care = "0";
+				}
+				
+				if (care.equals("1")) {
+					imgCare.setImageResource(R.drawable.care_on);
+				} else {
+					imgCare.setImageResource(R.drawable.care_off);
+				}
+				
+				imgCare.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						if (Integer.parseInt(UserId.getInstance(UserPager.this).getUserId()) < 0) {
+							Intent intent = new Intent(UserPager.this, LogOn.class);
+							startActivity(intent);
+						} else {
+							if (care.equals("0")) {		//没关注-->关注
+								imgCare.setImageResource(R.drawable.care_on);
+								sendCare(userId, "1");
+							} else if (care.equals("1")) { //关注-->没关注
+								imgCare.setImageResource(R.drawable.care_off);
+								sendCare(userId, "0");
+							}
+						}
+					}
+				});
+			}
+			
+		};
+		
+		task.execute();
+	}
+	
+	private void sendCare(final String userId, final String careT) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_sendCare(UserId.getInstance(UserPager.this).getUserId(), userId, careT);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				if (careT.equals("0")) {
+					care = "0";
+				} else if (careT.equals("1")) {
+					care = "1";
+				}
+			}
+			
+		};
+		
+		task.execute();
+	}
+	
 }

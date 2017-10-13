@@ -644,7 +644,7 @@ public class CommentMain extends Activity {
 				@Override
 				protected String doInBackground(String... params) {
 
-					return MyClient.getInstance().http_postPoem(poem_id);
+					return MyClient.getInstance().http_postPoem(poem_id, UserId.getInstance(mContext).getUserId());
 				}
 
 				@Override

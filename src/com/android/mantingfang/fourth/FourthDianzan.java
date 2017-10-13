@@ -100,7 +100,6 @@ public class FourthDianzan extends FragmentActivity {
 
 		@Override
 		public int getItemPosition(Object object) {
-			// TODO Auto-generated method stub
 			return PagerAdapter.POSITION_NONE;
 		}
 

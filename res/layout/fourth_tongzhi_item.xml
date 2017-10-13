@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/tongzhi_item_img"
-        android:layout_width="47dp"
-        android:layout_height="47dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:src="@drawable/ic_launcher"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp" />
@@ -22,16 +22,15 @@
             android:id="@+id/tongzhi_item_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="通知通知通知通知通知通知\n通知通知通知\n通知通知通知"
-            android:textSize="16sp" />
+            android:textSize="13sp" />
         
         <TextView
             android:id="@+id/tongzhi_item_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2017-10-10  20:56"
             android:textSize="13sp"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:textColor="@color/gray" />
     </LinearLayout>
 
 </LinearLayout>

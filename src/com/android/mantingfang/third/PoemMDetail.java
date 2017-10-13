@@ -108,7 +108,13 @@ public class PoemMDetail extends Activity {
 	private void initshow() {
 		poemname.setText(poem.getPoemName());
 		writername.setText("[" + poem.getDynasty() + "]" + poem.getWriter());
-		content.setText(poem.getPoemContent());
+		
+		String[] tokens = poem.getPoemContent().split("[。]");
+		String poemContent = "";
+		for (String e: tokens) {
+			poemContent += (e + "。\n");
+		}
+		content.setText(poemContent);
 		kindDetail.setText(poem.getPoemBg());
 		poetrydetail_rgp.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			

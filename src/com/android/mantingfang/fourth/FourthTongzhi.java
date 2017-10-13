@@ -3,7 +3,12 @@ package com.android.mantingfang.fourth;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.android.mantingfanggsc.CustomListView;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
 import android.annotation.SuppressLint;
@@ -58,21 +63,39 @@ public class FourthTongzhi extends Activity {
 	 */
 	private void getData() {
 
-		//final String url = "http://zhaobiao.zhaohuake.com/androidTender?page=1&pageSize=5";
-
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 			@Override
 			protected String doInBackground(String... pp) {
-				return null;
+				return MyClient.getInstance().Http_Inform();
 			}
 
 			@Override
 			protected void onPostExecute(String result) {
-				for (int i = 1; i < 10; i++) {
-					dataList.add(new TongzhiContent("通知", "21:00"));
+				/*for (int i = 1; i < 2; i++) {
+					dataList.add(new TongzhiContent("满庭芳v1.0发布啦，欢迎大家使用\n"
+							+ "1.修复上传失败的bug\n"
+							+ "2.修复图片加载缓慢的bug", "2017-10-10  20:56"));
+				}*/
+				if (!result.equals("") && result != null) {
+					try {
+						JSONArray obj = new JSONArray(result);
+						for (int i = 0; i < obj.length(); i++) {
+							JSONObject jo = obj.getJSONObject(i);
+							String str = jo.getString("inform_content");
+							String[] tokens = str.split("[#]");
+							String contentStr = "";
+							for (String e: tokens) {
+								contentStr += (e + "\n");
+							}
+							TongzhiContent content = new TongzhiContent(contentStr, jo.getString("inform_data"));
+							
+							dataList.add(content);
+						}
+						listview.setAdapter(adapter);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 				}
-				
-				listview.setAdapter(adapter);
 			}
 		};
 		// 执行任务

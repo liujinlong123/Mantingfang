@@ -7,9 +7,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfanggsc.CustomSwipeListView;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
+import com.android.mantingfanggsc.SuccinctProgress;
 import com.android.mantingfanggsc.SwipeItemView;
+import com.android.mantingfanggsc.UIHelper;
 import com.android.mantingfanggsc.SwipeItemView.OnSlideListener;
 
 import android.annotation.SuppressLint;
@@ -159,7 +163,6 @@ public class FourthShoucang extends Activity {
 					
 					@Override
 					public void onSlide(View view, int status) {
-						// TODO Auto-generated method stub
 						 if (mLastSlideViewWithStatusOn != null && mLastSlideViewWithStatusOn != view) {
 					            mLastSlideViewWithStatusOn.shrink();
 					        }
@@ -179,22 +182,24 @@ public class FourthShoucang extends Activity {
 		        CustomSwipeListView.mFocusedItemView.shrink();
 		        }
 			
-			/*holder.poemName.setText(content.getPoemName());
+			ShoucangContent content = dataList.get(position);
+			holder.poemName.setText(content.getPoemName());
 			holder.poemRhesis.setText(content.getPoemRhesis());
-			holder.writer.setText(content.getWriter());*/
 			
-			holder.poemName.setText("静夜思");
-			holder.poemRhesis.setText("床前明月光， 疑是地上霜");
-			holder.writer.setText("[唐]李白");
+			if (!content.getWriter().equals("") && content.getWriter() != null) {
+				holder.writer.setText(content.getWriter());
+			} else {
+				holder.writer.setText("佚名");
+			}
 			
 			holder.deleteHolder.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View arg0) {
-					// TODO Auto-generated method stub
+					sendCollection(dataList.get(position).getPoemId());
 					dataList.remove(position);
-					//Toast.makeText(getContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
 					notifyDataSetChanged();
+					
 				}
 			});
 			
@@ -227,31 +232,28 @@ public class FourthShoucang extends Activity {
 
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 			@Override
+			protected void onPreExecute() {
+				SuccinctProgress.showSuccinctProgress(FourthShoucang.this,
+						"正在加载", SuccinctProgress.THEME_LINE, false, true);
+			}
+			
+			@Override
 			protected String doInBackground(String... pp) {
-				return null;
+				return MyClient.getInstance().Http_Collection (UserId.getInstance(FourthShoucang.this).getUserId(), "0");
 			}
 
 			@Override
 			protected void onPostExecute(String result) {
-				/*if (result != null && !result.equals("")) {
+				SuccinctProgress.dismiss();
+				if (result != null && !result.equals("")) {
 					try {
 						parse(StringUtils.toJSONArray(result));
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}*/
-				for (int i = 1; i < 10; i++) {
-					dataListOne.add(new ShoucangContent());
+					adapter1 = new ListAdapter(dataListOne);
+					listview1.setAdapter(adapter1);
 				}
-				adapter1 = new ListAdapter(dataListOne);
-				listview1.setAdapter(adapter1);
-				
-				for (int i = 1; i < 20; i++) {
-					dataListTwo.add(new ShoucangContent());
-				}
-				adapter2 = new ListAdapter(dataListTwo);
-				listview2.setAdapter(adapter2);
 				
 				left.setChecked(true);
 				rgpTitle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -276,17 +278,45 @@ public class FourthShoucang extends Activity {
 
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-						// TODO Auto-generated method stub
-						
+						UIHelper.showPoemMDetailTwoById(FourthShoucang.this, dataListOne.get(position - 1).getPoemId(), 0);
 					}
 				});
+				
+				getDataTwo();
+			}
+		};
+		// 执行任务
+		task.execute();
+	}
+	
+	private void getDataTwo() {
+
+		//final String url = "http://zhaobiao.zhaohuake.com/androidTender?page=1&pageSize=5";
+
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+			
+			@Override
+			protected String doInBackground(String... pp) {
+				return MyClient.getInstance().Http_Collection (UserId.getInstance(FourthShoucang.this).getUserId(), "1");
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				if (result != null && !result.equals("")) {
+					try {
+						parseTwo(StringUtils.toJSONArray(result));
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					adapter2 = new ListAdapter(dataListTwo);
+					listview2.setAdapter(adapter2);
+				}
 				
 				listview2.setOnItemClickListener(new OnItemClickListener() {
 
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-						// TODO Auto-generated method stub
-						
+						UIHelper.showPoemMDetailTwoById(FourthShoucang.this, dataListTwo.get(position - 1).getPoemId(), 0);
 					}
 				});
 			}
@@ -295,7 +325,7 @@ public class FourthShoucang extends Activity {
 		task.execute();
 	}
 	
-	private void parse(List<ShoucangContent> dataList, JSONArray obj) throws JSONException {
+	private void parse(JSONArray obj) throws JSONException {
 		if (obj != null) {
 			for (int i = 0; i < obj.length(); i++) {
 				JSONObject jo = obj.getJSONObject(i);
@@ -306,8 +336,43 @@ public class FourthShoucang extends Activity {
 						jo.optString("dynasty_name"),
 						jo.optString("writer_name"));
 				
-				dataList.add(content);
+				dataListOne.add(content);
 			}
 		}
+	}
+	
+	private void parseTwo(JSONArray obj) throws JSONException {
+		if (obj != null) {
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				ShoucangContent content = new ShoucangContent(
+						jo.getString("poetry_id"),
+						jo.optString("poetry_name"),
+						jo.optString("poetry_rhesis"),
+						jo.optString("dynasty_name"),
+						jo.optString("writer_name"));
+				
+				dataListTwo.add(content);
+			}
+		}
+	}
+	
+	private void sendCollection(final String poemId) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				return MyClient.getInstance().Http_postCollection(UserId.getInstance(FourthShoucang.this).getUserId(), poemId, "1", "0");
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				
+			}
+			
+		};
+		
+		task.execute();
 	}
 }

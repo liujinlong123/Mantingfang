@@ -3,10 +3,15 @@ package com.android.mantingfang.fourth;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.mantingfang.third.UserTwoAdapter;
+import org.json.JSONException;
+
+import com.android.mantingfang.bean.StringUtils;
+import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.third.UserTwoContent;
 import com.android.mantingfanggsc.CustomListView;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
+import com.android.mantingfanggsc.SuccinctProgress;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
@@ -20,7 +25,7 @@ public class DianzanL extends Fragment {
 
 	private View view;
 	private CustomListView listview;
-	private UserTwoAdapter adapter;
+	private DianzanAdapter adapter;
 	private List<UserTwoContent> dataList;
 	
 	
@@ -31,7 +36,6 @@ public class DianzanL extends Fragment {
 			view = inflater.inflate(R.layout.dianzan_left, null);
 			
 			listview = (CustomListView)view.findViewById(R.id.dianzan_left_list);
-			dataList = new ArrayList<>();
 			getData();
 			
 			return view;
@@ -44,25 +48,39 @@ public class DianzanL extends Fragment {
 	 * 异步获取信息
 	 */
 	private void getData() {
-
-		//final String url = "http://zhaobiao.zhaohuake.com/androidTender?page=1&pageSize=5";
-
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
-			@Override
-			protected String doInBackground(String... pp) {
-				return null;
-			}
 
+			@Override
+			protected void onPreExecute() {
+				SuccinctProgress.showSuccinctProgress(getContext(),
+						"加载中", SuccinctProgress.THEME_LINE, false, true);
+			}
+			
+			@Override
+			protected String doInBackground(String... params) {
+				return MyClient.getInstance().http_postDianL(UserId.getInstance(getContext()).getUserId());
+			}
+			
 			@Override
 			protected void onPostExecute(String result) {
-				for (int i = 1; i < 10; i++) {
-					dataList.add(new UserTwoContent());
+				SuccinctProgress.dismiss();
+				if (result != null && !result.equals("")) {
+					dataList = new ArrayList<>();
+					try {
+						dataList = TopicList.parseDianzanL(StringUtils.toJSONArray(result)).getDianzanLList();
+						adapter = new DianzanAdapter(getContext(), dataList);
+						listview.setAdapter(adapter);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					//Toast.makeText(getContext(), "返回数据失败", Toast.LENGTH_SHORT).show();
+					//finish();
 				}
-				
-				listview.setAdapter(adapter);
 			}
+			
 		};
-		// 执行任务
+		
 		task.execute();
 	}
 }

@@ -180,7 +180,11 @@ public class OriginalAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				UIHelper.showUserDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
+				if (UserId.getInstance(mContext).getUserId().equals(content.getUserId())) {
+					UIHelper.showMyDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
+				} else {
+					UIHelper.showUserDetail(mContext, 0, content.getUserId(), content.getHeadPath(), content.getName());
+				}
 			}
 		});
 

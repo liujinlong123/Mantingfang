@@ -29,6 +29,7 @@ public class TopicList extends Base {
 	private List<Poem> listKindPoem = new ArrayList<>();
 	private List<Writer> listAllWriters = new ArrayList<>();
 	private List<Poem> listWriterPoem = new ArrayList<>();
+	private List<UserTwoContent> listDianzanL = new ArrayList<>();
 	
 	//-------------------Search-----------------------------//
 	private List<PoemRhesis> listSearchPoem = new ArrayList<>();
@@ -51,6 +52,7 @@ public class TopicList extends Base {
 	private int kindPoemCount;
 	private int allWritersCount;
 	private int writerPoemCount;
+	private int dianzanLCount;
 	
 	//------------------------------返回ArrayList-----------------------------------
 	
@@ -114,6 +116,10 @@ public class TopicList extends Base {
 		return listSearchContent;
 	}
 	
+	public List<UserTwoContent> getDianzanLList() {
+		return listDianzanL;
+	}
+	
 	
 	//------------------------------返回ArrayList Size()-----------------------------------
 	
@@ -175,6 +181,10 @@ public class TopicList extends Base {
 	
 	public int getSearchContentCount() {
 		return searchContentCount;
+	}
+	
+	public int getDianzanLCount() {
+		return dianzanLCount;
 	}
 	
 	//------------------------------返回处理结果-----------------------------------
@@ -706,6 +716,100 @@ public class TopicList extends Base {
 					tList.listSearchContent.add(rhesis);
 				}
 				//Log.v("POMEEEE", poem.getPoemId() + "---" + poem.getPoemName());
+			}
+		}
+		
+		return tList;
+	}
+	
+	public static TopicList parseDianzanL (JSONArray obj) throws JSONException {
+		TopicList tList = new TopicList();
+		if (obj != null) {
+			tList.dianzanLCount = obj.length();
+			for (int i = 0; i < obj.length(); i++) {
+				JSONObject jo = obj.getJSONObject(i);
+				String topicTime = jo.optString("topic_time");
+				String noteTime = jo.optString("note_time");
+				String originalTime = jo.optString("original_time");
+				String audioTime = jo.optString("audio_time");
+				UserTwoContent content = null;
+				if (topicTime != null && !topicTime.equals("")) {
+					content = new UserTwoContent(
+							jo.getString("user_id"),
+							jo.getString("user_photo"),
+							jo.getString("user_nickname"),
+							jo.getString("topic_time"),
+							null,
+							jo.getString("topic_content"),
+							StringUtils.getPictures(jo.getString("topic_picture")),
+							null,
+							null,
+							null,
+							null,
+							jo.optString("zan_post"),
+							1,
+							Integer.parseInt(jo.getString("topic_id")),
+							0);
+					if (content.getPicture().size() == 1) {
+						content.setType(1);
+					}
+				} else if (noteTime != null && !noteTime.equals("")) {
+					content = new UserTwoContent(
+							jo.getString("user_id"),
+							jo.getString("user_photo"),
+							jo.getString("user_nickname"),
+							jo.getString("note_time"),
+							null,
+							jo.getString("note_content"),
+							null,
+							null,
+							jo.getString("note_poem_id"),
+							jo.getString("poetry_content"),
+							jo.getString("poetry_name"),
+							jo.optString("zan_post"),
+							2,
+							Integer.parseInt(jo.getString("note_id")),
+							2);
+				} else if (originalTime != null && !originalTime.equals("")) {
+					content = new UserTwoContent(
+							jo.getString("user_id"),
+							jo.getString("user_photo"),
+							jo.getString("user_nickname"),
+							jo.getString("original_time"),
+							jo.optString("original_title"),
+							jo.getString("original_content"),
+							StringUtils.getPictures(jo.getString("original_picture")),
+							null,
+							null,
+							null,
+							null,
+							jo.optString("zan_post"),
+							3,
+							Integer.parseInt(jo.getString("original_id")),
+							3);
+					if (content.getPicture().size() == 1) {
+						content.setType(4);
+					}
+				} else if (audioTime != null && !audioTime.equals("")) {
+					content = new UserTwoContent(
+							jo.getString("user_id"),
+							jo.getString("user_photo"),
+							jo.getString("user_nickname"),
+							jo.getString("audio_time"),
+							null,
+							null,
+							null,
+							new FileAudio("0", jo.optString("audio_content")),
+							jo.getString("audio_poem_id"),
+							jo.getString("poetry_content"),
+							jo.getString("poetry_name"),
+							jo.optString("zan_post"),
+							4,
+							Integer.parseInt(jo.getString("audio_id")),
+							5);
+				}
+				
+				tList.listDianzanL.add(content);
 			}
 		}
 		

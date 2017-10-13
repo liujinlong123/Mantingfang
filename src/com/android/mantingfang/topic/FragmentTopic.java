@@ -186,23 +186,6 @@ public class FragmentTopic extends BaseFragment {
 		task.execute();
 	}
 	
-	private void getCycleData() {
-		AsyncTask<String , Long, String> task = new AsyncTask<String, Long, String>() {
-			
-			@Override
-			protected String doInBackground(String... params) {
-				return null;
-			}
-			
-			@Override
-			protected void onPostExecute(String result) {
-				
-				super.onPostExecute(result);
-			}
-			
-		};
-	}
-	
 	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler() {
 		

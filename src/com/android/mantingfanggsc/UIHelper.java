@@ -1,6 +1,7 @@
 package com.android.mantingfanggsc;
 
 import com.android.mantingfang.bean.Writer;
+import com.android.mantingfang.fourth.MyUserPager;
 import com.android.mantingfang.model.PoemM;
 import com.android.mantingfang.second.PoemMDetailTwo;
 import com.android.mantingfang.third.Comment;
@@ -48,6 +49,26 @@ public class UIHelper {
 	 */
 	public static void showUserDetail(Context context, int flag, String userId, String headPath, String nickName) {
 		Intent intent = new Intent(context, UserPager.class);
+		intent.putExtra("flag", flag);
+		Bundle bundle = new Bundle();
+		bundle.putString("userId", userId);
+		bundle.putString("nickName", nickName);
+		bundle.putString("headPath", headPath);
+		intent.putExtras(bundle);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
+	}
+	
+	/**
+	 * User--my
+	 * @param context
+	 * @param flag
+	 * @param userId
+	 * @param headPath
+	 * @param nickName
+	 */
+	public static void showMyDetail(Context context, int flag, String userId, String headPath, String nickName) {
+		Intent intent = new Intent(context, MyUserPager.class);
 		intent.putExtra("flag", flag);
 		Bundle bundle = new Bundle();
 		bundle.putString("userId", userId);

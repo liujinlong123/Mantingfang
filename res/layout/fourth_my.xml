@@ -26,7 +26,7 @@
                 android:layout_height="250dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:background="#bb000000" >
+                android:background="@drawable/add" >
 
                 <com.android.mantingfanggsc.CircleImageView
                     android:id="@+id/fourth_my_userPhoto"

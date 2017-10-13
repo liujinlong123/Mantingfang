@@ -12,19 +12,14 @@ import com.android.mantingfang.model.PoemM;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.MyClient;
-import com.android.mantingfanggsc.Player;
 import com.android.mantingfanggsc.R;
 import com.android.mantingfanggsc.UIHelper;
-import com.android.mantingfanggsc.Player.StartPlayer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,12 +43,10 @@ public class UserTwoAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private List<UserTwoContent> list;
 	private String headPath;
-	private Player player;
 	
 	@SuppressWarnings("unused")
 	private MediaPlayer mPlayer = null;
 	private AnimationDrawable animationDrawable;
-	private Handler handler;
 	private boolean showLine = false;
 
 	public UserTwoAdapter(Context context, List<UserTwoContent> list, String headPath) {
@@ -61,7 +54,6 @@ public class UserTwoAdapter extends BaseAdapter {
 		this.list = list;
 		inflater = LayoutInflater.from(context);
 		this.headPath = headPath;
-		player = new Player();
 	}
 	
 	public UserTwoAdapter(Context context, List<UserTwoContent> list, String headPath, boolean showLine) {
@@ -69,7 +61,6 @@ public class UserTwoAdapter extends BaseAdapter {
 		this.list = list;
 		inflater = LayoutInflater.from(context);
 		this.headPath = headPath;
-		player = new Player();
 		this.showLine = showLine;
 	}
 
@@ -207,7 +198,6 @@ public class UserTwoAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -217,7 +207,6 @@ public class UserTwoAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -361,7 +350,6 @@ public class UserTwoAdapter extends BaseAdapter {
 				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
 					
 				}
 			});
@@ -422,7 +410,7 @@ public class UserTwoAdapter extends BaseAdapter {
 			@Override
 			protected String doInBackground(String... params) {
 
-				return MyClient.getInstance().http_postPoem(poem_id);
+				return MyClient.getInstance().http_postPoem(poem_id, UserId.getInstance(mContext).getUserId());
 			}
 
 			@Override
@@ -436,7 +424,6 @@ public class UserTwoAdapter extends BaseAdapter {
 						UIHelper.showPoemMDetail(mContext, poemList.get(0), 0);
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

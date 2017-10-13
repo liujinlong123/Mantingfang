@@ -76,7 +76,7 @@ public class FilesUpload {
 	            sb1.append(LINEND);  
 	            outStream.write(sb1.toString().getBytes());  
 	            InputStream is = new FileInputStream(file.getValue());  
-	            byte[] buffer = new byte[1024];  
+	            byte[] buffer = new byte[4096];  
 	            int len = 0;  
 	            while ((len = is.read(buffer)) != -1) {  
 	                outStream.write(buffer, 0, len);  
