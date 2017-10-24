@@ -5,6 +5,10 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.location.LocationManagerProxy;
+import com.amap.api.location.LocationProviderProxy;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.fourth.LogOn;
@@ -12,17 +16,21 @@ import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
@@ -58,6 +66,8 @@ public class FragmentFrist extends Fragment {
 	
 
 	private ArrayList<String> listTitles;
+	private static int MY_PERMISSIONS_REQUEST_LOCATION = 5;
+	private LocationManagerProxy aMapManager;
 	
 	@SuppressLint("InflateParams")
 	@Override
@@ -70,6 +80,7 @@ public class FragmentFrist extends Fragment {
 			typefaceHWXK = Typeface.createFromAsset(getActivity().getAssets(), "fonts/HWXK.ttf");
 			
 			initViews();
+			Accessibility();
 			
 			return view;
 		}
@@ -220,9 +231,9 @@ public class FragmentFrist extends Fragment {
 				String titles = listTitles.toString();
 				
 				if (titles.equals("[]")) {
-					return MyClient.getInstance().Http_postViewPager("全部", getContext());
+					return MyClient.getInstance().Http_postViewPager("全部", getContext(), "0");
 				} else {
-					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1), getContext());
+					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1), getContext(), "0");
 				}
 			}
 			
@@ -253,7 +264,7 @@ public class FragmentFrist extends Fragment {
 		task.execute();
 	}
 	
-	private void getDataAgain() {
+	private void getDataAgain(final String loclabel) {
 		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
 
 			@Override
@@ -263,9 +274,9 @@ public class FragmentFrist extends Fragment {
 				String titles = listTitles.toString();
 				
 				if (titles.equals("[]")) {
-					return MyClient.getInstance().Http_postViewPager("全部", getContext());
+					return MyClient.getInstance().Http_postViewPager("全部", getContext(), loclabel);
 				} else {
-					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1), getContext());
+					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1), getContext(), loclabel);
 				}
 			}
 			
@@ -401,7 +412,7 @@ public class FragmentFrist extends Fragment {
 		case CHOOSETYPE:
 			if (resultCode == getActivity().RESULT_OK) {
 				btnAdd.setText(data.getStringExtra("choose"));
-				getDataAgain();
+				getDataAgain("0");
 			}
 			break;
 			
@@ -409,31 +420,116 @@ public class FragmentFrist extends Fragment {
 			break;
 		}
 	}
-	
-	/*private void setViewPagerAdapter(final int type) {
-		new Thread() {
-			@Override
-			public void run() {
-				fragmentList.clear();
-				for (PoemRhesis e: dataList) {
-					fragmentList.add(new FragViewPager(e, getActivity(), type));
-				}
-				handler.sendEmptyMessage(1);
-			};
-		}.start();
+
+
+	public void Accessibility() {
+		if (ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED)
+        {
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_LOCATION);
+        } else
+        {
+        	//MyLocation.getInstance(MainActivity.this).startAmap();
+        	startAmap();
+        }
+
+	}
+
+	@SuppressLint("Override")
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] arg1, int[] grantResults) {
+		if (requestCode == MY_PERMISSIONS_REQUEST_LOCATION)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+            	//MyLocation.getInstance(MainActivity.this).startAmap();
+            	startAmap();
+                
+            } else
+            {
+                // Permission Denied
+                Toast.makeText(getContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+
 	}
 	
-	@SuppressLint("HandlerLeak")
-	Handler handler = new Handler() {
+	public void startAmap() {
+		aMapManager = LocationManagerProxy.getInstance(getContext());
+		/*
+		 * mAMapLocManager.setGpsEnable(false);
+		 * 1.0.2版本新增方法，设置true表示混合定位中包含gps定位，false表示纯网络定位，默认是true Location
+		 * API定位采用GPS和网络混合定位方式
+		 * ，第一个参数是定位provider，第二个参数时间最短是2000毫秒，第三个参数距离间隔单位是米，第四个参数是定位监听者
+		 */
+		aMapManager.requestLocationUpdates(LocationProviderProxy.AMapNetwork, 2000, 10, mAMapLocationListener);
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void stopAmap() {
+		if (aMapManager != null) {
+			aMapManager.removeUpdates(mAMapLocationListener);
+			aMapManager.destory();
+		}
+		
+		System.out.println("TEST--Location" + "---stop");
+		aMapManager = null;
+	}
+	
+	private AMapLocationListener mAMapLocationListener = new AMapLocationListener() {
+		
 		@Override
-		public void handleMessage(android.os.Message msg) {
-			if (msg.what == 1) {
-				if (new ViewAdapter(getChildFragmentManager()) != null) {
-					new ViewAdapter(getChildFragmentManager()).notifyDataSetChanged();
-					viewPager.setAdapter(new ViewAdapter(getChildFragmentManager()));
-					Log.v("ViewPager", "----tst");
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			
+		}
+		
+		@Override
+		public void onProviderEnabled(String provider) {
+			
+		}
+		
+		@Override
+		public void onProviderDisabled(String provider) {
+			
+		}
+		
+		@Override
+		public void onLocationChanged(AMapLocation location) {
+			if (location != null) {
+				String str =location.getProvince() + location.getCity() + location.getDistrict();
+				
+				//写入文件
+				//0--not change 1--change
+				@SuppressWarnings("static-access")
+				SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", getContext().MODE_PRIVATE).edit();
+				String loc = UserId.getInstance(getContext()).getLocation();
+				editor.putString("mylocation", str);
+				if (!loc.equals("")) {
+					if (loc.equals(str)) {
+						editor.putString("loclabel", "0");
+					} else {
+						editor.putString("loclabel", "1");
+						getDataAgain("1");
+					}
+				} else {
+					editor.putString("loclabel", "0");
 				}
+				editor.commit();
+				//写入完之后
+				System.out.println("TEST--Location" + str);
+				stopAmap();
 			}
-		};
-	};*/
+		}
+
+		@Override
+		public void onLocationChanged(android.location.Location location) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
 }

@@ -243,9 +243,9 @@ public class FirstPagerInfoP extends Activity {
 				String titles = listTitles.toString();
 				
 				if (titles.equals("[]")) {
-					return MyClient.getInstance().Http_postViewPager("全部", FirstPagerInfoP.this);
+					return MyClient.getInstance().Http_postViewPager("全部", FirstPagerInfoP.this, "0");
 				} else {
-					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1), FirstPagerInfoP.this);
+					return MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1), FirstPagerInfoP.this, "0");
 				}
 			}
 			

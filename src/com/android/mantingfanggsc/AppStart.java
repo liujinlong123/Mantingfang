@@ -173,9 +173,9 @@ public class AppStart extends Activity{
 					String result = "";
 					
 					if (titles.equals("[]")) {
-						result = MyClient.getInstance().Http_postViewPager("全部", AppStart.this);
+						result = MyClient.getInstance().Http_postViewPager("全部", AppStart.this, "0");
 					} else {
-						result = MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1), AppStart.this);
+						result = MyClient.getInstance().Http_postViewPager(titles.substring(1, titles.length() - 1), AppStart.this, "0");
 					}
 					
 					dys = ApiClient.getDynastyListByAs("dynasty.json", context);

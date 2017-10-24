@@ -303,7 +303,7 @@ public class MyClient {
 	 * @param post_id
 	 * @return
 	 */
-	public String Http_postViewPager (String titles, Context context) {
+	public String Http_postViewPager (String titles, Context context, String loclabel) {
 		try {
 			//HttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(actionUrl + "searchrhesis.php");
@@ -316,7 +316,7 @@ public class MyClient {
 			param.add(new BasicNameValuePair("month", (c.get(Calendar.MONTH) + 1) + ""));
 			param.add(new BasicNameValuePair("day", c.get(Calendar.DAY_OF_MONTH) + ""));
 			param.add(new BasicNameValuePair("type_num", "1"));
-			param.add(new BasicNameValuePair("loclabel", UserId.getInstance(context).getLoclabel()));
+			param.add(new BasicNameValuePair("is_change_location", loclabel));
 			param.add(new BasicNameValuePair("location", UserId.getInstance(context).getLocation()));
 			
 			Log.v("TESTViewP--1", titles);
