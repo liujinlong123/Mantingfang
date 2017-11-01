@@ -1,10 +1,12 @@
 package com.android.mantingfang.first;
 
 import com.android.mantingfanggsc.R;
+import com.android.mantingfanggsc.SuccinctProgress;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,8 +54,40 @@ public class PoemPic extends Activity {
 		});
 		
 		String path = getIntent().getStringExtra("path");
-		Bitmap bm = BitmapFactory.decodeFile(path);
-		imgBg.setImageBitmap(bm);
-		imgPic.setImageBitmap(bm);
+		getData(path);
+	}
+	
+	private void getData(final String path) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected void onPreExecute() {
+				SuccinctProgress.showSuccinctProgress(PoemPic.this,
+						"正在上传", SuccinctProgress.THEME_LINE, false, true);
+			}
+			
+			@Override
+			protected String doInBackground(String... params) {
+				try {
+					return new PictureToPoem(path).getJSONArray();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				SuccinctProgress.dismiss();
+				Bitmap bm = BitmapFactory.decodeFile(path);
+				imgBg.setImageBitmap(bm);
+				imgPic.setImageBitmap(bm);
+				tvPoem.setText(result + "===========");
+			}
+			
+		};
+		
+		task.execute();
 	}
 }
