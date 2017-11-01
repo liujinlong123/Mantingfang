@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/topic_theme_topImg"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="fitXY" />
+
+    <RelativeLayout
+        android:id="@+id/topic_theme_rank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.android.mantingfanggsc.CircleImageView
+            android:id="@+id/topic_theme_userPhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/picture_no" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@id/topic_theme_userPhoto" >
+            
+            <TextView
+                android:id="@+id/topic_theme_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小龙龙"
+                android:textColor="@color/gray" />
+            
+			<LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal" >
+			    
+			    <TextView
+			        android:layout_height="wrap_content"
+			        android:layout_width="wrap_content"
+			        android:text="等级  "
+			        android:textColor="@color/gray" />
+			    
+			    <TextView
+			        android:id="@+id/topic_victory_rate"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="78.8%"
+			        android:textColor="@color/gray" />
+			    
+			    <TextView
+			        android:layout_height="wrap_content"
+			        android:layout_width="wrap_content"
+			        android:layout_marginLeft="10dp"
+			        android:text="对阵场次  "
+			        android:textColor="@color/gray" />
+			    
+			    <TextView
+			        android:id="@+id/topic_game_number"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="788"
+			        android:textColor="@color/gray" />
+			</LinearLayout>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp" >
+            
+            <TextView
+                android:id="@+id/all_rank_f"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1888"
+                android:textSize="65sp"
+                android:textColor="#0080FF" />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="名"
+                android:textColor="#0080FF" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

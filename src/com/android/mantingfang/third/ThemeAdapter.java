@@ -8,7 +8,6 @@ import org.json.JSONException;
 import com.android.mantingfang.bean.StringUtils;
 import com.android.mantingfang.bean.TopicList;
 import com.android.mantingfang.fourth.LogOn;
-import com.android.mantingfang.fourth.MyUserPager;
 import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.second.KindGridView;
 import com.android.mantingfanggsc.CircleImageView;
@@ -21,9 +20,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -257,7 +254,7 @@ public class ThemeAdapter extends BaseAdapter {
 			
 			@Override
 			public void onLoadMore() {
-				// TODO 下拉刷新
+				// TODO 上拉刷新
 				loadData(1);
 			}
 		});

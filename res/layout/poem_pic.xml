@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <ImageView
+        android:id="@+id/poem_pic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/wel" />
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/pic_bg"/>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#77000000" >
+        
+        <ImageView
+            android:id="@+id/poem_pic_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/cameraback"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp" />
+        
+        <ImageView
+            android:id="@+id/poem_pic_save"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/save_poem_pic"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp" />
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="50dp"
+        android:background="@color/white"
+        android:orientation="vertical" >
+        
+        <ImageView
+            android:id="@+id/poem_pic_img"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/wel"
+            android:layout_margin="15dp"
+            android:scaleType="fitXY" />
+        
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+            <TextView
+                android:id="@+id/poem_pic_poem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="床前明月光\n疑是地上霜\n举头望明月\n低头思故乡" />
+            
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_launcher" />
+        </RelativeLayout>
+        
+    </LinearLayout>
+
+</RelativeLayout>

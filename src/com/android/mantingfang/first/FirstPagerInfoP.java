@@ -80,8 +80,8 @@ public class FirstPagerInfoP extends Activity {
 		type = Fonts.getInstance(FirstPagerInfoP.this).getType();
 		if (rhesis != null) {
 			String[] tokens = rhesis.getRhesis().split("[,，.。]");
-			tv1.setText(tokens[0]);
-			tv2.setText(tokens[1]);
+			tv2.setText(tokens[0]);
+			tv1.setText(tokens[1]);
 			tv3.setText(rhesis.getWriter());
 			
 			setFronts(type);

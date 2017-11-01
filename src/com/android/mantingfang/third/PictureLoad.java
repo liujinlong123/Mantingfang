@@ -308,7 +308,7 @@ public class PictureLoad {
 		//BitmapFactory.decodeFile(path, options);
 		Map<String, String> param = new HashMap<>();
 		param.put("path", path);
-		byte[] data = ImageByteLoad.upload("http://1696824u8f.51mypc.cn:12755//condensepicture.php", param);
+		byte[] data = ImageByteLoad.upload("MyClient.actionUrl" + "condensepicture.php", param);
 		BitmapFactory.decodeByteArray(data, 0, data.length, options);
 
 		options.inSampleSize = caculateInSampleSize(options, width, height);

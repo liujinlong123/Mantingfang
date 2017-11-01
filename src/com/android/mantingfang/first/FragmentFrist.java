@@ -55,6 +55,7 @@ public class FragmentFrist extends Fragment {
 	private Button btnAdd;
 	private ImageView imgCollect;
 	private ImageView imgMore;
+	private ImageView camera;
 	//private SharedPreferences pref;
 	//private String userId;
 	
@@ -94,6 +95,7 @@ public class FragmentFrist extends Fragment {
 		btnAdd = (Button)view.findViewById(R.id.topbar_first_add);
 		imgCollect = (ImageView)view.findViewById(R.id.topbar_first_collect);
 		imgMore = (ImageView)view.findViewById(R.id.topbar_first_more);
+		camera = (ImageView)view.findViewById(R.id.topbar_first_pai);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 		
 		/**
 		 * 用户自己选择的标签
@@ -177,6 +179,15 @@ public class FragmentFrist extends Fragment {
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
 				
+			}
+		});
+		
+		camera.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getContext(), CameraAcitivty.class);
+				startActivity(intent);
 			}
 		});
 	}

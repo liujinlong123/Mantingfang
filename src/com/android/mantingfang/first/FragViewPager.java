@@ -48,8 +48,8 @@ public class FragViewPager extends Fragment{
 					&& !rhesis.getPoemId().equals("") && !rhesis.getRhesis().equals("")) {
 				String[] tokens = rhesis.getRhesis().split("[，,.。!?！？]");
 				if (tokens.length >= 2) {
-					tv1.setText(tokens[0]);
-					tv2.setText(tokens[1]);
+					tv2.setText(tokens[0]);
+					tv1.setText(tokens[1]);
 					if (rhesis.getWriter() != null && !rhesis.getWriter().equals("")) {
 						
 						tv3.setText(rhesis.getWriter());

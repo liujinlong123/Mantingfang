@@ -1176,4 +1176,125 @@ public class MyClient {
 		}
 		return null;
 	}
+	
+	/**
+	 * 飞花令个人排名
+	 * @param user_id
+	 * @return
+	 */
+	public String http_postTopicGameFTheme (String user_id) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "search_gamemessage.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", user_id));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 飞花令对话图片
+	 * @param user_id
+	 * @return
+	 */
+	public String http_postTopicGameFPics (String user_id, String key) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "send_photopath.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", user_id));
+			param.add(new BasicNameValuePair("topic", key));
+			param.add(new BasicNameValuePair("delete_sign", "1"));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 飞花令单条发送
+	 * @param user_id
+	 * @param poetryId
+	 * @param rhesis
+	 * @param topic
+	 * @return
+	 */
+	public String http_postSendFei (String user_id, String poetryId, String rhesis, String topic, String gradeCount) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "fei_hua_ling.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", user_id));
+			param.add(new BasicNameValuePair("poetryId", poetryId));
+			param.add(new BasicNameValuePair("user_poetry_sentence", rhesis));
+			param.add(new BasicNameValuePair("topic", topic));
+			param.add(new BasicNameValuePair("integral", gradeCount));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("Feihualing-------", response);
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 总场数请求加1
+	 * @param user_id
+	 * @return
+	 */
+	public String http_postSendFeiCount (String user_id) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "receive_count.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("user_id", user_id));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				Log.v("Feihualing-------", response);
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }
+
+

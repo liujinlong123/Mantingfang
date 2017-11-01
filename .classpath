@@ -11,6 +11,7 @@
 	<classpathentry kind="lib" path="D:/Android/AndroidSDK/android-sdk-windows/add-ons/addon-google_apis-google-19/libs/maps.jar"/>
 	<classpathentry kind="lib" path="D:/Android/AndroidSDK/android-sdk-windows/add-ons/addon-google_apis-google-19/libs/usb.jar"/>
 	<classpathentry kind="lib" path="libs/universal-image-loader-1.9.2-SNAPSHOT-with-sources.jar"/>
+	<classpathentry kind="lib" path="libs/nineoldandroids-2.4.0.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>

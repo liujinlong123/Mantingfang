@@ -120,13 +120,6 @@ public class FragmentTopic extends BaseFragment {
 	private void initViews() {
 		list = (CustomListView) view.findViewById(R.id.topic_tuijian);
 		
-		
-		/*viewLinear = LayoutInflater.from(getContext()).inflate(R.layout.topic_linear_search, null);
-		linearSearch = (ScrollViewWithListView)viewLinear.findViewById(R.id.topic_search_linear_list);
-		SearchList = new ArrayList<>();
-		SearchList.add("大家都在搜XXX");
-		linearAdapter = new LinearAdapter();
-		linearSearch.setAdapter(linearAdapter);*/
 		viewLinear = LayoutInflater.from(getContext()).inflate(R.layout.topic_viewpager, null);
 		viewLinearLayout = (LinearLayout) viewLinear.findViewById(R.id.topic_linear_search);
 		viewLinearTv = (TextView) viewLinear.findViewById(R.id.topic_linear_tv_search);
@@ -323,6 +316,7 @@ public class FragmentTopic extends BaseFragment {
 		cycleViewPager.setIndicatorCenter();
 	}
 
+	//跳转不同的游戏界面
 	private ImageCycleViewListener mAdCycleViewListener = new ImageCycleViewListener() {
 
 		@Override
@@ -331,7 +325,9 @@ public class FragmentTopic extends BaseFragment {
 				position = position - 1;
 				Toast.makeText(getContext(), "position-->" + info.getContent(), Toast.LENGTH_SHORT).show();
 
-				Intent intent = new Intent(getContext(), ShowWebView.class);
+				//Intent intent = new Intent(getContext(), ShowWebView.class);
+				Intent intent = new Intent(getContext(), TopicGameF.class);
+				intent.putExtra("picturepath", info.getUrl());
 				startActivity(intent);
 			}
 

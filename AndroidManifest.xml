@@ -84,6 +84,8 @@
         
         <activity android:name="com.android.mantingfang.first.FirstPagerAdd" ></activity>
         <activity android:name="com.android.mantingfang.first.FirstPagerInfoP" ></activity>
+        <activity android:name="com.android.mantingfang.first.CameraAcitivty" ></activity>
+        <activity android:name="com.android.mantingfang.first.PoemPic" ></activity>
         
         <activity android:name="com.android.mantingfang.second.SecondWenkuPoem" ></activity>
         <activity android:name="com.android.mantingfang.second.PoemMDetailTwo" ></activity>
@@ -92,6 +94,8 @@
         
         <activity android:name="com.android.mantingfang.topic.TopicSearch" ></activity>
         <activity android:name="com.android.mantingfang.topic.ShowWebView" ></activity>
+        <activity android:name="com.android.mantingfang.topic.TopicGameF" ></activity>
+        <activity android:name="com.android.mantingfang.topic.ChatF" ></activity>
         
         <activity android:name="com.android.mantingfang.third.UserPager" ></activity>
         <activity android:name="com.android.mantingfang.third.UserInfo" ></activity>
