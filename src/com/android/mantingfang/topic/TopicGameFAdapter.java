@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 public class TopicGameFAdapter extends BaseAdapter {
 
-	@SuppressWarnings("unused")
 	private Context mContext;
 	private LayoutInflater inflater;
 	private List<TopicGameFContent> list;

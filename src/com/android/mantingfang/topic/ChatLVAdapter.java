@@ -100,7 +100,7 @@ public class ChatLVAdapter extends BaseAdapter {
 			hodler = (ViewHodler) convertView.getTag();
 		}
 		
-		PictureLoad.getInstance().loadImage(myHead, hodler.myIcon);
+		//PictureLoad.getInstance().loadImage(myHead, hodler.myIcon);
 		PictureLoad.getInstance().loadImage(robotHead, hodler.robotIcon);
 
 		if (list.get(position).fromOrTo == 0) {

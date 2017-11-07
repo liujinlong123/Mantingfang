@@ -131,7 +131,6 @@ public class TopicGameF extends Activity {
 					if (tokens[0] != null && !tokens[0].equals("")) {
 						try {
 							JSONArray obj = new JSONArray(tokens[0]);
-							//JSONObject jo = new JSONObject(result);
 							JSONObject jo = obj.getJSONObject(0);
 							TopicGameFContent content = new TopicGameFContent(
 									userId,
@@ -201,22 +200,4 @@ public class TopicGameF extends Activity {
 		
 		task.execute();
 	}
-	
-	/*private void getDataTwo (final String tokens) {
-		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
-			
-			@Override
-			protected String doInBackground(String... params) {
-				return null;
-			}
-			
-			@Override
-			protected void onPostExecute(String result) {
-				
-			}
-			
-		};
-		
-		task.execute();
-	}*/
 }

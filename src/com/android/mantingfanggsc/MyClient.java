@@ -1247,10 +1247,12 @@ public class MyClient {
 			HttpPost httpPost = new HttpPost(actionUrl + "fei_hua_ling.php");
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 			param.add(new BasicNameValuePair("user_id", user_id));
-			param.add(new BasicNameValuePair("poetryId", poetryId));
+			param.add(new BasicNameValuePair("poetry_id", poetryId));
 			param.add(new BasicNameValuePair("user_poetry_sentence", rhesis));
 			param.add(new BasicNameValuePair("topic", topic));
 			param.add(new BasicNameValuePair("integral", gradeCount));
+			
+			Log.v("飞花令++", user_id + "++" + poetryId + "--" + rhesis);
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
 			httpPost.setEntity(entity);
 			HttpResponse httpResponse = httpClient.execute(httpPost);
@@ -1287,6 +1289,36 @@ public class MyClient {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				String response = EntityUtils.toString(httpEntity, "utf-8");
 				Log.v("Feihualing-------", response);
+				return response;
+			} 
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 拍照写诗API for poem
+	 * @param content
+	 * @param kind 7-->七言 5-->五言
+	 * @return
+	 */
+	public String http_postPoemByCamera (String content, String kind) {
+		try {
+			//HttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(actionUrl + "generate_poetry.php");
+			List<NameValuePair> param = new ArrayList<NameValuePair>();
+			param.add(new BasicNameValuePair("text", content));
+			param.add(new BasicNameValuePair("number", kind));
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(param, "utf-8");
+			httpPost.setEntity(entity);
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+				HttpEntity httpEntity = httpResponse.getEntity();
+				String response = EntityUtils.toString(httpEntity, "utf-8");
+				//Log.v("Feihualing-------", response);
 				return response;
 			} 
 		} catch(Exception e) {

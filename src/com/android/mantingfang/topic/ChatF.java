@@ -199,7 +199,16 @@ public class ChatF extends Activity implements OnRefreshListenerHeader {
 						e.printStackTrace();
 					}
 				} else {
+					//没有接收到诗句或者答的不对或者词库不包含这首诗
+					String content = "你打错了哦";
+					infos.add(getChatInfoFrom(content));
+					mLvAdapter.setList(infos);
+					mLvAdapter.notifyDataSetChanged();
+					mListView.setSelection(infos.size() - 1);
 					
+					//EditText不可编辑状态
+					input.setFocusable(false);
+					input.setFocusableInTouchMode(false);
 				}
 			}
 

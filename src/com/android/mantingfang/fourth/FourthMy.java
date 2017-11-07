@@ -159,13 +159,11 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -183,13 +181,11 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -295,7 +291,6 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 
 						@Override
 						public void onProgress(long pro, double precent) {
-							// TODO Auto-generated method stub
 
 						}
 
@@ -310,7 +305,6 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 
 						@Override
 						public void onProgress(long pro, double precent) {
-							// TODO Auto-generated method stub
 
 						}
 
@@ -366,7 +360,6 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 							editorNickName.setSelection(user.getUserNickname().length());
 						}
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
@@ -378,36 +371,6 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 		
 		task.execute();
 	}
-	
-	/**
-	 * 获取头像
-	 * @param path
-	 *//*
-	private void getImage(final String path) {
-		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
-
-			@Override
-			protected String doInBackground(String... params) {
-				
-				Map<String, String> param = new HashMap<>();
-				param.put("path", path);
-				bitmap = ImageLoad.upload("http://1696824u8f.51mypc.cn:12755//sendpicture.php", param);
-				return null;
-			}
-			
-			@Override
-			protected void onPostExecute(String result) {
-				if (bitmap != null) {
-					userPhoto.setImageBitmap(bitmap);
-				} else {
-					userPhoto.setImageResource(R.drawable.welcome);
-				}
-			}
-			
-		};
-		
-		task.execute();
-	}*/
 	
 	
 	@Override
@@ -429,7 +392,6 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 				}
 				outputImage.createNewFile();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -470,7 +432,6 @@ public class FourthMy extends Activity implements OnRequestPermissionsResultCall
 					userPhoto.setImageBitmap(bitmap);
 					//user.setUserPhoto(userPhoto);
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

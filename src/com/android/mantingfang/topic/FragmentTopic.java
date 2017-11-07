@@ -53,7 +53,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 @SuppressLint("InflateParams")
 public class FragmentTopic extends BaseFragment {
@@ -323,12 +322,14 @@ public class FragmentTopic extends BaseFragment {
 		public void onImageClick(ADInfo info, int position, View imageView) {
 			if (cycleViewPager.isCycle()) {
 				position = position - 1;
-				Toast.makeText(getContext(), "position-->" + info.getContent(), Toast.LENGTH_SHORT).show();
-
-				//Intent intent = new Intent(getContext(), ShowWebView.class);
-				Intent intent = new Intent(getContext(), TopicGameF.class);
-				intent.putExtra("picturepath", info.getUrl());
-				startActivity(intent);
+				//Toast.makeText(getContext(), "position-->" + info.getContent(), Toast.LENGTH_SHORT).show();
+				if (position == 0) {
+					Intent intent = new Intent(getContext(), TopicGameF.class);
+					intent.putExtra("picturepath", info.getUrl());
+					startActivity(intent);
+				} else {
+					Intent intent = new Intent(getContext(), ShowWebView.class);
+				}
 			}
 
 		}

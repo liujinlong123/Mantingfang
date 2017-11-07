@@ -12,12 +12,13 @@
         
         <TextView
             android:id="@+id/number_rank"
-            android:layout_width="wrap_content"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textSize="54sp"
             android:textStyle="italic|bold"
-            android:textColor="@color/gold" />
+            android:textColor="@color/gold"
+            android:gravity="center_horizontal" />
         
         <com.android.mantingfanggsc.CircleImageView
             android:id="@+id/topic_game_item_userPhoto"

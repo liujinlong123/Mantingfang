@@ -36,7 +36,6 @@
                 android:id="@+id/topic_theme_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="小龙龙"
                 android:textColor="@color/gray" />
             
 			<LinearLayout
@@ -54,7 +53,6 @@
 			        android:id="@+id/topic_victory_rate"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:text="78.8%"
 			        android:textColor="@color/gray" />
 			    
 			    <TextView
@@ -68,7 +66,6 @@
 			        android:id="@+id/topic_game_number"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:text="788"
 			        android:textColor="@color/gray" />
 			</LinearLayout>
         </LinearLayout>
@@ -85,7 +82,6 @@
                 android:id="@+id/all_rank_f"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1888"
                 android:textSize="65sp"
                 android:textColor="#0080FF" />
             

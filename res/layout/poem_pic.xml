@@ -64,8 +64,7 @@
                 android:id="@+id/poem_pic_poem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="床前明月光\n疑是地上霜\n举头望明月\n低头思故乡" />
+                android:layout_margin="15dp" />
             
             <ImageView
                 android:layout_width="50dp"

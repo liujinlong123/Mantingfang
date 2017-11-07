@@ -108,8 +108,8 @@ public class FirstPagerInfoP extends Activity {
 					rhesis = rhesisList.get((int)(rhesisList.size() * Math.random()));
 					String[] tokens = rhesis.getRhesis().split("[，,.。!?！？]");
 					if (tokens.length >= 2) {
-						tv1.setText(tokens[0]);
-						tv2.setText(tokens[1]);
+						tv2.setText(tokens[0]);
+						tv1.setText(tokens[1]);
 						if (rhesis.getWriter() != null && !rhesis.getWriter().equals("")) {
 							tv3.setText(rhesis.getWriter());
 						} else {

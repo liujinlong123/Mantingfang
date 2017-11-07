@@ -9,11 +9,15 @@ import java.util.Date;
 
 import com.android.mantingfanggsc.R;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -21,8 +25,16 @@ import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.PictureCallback;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.provider.MediaStore.Images.Media;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
+import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
 import android.view.MotionEvent;
 import android.view.Surface;
@@ -32,7 +44,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class CameraAcitivty extends Activity {
+public class CameraAcitivty extends Activity implements OnRequestPermissionsResultCallback {
 
 	private ImageView imgBack;
 	private ImageView imgReverse;
@@ -45,6 +57,8 @@ public class CameraAcitivty extends Activity {
 	private CameraPreview mPreview;
 	private FrameLayout mCameralayout;
 	private int mCameraId = CameraInfo.CAMERA_FACING_BACK;
+	private static final int CHOOSE_PHOTO = 3;
+	private static final int MY_PERMISSIONS_REQUEST_CAMERA = 6;
 
 	//private static String path = Environment.getExternalStorageDirectory() + "/data/pang";
 
@@ -53,13 +67,7 @@ public class CameraAcitivty extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.camera);
 
-		if (!checkCameraHardware(this)) {
-			Toast.makeText(CameraAcitivty.this, "相机不支持", Toast.LENGTH_SHORT).show();
-		} else {
-			openCamera();
-			initViews();
-			setCameraDisplayOrientation(this, mCameraId, mCamera);
-		}
+		Accessibility();
 	}
 
 	private void initViews() {
@@ -106,8 +114,9 @@ public class CameraAcitivty extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
+				Intent intent2 = new Intent("android.intent.action.GET_CONTENT");
+				intent2.setType("image/*");
+				startActivityForResult(intent2, CHOOSE_PHOTO);
 			}
 		});
 	}
@@ -277,4 +286,128 @@ public class CameraAcitivty extends Activity {
 			}
 		}
 	};
+	
+	@SuppressLint("InlinedApi")
+	public void Accessibility() {
+		if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED)
+        {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    		Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_CAMERA);
+        } else
+        {
+        	if (!checkCameraHardware(this)) {
+    			Toast.makeText(CameraAcitivty.this, "相机不支持", Toast.LENGTH_SHORT).show();
+    			finish();
+    		} else {
+    			openCamera();
+    			initViews();
+    			setCameraDisplayOrientation(this, mCameraId, mCamera);
+    		}
+        }
+
+	}
+
+	@SuppressLint("Override")
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] arg1, int[] grantResults) {
+		if (requestCode == MY_PERMISSIONS_REQUEST_CAMERA)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+            	if (!checkCameraHardware(this)) {
+        			Toast.makeText(CameraAcitivty.this, "相机不支持", Toast.LENGTH_SHORT).show();
+        			finish();
+        		} else {
+        			openCamera();
+        			initViews();
+        			setCameraDisplayOrientation(this, mCameraId, mCamera);
+        		}
+                
+            } else
+            {
+                // Permission Denied
+                Toast.makeText(CameraAcitivty.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+            return;
+        }
+
+	}
+	
+	/**
+	 * 图片处理
+	 * @param imagePath
+	 */
+	private void displayImage(String imagePath) {
+		if (imagePath != null) {
+			//Log.v("Path", imagePath);
+			//图片处理
+			
+			Intent intent = new Intent(CameraAcitivty.this, PoemPic.class);
+			intent.putExtra("path", imagePath);
+			startActivity(intent);
+		} else {
+			Toast.makeText(CameraAcitivty.this, "failed to get image", Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch(requestCode) {
+		case CHOOSE_PHOTO:
+			if (resultCode == RESULT_OK) {
+				if (Build.VERSION.SDK_INT >= 19) {
+					handleImageOnKitKat(data);
+				} else {
+					handleImageBeforeKitKat(data);
+				}
+			}
+			break;
+		}
+	}
+	
+	@TargetApi(Build.VERSION_CODES.KITKAT)
+	@SuppressLint("NewApi")
+	private void handleImageOnKitKat(Intent data) {
+		String imagePath = null;
+		Uri uri = data.getData();
+		if (DocumentsContract.isDocumentUri(this, uri)) {
+			String docId = DocumentsContract.getDocumentId(uri);
+			if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
+				String id = docId.split("[:]")[1];
+				String selection = MediaStore.Images.Media._ID + "=" + id;
+				imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+			} else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+				Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
+				imagePath = getImagePath(contentUri, null);
+			}
+		} else if ("content".equalsIgnoreCase(uri.getScheme())) {
+			imagePath = getImagePath(uri, null);
+		}
+		displayImage(imagePath);
+	}
+	
+	private void handleImageBeforeKitKat(Intent data) {
+		Uri uri = data.getData();
+		String imagePath = getImagePath(uri, null);
+		displayImage(imagePath);
+	}
+	
+	private String getImagePath(Uri uri, String selection) {
+		String path = null;
+		Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
+		if (cursor != null) {
+			if (cursor.moveToFirst()) {
+				path = cursor.getString(cursor.getColumnIndex(Media.DATA));
+			}
+			cursor.close();
+		}
+		
+		return path;
+	}
 }
