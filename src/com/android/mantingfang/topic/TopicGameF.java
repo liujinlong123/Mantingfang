@@ -180,7 +180,7 @@ public class TopicGameF extends Activity {
 										joo.optString("care"));
 								dataList.add(content);
 							}
-							adapter = new TopicGameFAdapter(TopicGameF.this, dataList, listview);
+							adapter = new TopicGameFAdapter(TopicGameF.this, dataList, listview, UserId.getInstance(TopicGameF.this).getUserId());
 							listview.setAdapter(adapter);
 							listview.addHeaderView(TopView);
 						} catch (JSONException e) {

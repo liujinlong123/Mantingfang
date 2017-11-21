@@ -2,17 +2,24 @@ package com.android.mantingfang.topic;
 
 import java.util.List;
 
+import com.android.mantingfang.fourth.LogOn;
 import com.android.mantingfang.third.PictureLoad;
 import com.android.mantingfanggsc.CircleImageView;
 import com.android.mantingfanggsc.CustomListView;
 import com.android.mantingfanggsc.CustomListView.OnLoadMoreListener;
 import com.android.mantingfanggsc.CustomListView.OnRefreshListener;
+import com.android.mantingfanggsc.MyClient;
 import com.android.mantingfanggsc.R;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -24,13 +31,15 @@ public class TopicGameFAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private List<TopicGameFContent> list;
 	private CustomListView listview;
+	private String userId;
 	private static final int LOAD_DATA_FINISH = 10; //上拉刷新
 	private static final int REFERSH_DATA_FINISH = 11; //下拉刷新
 	
-	public TopicGameFAdapter(Context context, List<TopicGameFContent> list, CustomListView listview) {
+	public TopicGameFAdapter(Context context, List<TopicGameFContent> list, CustomListView listview, String userId) {
 		this.list = list;
 		this.mContext = context;
 		this.listview = listview;
+		this.userId = userId;
 		inflater = LayoutInflater.from(context);
 	}
 	
@@ -88,7 +97,7 @@ public class TopicGameFAdapter extends BaseAdapter {
 		ImageView heart;
 	}
 
-	private void initViews(TopicGameFContent content, ViewHolder holder, int position) {
+	private void initViews(final TopicGameFContent content, final ViewHolder holder, int position) {
 		//头像
 		PictureLoad.getInstance().loadImage(content.getHeadPath(), holder.imgHead);
 		
@@ -113,6 +122,49 @@ public class TopicGameFAdapter extends BaseAdapter {
 		} else {
 			holder.heart.setImageResource(R.drawable.heart_off);
 		}
+		
+		holder.heart.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (Integer.parseInt(userId) < 0) {
+					Intent intent = new Intent(mContext, LogOn.class);
+					mContext.startActivity(intent);
+				} else {
+					if (content.getCollect().equals("0")) {	//没关注 --> 关注
+						holder.heart.setImageResource(R.drawable.heart_on);
+						sendCare(content.getUserId(), "1", content);
+					} else if (content.getCollect().equals("1")) {	//关注 --> 没关注
+						holder.heart.setImageResource(R.drawable.heart_off);
+						sendCare(content.getUserId(), "0", content);
+					}
+				}
+			}
+		});
+	}
+	
+	private void sendCare(final String userid, final String careT, final TopicGameFContent content) {
+		AsyncTask<String, Long, String> task = new AsyncTask<String, Long, String>() {
+
+			@Override
+			protected String doInBackground(String... params) {
+				
+				Log.v("TEST", userId + "--" + "--" + userid + "--" + careT);
+				return MyClient.getInstance().Http_sendCare(userId, userid, careT);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				if (careT.equals("0")) {
+					content.setCollect("0");
+				} else if (careT.equals("1")) {
+					content.setCollect("1");
+				}
+			}
+			
+		};
+		
+		task.execute();
 	}
 	
 	private void refresh() {

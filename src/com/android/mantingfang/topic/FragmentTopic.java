@@ -85,7 +85,7 @@ public class FragmentTopic extends BaseFragment {
 	private Timer t;
 
 	private String[] imageUrls = {
-			"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=338960318,3040799804&fm=26&gp=0.jpg",
+			"http://1692ab4340.51mypc.cn:41189//receive%20photo/fei_hua_ling.jpg",
 			"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2650519084,56168659&fm=26&gp=0.jpg",
 			"https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1203797674,2083454031&fm=26&gp=0.jpg",
 			"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3272581681,1253176532&fm=26&gp=0.jpg" };

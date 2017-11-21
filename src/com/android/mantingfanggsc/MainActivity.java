@@ -1,27 +1,16 @@
 package com.android.mantingfanggsc;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationListener;
-import com.amap.api.location.LocationManagerProxy;
-import com.amap.api.location.LocationProviderProxy;
 import com.android.mantingfang.first.FragmentFrist;
 import com.android.mantingfang.fourth.FragmentFourth;
-import com.android.mantingfang.fourth.UserId;
 import com.android.mantingfang.second.FragmentSecond;
 import com.android.mantingfang.third.FragmentThird;
 import com.android.mantingfang.topic.FragmentTopic;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
