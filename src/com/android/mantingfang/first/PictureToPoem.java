@@ -19,8 +19,8 @@ import Decoder.BASE64Encoder;
 
 public class PictureToPoem {
 	
-	private static final String ak_id1 = "LTAIycpA6Koc1BNe"; //用户ak
-    private static final String ak_secret1 = "WQJrZEn3Q3sPrd9vYnPFAuuz5fmRGw"; // 用户ak_secret
+	private static final String ak_id1 = ""; //用户ak
+    private static final String ak_secret1 = ""; // 用户ak_secret
     private static final String url = "https://dtplus-cn-shanghai.data.aliyuncs.com/image/tag";
     private String path;
     
